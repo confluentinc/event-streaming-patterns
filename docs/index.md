@@ -1,4 +1,3 @@
 # Welcome to Event Streaming Patterns
 
-## Pattern List
-
+Text about event streaming patterns

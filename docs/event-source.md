@@ -1,5 +1,4 @@
-# Pattern Name
-* Event Source 
+# Event Source 
 
 ## Problem
 put events into system
