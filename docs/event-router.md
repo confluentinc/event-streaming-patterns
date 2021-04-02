@@ -6,7 +6,7 @@ How do I handle a situation where the implementation of a single logical functio
 
 ## Solution Pattern
 
-![event-router](event-router.png)
+![event-router](img/event-router.png)
 
 Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, `extract`, which accepts three parameters:
 

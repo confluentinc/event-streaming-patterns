@@ -8,7 +8,7 @@ How can an application discard uninteresting events?
 
 The Kafka Streams DSL provides a `filter` operator, where only records matching a given predicate continue to progress in the event stream.
 
-![event-filter](event-filter.png)
+![event-filter](img/event-filter.png)
 
 ## Example Implementation
 
