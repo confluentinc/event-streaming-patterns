@@ -4,8 +4,8 @@
 How do I update a value in a database and create an associated event with the least amount of effort?
 
 ## Solution Pattern
+![database-write-aside](../img/database-write-aside.png)
 Write to a database, then write to Kafka. Perform the write to Kafka as the last step in a database transaction to ensure an atomic dual commit (aborting the transaction if the write to Kafka fails). 
-![database-write-aside](img/database-write-aside.png)
 
 ## Example Implementation
 ```
