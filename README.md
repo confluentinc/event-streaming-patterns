@@ -6,9 +6,6 @@ Follow the pattern defined in [pattern-template.md](pattern-template.md)
 ## Diagram creation
 Use [this google sheet](https://docs.google.com/presentation/d/1Zf256Z6fBvre3uclIbmxXsDpnTIxiBX66b13pHbGIYc/edit?usp=sharing) as a method for building the diagram art.
 
-## Local testing
-The `mkdocs serve` command will build and serve (with auto-reload) for local testing. Site available at http://localhost:8000.
-	
 ## Staging instructions
 - Make sure the `main` branch is in desired state
 - Build and deploy the static site using `mkdocs`. The following command builds the site (`site` folder), commits it to the `gh-pages` branch and pushes to GitHub. 
