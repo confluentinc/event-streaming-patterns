@@ -1,11 +1,11 @@
 # Event Sink Connector
 
 ## Problem
-How can I connect an application or system like a DB to an event streaming platform so that it can receive events?
+How can I connect an application or system like a DB to an event streaming platform so that it can receive events? Unlike `Event Sink`, this is a specific example that doesn't use generic consumers or a REST API. 
 
 ## Solution Pattern
+![event-sink-connector](../img/event-sink-connector.png)
 When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified sink.
-![event-sink-connector](img/event-sink-connector.png)
 
 ## Example Implementation
 ```
@@ -26,4 +26,4 @@ CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
 
 ## References
 * [Confluent Connector Hub](https://www.confluent.io/hub/) 
-
+* TODO: add sink connector KT once made public
