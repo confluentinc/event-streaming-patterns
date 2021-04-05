@@ -6,3 +6,4 @@
   - `mkdocs gh-deploy`
 - Commit the built site to master so the main branch is clean
   - `git commit -am 'deploy site';git push origin main` 
+- The updated site will be availble here: https://fluffy-spork-82bccf67.pages.github.io/
