@@ -5,9 +5,10 @@ How can a stream of events be written into a sink, any destination that wants to
 This can be a generic consumer application that reads a stream of events (or for a more specific example, see `Event Sink Connector`).
 
 ## Solution Pattern
-An application can read a stream of events from an event streaming platform.
 
-![event-sink](img/event-sink.png)
+![event-sink](../img/event-sink.png)
+
+An application can read a stream of events from an event streaming platform.
 
 ## Example Implementation
 
