@@ -1,0 +1,31 @@
+# Event Splitter
+
+## Problem
+How can I process an event if it contains multiple events, each of which may need to be processed in a different way?
+
+## Solution Pattern
+First, split the original event into multiple child event. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
+![event-splitter](img/event-splitter.png)
+
+## Example Implementation
+```
+KStream<Long, String> stream = ...;
+KStream<String, Integer> transformed = stream.flatMap(
+     // Here, we generate two output records for each input record.
+     // We also change the key and value types.
+     // Example: (345L, "Hello") -> ("HELLO", 1000), ("hello", 9000)
+    (key, value) -> {
+      List<KeyValue<String, Integer>> result = new LinkedList<>();
+      result.add(KeyValue.pair(value.toUpperCase(), 1000));
+      result.add(KeyValue.pair(value.toLowerCase(), 9000));
+      return result;
+    }
+  );
+```
+
+## Considerations
+* Think about where the child events should be routed to, the same stream or a different stream. See `Event Router` on how to route events to different locations.
+
+## References
+
+
