@@ -4,7 +4,7 @@
 How can an event processing application handle event processing failures without terminating on error?
 
 ## Solution Pattern
-![dead-letter-stream](img/dead-letter-stream.png)
+![dead-letter-stream](../img/dead-letter-stream.png)
 
 When an event stream processing system cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon.
 
