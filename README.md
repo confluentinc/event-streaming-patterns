@@ -4,6 +4,9 @@
 - Install `mkdocs`
   - `brew install mkdocs`
 
+## Local Testing
+`mkdocs serve`
+
 ## Pattern Template
 Follow the pattern defined in [pattern-template.md](pattern-template.md)
 
