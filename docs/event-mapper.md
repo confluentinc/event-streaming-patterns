@@ -10,9 +10,8 @@ Create (or use an existing) Event Mapper to map the Domain Model (or the applica
 
 Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.
 
-
 ## Example Implementation
-TODO: Example
+TODO: Example?
 
 ## Considerations
 The mapper may optionally validate the schema of the converted objects, see "Schema Validation".
