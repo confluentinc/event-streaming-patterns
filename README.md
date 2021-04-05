@@ -12,4 +12,4 @@ Use [this google sheet](https://docs.google.com/presentation/d/1Zf256Z6fBvre3ucl
   - `mkdocs gh-deploy`
 - Commit the built site to master so the main branch is clean
   - `git commit -am 'deploy site';git push origin main` 
-- The updated site will be availble here: https://fluffy-spork-82bccf67.pages.github.io/
+- The updated site will be available here: https://fluffy-spork-82bccf67.pages.github.io/
