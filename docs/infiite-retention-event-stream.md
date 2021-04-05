@@ -1,5 +1,4 @@
-# Pattern Name
-Infinite Retention Event Stream
+# Infinite Retention Event Stream
 
 ## Problem
 How can an operator ensure that events in a stream are retained forever?
