@@ -1,5 +1,9 @@
 # Event Streaming Patterns
 
+## Setup
+- Install `mkdocs`
+  - `brew install mkdocs`
+
 ## Pattern Template
 Follow the pattern defined in [pattern-template.md](pattern-template.md)
 
