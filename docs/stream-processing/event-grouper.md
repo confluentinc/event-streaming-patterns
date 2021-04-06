@@ -6,7 +6,7 @@ How can I group individual but related events from the same stream/table so that
 
 
 ## Solution Pattern
-![event-grouper](img/event-grouper.png)
+![event-grouper](../img/event-grouper.png)
 
 ksqlDB provides the capability to group related events by a column and group them into "windows" where all the related events have a timestamp
 within the defined time-window.
