@@ -1,21 +1,19 @@
 # Pattern Name
-* Category: e.g. "Compositional Patterns"
 
 ## Problem
 text
 
 ## Solution Pattern
-* text
 * diagram
+* text
 
 ## Example Implementation
-
-code example (ksqlDB preferred)
+TODO: code example, ksqlDB preferred. Not every pattern will have code.
 
 ## Considerations
-optional section, not all patterns have/need this
+TODO: optional section, not all patterns have/need this
 
 ## References
-* pointers to external material
-* pointers to related patterns
+* TODO: pointers to external material?
+* TODO: pointers to related patterns?
 
