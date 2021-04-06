@@ -1,4 +1,4 @@
-# Database Write Through (Change Data Capture)
+# Database Write Through
 
 ## Problem
 How do I update a value in a database and create an associated event with at-least-once guarantees?
