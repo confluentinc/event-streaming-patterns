@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Mapper - Event Streaming Patterns</title>
+  <title>Event Sink Connector - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Mapper";
-    var mkdocs_page_input_path = "event-processing/event-mapper.md";
+    var mkdocs_page_name = "Event Sink Connector";
+    var mkdocs_page_input_path = "event-sink/event-sink-connector.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,12 +52,19 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
                 <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Mapper</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Sink Connector</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
@@ -71,14 +78,7 @@
     </li>
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event sink</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink-connector/">Event Sink Connector</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink/">Event Sink</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/">Event Sink</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
@@ -125,11 +125,11 @@
     
       
         
-          <li>Event processing &raquo;</li>
+          <li>Event sink &raquo;</li>
         
       
     
-    <li>Event Mapper</li>
+    <li>Event Sink Connector</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -140,21 +140,33 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-mapper">Event Mapper</h1>
+                <h1 id="event-sink-connector">Event Sink Connector</h1>
 <h2 id="problem">Problem</h2>
-<p>How do I move data between an application’s internal data model (with domain objects) and an event streaming platform (with events) while keeping the two independent of each other?</p>
+<p>How can I connect an application or system like a DB to an event streaming platform so that it can receive events? Unlike <code>Event Sink</code>, this is a specific example that doesn't use generic consumers or a REST API. </p>
 <h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-mapper" src="../../img/event-mapper.png" /></p>
-<p>Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.</p>
-<p>Create (or use an existing) Event Mapper to map the Domain Model (or the application's internal data model) to the data formats accepted by the event streaming platform, and vice versa. The mapper reads the domain model and converts it into outgoing events that are sent to the event streaming platform. Conversely, a mapper can be used to create or update domain objects from incoming events.</p>
+<p><img alt="event-sink-connector" src="../../img/event-sink-connector.png" />
+When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified sink.</p>
 <h2 id="example-implementation">Example Implementation</h2>
-<p>TODO: Example?</p>
+<pre><code>CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
+    'connector.class'     = 'io.confluent.connect.jdbc.JdbcSinkConnector',
+    'connection.url'      = 'jdbc:postgresql://postgres:5432/',
+    'connection.user'     = 'postgres',
+    'connection.password' = 'postgres',
+    'topics'              = 'TEMPERATURE_READINGS_TIMESTAMP_MT',
+    'auto.create'         = 'true',
+    'auto.evolve'         = 'true'
+);
+</code></pre>
+
 <h2 id="considerations">Considerations</h2>
-<p>The mapper may optionally validate the schema of the converted objects, see "Schema Validation".</p>
+<ul>
+<li>Existing Kafka connectors: there are many such event sink connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See Confluent Hub for available connectors.</li>
+<li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication and authorization, etc. between event sink, event sink connector, and the event streaming platform.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Reference for Schema Validation </li>
-<li><a href="https://en.wikipedia.org/wiki/Domain_model">Domain Model</a></li>
+<li><a href="https://www.confluent.io/hub/">Confluent Connector Hub</a> </li>
+<li>TODO: add sink connector KT once made public</li>
 </ul>
               
             </div>
@@ -163,10 +175,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-router/" class="btn btn-neutral float-right" title="Event Router">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-sink/" class="btn btn-neutral float-right" title="Event Sink">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-filter/" class="btn btn-neutral" title="Event Filter"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../event-processing/event-router/" class="btn btn-neutral" title="Event Router"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -192,10 +204,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-filter/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../event-processing/event-router/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-router/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-sink/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

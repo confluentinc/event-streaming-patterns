@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Mapper - Event Streaming Patterns</title>
+  <title>Database Write Through - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Mapper";
-    var mkdocs_page_input_path = "event-processing/event-mapper.md";
+    var mkdocs_page_name = "Database Write Through";
+    var mkdocs_page_input_path = "event-source/database-write-through.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,12 +52,28 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink-connector/">Event Sink Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink/">Event Sink</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event source</span></p>
                 <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Mapper</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Database Write Through</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
@@ -71,25 +87,9 @@
     </li>
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source-connector/">Event Source Connector</a>
                     </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event sink</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink-connector/">Event Sink Connector</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-sink/event-sink/">Event Sink</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -125,11 +125,11 @@
     
       
         
-          <li>Event processing &raquo;</li>
+          <li>Event source &raquo;</li>
         
       
     
-    <li>Event Mapper</li>
+    <li>Database Write Through</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -140,21 +140,26 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-mapper">Event Mapper</h1>
+                <h1 id="database-write-through">Database Write Through</h1>
 <h2 id="problem">Problem</h2>
-<p>How do I move data between an application’s internal data model (with domain objects) and an event streaming platform (with events) while keeping the two independent of each other?</p>
+<p>How do I update a value in a database and create an associated event with at-least-once guarantees?</p>
+<p>This pattern is a specialization of the <a href="../event-source-connector/">Event Source Connector</a> that guarantees that all state changes represented in an event source, including changes to tables in an event streaming platform, are captured in an event streaming platform.</p>
 <h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-mapper" src="../../img/event-mapper.png" /></p>
-<p>Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.</p>
-<p>Create (or use an existing) Event Mapper to map the Domain Model (or the application's internal data model) to the data formats accepted by the event streaming platform, and vice versa. The mapper reads the domain model and converts it into outgoing events that are sent to the event streaming platform. Conversely, a mapper can be used to create or update domain objects from incoming events.</p>
+<p><img alt="db-write-through" src="../../img/db-write-through.png" /></p>
+<p>Write to a database table, which is the Event Source. Then set up streaming Change Data Capture (CDC) on that table to continuously ingest any changes—inserts, updates, deletes—into an Event Stream in Kafka. Typically, Kafka Connect is used for this step in combination with an appropriate Event Source Connector for the database. See Confluent Hub for a list of available connectors.</p>
+<p>The events in stream can then be consumed by Event Processing Applications. Additionally, the event stream can be read into a Projection Table, for example with ksqlDB, so that it can be queried by other applications.</p>
 <h2 id="example-implementation">Example Implementation</h2>
-<p>TODO: Example?</p>
+<p>TODO: Example for CDC?</p>
 <h2 id="considerations">Considerations</h2>
-<p>The mapper may optionally validate the schema of the converted objects, see "Schema Validation".</p>
+<ul>
+<li>The processing guarantees (cf. "Guaranteed Delivery") to choose from—e.g., at-least-once, exactly-once—for the CDC data flow depend on the selected Kafka connector.</li>
+<li>There is a certain delay until changes in the source database table are available in the CDC-ingested event stream. The amount of the delay depends on a variety of factors, including the features and configuration of the event source connector. In many typical scenarios the delay is less than a few seconds.</li>
+<li>In terms of their data model, events typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all events for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Reference for Schema Validation </li>
-<li><a href="https://en.wikipedia.org/wiki/Domain_model">Domain Model</a></li>
+<li>TODO: Pointers to Confluent Source connector(s)?</li>
+<li>TODO: What about well known CDC providers, like Debizium? </li>
 </ul>
               
             </div>
@@ -163,10 +168,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-router/" class="btn btn-neutral float-right" title="Event Router">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-source-connector/" class="btn btn-neutral float-right" title="Event Source Connector">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-filter/" class="btn btn-neutral" title="Event Filter"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../database-write-aside/" class="btn btn-neutral" title="Database Write Aside"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -192,10 +197,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-filter/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../database-write-aside/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-router/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-source-connector/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
