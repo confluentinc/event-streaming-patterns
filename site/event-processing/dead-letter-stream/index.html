@@ -141,11 +141,13 @@
             <div class="section">
               
                 <h1 id="dead-letter-stream">Dead Letter Stream</h1>
+<p>Event processing applications may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.</p>
 <h2 id="problem">Problem</h2>
-<p>How can an event processing application handle event processing failures without terminating on error?</p>
+<p>How can an event processing application handle processing failures without terminating on a single error?</p>
 <h2 id="solution-pattern">Solution Pattern</h2>
+<p>What can the application do with an event it cannot process?</p>
 <p><img alt="dead-letter-stream" src="../../img/dead-letter-stream.png" /></p>
-<p>When an event stream processing system cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon.</p>
+<p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event", for example exception details, to ease fault resolution later.</p>
 <h2 id="example-implementation">Example Implementation</h2>
 <pre><code>public class DeadLetterStreamer {
   …
@@ -168,6 +170,7 @@ for (ConsumerRecord&lt;&gt; record : records) {
 <p>TODO: Considerations? </p>
 <h2 id="references">References</h2>
 <ul>
+<li><a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Schema Registry</a></li>
 <li><a href="https://docs.ksqldb.io/en/latest/reference/processing-log/">ksqlDB Processing Log</a></li>
 </ul>
               
