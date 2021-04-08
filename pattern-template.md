@@ -1,19 +1,20 @@
 # Pattern Name
+TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
 
 ## Problem
-text
+TODO: Technology agnostic English explanation of the problem
 
-## Solution Pattern
-* diagram
-* text
+## Solution
+TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
 
-## Example Implementation
-TODO: code example, ksqlDB preferred. Not every pattern will have code.
+## Implementation
+TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)
 
 ## Considerations
-TODO: optional section, not all patterns have/need this
+TODO: Technology specific reflection on implmenting the pattern 'in the real world'. 
 
 ## References
-* TODO: pointers to external material?
+* TODO: Reference link to the EIP pattern as citation
 * TODO: pointers to related patterns?
+* TODO: pointers to external material?
 
