@@ -12,6 +12,8 @@ How can an event processing application handle processing failures without termi
 When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.
 
 ## Example Implementation
+
+Java Basic Kafka Consumer
 ```
 while (keepConsuming) {
   try {
@@ -26,6 +28,26 @@ while (keepConsuming) {
     deadEventReporter.report(/*Error Details*/);
   }
 }
+```
+
+Python Basic Kafka Consumer
+```
+while True:
+    try:
+        event = consumer.poll(1000)
+
+    except SerializerError as e:
+        deadEventReporter.report(e)
+        break
+
+    if msg.error():
+        deadEventReporter.report(msg.error())
+        continue
+
+    if msg is None:
+        continue
+
+    eventProcessor.process(msg)
 ```
 
 ## Considerations
