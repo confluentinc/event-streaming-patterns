@@ -1,6 +1,7 @@
 # Dead Letter Stream
 
-Event processing applications may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.
+<!-- TODO: Event Processing Application is a pattern that should be linked to in the following text -->
+Event Processing Applications may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.
 
 ## Problem
 How can an event processing application handle processing failures without terminating, or becoming stuck, when a message cannot be read?
