@@ -150,6 +150,7 @@
 <p><img alt="dead-letter-stream" src="../../img/dead-letter-stream.png" /></p>
 <p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.</p>
 <h2 id="example-implementation">Example Implementation</h2>
+<p>Java Basic Kafka Consumer</p>
 <pre><code>while (keepConsuming) {
   try {
     final ConsumerRecords&lt;K, V&gt; records = consumer.poll(Duration.ofSeconds(1));
@@ -163,6 +164,25 @@
     deadEventReporter.report(/*Error Details*/);
   }
 }
+</code></pre>
+
+<p>Python Basic Kafka Consumer</p>
+<pre><code>while True:
+    try:
+        event = consumer.poll(1000)
+
+    except SerializerError as e:
+        deadEventReporter.report(e)
+        break
+
+    if msg.error():
+        deadEventReporter.report(msg.error())
+        continue
+
+    if msg is None:
+        continue
+
+    eventProcessor.process(msg)
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
