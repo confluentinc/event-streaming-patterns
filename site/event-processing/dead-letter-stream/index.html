@@ -143,35 +143,34 @@
                 <h1 id="dead-letter-stream">Dead Letter Stream</h1>
 <p>Event processing applications may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.</p>
 <h2 id="problem">Problem</h2>
-<p>How can an event processing application handle processing failures without terminating on a single error?</p>
+<p>How can an event processing application handle processing failures without terminating, or becoming stuck, when a message cannot be read?</p>
 <h2 id="solution-pattern">Solution Pattern</h2>
-<p>What can the application do with an event it cannot process?</p>
 <p><img alt="dead-letter-stream" src="../../img/dead-letter-stream.png" /></p>
-<p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event", for example exception details, to ease fault resolution later.</p>
+<p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.</p>
 <h2 id="example-implementation">Example Implementation</h2>
-<pre><code>public class DeadLetterStreamer {
-  …
-  public Future&lt;RecordMetadata&gt; report(ConsumerRecord&lt;byte[], byte[]&gt; badRecord, Exception ex) {
-    return this.producer.send(new ProducerRecord&lt;&gt;(/*badRecord and Exception data*/);
-  }
-}
-
-ConsumerRecords&lt;String, byte[]&gt; records = consumer.poll(1000);
-for (ConsumerRecord&lt;&gt; record : records) {
+<pre><code>while (keepConsuming) {
   try {
-    // process record
-  } catch (Exception ex) {
-    dlStreamer.report(record, ex);
+    final ConsumerRecords&lt;K, V&gt; records = consumer.poll(Duration.ofSeconds(1));
+    try {
+      eventProcessor.process(records);
+    } catch (Exception ex) {
+      deadEventReporter.report(/*Error Details*/);
+    }
+  }
+  catch (SerializationException se) {
+    deadEventReporter.report(/*Error Details*/);
   }
 }
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>TODO: Considerations? </p>
+<p>What should real-world applications do with the events in the dead letter stream? Reprocessing events automatically will often lead to reorderings and hence the potential for corruption to downstream systems if the stream contains events that represent changing states of the same underlying entity, such as orders being booked, processed, or shipped. Manual reprocessing can be useful, but is often viewed more as an error log in many real-world implementations.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Schema Registry</a></li>
-<li><a href="https://docs.ksqldb.io/en/latest/reference/processing-log/">ksqlDB Processing Log</a></li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/DeadLetterChannel.html">Dead Letter Channel</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>Confluent’s <a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Schema Registry</a> provides data governance capabilities including “schema on write” enforcement which can help insulate downstream consumers from unexpected event formats.</li>
+<li>Kafka Streams provides the ability to register a customer Serde to handle corrupt records allowing for creation of Dead Event data which could be published to a Dead Event Stream. See this Confluent <a href="https://docs.confluent.io/platform/current/streams/faq.html#streams-faq-failure-handling-deserialization-errors-serde">Kafka Streams FAQ</a> for details.</li>
+<li><a href="https://ksqldb.io/">ksqlDB</a> emits a stream of records, called the <a href="https://docs.ksqldb.io/en/latest/reference/processing-log/">Processing Log</a>, which is analogous to a Dead Letter Stream. The Processing Log contains structured events including processing errors and additional debugging details for ksqlDB applications.  See this <a href="https://kafka-tutorials.confluent.io/handling-deserialization-errors/ksql.html">Kafka Tutorial</a> for more information.</li>
 </ul>
               
             </div>
