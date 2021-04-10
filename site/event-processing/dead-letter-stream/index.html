@@ -57,9 +57,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -150,10 +150,10 @@
 <p><a href="../event-processing-application/">Event Processing Applications</a> may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.</p>
 <h2 id="problem">Problem</h2>
 <p>How can an event processing application handle processing failures without terminating, or becoming stuck, when a message cannot be read?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="dead-letter-stream" src="../../img/dead-letter-stream.png" /></p>
 <p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<h2 id="implementation">Implementation</h2>
 <p>Java Basic Kafka Consumer</p>
 <pre><code>while (keepConsuming) {
   try {
