@@ -5,4 +5,4 @@ echo "releasing branch $CURRENT_BRANCH to GH Pages"
 mkdocs gh-deploy
 git add site/.
 git commit -m "Deploy $CURRENT_BRANCH to site"
-git push origin main
+git push origin $CURRENT_BRANCH
