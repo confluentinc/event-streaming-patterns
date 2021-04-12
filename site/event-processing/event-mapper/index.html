@@ -61,9 +61,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -145,20 +145,24 @@
             <div class="section">
               
                 <h1 id="event-mapper">Event Mapper</h1>
+<p>Traditional applications (operating with data at rest) and <a href="../event-processing-application/">Event Processing Applications</a> (with data in motion), may need to share data via the <a href="../event-streaming/event-streaming-platform.md">Event Streaming Platform</a>. These applications will need a common mechanism to convert data from events to domain objects and vice versa.</p>
 <h2 id="problem">Problem</h2>
 <p>How do I move data between an application’s internal data model (with domain objects) and an event streaming platform (with events) while keeping the two independent of each other?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-mapper" src="../../img/event-mapper.png" /></p>
 <p>Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.</p>
 <p>Create (or use an existing) Event Mapper to map the Domain Model (or the application's internal data model) to the data formats accepted by the event streaming platform, and vice versa. The mapper reads the domain model and converts it into outgoing events that are sent to the event streaming platform. Conversely, a mapper can be used to create or update domain objects from incoming events.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<h2 id="implementation">Implementation</h2>
 <p>TODO: Example?</p>
+<p>Idea: Kafka streams example with a mapper as a stage in the topology?</p>
+<p>Idea: Kafka Connect as the </p>
 <h2 id="considerations">Considerations</h2>
-<p>The mapper may optionally validate the schema of the converted objects, see "Schema Validation".</p>
+<p>TODO: Considerations?</p>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Reference for Schema Validation </li>
-<li><a href="https://en.wikipedia.org/wiki/Domain_model">Domain Model</a></li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html">Messaging Mapper</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>TODO: Reference to Event-Carried State Transfer?</li>
+<li>TODO: Reference to Document Message / Event vs Command Message / Event?</li>
 </ul>
               
             </div>
