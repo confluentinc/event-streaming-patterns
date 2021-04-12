@@ -146,7 +146,6 @@
               
                 <h1 id="dead-letter-stream">Dead Letter Stream</h1>
 <!-- TODO: Event Processing Application is a pattern that should be linked to in the following text -->
-
 <p><a href="../event-processing-application/">Event Processing Applications</a> may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.</p>
 <h2 id="problem">Problem</h2>
 <p>How can an event processing application handle processing failures without terminating, or becoming stuck, when a message cannot be read?</p>
@@ -169,7 +168,6 @@
   }
 }
 </code></pre>
-
 <p>Python Basic Kafka Consumer</p>
 <pre><code>while True:
     try:
@@ -188,7 +186,6 @@
 
     eventProcessor.process(msg)
 </code></pre>
-
 <h2 id="considerations">Considerations</h2>
 <p>What should real-world applications do with the events in the dead letter stream? Reprocessing events automatically will often lead to reorderings and hence the potential for corruption to downstream systems if the stream contains events that represent changing states of the same underlying entity, such as orders being booked, processed, or shipped. Manual reprocessing can be useful, but is often viewed more as an error log in many real-world implementations.</p>
 <h2 id="references">References</h2>

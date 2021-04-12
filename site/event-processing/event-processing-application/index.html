@@ -145,22 +145,23 @@
             <div class="section">
               
                 <h1 id="event-processing-application">Event Processing Application</h1>
-<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
+<p>An Event Processing Application uses one or more <a href="../event-processor/">Event Processor</a> instances to handle streaming event driven data.</p>
 <h2 id="problem">Problem</h2>
-<p>TODO: Technology agnostic English explanation of the problem</p>
+<p>How can I build an application to work with streaming event data?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-processing-application" src="../../img/event-processing-application.png" />
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
+<p><img alt="event-processing-application" src="../../img/event-processing-application.png" /></p>
+<p>Using an Event Processing Application allows you to tie together indpendant event processors for working with streaming event recorods and are not aware of each other.</p>
 <h2 id="implementation">Implementation</h2>
-<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
+<pre><code>StreamsBuilder builder = new StreamsBuilder();
+KStream&lt;String, String&gt; stream = builder.stream(&quot;input-events&quot;);
+....      
+
+KafkaStreams kafkaStreams = new KafkaStreams(builder.build(), properties);
+kafkaStreams.start() 
+</code></pre>
 <h2 id="considerations">Considerations</h2>
-<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
+<p>When building an Event Processing Application, it's important to generally confine the application to one problem domain.  While it's true the application can have any number of event processors, they should be closely related.</p>
 <h2 id="references">References</h2>
-<ul>
-<li>TODO: Reference link to the EIP pattern as citation</li>
-<li>TODO: pointers to related patterns?</li>
-<li>TODO: pointers to external material?</li>
-</ul>
               
             </div>
           </div>

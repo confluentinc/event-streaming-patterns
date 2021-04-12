@@ -145,16 +145,21 @@
             <div class="section">
               
                 <h1 id="event-processor">Event Processor</h1>
-<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
+<p>An event processor is a component of a larger <a href="../event-processing-application/">Event Processing Application</a>.  The event processor applies discrete, idempotent operations to an event object.</p>
 <h2 id="problem">Problem</h2>
-<p>TODO: Technology agnostic English explanation of the problem</p>
+<p>How do I gain insight from event data? For example, how can I quickly address a customer issue?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-processor" src="../../img/event-processor.png" />
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
+You can define any number of event processors inside an <a href="../event-processing-application/">Event Processing Application</a> to perform such tasks as mapping an event type to a domain object, triggering alerts, real-time report updates, and writing out results for consumption by other applications.</p>
 <h2 id="implementation">Implementation</h2>
-<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
+<pre><code>StreamsBuilder builder = new StreamsBuilder();
+        KStream&lt;String, String&gt; stream = builder.stream(&quot;input-events&quot;);
+        stream.filter((key, value)-&gt; value.contains(&quot;special-code&quot;))
+              .mapValues(value -&gt; to domain object)
+              .to(&quot;special-output-events&quot;);
+</code></pre>
 <h2 id="considerations">Considerations</h2>
-<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
+<p>While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the application does. </p>
 <h2 id="references">References</h2>
 <ul>
 <li>TODO: Reference link to the EIP pattern as citation</li>

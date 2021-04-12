@@ -153,7 +153,6 @@
 <pre><code>KStream&lt;String, Event&gt; eventStream = builder.stream(.....);
 eventStream.filter((key, value) -&gt; value.type() == &quot;foo&quot;).to(&quot;foo-events&quot;);
 </code></pre>
-
 <h2 id="references">References</h2>
 <ul>
 <li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html">Message Filter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
