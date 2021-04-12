@@ -7,29 +7,49 @@ How can I isolate Events into a dedicated Event Stream based on some attribute o
 ## Solution
 ![event-router](../img/event-router.png)
 
-Kafka Streams provides the [TopicNameExtractor](https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html) interface which can redirect events to topics.  The `TopicNameExtractor` has one method, `extract`, which accepts three parameters:
-
-- The Key of the record
-- The Value of the record
-- The RecordContext
-
-You can use any or all of these three to pull the required information to route records to different topics at runtime.  The `RecordContext` provides access to the headers of the record, which can contain user provided information for routing purposes.
-
 ## Implementation
-Implement a customer topic name extractor using the Kafka Streams `TopicNameExtractor` interface and provide it to the Kafka Streams `to` function while building the topology.
+With [ksqlDB](https://ksqldb.io/), continuously routing events to a different stream is as simple as using the `CREATE STREAM` syntax with the appropriate `WHERE` filter.
 
 ```
-CustomExtractor implements TopicNameExtractor<String, String> {
-   
-   String extract(String key, String value, RecordContext recordContext) {
-         // Assuming the first ten characters of the key
-         // contains the information determining where 
-         // Kafka Streams forwards the record.
-      return key.substring(0,10);
-   }
+CREATE STREAM actingevents_drama AS
+    SELECT NAME, TITLE
+      FROM ACTINGEVENTS
+     WHERE GENRE='drama';
 
- KStream<String, String> myStream = builder.stream(...);
- myStream.mapValues(..).to( new CustomExtractor());
+CREATE STREAM actingevents_fantasy AS
+    SELECT NAME, TITLE
+      FROM ACTINGEVENTS
+     WHERE GENRE='fantasy';
+
+CREATE STREAM actingevents_other AS
+    SELECT NAME, TITLE, GENRE
+      FROM ACTINGEVENTS
+     WHERE GENRE != 'drama'
+       AND GENRE != 'fantasy';
+```
+
+If using Kafka Streams, the provided [TopicNameExtractor](https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html) interface can redirect events to topics.  The `TopicNameExtractor` has one method, `extract`, which accepts three parameters:
+
+- The event key
+- The event value
+- The [RecordContext](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, ando ther contextual information about the event.
+
+You can use any of the given parameters to return the destination topic name, and Kafka Streams will complete the routing. 
+
+```
+GenreTopicExtractor implements TopicNameExtractor<String, String> {
+   String extract(String key, String value, RecordContext recordContext) {
+      switch (value.genre) {
+        case "drama":
+          return "drama-topic";
+        case "fantasy":
+          return "fantasy-topic";
+      }
+   }
+}
+
+KStream<String, String> myStream = builder.stream(...);
+myStream.mapValues(..).to( new GenreTopicExtractor());
 ```
 
 ## Considerations
