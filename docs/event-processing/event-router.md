@@ -1,14 +1,13 @@
 # Event Router
+[Event Streams](../event-stream/event-stream.md) may contain [Events](../event/event.md) which can be separated logically by some attribute. The routing of Events to dedicated Streams may allow for simplified [Event Processing](event-processor.md) and [Event Sink](../event-sink/event-sink.md) solutions.
 
 ## Problem
+How can I isolate Events into a dedicated Event Stream based on some attribute of the Events?
 
-How do I handle a situation where the implementation of a single logical function (e.g., inventory check) is spread across multiple physical systems?
-
-## Solution Pattern
-
+## Solution
 ![event-router](../img/event-router.png)
 
-Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, `extract`, which accepts three parameters:
+Kafka Streams provides the [TopicNameExtractor](https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html) interface which can redirect events to topics.  The `TopicNameExtractor` has one method, `extract`, which accepts three parameters:
 
 - The Key of the record
 - The Value of the record
@@ -16,7 +15,8 @@ Use the TopicNameExtractor to determine the topic to send records to.  The Topic
 
 You can use any or all of these three to pull the required information to route records to different topics at runtime.  The `RecordContext` provides access to the headers of the record, which can contain user provided information for routing purposes.
 
-## Example Implementation
+## Implementation
+Implement a customer topic name extractor using the Kafka Streams `TopicNameExtractor` interface and provide it to the Kafka Streams `to` function while building the topology.
 
 ```
 CustomExtractor implements TopicNameExtractor<String, String> {
@@ -32,6 +32,10 @@ CustomExtractor implements TopicNameExtractor<String, String> {
  myStream.mapValues(..).to( new CustomExtractor());
 ```
 
+## Considerations
+* Event Routers should not modify the Event contents and instead only provide the proper Event routing.
+
 ## References
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html): How to dynamically choose the output topic at runtime 
+* This pattern is derived from [Message Router](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html) for a full example of dynamically routing events at runtime
 
