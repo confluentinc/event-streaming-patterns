@@ -171,22 +171,21 @@ public void updatePublication(PublicationEvent pubEvent) {
   domainStore.update(newPub);
 </code></pre>
 
-<p>TODO: Rick Feedback Request: How could we use ksqlDB or Kafka Streams her? The following KStreams example doesn't work to me because it's a stream processing application, but Mapper means to convert between domain objects and events. I'm not sure there is a logical way to "push" an event to a toplogy manually withouth producing to a topic.</p>
+<p><strong>TODO:</strong> Rick Feedback Request: How could we use ksqlDB or Kafka Streams her? The following KStreams example doesn't work to me because it's a stream processing application, but Mapper means to convert between domain objects and events. I'm not sure there is a logical way to "push" an event to a toplogy manually withouth producing to a topic.</p>
 <pre><code>IMapper mapper = mapperFactory.buildMapper(Publication.class);
 builder.stream(inputTopic, Consumed.with(Serdes.String(), publicationSerde))
   .map((name, publication) -&gt; mapper.map(publication))
   .to(outputTopic, Produced.with(Serdes.String(), publicationEventSerde));
 </code></pre>
 
-<p>Idea: Kafka streams example with a mapper as a stage in the topology?</p>
 <h2 id="considerations">Considerations</h2>
-<p>TODO: Considerations?</p>
-<p>TODO: Is CDC a consideration?</p>
+<p><strong>TODO:</strong> Considerations?</p>
 <h2 id="references">References</h2>
 <ul>
 <li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html">Messaging Mapper</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
-<li>TODO: Reference to Event-Carried State Transfer?</li>
-<li>TODO: Reference to Document Message / Event vs Command Message / Event?</li>
+<li><strong>TODO:</strong> Reference to Event-Carried State Transfer?</li>
+<li><strong>TODO:</strong> Reference to Document Message / Event vs Command Message / Event?</li>
+<li><strong>TODO:</strong> Is Database Write Through / CDC a valid reference?</li>
 </ul>
               
             </div>
