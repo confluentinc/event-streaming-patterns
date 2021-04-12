@@ -67,9 +67,11 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
@@ -143,18 +145,20 @@
             <div class="section">
               
                 <h1 id="event-router">Event Router</h1>
+<p><a href="../event-stream/event-stream.md">Event Streams</a> may contain <a href="../event/event.md">Events</a> which can be separated logically by some attribute. The routing of Events to dedicated Streams may allow for simplified <a href="../event-processor/">Event Processing</a> and <a href="../../event-sink/event-sink/">Event Sink</a> solutions.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I handle a situation where the implementation of a single logical function (e.g., inventory check) is spread across multiple physical systems?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<p>How can I isolate Events into a dedicated Event Stream based on some attribute of the Events?</p>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-router" src="../../img/event-router.png" /></p>
-<p>Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, <code>extract</code>, which accepts three parameters:</p>
+<p>Kafka Streams provides the <a href="https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html">TopicNameExtractor</a> interface which can redirect events to topics.  The <code>TopicNameExtractor</code> has one method, <code>extract</code>, which accepts three parameters:</p>
 <ul>
 <li>The Key of the record</li>
 <li>The Value of the record</li>
 <li>The RecordContext</li>
 </ul>
 <p>You can use any or all of these three to pull the required information to route records to different topics at runtime.  The <code>RecordContext</code> provides access to the headers of the record, which can contain user provided information for routing purposes.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<h2 id="implementation">Implementation</h2>
+<p>Implement a customer topic name extractor using the Kafka Streams <code>TopicNameExtractor</code> interface and provide it to the Kafka Streams <code>to</code> function while building the topology.</p>
 <pre><code>CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
 
    String extract(String key, String value, RecordContext recordContext) {
@@ -168,9 +172,14 @@
  myStream.mapValues(..).to( new CustomExtractor());
 </code></pre>
 
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>Event Routers should not modify the Event contents and instead only provide the proper Event routing.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">Kafka Tutorial</a>: How to dynamically choose the output topic at runtime </li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html">Message Router</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>See this <a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">Kafka Tutorial</a> for a full example of dynamically routing events at runtime</li>
 </ul>
               
             </div>
