@@ -1,18 +1,27 @@
 # Event Processor
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
+An event processor is a component of a larger [Event Processing Application](event-processing-application.md).  The event processor applies discrete, idempotent operations to an event object.
 
 ## Problem
-TODO: Technology agnostic English explanation of the problem
+How do I gain insight from event data? For example, how can I quickly address a customer issue?
 
 ## Solution
 ![event-processor](../img/event-processor.png)
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
+You can define any number of event processors inside an [Event Processing Application](event-processing-application.md) to perform such tasks as mapping an event type to a domain object, triggering alerts, real-time report updates, and writing out results for consumption by other applications.
 
 ## Implementation
-TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)
+
+```
+StreamsBuilder builder = new StreamsBuilder();
+        KStream<String, String> stream = builder.stream("input-events");
+        stream.filter((key, value)-> value.contains("special-code"))
+              .mapValues(value -> to domain object)
+              .to("special-output-events");
+```
 
 ## Considerations
-TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
+
+While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the application does. 
+
 
 ## References
 * TODO: Reference link to the EIP pattern as citation
