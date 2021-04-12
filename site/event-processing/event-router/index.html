@@ -161,12 +161,6 @@ CREATE STREAM actingevents_fantasy AS
     SELECT NAME, TITLE
       FROM ACTINGEVENTS
      WHERE GENRE='fantasy';
-
-CREATE STREAM actingevents_other AS
-    SELECT NAME, TITLE, GENRE
-      FROM ACTINGEVENTS
-     WHERE GENRE != 'drama'
-       AND GENRE != 'fantasy';
 </code></pre>
 
 <p>If using Kafka Streams, the provided <a href="https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html">TopicNameExtractor</a> interface can redirect events to topics.  The <code>TopicNameExtractor</code> has one method, <code>extract</code>, which accepts three parameters:</p>
