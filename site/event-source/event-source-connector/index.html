@@ -83,9 +83,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -145,12 +145,14 @@
             <div class="section">
               
                 <h1 id="event-source-connector">Event Source Connector</h1>
+<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems which are not themselves <a href="../event-source/">Event Sources</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How can I connect an application or system like a DB to an event streaming platform so that it can send events?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-source-connector" src="../../img/event-source-connector.png" />
-When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<p>How can I connect traditional applications or systems, like a Database, to an event streaming platform, converting it's data at rest to data in motion with <a href="../event/event.md">Events</a>.</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
+<p>When connecting a system like a relational database to <a href="https://kafka.apache.org/">Kafka</a>, the most common option is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.</p>
+<h2 id="implementation">Implementation</h2>
+<p><a href="https://ksqldb.io/">ksqlDB</a> provides an ability to manage <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a> with a SQL like syntax.</p>
 <pre><code>CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
     'connector.class'= 'io.confluent.connect.jdbc.JdbcSourceConnector',
     'connection.url'= 'jdbc:postgresql://postgres:5432/postgres',
@@ -161,6 +163,7 @@ When connecting a system like a relational database to Kafka, the most common op
     'topic.prefix'= 'postgres_'
 );
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>End-to-end data delivery guarantees (e.g., at-least-once or exactly-once delivery; cf. "Guaranteed Delivery") depend primarily on three factors: (1) the capabilities of the event source, such as a relational or NoSQL database; (2) the capabilities of the destination event streaming platform, such as Apache Kafka; and (3) the capabilities of the event source connector.</li>
@@ -169,7 +172,8 @@ When connecting a system like a relational database to Kafka, the most common op
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorials</a>: Kafka Connect Source example</li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html">Channel Adapter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>See this <a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorial</a> for a full Kafka Connect example</li>
 </ul>
               
             </div>

@@ -158,6 +158,7 @@ You can define any number of event processors inside an <a href="../event-proces
               .mapValues(value -&gt; to domain object)
               .to(&quot;special-output-events&quot;);
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <p>While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the application does. </p>
 <h2 id="references">References</h2>
