@@ -145,11 +145,12 @@
             <div class="section">
               
                 <h1 id="database-write-aside">Database Write Aside</h1>
+<p>Applications which write directly to a database may want to produce an associated event to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> for each write operation allowing downstream <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> to be notified and consume the <a href="../event/event.md">Event</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I update a value in a database and create an associated event with the least amount of effort?</p>
+<p>How do I update a value in a database and create an associated event?</p>
 <h2 id="solution-pattern">Solution Pattern</h2>
 <p><img alt="database-write-aside" src="../../img/database-write-aside.png" />
-Write to a database, then write to Kafka. Perform the write to Kafka as the last step in a database transaction to ensure an atomic dual commit (aborting the transaction if the write to Kafka fails). </p>
+Within a transaction, write the data to the database and produce an <a href="../event/event.md">Event</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. If the produce to the Event Streaming Platform fails, abort the transaction. This pattern provides an atomic dual commit. </p>
 <h2 id="example-implementation">Example Implementation</h2>
 <pre><code>//Enable transactions
 db.setAutoCommit(false);
@@ -171,8 +172,14 @@ try{
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
+<ul>
+<li>
 <p>In its default form, this pattern guarantees dual-write for most use cases. However, should the database transaction fail at commit time (say, because the database server has crashed) the write to Kafka cannot be rolled back unless transactions have been enabled. For many use cases, this eventuality will be tolerable as the dual-write can be retried once the failure is fixed, and most event consumers will implement idempotence anyway. However, application programmers need to be aware that there is no firm guarantee. </p>
+</li>
+<li>
 <p>Transactional messaging systems like Kafka can be used to provide stronger guarantees so long as all event consumers have the transactions feature enabled. </p>
+</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
 <li>TODO: Add references?</li>
