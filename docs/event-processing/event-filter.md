@@ -1,5 +1,5 @@
 # Event Filter
-[Event Processors](event-processor.md) may need to operate over a subset of [Events](../event/events.md) over a particular [Event Stream](../event-stream/event-stream.md).
+[Event Processors](event-processor.md) may need to operate over a subset of [Events](../event/event.md) over a particular [Event Stream](../event-stream/event-stream.md).
 
 ## Problem
 How can an application discard uninteresting events?
