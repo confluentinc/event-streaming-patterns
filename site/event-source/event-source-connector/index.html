@@ -51,6 +51,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to Event Streaming Patterns</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
@@ -101,6 +106,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infiite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-streaming-platform/">Event streaming platform</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
@@ -147,7 +157,7 @@
                 <h1 id="event-source-connector">Event Source Connector</h1>
 <p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems which are not themselves <a href="../event-source/">Event Sources</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How can I connect traditional applications or systems, like a Database, to an event streaming platform, converting it's data at rest to data in motion with <a href="../event/event.md">Events</a>.</p>
+<p>How can I connect traditional applications or systems, like a Database, to an event streaming platform, converting it's data at rest to data in motion with <a href="../../event/event/">Events</a>.</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
 <p>When connecting a system like a relational database to <a href="https://kafka.apache.org/">Kafka</a>, the most common option is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.</p>
