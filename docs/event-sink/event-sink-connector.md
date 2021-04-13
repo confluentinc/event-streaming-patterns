@@ -1,7 +1,8 @@
 # Event Sink Connector
+An event sink connector enables external systems to recieve events from an evant streaming platform.
 
 ## Problem
-How can I connect an application or system like a DB to an event streaming platform so that it can receive events? Unlike `Event Sink`, this is a specific example that doesn't use generic consumers or a REST API. 
+How can application or external system like a DB connect to an event streaming platform so that it can receive events? Unlike [Event Sink](event-sink.md), this is a specific example that doesn't use generic consumers, a REST API, or an [Event Processing Application](../event-processing/event-processing-application). 
 
 ## Solution Pattern
 ![event-sink-connector](../img/event-sink-connector.png)
