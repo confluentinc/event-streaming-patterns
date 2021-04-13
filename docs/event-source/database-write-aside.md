@@ -34,5 +34,3 @@ try{
 
 * Transactional messaging systems like Kafka can be used to provide stronger guarantees so long as all event consumers have the transactions feature enabled. 
 
-## References
-* TODO: Add references?
