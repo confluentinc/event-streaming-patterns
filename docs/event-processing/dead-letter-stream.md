@@ -1,6 +1,5 @@
 # Dead Letter Stream
 
-<!-- TODO: Event Processing Application is a pattern that should be linked to in the following text -->
 [Event Processing Applications](event-processing-application.md) may encounter invalid data as they operate over the infinite stream of events. Errors may include invalid data formats, nonsensical, missing or corrupt values, technical failures, or other unexpected scenarios.
 
 ## Problem
