@@ -1,5 +1,5 @@
 # Event Mapper
-Traditional applications (operating with data at rest) and [Event Processing Applications](event-processing-application.md) (with data in motion), may need to share data via the [Event Streaming Platform](../event-streaming/event-streaming-platform.md). These applications will need a common mechanism to convert data from events to domain objects and vice versa.
+Traditional applications (operating with data at rest) and [Event Processing Applications](event-processing-application.md) (with data in motion), may need to share data via the [Event Streaming Platform](../event-stream/event-streaming-platform.md). These applications will need a common mechanism to convert data from events to domain objects and vice versa.
 
 ## Problem
 How do I move data between an application’s internal data model (with domain objects) and an event streaming platform (with events) while keeping the two independent of each other?
