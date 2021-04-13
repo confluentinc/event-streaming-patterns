@@ -103,7 +103,7 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infiite-retention-event-stream/">Infinite Retention Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infinite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
@@ -157,8 +157,9 @@
             <div class="section">
               
                 <h1 id="event-sink-connector">Event Sink Connector</h1>
+<p>An event sink connector enables external systems to recieve events from an evant streaming platform.</p>
 <h2 id="problem">Problem</h2>
-<p>How can I connect an application or system like a DB to an event streaming platform so that it can receive events? Unlike <code>Event Sink</code>, this is a specific example that doesn't use generic consumers or a REST API. </p>
+<p>How can application or external system like a DB connect to an event streaming platform so that it can receive events? Unlike <a href="../event-sink/">Event Sink</a>, this is a specific example that doesn't use generic consumers, a REST API, or an <a href="../event-processing/event-processing-application">Event Processing Application</a>. </p>
 <h2 id="solution-pattern">Solution Pattern</h2>
 <p><img alt="event-sink-connector" src="../../img/event-sink-connector.png" />
 When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified sink.</p>
@@ -173,7 +174,6 @@ When connecting a system like a relational database to Kafka, the most common op
     'auto.evolve'         = 'true'
 );
 </code></pre>
-
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>Existing Kafka connectors: there are many such event sink connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See Confluent Hub for available connectors.</li>
