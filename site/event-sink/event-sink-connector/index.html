@@ -77,9 +77,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -157,13 +157,13 @@
             <div class="section">
               
                 <h1 id="event-sink-connector">Event Sink Connector</h1>
-<p>An event sink connector enables external systems to recieve events from an evant streaming platform.</p>
+<p>Connecting external systems to the <a href="../../event-stream/event-streaming-platform/">Event Streaming Platform</a> allows for advanced and specialized integrations. </p>
 <h2 id="problem">Problem</h2>
-<p>How can application or external system like a DB connect to an event streaming platform so that it can receive events? Unlike <a href="../event-sink/">Event Sink</a>, this is a specific example that doesn't use generic consumers, a REST API, or an <a href="../event-processing/event-processing-application">Event Processing Application</a>. </p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-sink-connector" src="../../img/event-sink-connector.png" />
-When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified sink.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<p>How can applications or external systems, like a databases, connect to an event streaming platform so that it can receive events? </p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event-sink-connector" src="../../img/event-sink-connector.png" /></p>
+<p>Event Sink Connector is a specific implementation of an <a href="../event-sink/">Event Sink</a>. Use an Event Sink Connector to transfer <a href="../../event/event/">Events</a> from the <a href="../../event-stream/event-stream/">Event Stream</a> into the specific external system. </p>
+<h2 id="implementation">Implementation</h2>
 <pre><code>CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
     'connector.class'     = 'io.confluent.connect.jdbc.JdbcSinkConnector',
     'connection.url'      = 'jdbc:postgresql://postgres:5432/',
@@ -175,15 +175,17 @@ When connecting a system like a relational database to Kafka, the most common op
 );
 </code></pre>
 
+<p>When connecting a system like a relational database to Kafka, the most common option is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified Event Sink.
+Event Sink Connector is a specific implementation of an <a href="../event-sink/">Event Sink</a>.</p>
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>Existing Kafka connectors: there are many such event sink connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See Confluent Hub for available connectors.</li>
+<li>There are many Event Sink Connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See <a href="https://www.confluent.io/hub/">Confluent Hub</a> for available connectors.</li>
 <li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication and authorization, etc. between event sink, event sink connector, and the event streaming platform.</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://www.confluent.io/hub/">Confluent Connector Hub</a> </li>
-<li>TODO: add sink connector KT once made public</li>
+<li><strong>TODO:</strong> add sink connector KT once made public</li>
 </ul>
               
             </div>
