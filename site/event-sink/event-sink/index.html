@@ -79,11 +79,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
@@ -160,12 +158,12 @@
 <p>A component that reads or receives events</p>
 <h2 id="problem">Problem</h2>
 <p>How can an application consume events?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-sink" src="../../img/event-sink.png" /></p>
 <p>The event sink is an application capable of consuming events from an event streaming platform. This application can be a generic consumer or a more complex 
 <a href="../../event-processing/event-processing-application/">Event Processing Application</a> such as Kafka Streams or ksqlDB.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<p>.Generic consumer application</p>
+<h2 id="implementation">Implementation</h2>
+<p>Generic Kafka Consumer application:</p>
 <pre><code>consumer.subscribe(Collections.singletonList(&quot;stream&quot;));
       while (keepConsuming) { 
         final ConsumerRecords&lt;String, EventRecord&gt; consumerRecords = consumer.poll(Duration.ofSeconds(1));  
@@ -173,7 +171,7 @@
       }
 </code></pre>
 
-<p>.ksqlDB streaming query</p>
+<p><a href="https://ksqldb.io/">ksqlDB</a> streaming query:</p>
 <pre><code>CREATE STREAM CLICKS (IP_ADDRESS VARCHAR, URL VARCHAR, TIMESTAMP VARCHAR)
     WITH (KAFKA_TOPIC = 'CLICKS',
           VALUE_FORMAT = 'JSON',
@@ -183,13 +181,9 @@
 
 </code></pre>
 
-<h2 id="considerations">Considerations</h2>
-<ul>
-<li>TODO</li>
-</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/creating-first-apache-kafka-consumer-application/kafka.html">Kafka Tutorial</a>: Kafka consumer application</li>
+<li>See this <a href="https://kafka-tutorials.confluent.io/creating-first-apache-kafka-consumer-application/kafka.html">Kafka Tutorial</a> for a full Kafka consumer example application</li>
 </ul>
               
             </div>
