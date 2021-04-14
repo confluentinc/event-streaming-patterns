@@ -170,6 +170,7 @@ within the defined time-window.</p>
   WINDOW TUMBLING (SIZE 1 MINUTE)
   GROUP BY product-name EMIT CHANGES;
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>If the field you want to group events with is embedded in the value, you can use a <code>select-key</code> event-processor to rey key the event-stream</li>

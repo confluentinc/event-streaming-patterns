@@ -86,9 +86,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -157,25 +157,25 @@
             <div class="section">
               
                 <h1 id="database-write-through">Database Write Through</h1>
+<p>For architectural or legacy purposes, data centric applications may write directly to a database. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to reliably consume data from these systems using <a href="../../event/event/">Events</a> on <a href="../../event-stream/event-stream/">Event Streams</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I update a value in a database and create an associated event with at-least-once guarantees?</p>
-<p>This pattern is a specialization of the <a href="../event-source-connector/">Event Source Connector</a> that guarantees that all state changes represented in an event source, including changes to tables in an event streaming platform, are captured in an event streaming platform.</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="db-write-through" src="../../img/db-write-through.png" /></p>
-<p>Write to a database table, which is the Event Source. Then set up streaming Change Data Capture (CDC) on that table to continuously ingest any changes—inserts, updates, deletes—into an Event Stream in Kafka. Typically, Kafka Connect is used for this step in combination with an appropriate Event Source Connector for the database. See Confluent Hub for a list of available connectors.</p>
-<p>The events in stream can then be consumed by Event Processing Applications. Additionally, the event stream can be read into a Projection Table, for example with ksqlDB, so that it can be queried by other applications.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<p>TODO: Example for CDC?</p>
+<p>How do I update a value in a database and create an associated Event with at-least-once guarantees?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="db-write-through" src="../../img/database-write-through.png" /></p>
+<p>Applications write directly to a database table, which is the <a href="../event-source/">Event Source</a>. Deploy a Change Data Capture (CDC) solution to continuously capture writes (inserts, updates, deletes) to that table and produce them as Events onto an Event Stream.  The events in stream can then be consumed by Event Processing Applications. Additionally, the event stream can be read into a Projection Table, for example with ksqlDB, so that it can be queried by other applications.</p>
+<h2 id="implementation">Implementation</h2>
+<p><strong>TODO:</strong> Implementation for this pattern?  Kafka Connect config / create example?</p>
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>The processing guarantees (cf. "Guaranteed Delivery") to choose from—e.g., at-least-once, exactly-once—for the CDC data flow depend on the selected Kafka connector.</li>
-<li>There is a certain delay until changes in the source database table are available in the CDC-ingested event stream. The amount of the delay depends on a variety of factors, including the features and configuration of the event source connector. In many typical scenarios the delay is less than a few seconds.</li>
+<li>This pattern is a specialization of the <a href="../event-source-connector/">Event Source Connector</a> that guarantees that all state changes represented in an Event Source are captured in an Event Streaming Platform.</li>
+<li>The processing guarantees (cf. "Guaranteed Delivery") to choose from—e.g., at-least-once, exactly-once—for the CDC data flow depend on the CDC and Database technology utilizied.</li>
+<li>There is a certain delay until changes in the source database table are available in the CDC-ingested event stream. The amount of the delay depends on a variety of factors, including the features and configuration of the Event Source Connector. In many typical scenarios the delay is less than a few seconds.</li>
 <li>In terms of their data model, events typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all events for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Pointers to Confluent Source connector(s)?</li>
-<li>TODO: What about well known CDC providers, like Debizium? </li>
+<li>See <a href="https://docs.confluent.io/cloud/current/connectors/index.html">Integrate External Systems to Kafka</a> on Confluent documentation for information on source connectors.</li>
+<li><strong>TODO:</strong> What about well known CDC providers, like Debezium? </li>
 </ul>
               
             </div>

@@ -179,6 +179,7 @@
   }
 }
 </code></pre>
+
 <p>Python Basic Kafka Consumer</p>
 <pre><code>while True:
     try:
@@ -197,6 +198,7 @@
 
     eventProcessor.process(msg)
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <p>What should real-world applications do with the events in the dead letter stream? Reprocessing events automatically will often lead to reorderings and hence the potential for corruption to downstream systems if the stream contains events that represent changing states of the same underlying entity, such as orders being booked, processed, or shipped. Manual reprocessing can be useful, but is often viewed more as an error log in many real-world implementations.</p>
 <h2 id="references">References</h2>

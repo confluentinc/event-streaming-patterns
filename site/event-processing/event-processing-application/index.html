@@ -171,6 +171,7 @@ KStream&lt;String, String&gt; stream = builder.stream(&quot;input-events&quot;);
 KafkaStreams kafkaStreams = new KafkaStreams(builder.build(), properties);
 kafkaStreams.start() 
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <p>When building an Event Processing Application, it's important to generally confine the application to one problem domain.  While it's true the application can have any number of event processors, they should be closely related.</p>
 <h2 id="references">References</h2>

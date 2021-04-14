@@ -172,6 +172,7 @@
         recordsHandler.process(consumerRecords); 
       }
 </code></pre>
+
 <p>.ksqlDB streaming query</p>
 <pre><code>CREATE STREAM CLICKS (IP_ADDRESS VARCHAR, URL VARCHAR, TIMESTAMP VARCHAR)
     WITH (KAFKA_TOPIC = 'CLICKS',
@@ -181,6 +182,7 @@
           PARTITIONS = 1);
 
 </code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>TODO</li>
