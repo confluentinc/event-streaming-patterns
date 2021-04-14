@@ -59,10 +59,6 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
@@ -157,16 +153,16 @@
             <div class="section">
               
                 <h1 id="event">Event</h1>
-<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
+<p>Events represent facts and can help facilitate two decoupled applications exchanging data across an <a href="../../event-stream/event-streaming-platform/">Event Streaming Platform</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I represent something that has happened?</p>
+<p>How do I represent a fact about something that has happened?</p>
 <h2 id="solution">Solution</h2>
-<p>TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
-<h2 id="implementation">Implementation</h2>
-<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
-<h2 id="considerations">Considerations</h2>
-<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
+<p><img alt="event" src="../../img/event.png" />
+An event is an immutable fact about something that has happened. It is produced and consumed from an <a href="../../event-stream/event-stream/">Event Stream</a>. Events contain data, timestamps, and may contain various metadata about the event (event headers, location in the stream, etc).</p>
 <h2 id="references">References</h2>
+<ul>
+<li>This pattern is derived in part from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html">Message</a>, <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">Event Message</a>, and <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html">Document Message</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+</ul>
               
             </div>
           </div>
