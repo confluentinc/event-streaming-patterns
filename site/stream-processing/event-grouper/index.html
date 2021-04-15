@@ -107,9 +107,9 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -160,12 +160,11 @@
 <p>An event grouper is a specialized form of an <a href="../../event-processing/event-processor/">Event Processor</a> that groups events together by a common field such as a key in a key-value pair.</p>
 <h2 id="problem">Problem</h2>
 <p>How can an application group individual but related events from the same stream/table so that they can subsequently be processed as a whole?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-grouper" src="../../img/event-grouper.png" /></p>
 <p>Using a <code>group-by</code> <a href="../../event-processing/event-processor/">Event Processor</a> in an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> will group the related events together.  Additionally you can use a windowing event processor to group events containing a timestamp within the size of the window. </p>
-<p>ksqlDB provides the capability to group related events by a column and group them into "windows" where all the related events have a timestamp
-within the defined time-window.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<h2 id="implementation">Implementation</h2>
+<p><a href="https://ksqldb.io/">ksqlDB</a> provides the capability to group related events by a column and group them into <a href="https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/">"windows"</a> where all the related events have a timestamp within the defined time-window.</p>
 <pre><code>SELECT product-name, COUNT(*), SUM(price) FROM purchases
   WINDOW TUMBLING (SIZE 1 MINUTE)
   GROUP BY product-name EMIT CHANGES;
