@@ -95,11 +95,11 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
                     </li>
@@ -155,25 +155,24 @@
             <div class="section">
               
                 <h1 id="infinite-retention-event-stream">Infinite Retention Event Stream</h1>
-<p>An infinite retention event stream enables an event streaming platform to separate storage from compute resources</p>
+<p>Storing all <a href="../../event/event/">Events</a> over time of an <a href="../../event-stream/event-stream/">Event Stream</a> enables systems to be agile and evolve by providing the capability of rebuilding global historical state.</p>
 <h2 id="problem">Problem</h2>
 <p>How can an operator ensure that events in a stream are retained forever?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="infinite-retention-event-stream" src="../../img/infinite-stream-strorage.png" /></p>
+<h2 id="implementation">Implementation</h2>
 <p>Confluent adds the ability for infinite retention by extending Apache Kafka with <a href="https://docs.confluent.io/platform/current/kafka/tiered-storage.html#tiered-storage">Tiered Storage</a>.  Tiered storage separates the compute and storage layers, allowing the operator to scale either of those independently as needed. Newly arrived records are considered "hot", but as time moves on, they get "warm" and migrate to more cost-effective external storage like an S3 bucket.  By separating storage from compute, operators only need to add brokers to increase compute power.</p>
-<h2 id="considerations">Considerations</h2>
-<ul>
-<li>An <a href="../../event-sink/event-sink-connector/">Event Sink Connector</a> can be used to implement an infinite retention event stream by loading the event records into permanent external storage.</li>
-</ul>
-<h2 id="example-implementation">Example Implementation</h2>
 <pre><code>confluent.tier.feature=true
 confluent.tier.enable=true
 confluent.tier.backend=S3
-confluent.tier.s3.bucket=&lt;BUCKET_NAME&gt;
-confluent.tier.s3.region=&lt;REGION&gt;
-
-# Confluent also supports using Google Cloud Storage (GCS)
+confluent.tier.&lt;storage-provider&gt;.bucket=&lt;BUCKET_NAME&gt;
+confluent.tier.&lt;storage-provider&gt;.region=&lt;REGION&gt;
 </code></pre>
+
+<h2 id="references">References</h2>
+<ul>
+<li>An <a href="../../event-sink/event-sink-connector/">Event Sink Connector</a> can be used to implement an infinite retention event stream by loading the event records into permanent external storage.</li>
+</ul>
               
             </div>
           </div>
