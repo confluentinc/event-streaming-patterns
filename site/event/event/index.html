@@ -59,6 +59,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
@@ -159,6 +161,9 @@
 <h2 id="solution">Solution</h2>
 <p><img alt="event" src="../../img/event.png" />
 An event is an immutable fact about something that has happened. It is produced and consumed from an <a href="../../event-stream/event-stream/">Event Stream</a>. Events contain data, timestamps, and may contain various metadata about the event (event headers, location in the stream, etc).</p>
+<h2 id="considerations">Considerations</h2>
+<p>Events are often created in reference to a schema (TODO:pattern-ref) commonly defined in <a href="https://avro.apache.org/docs/current/spec.html">Avro</a>, <a href="https://developers.google.com/protocol-buffers">Protobuf</a>, or <a href="https://json-schema.org/">JSON schema</a>. The emerging standard: <a href="https://cloudevents.io/">Cloud Events</a> provides a standardized envelope that wraps event data, making common event properties such as source, type, time, ID, and more, universally accessible regardless of the event payload. 
+While events are necessarily a 'fact', in many cases they also imply movement: the communicating of facts about the world from one piece of software to another. </p>
 <h2 id="references">References</h2>
 <ul>
 <li>This pattern is derived in part from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html">Message</a>, <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">Event Message</a>, and <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html">Document Message</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
