@@ -1,5 +1,4 @@
 # Event Streaming Platform
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
 
 ## Problem
 ![event streaming platform](../img/event-streaming-platform.png)
