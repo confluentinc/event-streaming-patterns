@@ -4,11 +4,11 @@ Applications which write directly to a database may want to produce an associate
 ## Problem
 How do I update a value in a database and create an associated event?
 
-## Solution Pattern
+## Solution
 ![database-write-aside](../img/database-write-aside.png)
 Within a transaction, write the data to the database and produce an [Event](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md). If the produce to the Event Streaming Platform fails, abort the transaction. This pattern provides an atomic dual commit. 
 
-## Example Implementation
+## Implementation
 ```
 //Enable transactions
 db.setAutoCommit(false);
