@@ -2,7 +2,7 @@
 [Events](../event/event.md) will typically be categorized by some attribute and will need to be grouped in order to be processed logically by [Event Processors](../event-processing/event-processor.md). 
 
 ## Problem
-How does one [Event Processing Applications](../event-processing/event-processing-application.md) communicate events to other applications in an ordered, scalable, and repliable way?
+How does one [Event Processing Application](../event-processing/event-processing-application.md) communicate events to other applications in an ordered, scalable, and reliable way?
 
 ## Solution
 ![event-stream](../img/event-stream.png)
@@ -16,4 +16,3 @@ CREATE STREAM filtered AS SELECT col1, col2, col3 FROM source_stream;
 
 ## References
 * This pattern is derived from [Message Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html) and [Publish-Subscribe Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/PublishSubscribeChannel.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-
