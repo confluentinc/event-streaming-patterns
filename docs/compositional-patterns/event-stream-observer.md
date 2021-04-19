@@ -22,10 +22,11 @@ With Apache Kafka, you can do this in one of several ways.
 Option 1: [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html)
 
 Cluster Linking enables easy data sharing between datacenters, mirroring topics across clusters.
-Because Cluster Linking uses native replication protocols instead of a separate service, client applications can easily failover in the case of a disaster recovery scenario.
+Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.
 
 ```
-ccloud kafka link create east-west --cluster <destination> --source_cluster <source> ...
+ccloud kafka link create east-west ...
+ccloud kafka topic create <destination topic> --link east-west --mirror-topic <source topic> ...
 ```
 
 Option 2: [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
