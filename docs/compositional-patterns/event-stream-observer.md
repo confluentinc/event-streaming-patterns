@@ -1,14 +1,15 @@
 # Event Stream Observer
 Many architectures have streams of events deployed across multiple datacenters across boundaries of event streaming platforms, datacenters, or geo-regions.
 In these situations, it may be useful for client applications in one datacenter to have access to events produced in another datacenter.
-The applications in the destination are "observers" of the original data written in the source.
+All clients shouldn't be forced to read from the source datacenter, which can incur high latency and data egress costs.
+Instead, with a move-once-read-many approach, the data can be mirrored to the destination datacenter and then the client there can "observe" the data.
 
 ## Problem
 How can multiple event streaming platforms be connected so that events available in one site are also available on the others?
 
 ## Solution
 ![event-stream-observer](../img/event-stream-observer.png)
-Using a "pull" method, create a connection between the two systems, enabling the destination system to read from the source system.
+Create a connection between the two systems, enabling the destination system to read from the source system.
 Ideally this is done in realtime such that as new events are published in the source datacenter, they can be immediately copied, byte for byte, to the destination datacenter.
 This allows the client applications in the destination to leverage the same set of data.
 
@@ -20,7 +21,7 @@ With Apache Kafka, you can do this in one of several ways.
 
 Option 1: [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html)
 
-Cluster Linking enables easy data sharing between datacenters, by enabling topics to be mirrored across clusters.
+Cluster Linking enables easy data sharing between datacenters, mirroring topics across clusters.
 Because Cluster Linking uses native replication protocols instead of a separate service, client applications can easily failover in the case of a disaster recovery scenario.
 
 ```
