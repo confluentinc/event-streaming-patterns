@@ -11,7 +11,7 @@ TODO: Provide a technology agnostic diagram and supporting text explaining the p
 TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)
 
 ## Considerations
-TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
+TODO: Technology specific reflection on implementing the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
 
 ## References
 * TODO: Reference link to the EIP pattern as citation
