@@ -4,12 +4,11 @@ A natural behavior of applications and data is that they evolve over time, so it
 
 ## Problem
 How do I ensure that a new schema is backward-compatible with a previous schema such that consumers do not need to make code changes to consume events?
-(Backward schema compatibility is the most popular compatibility so this pattern will focus on backward instead of forward schema compatibility).
 
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.png)
 
-Backward schema compatibility means that consumers referencing the new schema version of the schema can read data produced with the last version of the schema.
+Backward schema compatibility means that consumers referencing the new schema version of the schema can read data produced with the previous version of the schema.
 Two types of backward compatible changes:
 
 1. _Removal of a mandatory field_: a new consumer that was developed to process events without the field will be able to process events written with the previous schema that contain the field – the consumer will just ignore the field.
