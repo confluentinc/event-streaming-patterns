@@ -8,11 +8,11 @@ How do I restructure or add new information to an event in a way that ensures [S
 ## Solution
 ![schema-evolution](../img/schema-evolution-1.png)
 
-One approach for evolving this schema is "in-place", in which the single stream can have both new and previous schema versions in it, and the compatibility checks ensure that client applications can read schemas in both formats.
+One approach for evolving this schema is "in-place" (shown above), in which the single stream can have both new and previous schema versions in it, and the compatibility checks ensure that client applications can read schemas in both formats.
 
 ![schema-evolution](../img/schema-evolution-2.png)
 
-Another approach is "dual schema upgrades", in which the event producers write to two streams, one stream with the new schema version and one stream with the previous schema version, and client applications consume from the one that they are compatible with.
+Another approach is "dual schema upgrades" (shown above), in which the event producers write to two streams, one stream with the new schema version and one stream with the previous schema version, and client applications consume from the one that they are compatible with.
 Once all consumers are upgraded to the new schema, the old stream can be retired.
 
 ## Implementation
