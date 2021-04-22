@@ -1,28 +1,22 @@
 # Schema Compatibility
-An important aspect of data management is schema evolution.
-Similar to how APIs evolve and need to be compatible for all applications that rely on old and new versions of the API, schemas also evolve and likewise need to be compatible for all applications that rely on old and new versions of a schema.
-This schema evolution is a natural behavior of how applications and data develop over time, it's important to have a policy about how schemas are allowed to evolve and what compatibility rules are between old and new versions.
+Schemas are like contracts in that they set the terms that guarantee applications can process the data it receives.
+A natural behavior of applications and data is that they evolve over time, so it's important to have a policy about they are allowed to evolve and what compatibility rules are between old and new versions.
 
 ## Problem
-How do I handle addition or deletion of fields from a schema to ensure that it is compatible with previous version, such that readers do not need to make code changes to consume events?
+How do I ensure that a new schema is backward-compatible with a previous schema such that consumers do not need to make code changes to consume events?
+(Backward schema compatibility is the most popular compatibility so this pattern will focus on backward instead of forward schema compatibility).
 
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.png)
 
-After the initial schema for a stream is defined, applications may need to evolve it over time.
-For example, there may be a new application producing similar events with a slightly different schema, both of which need to be read by the same downstream applications.
-Define the rules for this stream, taking into consideration how you want to control modification of the schema's fields:
+Backward schema compatibility means that consumers referencing the new schema version of the schema can read data produced with the last version of the schema.
+Two types of backward compatible changes:
 
-- addition of mandatory fields
-- deletion of mandatory fields
-- addition of optional fields
-- deletion of optional fields
+1. _Removal of a mandatory field_: a consumer that was developed to process events without this field will be able to process events written with the previous schema that contain the field – the consumer will just ignore it.
+2. _Addition of an optional field_: a consumer that was developed to process events with this optional field will be able to process events written with the previous schema that do not contain the field – the consumer will not error because the field is optional.
 
 ## Implementation
-It is desirable to create the new schema and validate it out-of-band.
-You can do this manually or with a schema registry service with built-in compatibility checking.
-
-For example, if you have a new schema:
+Using Avro as the serialization format, if the original schema is
 
 ```
 {"namespace": "io.confluent.examples.client",
@@ -35,16 +29,44 @@ For example, if you have a new schema:
 }
 ```
 
-A schema registry service could have an interface where you submit the schema to check its compatibility against previous versions, per whatever evolution policy is defined for that schema.
+Examples of backward compatible changes:
+
+1. _Removal of a mandatory field_: notice `field2` is removed
+
+```
+{"namespace": "io.confluent.examples.client",
+ "type": "record",
+ "name": "Event",
+ "fields": [
+     {"name": "field1", "type": "long"}
+ ]
+}
+```
+
+2. _Addition of an optional field_: notice `field3` is added with a default value of 0.
+
+```
+{"namespace": "io.confluent.examples.client",
+ "type": "record",
+ "name": "Event",
+ "fields": [
+     {"name": "field1", "type": "long"},
+     {"pame": "field2", "type": "string"},
+     {"pame": "field3", "type": "int", "default": 0}
+ ]
+}
+```
+
+## Considerations
+You could use an interface of a fully-managed Schema Registry service, with built-in compatibility checking, to centralize your schemas and check compatibility of new schema versions against previous versions (or a [plugin](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility)).
 
 ```
 curl -X POST --data @filename.avsc https://<schema-registry>/<subject>/versions
 ```
 
-## Considerations
-When updating schemas, even if they pass the schema compatibility policy, be thoughtful about the order of upgrading applications.
+After updated schemas that pass the schema compatibility check, be thoughtful about the order of upgrading applications.
 In some cases you should upgrade producers first, in other cases you should upgrade consumers first.
 See [Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
 
 ## References
-* [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html#)
+* [Schema compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
