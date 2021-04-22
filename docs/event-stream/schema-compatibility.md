@@ -12,8 +12,8 @@ How do I ensure that a new schema is backward-compatible with a previous schema 
 Backward schema compatibility means that consumers referencing the new schema version of the schema can read data produced with the last version of the schema.
 Two types of backward compatible changes:
 
-1. _Removal of a mandatory field_: a consumer that was developed to process events without this field will be able to process events written with the previous schema that contain the field – the consumer will just ignore it.
-2. _Addition of an optional field_: a consumer that was developed to process events with this optional field will be able to process events written with the previous schema that do not contain the field – the consumer will not error because the field is optional.
+1. _Removal of a mandatory field_: a new consumer that was developed to process events without the field will be able to process events written with the previous schema that contain the field – the consumer will just ignore the field.
+2. _Addition of an optional field_: a new consumer that was developed to process events with this optional field will be able to process events written with the previous schema that do not contain the field – the consumer will not error because the field is optional.
 
 ## Implementation
 Using Avro as the serialization format, if the original schema is
