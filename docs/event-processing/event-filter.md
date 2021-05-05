@@ -1,5 +1,5 @@
 # Event Filter
-[Event Processors](event-processor.md) may need to operate over a subset of [Events](../event/events.md) over a particular [Event Stream](../event-stream/event-stream.md).
+[Event Processors](event-processor.md) may need to operate over a subset of [Events](../event/event.md) over a particular [Event Stream](../event-stream/event-stream.md).
 
 ## Problem
 How can an application discard uninteresting events?
@@ -19,4 +19,5 @@ eventStream.filter((key, value) -> value.type() == "foo").to("foo-events");
 ## References
 * This pattern is derived from [Message Filter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html) for a full example of filtering event streams.
+
 
