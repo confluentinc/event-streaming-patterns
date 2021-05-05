@@ -1,17 +1,20 @@
 # Event Sink
+A component that reads or receives events
 
 ## Problem
-How can a stream of events be written into a sink, any destination that wants to receive those events?
-This can be a generic consumer application that reads a stream of events (or for a more specific example, see `Event Sink Connector`).
+How can an application consume events?
 
-## Solution Pattern
+
+## Solution
 
 ![event-sink](../img/event-sink.png)
 
-An application can read a stream of events from an event streaming platform.
+The event sink is an application capable of consuming events from an event streaming platform. This application can be a generic consumer or a more complex 
+[Event Processing Application](../event-processing/event-processing-application.md) such as Kafka Streams or ksqlDB.
 
-## Example Implementation
+## Implementation
 
+Generic Kafka Consumer application:
 ```
 consumer.subscribe(Collections.singletonList("stream"));
       while (keepConsuming) { 
@@ -20,5 +23,16 @@ consumer.subscribe(Collections.singletonList("stream"));
       }
 ```
 
+[ksqlDB](https://ksqldb.io/) streaming query:
+```
+CREATE STREAM CLICKS (IP_ADDRESS VARCHAR, URL VARCHAR, TIMESTAMP VARCHAR)
+    WITH (KAFKA_TOPIC = 'CLICKS',
+          VALUE_FORMAT = 'JSON',
+          TIMESTAMP = 'TIMESTAMP',
+          TIMESTAMP_FORMAT = 'yyyy-MM-dd''T''HH:mm:ssXXX',
+          PARTITIONS = 1);
+
+```
+
 ## References
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-consumer-application/kafka.html): Kafka consumer application
+* See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-consumer-application/kafka.html) for a full Kafka consumer example application
