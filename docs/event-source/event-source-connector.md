@@ -1,13 +1,16 @@
 # Event Source Connector
+[Event Processing Applications](../event-processing/event-processing-application.md) may want to consume data from existing data systems which are not themselves [Event Sources](event-source.md).
 
 ## Problem
-How can I connect an application or system like a DB to an event streaming platform so that it can send events?
+How can I connect traditional applications or systems, like a Database, to an event streaming platform, converting it's data at rest to data in motion with [Events](../event/event.md).
 
-## Solution Pattern
+## Solution
 ![event-source-connector](../img/event-source-connector.png)
-When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.
 
-## Example Implementation
+When connecting a system like a relational database to [Kafka](https://kafka.apache.org/), the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.
+
+## Implementation
+[ksqlDB](https://ksqldb.io/) provides an ability to manage [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) with a SQL like syntax.
 ```
 CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
     'connector.class'= 'io.confluent.connect.jdbc.JdbcSourceConnector',
@@ -26,5 +29,6 @@ CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
 * Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication and authorization, etc. between event source, event source connector, and the destination event streaming platform.
 
 ## References
-* [Kafka Tutorials](https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html): Kafka Connect Source example
+* This pattern is derived from [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html) for a full Kafka Connect example
 
