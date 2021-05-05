@@ -5,23 +5,30 @@ seo:
 ---
 
 # Event Processing Application
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
+An Event Processing Application uses one or more [Event Processor](event-processor.md) instances to handle streaming event driven data.
 
 ## Problem
-TODO: Technology agnostic English explanation of the problem
+How can I build an application to work with streaming event data?
 
 ## Solution
 ![event-processing-application](../img/event-processing-application.png)
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
+
+Using an Event Processing Application allows you to tie together indpendant event processors for working with streaming event recorods and are not aware of each other.
 
 ## Implementation
-TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)
+
+```
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> stream = builder.stream("input-events");
+....      
+
+KafkaStreams kafkaStreams = new KafkaStreams(builder.build(), properties);
+kafkaStreams.start() 
+```
 
 ## Considerations
-TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
+When building an Event Processing Application, it's important to generally confine the application to one problem domain.  While it's true the application can have any number of event processors, they should be closely related.
 
 ## References
-* TODO: Reference link to the EIP pattern as citation
-* TODO: pointers to related patterns?
-* TODO: pointers to external material?
+
 
