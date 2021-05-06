@@ -59,15 +59,19 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-mapper/">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing-application/">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
                     </li>
@@ -139,20 +143,21 @@
             <div class="section">
               
                 <h1 id="event-filter">Event Filter</h1>
+<p><a href="../event-processor/">Event Processors</a> may need to operate over a subset of <a href="../event/events.md">Events</a> over a particular <a href="../event-stream/event-stream.md">Event Stream</a>.</p>
 <h2 id="problem">Problem</h2>
 <p>How can an application discard uninteresting events?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-filter" src="../../img/event-filter.png" /></p>
-<p>The Kafka Streams DSL provides a <code>filter</code> operator, where only records matching a given predicate continue to progress in the event stream.</p>
-<h2 id="example-implementation">Example Implementation</h2>
+<h2 id="implementation">Implementation</h2>
+<p>The Kafka Streams DSL provides a <code>filter</code> operator which filters out events that do not match a given predicate.</p>
 <pre><code>KStream&lt;String, Event&gt; eventStream = builder.stream(.....);
-KStream&lt;String, Event&gt; eventStream = ....;
-eventStream.filter((key, value) -&gt; value.eventCode() == 200)..to(...);
+eventStream.filter((key, value) -&gt; value.type() == &quot;foo&quot;).to(&quot;foo-events&quot;);
 </code></pre>
 
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html">Kafka Tutorial</a>: How to filter a stream of events </li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html">Message Filter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>See this <a href="https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html">Kafka Tutorial</a> for a full example of filtering event streams.</li>
 </ul>
               
             </div>

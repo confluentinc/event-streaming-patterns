@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Source Connector - Event Streaming Patterns</title>
+  <title>Event Processor - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Source Connector";
-    var mkdocs_page_input_path = "event-source/event-source-connector.md";
+    var mkdocs_page_name = "Event Processor";
+    var mkdocs_page_input_path = "event-processing/event-processor.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,18 +52,30 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-mapper/">Event Mapper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processing-application/">Event Processing Application</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing-application/">Event Processing Application</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processor/">Event Processor</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Processor</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -74,26 +86,14 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Source Connector</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -129,11 +129,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Event processing &raquo;</li>
         
       
     
-    <li>Event Source Connector</li>
+    <li>Event Processor</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -144,33 +144,22 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-source-connector">Event Source Connector</h1>
+                <h1 id="event-processor">Event Processor</h1>
+<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
 <h2 id="problem">Problem</h2>
-<p>How can I connect an application or system like a DB to an event streaming platform so that it can send events?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-source-connector" src="../../img/event-source-connector.png" />
-When connecting a system like a relational database to Kafka, the most common option is to use Kafka connectors. The connector reads data from the event source, then generate events from that data, and finally sends these events to the event streaming platform.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code>CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
-    'connector.class'= 'io.confluent.connect.jdbc.JdbcSourceConnector',
-    'connection.url'= 'jdbc:postgresql://postgres:5432/postgres',
-    'connection.user'= 'postgres',
-    'connection.password'= 'postgres',
-    'mode'= 'incrementing',
-    'incrementing.column.name'= 'city_id',
-    'topic.prefix'= 'postgres_'
-);
-</code></pre>
-
+<p>TODO: Technology agnostic English explanation of the problem</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event-processor" src="../../img/event-processor.png" />
+TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
+<h2 id="implementation">Implementation</h2>
+<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
 <h2 id="considerations">Considerations</h2>
-<ul>
-<li>End-to-end data delivery guarantees (e.g., at-least-once or exactly-once delivery; cf. "Guaranteed Delivery") depend primarily on three factors: (1) the capabilities of the event source, such as a relational or NoSQL database; (2) the capabilities of the destination event streaming platform, such as Apache Kafka; and (3) the capabilities of the event source connector.</li>
-<li>Existing Kafka connectors: there are many such event source connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See Confluent Hub for available connectors.</li>
-<li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication and authorization, etc. between event source, event source connector, and the destination event streaming platform.</li>
-</ul>
+<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorials</a>: Kafka Connect Source example</li>
+<li>TODO: Reference link to the EIP pattern as citation</li>
+<li>TODO: pointers to related patterns?</li>
+<li>TODO: pointers to external material?</li>
 </ul>
               
             </div>
@@ -179,10 +168,10 @@ When connecting a system like a relational database to Kafka, the most common op
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-source/" class="btn btn-neutral float-right" title="Event Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-router/" class="btn btn-neutral float-right" title="Event Router">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../database-write-through/" class="btn btn-neutral" title="Database Write Through"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-processing-application/" class="btn btn-neutral" title="Event Processing Application"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -208,10 +197,10 @@ When connecting a system like a relational database to Kafka, the most common op
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../database-write-through/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-processing-application/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-source/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-router/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

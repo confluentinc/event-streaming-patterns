@@ -1,10 +1,11 @@
-# Pattern Name
+# Event Processing Application
 TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
 
 ## Problem
 TODO: Technology agnostic English explanation of the problem
 
 ## Solution
+![event-processing-application](../img/event-processing-application.png)
 TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
 
 ## Implementation
