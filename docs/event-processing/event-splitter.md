@@ -1,13 +1,14 @@
 # Event Splitter
+Event Splitter takes a single [event](../event/events.md) and splits it into multiple events.
 
 ## Problem
 How can I process an event if it contains multiple events, each of which may need to be processed in a different way?
 
 ## Solution Pattern
-First, split the original event into multiple child event. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
 ![event-splitter](img/event-splitter.png)
+First, split the original event into multiple child event. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
 
-## Example Implementation
+## Implementation
 ```
 KStream<Long, String> stream = ...;
 KStream<String, Integer> transformed = stream.flatMap(
@@ -25,7 +26,5 @@ KStream<String, Integer> transformed = stream.flatMap(
 
 ## Considerations
 * Think about where the child events should be routed to, the same stream or a different stream. See `Event Router` on how to route events to different locations.
-
-## References
-
-
+* Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
+* Event Lineage: Your use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
