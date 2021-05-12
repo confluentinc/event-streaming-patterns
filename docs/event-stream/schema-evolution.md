@@ -12,7 +12,14 @@ One approach for evolving this schema is "in-place" (shown above), in which the 
 
 ![schema-evolution](../img/schema-evolution-2.png)
 
-Another approach is "dual schema upgrades" (shown above), in which the event producers write to two streams, one stream with the new schema version and one stream with the previous schema version, and client applications consume from the one that they are compatible with.
+Another approach is "dual schema upgrades" a.k.a. "versioned streams" (shown above). This approach is useful especially when breaking changes in a stream's schema(s) need to be introduced; i.e., in a situation where the new schema is incompatible to the previous schema. Here, the [Event Sources](TODO: pattern link) write to two streams:
+
+1. One stream with the previous schema version, e.g. `payments-v1`.
+2. One stream with the new schema version, e.g. `payments-v2`.
+
+[Event Processing Applications](TODO: pattern link) and [Event Sinks](TODO: pattern link) then consume from the respective stream that they are compatible with.
+
+
 Once all consumers are upgraded to the new schema, the old stream can be retired.
 
 ## Implementation
