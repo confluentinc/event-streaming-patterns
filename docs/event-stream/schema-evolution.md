@@ -8,7 +8,7 @@ How do I restructure or add new information to an event in a way that ensures [S
 ## Solution
 ![schema-evolution](../img/schema-evolution-1.png)
 
-One approach for evolving this schema is "in-place" (shown above), in which the single stream can have both new and previous schema versions in it, and the compatibility checks ensure that client applications can read schemas in both formats.
+One approach for evolving a schema is "in-place" (shown above), in which a stream can have events with both new and previous schema versions in it. The schema compatibility checks then ensure that [Event Processing Applications](TODO: pattern link) and [Event Sinks](TODO: pattern link) can read schemas in both formats.
 
 ![schema-evolution](../img/schema-evolution-2.png)
 
