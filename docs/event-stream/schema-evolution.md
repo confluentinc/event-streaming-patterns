@@ -3,7 +3,7 @@ An important aspect of data management is schema evolution.
 Similar to how APIs evolve and need to be compatible for all applications that rely on old and new versions of the API, schemas also evolve and likewise need to be compatible for all applications that rely on old and new versions of a schema.
 
 ## Problem
-How do I restructure or add new information to an event in a way that ensures [Schema Compatibility](schema-compatibility.md)?
+How do I restructure or add new information to an event, ideally in a way that ensures [Schema Compatibility](schema-compatibility.md)?
 
 ## Solution
 ![schema-evolution](../img/schema-evolution-1.png)
