@@ -30,3 +30,4 @@ TODO: considerations
 
 ## References
 * [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html#)
+* [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html): creating, editing, comparing versions

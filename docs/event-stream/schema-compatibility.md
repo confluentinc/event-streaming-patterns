@@ -69,3 +69,4 @@ See [Compatibility Types](https://docs.confluent.io/platform/current/schema-regi
 
 ## References
 * [Schema compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
+* [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html): creating, editing, comparing versions
