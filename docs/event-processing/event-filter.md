@@ -1,8 +1,8 @@
 # Event Filter
-[Event Processors](event-processor.md) may need to operate over a subset of [Events](../event/event.md) over a particular [Event Stream](../event-stream/event-stream.md).
+[Event Processing Applications](event-processing-application.md) may need to operate over a subset of [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md).
 
 ## Problem
-How can an application discard uninteresting events?
+How can an application select only the relevant events (or discard uninteresting events) from an Event Stream?
 
 ## Solution
 ![event-filter](../img/event-filter.png)
