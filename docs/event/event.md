@@ -10,7 +10,7 @@ An event represents an immutable fact about something that happened. It is produ
 
 ## Considerations
 Events are often created in reference to a schema (TODO:pattern-ref) commonly defined in [Avro](https://avro.apache.org/docs/current/spec.html), [Protobuf](https://developers.google.com/protocol-buffers), or [JSON schema](https://json-schema.org/). The emerging standard: [Cloud Events](https://cloudevents.io/) provides a standardized envelope that wraps event data, making common event properties such as source, type, time, ID, and more, universally accessible regardless of the event payload. 
-While events are necessarily a 'fact', in many cases they also imply movement: the communicating of facts about the world from one piece of software to another. 
+* In certain scenarios, events may represent commands (think: instructions, actions) that an [Event Processor](TODO: link to pattern) reading the events should carry out. See the [Command Event](TODO: link to pattern) for details.
 
 ## References
 * This pattern is derived in part from [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html), [Event Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html), and [Document Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
