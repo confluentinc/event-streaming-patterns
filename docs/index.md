@@ -1,3 +1,8 @@
+---
+seoTitle: Welcome to Event Streaming Patterns
+seoDescription: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus aliquet consequat. Morbi nec lorem eget mauris posuere consequat in vel sem. Nunc ut malesuada est, fermentum tristique velit. In in odio dui. Nunc sed iaculis mauris. Donec purus tellus, fringilla nec tempor et, tristique sit amet nulla. In pharetra ligula orci, eget mattis odio luctus eu. Praesent porttitor pretium dolor, ut facilisis tortor dignissim vitae.
+---
+
 # Welcome to Event Streaming Patterns
 
 Event Streaming Platforms provide an architecture that enables software to react and operate as events occur. These platforms allow for software components to work together in a real-time, decoupled, and scalable fashion. When software is modeled as streams of events, new capabilities surface along with new unique technical challenges.

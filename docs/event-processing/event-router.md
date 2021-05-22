@@ -1,3 +1,9 @@
+---
+seo:
+   title: Event Router
+   description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus aliquet consequat. Morbi nec lorem eget mauris posuere consequat in vel sem. Nunc ut malesuada est, fermentum tristique velit. In in odio dui. Nunc sed iaculis mauris. Donec purus tellus, fringilla nec tempor et, tristique sit amet nulla. In pharetra ligula orci, eget mattis odio luctus eu. Praesent porttitor pretium dolor, ut facilisis tortor dignissim vitae.
+---
+
 # Event Router
 
 ## Problem
@@ -18,7 +24,7 @@ You can use any or all of these three to pull the required information to route 
 
 ## Example Implementation
 
-```
+```java
 CustomExtractor implements TopicNameExtractor<String, String> {
    
    String extract(String key, String value, RecordContext recordContext) {
