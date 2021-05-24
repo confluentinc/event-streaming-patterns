@@ -4,14 +4,13 @@ Various components in an [Event Streaming Platform](../event-stream/event-stream
 Conceptually, an event sink is the opposite of an [Event Source](../event-source/event-source.md). In practice, however, components such as an event processing application can act as both an event source and an event sink.
 
 ## Problem
-How can an application consume events?
+How can I read (or consume / subscribe to) events in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
 
 ![event-sink](../img/event-sink.png)
 
-The event sink is an application capable of consuming events from an event streaming platform. This application can be a generic consumer or a more complex 
-[Event Processing Application](../event-processing/event-processing-application.md) such as Kafka Streams or ksqlDB.
+Use an event sink, which typically acts as a client in an Event Streaming Platform. Examples are an [Event Sink Connector](event-sink-connector.md) (which continuously exports event streams from the event streaming platform into an external system such as a cloud services or a relational database) or an Event Processing Application such as a Kafka Streams application and the streaming database [ksqlDB](https://ksqldb.io/).
 
 ## Implementation
 
