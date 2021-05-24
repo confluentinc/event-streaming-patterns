@@ -1,6 +1,8 @@
 basePath: /patterns
 layout: pattern
 toc:
+  - items:
+      - index
   - title: Event Processing
     items:
       - event-processing/dead-letter-stream
