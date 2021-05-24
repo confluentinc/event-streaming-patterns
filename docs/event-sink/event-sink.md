@@ -14,7 +14,16 @@ Use an event sink, which typically acts as a client in an Event Streaming Platfo
 
 ## Implementation
 
-Generic Kafka Consumer application:
+ksqlDB streaming query example: Reading events from an existing Kafka topic into a ksqlDB event stream for further processing.
+```
+CREATE STREAM clicks (ip_address VARCHAR, url VARCHAR, timestamp VARCHAR)
+    WITH (kafka_topic = 'clicks-topic',
+          value_format = 'json',
+          timestamp = 'timestamp',
+          timestamp_format = 'yyyy-MM-dd''T''HH:mm:ssXXX');
+```
+
+Generic Kafka Consumer application: See [Getting Started with Apache Kafka and Java](link.tbd) for a full example: 
 ```
 consumer.subscribe(Collections.singletonList("stream"));
       while (keepConsuming) { 
@@ -23,16 +32,6 @@ consumer.subscribe(Collections.singletonList("stream"));
       }
 ```
 
-[ksqlDB](https://ksqldb.io/) streaming query:
-```
-CREATE STREAM CLICKS (IP_ADDRESS VARCHAR, URL VARCHAR, TIMESTAMP VARCHAR)
-    WITH (KAFKA_TOPIC = 'CLICKS',
-          VALUE_FORMAT = 'JSON',
-          TIMESTAMP = 'TIMESTAMP',
-          TIMESTAMP_FORMAT = 'yyyy-MM-dd''T''HH:mm:ssXXX',
-          PARTITIONS = 1);
-
-```
-
 ## References
-* See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/creating-first-apache-kafka-consumer-application/kafka.html) for a full Kafka consumer example application
+* The Kafka Streams library is another popular choice of developers to implement elastic applications and microservices that read, process, and write events. See [Filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/confluent.html) for a first example.
+
