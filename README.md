@@ -17,3 +17,6 @@ Use [this google sheet](https://docs.google.com/presentation/d/1Zf256Z6fBvre3ucl
 - Make sure the branch you wish to stage is in desired state
 - Run the provided script, `./release.sh`
 - The updated site will be available here: https://fluffy-spork-82bccf67.pages.github.io/
+
+# Original patterns
+[wiki](https://confluentinc.atlassian.net/wiki/spaces/PM/pages/940376652/Event+Streaming+Patterns+POC)
