@@ -16,6 +16,13 @@ TODO: Provide a technology agnostic diagram and supporting text explaining the p
 ## Implementation
 TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)
 
+Use language keyword for code blocks, when possible:
+
+```
+```java
+```python
+```
+
 ## Considerations
 TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
 
