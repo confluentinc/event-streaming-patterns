@@ -9,8 +9,10 @@ How can I create Events in an Event Streaming Platform?
 ## Solution
 ![event-source](../img/event-source.png)
 
+Use an Event Source, which typically acts as a client in an Event Streaming Platform. Examples are an [Event Source Connector](../event-source/event-source-connector.md) (which continuously imports data as event streams into the event streaming platform from an external system such as a cloud services or a relational database) or an [Event Processing Application](../event-processing/event-processing-application.md) such as a [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) application and the streaming database [ksqlDB](https://ksqldb.io/).
+
 ## Implementation
-[ksqlDB](https://ksqldb.io/) provides a builtin `INSERT` syntax to directly write new Events directly to the [Event Stream](../event-stream/event-stream.md).
+[ksqlDB](https://ksqldb.io/) provides a built-in `INSERT` syntax to directly write new Events directly to the [Event Stream](../event-stream/event-stream.md).
 ```
 INSERT INTO foo (ROWTIME, KEY_COL, COL_A) VALUES (1510923225000, 'key', 'A');
 ```
