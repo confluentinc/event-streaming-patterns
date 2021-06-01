@@ -16,7 +16,7 @@ For instance, the streaming database [ksqlDB](https://ksqldb.io/), provides an `
 ```
 CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
 	with (kafka_topic='users-topic', value_format='json');
-INSERT INTO users (username, name, email)
+INSERT INTO users (username, name, phone)
   VALUES ('awalther', 'Allison', '+1 555-555-1234');
 ```
 
