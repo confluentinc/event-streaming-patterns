@@ -14,7 +14,10 @@ Use an Event Source, which typically acts as a client in an Event Streaming Plat
 ## Implementation
 For instance, the streaming database [ksqlDB](https://ksqldb.io/), provides an `INSERT` statement to directly write new Events directly to the [Event Stream](../event-stream/event-stream.md).
 ```
-INSERT INTO foo (ROWTIME, KEY_COL, COL_A) VALUES (1510923225000, 'key', 'A');
+CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
+	with (kafka_topic='users-topic', value_format='json');
+INSERT INTO users (username, name, email)
+  VALUES ('awalther', 'Allison', '+1 555-555-1234');
 ```
 
 ## References
