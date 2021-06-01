@@ -42,3 +42,4 @@ Also, any Kafka compaction on a topic would just remove the message with the poi
 
 ## References
 * This pattern is similar in idea to [Claim Check](https://www.enterpriseintegrationpatterns.com/patterns/messaging/StoreInLibrary.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* An alternative approach to handling large messages is [Chunking](../event-processing/chunking.md)
