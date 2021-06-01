@@ -2,7 +2,7 @@
 
 ## Problem
 
-Timestamps are a critical component of stream processing framework as they impact processing order and will drive the behvior of stateful operations such as joins or windowed aggregations.  Depending on the use case it may be desired to extract a timestamp embedded in the event payload vs. using a timestamp assciated with the event itself.  Event timestamps are usually assigned by the stream processing application during the ingestion phase.
+Timestamps are a critical component of stream processing framework as they impact processing order and will drive the behavior of stateful operations such as joins or windowed aggregations.  Depending on the use case it may be desired to extract a timestamp embedded in the event payload vs. using a timestamp associated with the event itself.  Event timestamps are usually assigned by the stream processing application during the ingestion phase.
 
 ## Solution Pattern
 
