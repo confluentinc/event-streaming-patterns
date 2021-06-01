@@ -7,7 +7,7 @@ How does an application, that has requested information and received a response,
 ## Solution
 ![correlation-identifier](../img/correlation-identifier.png)
 
-Add a globally unique identifier to an Event that acts as the request. When a responding Event Processor generates a response Event, it attaches the corresponding identifier to the response Event allowing the requesting processor to correlate the request and response Events.
+An Event Processor generates an Event which acts as the request. A globally unique identifier is added to the request Event prior to sending. This allows the responding Event Processor to include the identifier in the response Event, allowing the requesting processor to correlate the request and response.
 
 ## Considerations
 TODO: Technology specific reflection on implementing the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
