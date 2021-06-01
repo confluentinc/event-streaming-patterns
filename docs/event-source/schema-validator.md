@@ -30,4 +30,3 @@ Schema Validator is a data governance implementation of "Schema on Write", which
 ## References
 * See the [Schema Compatibility](../event-stream/schema-compatibility.md) pattern for information on how schemas can evolve over time and be verified.
 * Learn more how to [Manage and Validate Schemas with Confluent and Kafka](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html).
-* [Subject Name Strategy](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html#subject-name-strategy) documentation describes the method used by [Confluent's Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) to map event streams to schemas.
