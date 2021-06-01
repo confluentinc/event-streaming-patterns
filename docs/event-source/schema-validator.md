@@ -6,7 +6,10 @@ How do I enforce that Events sent to an Event Stream conform to a defined schema
 
 ## Solution
 ![schema-validator](../img/schema-validator.png)
-A Schema Validator enforces the data format for Events prior to them being written to an Event Stream allowing Event Processing Applications to read Events based on a known schema.
+Validate whether an event conforms to the defined schema(s) of an [Event Stream](TODO: pattern link) prior to writing the event to the stream.  Such schema validation can be done:
+
+1. On the server side by the Event Streaming Platform that receives the event. Events that fail schema validation and thus violate the [Data Contract](TODO: pattern link) are rejected.
+2. On the client side by the [Event Source](TODO: pattern link) that creates the event. For example, an [Event Source Connector](TODO: pattern link) can validate events prior to ingestion into the Event Streaming Platform. Or, an [Event Processing Application](TODO: pattern link) can use the schema validation functionality provided by a serialization library that supports schemas (e.g., Confluent's serializer/deserializers for Kafka).
 
 ## Implementation
 With Confluent, Schema Validation is enabled on the brokers by pairing them with a [Schema Registry]((https://docs.confluent.io/platform/current/schema-registry/index.html)): 
