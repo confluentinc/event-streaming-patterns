@@ -1,5 +1,5 @@
 # Event
-Events represent facts and can help facilitate two decoupled applications exchanging data across an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
+Events represent facts and can help facilitate decoupled applications, services, and systems exchanging data across an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## Problem
 How do I represent a fact about something that has happened?
