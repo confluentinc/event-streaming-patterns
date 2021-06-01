@@ -10,7 +10,19 @@ How does an application, that has requested information and received a response,
 An Event Processor generates an Event which acts as the request. A globally unique identifier is added to the request Event prior to sending. This allows the responding Event Processor to include the identifier in the response Event, allowing the requesting processor to correlate the request and response.
 
 ## Considerations
-TODO: Technology specific reflection on implementing the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
+A globally unique identifier can be added to a produced Event using the Kafka record headers:
+```Java
+ProducerRecord<String, String> requestEvent = new ProducerRecord<>("request-key", "request-value"); 
+requestEvent.headers().add("requestID", UUID.randomUUID().toString());
+requestEvent.send(producerRecord);
+```
+
+added to a produced Event using the Kafka record headers:
+```Java
+ProducerRecord<String, String> responseEvent = new ProducerRecord<>("response-key", "response-value"); 
+requestEvent.headers().add("requestID", requestEvent.headers().lastHeader("requestID").value());
+requestEvent.send(producerRecord);
+```
 
 ## References
 * This pattern is derived from [Correlation Identifier](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CorrelationIdentifier.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
