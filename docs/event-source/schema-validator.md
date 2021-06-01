@@ -1,5 +1,5 @@
 # Schema Validator
-[Events](../event/event.md) are written to [Event Streams](../event-stream/event-stream.md) in various data formats. In order for an [Event Processing Application](../event-processing/event-processing-application.md) to consume the Event, it must be able to decode Event data formats.
+In an [Event Streaming Platform](TODO: pattern link), [Event Sources](TODO: pattern link), which create and write [Events](../event/event.md), are decoupled from [Event Sinks](TODO: pattern link) and [Event Processing Applications](../event-processing/event-processing-application.md), which read and process these events. Ensuring interoperability between the producers and the consumers of events requires that they agree on the data schemas for the events, which is an important aspect of putting [Data Contracts](TODO: pattern link) in place for data governance purposes.
 
 ## Problem
 How do I enforce that Events sent to an Event Stream conform to a defined schema for that stream?
