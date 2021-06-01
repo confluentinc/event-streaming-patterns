@@ -25,7 +25,7 @@ kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 \
 ```
 
 ## Considerations
-Schema Validator is a data governence implementation of "Schema on Write", enforcing data conformance prior to Event publication. An alternative strategy is [Schema On Read](../event/schema-on-read.md) where data formats are not enforced on write and consuming Event Processing Applications are required to validate data formats as they read each event. 
+Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is [Schema On Read](../event/schema-on-read.md), where data formats are not enforced on write. Instead, consuming [Event Processing Applications](TODO: pattern link) are required to validate data formats as they read each event. 
 
 ## References
 * See the [Schema Compatibility](../event-stream/schema-compatibility.md) for information on how schemas can be verified
