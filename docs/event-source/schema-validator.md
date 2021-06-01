@@ -28,6 +28,6 @@ kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 \
 Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is [Schema On Read](../event/schema-on-read.md), where data formats are not enforced on write. Instead, consuming [Event Processing Applications](TODO: pattern link) are required to validate data formats as they read each event. 
 
 ## References
-* See the [Schema Compatibility](../event-stream/schema-compatibility.md) for information on how schemas can be verified
+* See the [Schema Compatibility](../event-stream/schema-compatibility.md) pattern for information on how schemas can evolve over time and be verified.
 * The [Schema Validation with Confluent Platform](https://www.confluent.io/blog/data-governance-with-schema-validation/) blog describes data governance on the Confluent Platform
 * [Subject Name Strategy](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html#subject-name-strategy) documentation describes the method used by [Confluent's Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) to map event streams to schemas.
