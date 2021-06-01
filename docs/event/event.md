@@ -9,7 +9,7 @@ How do I represent a fact about something that has happened?
 An event represents an immutable fact about something that happened. It is produced to, stored in, and consumed from an [Event Stream](../event-stream/event-stream.md). An event typically contains at least one or more data fields that describe the fact, as well as a timestamp that denotes when this event was created by its [Event Source](TODO: link). The event may also contain various metadata about itself, such as its source of origin (e.g., the application or cloud services that created the event) and storage-level information (e.g., its position in the event stream).
 
 ## Considerations
-* To ensure that Events from an Event Source can be read correctly by an [Event Processor](../event-processing/event-processor.md), they are often created in reference to an [Event Schema](TODO: link to pattern).
+* To ensure that Events from an Event Source can be read correctly by an [Event Processor](../event-processing/event-processor.md), they are often created in reference to an Event schema.
 
 * Event Schemas are commonly defined in [Avro](https://avro.apache.org/docs/current/spec.html), [Protobuf](https://developers.google.com/protocol-buffers), or [JSON schema](https://json-schema.org/).
 
