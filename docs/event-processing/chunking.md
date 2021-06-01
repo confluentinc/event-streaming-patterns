@@ -28,7 +28,10 @@ Use metadata to track each chunk so that they can be associated to its parent me
 - The total number of chunks in the parent message
 
 ## Considerations
-Consumer applications need to be able to cache the chunks as it waits to receive all the smaller chunks that comprise the original event.
+Chunking places additional burden on client applications.
+First, implementing the chunking and unchunking logic requires more application development.
+Second, the consumer application needs to be able to cache the chunks as it waits to receive all the smaller chunks that comprise the original event.
+This, in turn, can have implications on memory fragmentation and longer garbage collection (GC), which may be mitigated to an extent by tuning the JVM heap size and GC.
 
 ## References
-* Given the additional burden that Chunking places on the client applications, an alternative approach that may be preferred for handling large messages is [Pointers](../event-processing/pointers.md)
+* To handle large messages, an alternative approach that may be preferred is [Pointers](../event-processing/pointers.md)
