@@ -26,7 +26,8 @@ kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 \
 
 ## Considerations
 Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is [Schema On Read](../event/schema-on-read.md), where data formats are not enforced on write. Instead, consuming [Event Processing Applications](TODO: pattern link) are required to validate data formats as they read each event. 
-
+* Server-side schema validation is preferable when you want to enforce this pattern centrally inside an organization.  In contrast, client-side validation assumes the cooperation of client applications and their developers, which may or may not be acceptable (e.g., in regulated industries).
+* Schema validation results in a load increase because it impacts the write path of every event.  Client-side validation impacts primarily the load of the client applications.  Server-side schema validation increases the load on the event streaming platform, whereas client applications are less affected (here, the main impact is dealing with rejected events; see [Dead Letter Stream](TODO: pattern link)).
 ## References
 * See the [Schema Compatibility](../event-stream/schema-compatibility.md) pattern for information on how schemas can evolve over time and be verified.
 * Learn more how to [Manage and Validate Schemas with Confluent and Kafka](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html).
