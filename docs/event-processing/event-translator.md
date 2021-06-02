@@ -21,9 +21,8 @@ CREATE STREAM translated_stream AS
    FROM untranslated_stream
 ```
 
-
 ## Considerations
-The [Event Standardizer](../event-processing/event-standardizer.md) pattern ties together an [Event Router](../event-processing/event-router.md) and multiple Event Translators allowing disparate systems with multiple Event formats to communicate.
+The [Event Standardizer](../event-processing/event-standardizer.md) pattern ties together an [Event Router](../event-processing/event-router.md) and multiple Event Translators allowing disparate systems with multiple [Event](../event/event.md) formats to communicate.
 
 ## References
 * This pattern is derived from [Event Translator](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageTranslator.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
