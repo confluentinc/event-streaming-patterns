@@ -18,7 +18,7 @@ How do I handle these use cases where the event payload is too large to move thr
 ![chunking](../img/chunking.png)
 
 Instead of storing the entire event as a single message in the event streaming platform, break it into chunks (an approach called "chunking") so that the single large message is sent across as multiple smaller messages.
-The producer can do the chunking when writing messages into the event streaming platform.
+The producer can do the chunking when writing events into the event streaming platform.
 Downstream clients would consume the chunks and when all the smaller chunks have been received, recombining ("unchunking") them to restore the original event.
 
 ## Implementation
