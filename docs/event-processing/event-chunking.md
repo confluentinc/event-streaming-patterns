@@ -1,10 +1,10 @@
 ---
 seo:
-   title: Chunking
+   title: Event Chunking
    description: If an event streaming platform has some natural or configured size limit for the events, instead of storing the entire event, break it into chunks
 ---
 
-# Chunking
+# Event Chunking
 
 Sometimes compression can reduce message size but there are various use cases that entail large message payloads where compression may not be enough.
 Often these use cases are related to image, video, or audio processing: image recognition, video analytics, audio analytics, etc.
@@ -15,7 +15,7 @@ How do I handle these use cases where the event payload is too large to move thr
 
 ## Solution Pattern
 
-![chunking](../img/chunking.png)
+![chunking](../img/event-chunking.png)
 
 Instead of storing the entire event as a single event in the event streaming platform, break it into chunks (an approach called "chunking") so that the large event is sent across as multiple smaller events.
 The producer can do the chunking when writing events into the event streaming platform.
