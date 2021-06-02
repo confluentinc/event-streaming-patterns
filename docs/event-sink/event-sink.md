@@ -33,5 +33,4 @@ consumer.subscribe(Collections.singletonList("stream"));
 ```
 
 ## References
-* The Kafka Streams library is another popular choice of developers to implement elastic applications and microservices that read, process, and write events. See [Filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/confluent.html) for a first example.
-
+* The Kafka Streams library of Apache Kafka is another popular choice of developers to implement elastic applications and microservices that read, process, and write events. See [Filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/confluent.html) for a first example.
