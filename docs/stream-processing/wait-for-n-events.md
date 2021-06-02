@@ -6,8 +6,8 @@ seo:
 
 # Wait for N Events
 
-How do I wait for a certain number of events to occur before
-performing processing?
+How can an application wait for a certain number of events to occur
+before performing processing?
 
 ## Problem
 
