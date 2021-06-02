@@ -14,7 +14,7 @@ Use an event sink, which typically acts as a client in an Event Streaming Platfo
 
 ## Implementation
 
-ksqlDB streaming query example: Reading events from an existing Kafka topic into a ksqlDB event stream for further processing.
+ksqlDB example: Reading events from an existing Kafka topic into a ksqlDB event stream for further processing.
 ```
 CREATE STREAM clicks (ip_address VARCHAR, url VARCHAR, timestamp VARCHAR)
     WITH (kafka_topic = 'clicks-topic',
