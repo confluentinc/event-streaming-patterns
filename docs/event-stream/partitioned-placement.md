@@ -1,12 +1,11 @@
 ---
 seo:
   title: Partitioned Placement
-  description: Topic partitions enable client applications to scale in an event streaming platform.  Events can be written to different partitions, based on key or custom partitioner, or just round-robin across all partitions to distribute evenly.
+  description: Topic partitions are the unit of parallelism in Kafka. Events can be written to different partitions, based on key or custom partitioner, or just round-robin across all partitions to distribute evenly.
 ---
 
 # Partitioned Placement
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
-Applications utilizing an event streaming platform may need distributed consumption to handle the throughput or processing required.
+Applications utilizing an event streaming platform may want distributed consumption to handle the throughput or processing required.
 
 ## Problem
 How can events be placed into a stream or table so that they can be processed concurrently with a distributed [Event Processor](../event-processing/event-processor.md)?
