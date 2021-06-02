@@ -34,14 +34,14 @@ and look for matches. If we find one, we emit a new event.
 For stream-stream joins, it's important to think about what we
 consider to be a 'recent' event. We can't join brand new events with
 arbitrarily-old ones - to join potentially-infinite streams would
-require potentially-infinite memory. Instead we decide on a window
+require potentially-infinite memory. Instead we decide on a retention period
 that counts as 'new enough', and only hold on to events in that
-window. This is often just fine - a payment will usually happen soon
+period. This is often just fine - a payment will usually happen soon
 after a order is placed. If it doesn't go through within the hour, we
 can reasonably expect a different process to chase the user for
 updated credit card details.
 
-_(For much longer windows, consider joining a stream to a [Projection Table](../table/projection-table.md) instead.)_
+_(For large retention periods, consider joining a stream to a [Projection Table](../table/projection-table.md) instead.)_
 
 
 ## Implementation
@@ -94,7 +94,8 @@ CREATE STREAM possible_fraud
     EMIT CHANGES;
 ```
 
-Querying that stream in one window:
+Querying that stream in one terminal:
+
 ```sql
 ksql> SELECT * FROM possible_fraud EMIT CHANGES;
 ```
@@ -127,8 +128,8 @@ Results in a stream of possible fraud cases that need further investigation:
 
 ## Considerations
 
-Joining event streams is simple. The big consideration is how large a
-time window you need to watch, and so how much memory you'll
+Joining event streams is fairly simple. The big consideration is how
+large a retention period you need, and so the resources your join will
 use. Planning that tradeoff requires careful consideration of the
 specific problem you're solving.
 
