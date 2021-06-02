@@ -6,10 +6,11 @@ seo:
 
 # Pointers
 
-## Problem
-
 Sometimes compression can reduce message size but there are various use cases that entail large message payloads where compression may not be enough.
 Often these use cases are related to image, video, or audio processing: image recognition, video analytics, audio analytics, etc.
+
+## Problem
+
 How do I handle these use cases where the event payload is too large or too expensive to move through the event streaming platform?
 
 ## Solution Pattern
