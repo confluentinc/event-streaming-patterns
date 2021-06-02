@@ -19,6 +19,7 @@ Create (or use an existing) Event Mapper to map the Domain Model (or the applica
 
 ## Implementation
 Using standard Kafka producer, you can use an abstract Mapper concept to construct an Event instance (`PublicationEvent`) representing the Domain Model (`Publication`) prior to producing to Kafka.
+
 ```
 private final IMapper mapper = mapperFactory.buildMapper(Publication.class);
 private final Producer<String, PublicationEvent> producer = ...
