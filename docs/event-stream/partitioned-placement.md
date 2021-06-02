@@ -22,12 +22,11 @@ A partition is the unit of parallelism within a topic and enables concurrent pro
 
 ## Implementation
 When a Kafka topic is created, either by an administrator or by a streaming application like ksqlDB, you can specific the number of partitions it has.
-Then events are placed into a specific partition and the partitioning algorithm can be based on different criteria.
-With Kafka, it could be based on the event key, round-robin to distribute all events across all partitions, or a custom partitioning algorithm.
-All events grouped into a partition has strong ordering guarantees.
+Events are placed into a specific partition according to the partitioning algorithm, which could be based on the event key, round-robin to distribute all events across all partitions, or a custom partitioning algorithm.
+All events grouped into a partition have strong ordering guarantees.
 
 If we are using ksqlDB, the processors can scale by working on a set of partitions.
-If an event stream's key content changes because of how the query wants to process the rows (via `GROUP BY` or `PARTITION BY`), the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation.
+If an event stream's key content changes because of how the query wants to process the rows, for example to execute a `JOIN` operation between two streams of events, the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation.
 
 ```
 CREATE STREAM stream_name
