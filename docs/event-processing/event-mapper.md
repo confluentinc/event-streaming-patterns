@@ -38,19 +38,5 @@ public void updatePublication(PublicationEvent pubEvent) {
   domainStore.update(newPub);
 ```
 
-**TODO:** Rick Feedback Request: How could we use ksqlDB or Kafka Streams her? The following KStreams example doesn't work to me because it's a stream processing application, but Mapper means to convert between domain objects and events. I'm not sure there is a logical way to "push" an event to a toplogy manually withouth producing to a topic.
-```
-IMapper mapper = mapperFactory.buildMapper(Publication.class);
-builder.stream(inputTopic, Consumed.with(Serdes.String(), publicationSerde))
-  .map((name, publication) -> mapper.map(publication))
-  .to(outputTopic, Produced.with(Serdes.String(), publicationEventSerde));
-```
-
-## Considerations
-**TODO:** Considerations?
-
 ## References
 * This pattern is derived from [Messaging Mapper](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-* **TODO:** Reference to Event-Carried State Transfer?
-* **TODO:** Reference to Document Message / Event vs Command Message / Event?
-* **TODO:** Is Database Write Through / CDC a valid reference?
