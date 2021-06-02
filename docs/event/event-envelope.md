@@ -11,7 +11,7 @@ seo:
 How can we operate existing systems on the [Event Streaming Platform](../event-stream/event-streaming-platform.md) when there are specific requirements on the [Event](../event/event.md) format that the existing system does not support?
 
 ## Solution
-![event-wrapper](../img/event-wrapper.png)
+![event-envelope](../img/event-envelope.png)
 
 Use an Event Envelope to wrap the application data inside an envelope that conforms to the data format expected on the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
