@@ -22,7 +22,7 @@ The producer can do the chunking when writing messages into the event streaming 
 Downstream clients would consume the chunks and when all the smaller chunks have been received, recombining ("unchunking") them to restore the original event.
 
 ## Implementation
-Use metadata to track each chunk so that they can be associated to its parent message:
+Use metadata to track each chunk so that they can be associated to their respective parent event:
 
 - Association between any given chunk and its parent message
 - The chunk’s position in the parent message
