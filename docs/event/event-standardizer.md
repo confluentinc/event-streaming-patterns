@@ -1,5 +1,5 @@
 # Event Standardizer
-A variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) will need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process [Events](../event/event.md) of different formats.
+In most businesses, a variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process these Events. However, the reality of having many sources for these Events often results in the lack of such standards or in different interpretations of the same standard.
 
 ## Problem
 How do I process [Events](../event/event.md) that are semantically equivalent, but arrive in different formats?
