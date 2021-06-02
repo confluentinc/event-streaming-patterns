@@ -1,7 +1,7 @@
 ---
 seo:
   title: Logical AND
-  description: Logical AND of two or more event streams, synthesizing a new event using stream (KStream) joins.
+  description: Logical AND of two or more event streams, synthesizing a new event using stream joins.
 ---
 
 # Logical AND
