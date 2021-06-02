@@ -33,5 +33,7 @@ First, implementing the chunking and unchunking logic requires more application 
 Second, the consumer application needs to be able to cache the chunks as it waits to receive all the smaller chunks that comprise the original event.
 This, in turn, can have implications on memory fragmentation and longer garbage collection (GC), which may be mitigated to an extent by tuning the JVM heap size and GC.
 
+Consumer client applications that are not aware of the protocol used for chunking messages may not be able to reconstruct the original content accurately.
+
 ## References
 * To handle large messages, an alternative approach that may be preferred is [Pointers](../event-processing/pointers.md)
