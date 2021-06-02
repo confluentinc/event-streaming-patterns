@@ -13,7 +13,7 @@ Often these use cases are related to image, video, or audio processing: image re
 
 How do I handle these use cases where the event payload is too large to move through the event streaming platform as a single event?
 
-## Solution Pattern
+## Solution
 
 ![chunking](../img/event-chunking.png)
 
