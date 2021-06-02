@@ -24,7 +24,7 @@ Downstream clients would consume the chunks and when all the smaller chunks have
 ## Implementation
 Use metadata to track each chunk so that they can be associated to their respective parent event:
 
-- Association between any given chunk and its parent message
+- Association between any given chunk and its parent event
 - The chunk’s position in the parent message
 - The total number of chunks in the parent message
 
