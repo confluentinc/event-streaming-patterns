@@ -4,7 +4,7 @@ Various components in an [Event Streaming Platform](../event-stream/event-stream
 Conceptually, an event sink is the opposite of an [Event Source](../event-source/event-source.md). In practice, however, components such as an event processing application can act as both an event source and an event sink.
 
 ## Problem
-How can I read (or consume / subscribe to) events in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
+How can we read (or consume / subscribe to) events in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
 
