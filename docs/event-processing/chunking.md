@@ -11,7 +11,7 @@ Often these use cases are related to image, video, or audio processing: image re
 
 ## Problem
 
-How do I handle these use cases where the event payload is too large or too expensive to move through the event streaming platform?
+How do I handle these use cases where the event payload is too large to move through the event streaming platform as a single event?
 
 ## Solution Pattern
 
