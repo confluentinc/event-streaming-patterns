@@ -1,7 +1,7 @@
 ---
 seo:
   title: Wait for N Events
-  description: Waiting for N events in a stream with KSQL.
+  description: Waiting for N events in a stream.
 ---
 
 # Wait for N Events
