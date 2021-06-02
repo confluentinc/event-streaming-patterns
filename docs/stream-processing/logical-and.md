@@ -23,7 +23,7 @@ How do we look at several different streams and use them to make new
 events?
 
 ## Solution
-![logical-and](../img/logical-and.svg)
+![logical AND](../img/logical-and.svg)
 
 Multiple streams of events can be joined together, similar to
 joins in a relational database. We watch the streams and
