@@ -2,7 +2,7 @@
 Consistent time semantics are important in stream processing, especially for time-based aggregations when calculating over a window of time.
 
 ## Problem
-How do I process events from an [Event Source](../event-source/event-source.md) irrespective of the timestamps when they were created originally at the source.
+How do I process events from an [Event Source](../event-source/event-source.md) irrespective of the timestamps when they were created originally at the source?
 
 ## Solution
 ![wallclock-time](../img/wallclock-time.png)
