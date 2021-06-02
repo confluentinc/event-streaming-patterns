@@ -1,24 +1,41 @@
 # Database Write Through
-For architectural or legacy purposes, data centric applications may write directly to a database. [Event Processing Applications](../event-processing/event-processing-application.md) will need to reliably consume data from these systems using [Events](../event/event.md) on [Event Streams](../event-stream/event-stream.md).
+For architectural or legacy purposes, data-centric applications may write directly to a database. [Event Processing Applications](../event-processing/event-processing-application.md) will need to reliably consume data from these systems using [Events](../event/event.md) on [Event Streams](../event-stream/event-stream.md).
 
 ## Problem
-How do I update a value in a database and create an associated Event with at-least-once guarantees?
+How do we update a value in a database and create an associated [Event](../event/event.md) with at-least-once guarantees?
 
 ## Solution
 ![db-write-through](../img/database-write-through.png)
 
-Applications write directly to a database table, which is the [Event Source](event-source.md). Deploy a Change Data Capture (CDC) solution to continuously capture writes (inserts, updates, deletes) to that table and produce them as Events onto an Event Stream.  The events in stream can then be consumed by Event Processing Applications. Additionally, the event stream can be read into a Projection Table, for example with ksqlDB, so that it can be queried by other applications.
+Applications write directly to a database table, which is the [Event Source](event-source.md). Deploy a Change Data Capture (CDC) solution to continuously capture writes (inserts, updates, deletes) to that table and produce them as [Events](../event/event.md) onto an [Event Stream](../event-stream/event-stream.md).  The events in stream can then be consumed by [Event Processing Applications](../event-processing/event-processing-application.md). Additionally, the [Event Stream](../event-stream/event-stream.md) can be read into a Projection Table, for example with [ksqlDB](https://ksqldb.io/), so that it can be queried by other applications.
 
 ## Implementation
-**TODO:** Implementation for this pattern?  Kafka Connect config / create example?
+[Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) provides the ability to scalably and reliably between Apache Kafka and other data systems. Using the [JDBC Source connector](https://docs.confluent.io/kafka-connect-jdbc/current/source-connector/index.html) for Kafka Connect allows for streaming of changes to a source database to Kafka topics.
+
+```bash
+curl -X POST http://connect:8083/connectors -H "Content-Type: application/json" -d '{
+        "name": "jdbc_source_mysql",
+        "config": {
+                "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+                "connection.url": "jdbc:mysql://mysql:3306/demo",
+                "connection.user": "db_user",
+                "connection.password": "db_pwd",
+                "topic.prefix": "mysql-",
+                "mode":"bulk",
+                "poll.interval.ms" : 3600000
+                }
+        }'
+```
+
+The above shows an example command to deploy a Kafka Connector streaming data from a MySQL database to Kafka topics.
 
 ## Considerations
-- This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an Event Source are captured in an Event Streaming Platform.
+- This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an [Event Source](../event-source/event-source.md) are captured in an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 - The processing guarantees (cf. "Guaranteed Delivery") to choose from—e.g., at-least-once, exactly-once—for the CDC data flow depend on the CDC and Database technology utilizied.
 - There is a certain delay until changes in the source database table are available in the CDC-ingested event stream. The amount of the delay depends on a variety of factors, including the features and configuration of the Event Source Connector. In many typical scenarios the delay is less than a few seconds.
-- In terms of their data model, events typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all events for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.
+- In terms of their data model, [Events](../event/event.md) typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all [Events](../event/event.md) for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.
 
 ## References
+* See [Oracle CDC Source Connector](https://www.confluent.io/blog/introducing-confluent-oracle-cdc-connector/) for details of a premium CDC connector for Oracle DB.
 * See [Integrate External Systems to Kafka](https://docs.confluent.io/cloud/current/connectors/index.html) on Confluent documentation for information on source connectors.
-* **TODO:** What about well known CDC providers, like Debezium? 
-
+* [Kafka Connect Depp Dive - JDBC Source Connector](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/) blog post
