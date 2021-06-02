@@ -11,6 +11,8 @@ Applications utilizing an event streaming platform may want distributed consumpt
 How can events be placed into a stream or table so that they can be processed concurrently with a distributed [Event Processor](../event-processing/event-processor.md)?
 
 ## Solution
+![partitioned-placement](../img/partitioned-placement.png)
+
 You can logically group events into a single topic, and the unit of parallelism within the topic is a partition.
 Partitions enable concurrent processing and help scalability in two ways:
 Partitions help scale in two ways:
