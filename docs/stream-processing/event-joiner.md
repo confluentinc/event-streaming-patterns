@@ -47,6 +47,7 @@ In ksqlDB joins between a stream and a table are driven by the stream side of th
 
 
 ## References
+
 * [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html): Join a stream and a lookup table
 * [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-stream/ksql.html): Join a stream and a stream
 * [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-table-to-a-table/ksql.html): Join a table and a table
