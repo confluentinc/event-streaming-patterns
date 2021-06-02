@@ -13,7 +13,7 @@ Often these use cases are related to image, video, or audio processing: image re
 
 How do I handle these use cases where the event payload is too large or too expensive to move through the event streaming platform?
 
-## Solution Pattern
+## Solution
 
 ![pointers](../img/pointers.png)
 
@@ -43,4 +43,4 @@ Also, any Kafka compaction on a topic would just remove the message with the poi
 
 ## References
 * This pattern is similar in idea to [Claim Check](https://www.enterpriseintegrationpatterns.com/patterns/messaging/StoreInLibrary.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-* An alternative approach to handling large messages is [Chunking](../event-processing/chunking.md)
+* An alternative approach to handling large messages is [Event Chunking](../event-processing/chunking.md)
