@@ -23,4 +23,4 @@ Every record in ksqlDB has a system column called `ROWTIME` that tracks the time
 
 ## References
 * See the [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation
-* See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for a full example on event-time semantics
+* See the tutorial [Event-time semantics](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for a full example
