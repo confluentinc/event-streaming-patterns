@@ -22,5 +22,5 @@ By default, [ksqlDB](https://ksqldb.io) `ROWTIME` is inherited from the timestam
 Every record in ksqlDB has a system column called `ROWTIME` that tracks the timestamp of the event. It could be either when the event occurs (producer system time) or when the event is ingested (broker system time), depending on the `message.timestamp.type` configuration value. ksqlDB also allows streams to use the timestamp from a field in the record payload.
 
 ## References
-* See the [ksqlDB documentation](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) on time semantics
+* See the [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation
 * See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for a full example on event-time semantics
