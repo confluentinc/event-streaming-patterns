@@ -1,6 +1,6 @@
 ---
 seo:
-	title: Event Envelope
+  title: Event Envelope
   description: Event Envelope pattern allows applications with different data formats to communicate across an Event Streaming Platform
 ---
 
