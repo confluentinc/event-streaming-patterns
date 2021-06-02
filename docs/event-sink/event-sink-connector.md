@@ -2,7 +2,7 @@
 Connecting external systems to the [Event Streaming Platform](../event-stream/event-streaming-platform.md) allows for advanced and specialized integrations. 
 
 ## Problem
-How can applications or external systems, like a databases, connect to an event streaming platform so that it can receive events? 
+How can we connect applications or external systems, like databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md) so that it can receive [Events](../event/event.md)?
 
 ## Solution
 ![event-sink-connector](../img/event-sink-connector.png)
@@ -22,8 +22,7 @@ CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
 );
 ```
 
-When connecting a system like a relational database to Kafka, the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads events from the event streaming platform, performs any necessary transformations, and writes the events to the specified Event Sink.
-Event Sink Connector is a specific implementation of an [Event Sink](event-sink.md).
+When connecting a system like a relational database to Kafka, the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads events from the [Event Streaming Platform](../event-stream/event-streaming-platform.md), performs any necessary transformations, and writes the [Events](../event/event.md) to the specified [Event Sink](../event-sink/event-sink.md).
 
 ## Considerations
 * There are many Event Sink Connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See [Confluent Hub](https://www.confluent.io/hub/) for available connectors.
@@ -31,5 +30,4 @@ Event Sink Connector is a specific implementation of an [Event Sink](event-sink.
 
 ## References
 * [Confluent Connector Hub](https://www.confluent.io/hub/) 
-* **TODO:** add sink connector KT once made public
-
+* For an example of using Kafka Connect as an Event Sink Connector, see [Timezone conversion and Kafka Connect JDBC sink](https://kafka-tutorials.confluent.io/connect-sink-timestamp/ksql.html) with [ksqlDB](https://ksqldb.io/).
