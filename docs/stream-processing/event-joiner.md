@@ -4,7 +4,7 @@ Event streams may need to join with a table or another stream to provide more co
 
 ## Problem
 
-How can event streams combine with another table or stream to produce enriched events?
+How can I enrich an event stream?
 
 ## Solution
 
