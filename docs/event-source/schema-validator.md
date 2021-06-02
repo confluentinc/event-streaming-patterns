@@ -2,14 +2,14 @@
 In an [Event Streaming Platform](../event-stream/event-streaming-platform.md), [Event Sources](../event-source/event-source.md), which create and write [Events](../event/event.md), are decoupled from [Event Sinks](../event-sink/event-sink.md) and [Event Processing Applications](../event-processing/event-processing-application.md), which read and process these events. Ensuring interoperability between the producers and the consumers of events requires that they agree on the data schemas for the events, which is an important aspect of putting [Data Contracts](../event/data-contract.md) in place for data governance purposes.
 
 ## Problem
-How do I enforce that Events sent to an Event Stream conform to a defined schema for that stream?
+How do I enforce that [Events](../event/event.md) sent to an [Event Stream](../event-stream/event-stream.md) conform to a defined schema for that stream?
 
 ## Solution
 ![schema-validator](../img/schema-validator.png)
-Validate whether an event conforms to the defined schema(s) of an [Event Stream](../event-stream/event-stream.md) prior to writing the event to the stream. Such schema validation can be done:
+Validate whether an [Event](../event/event.md) conforms to the defined schema(s) of an [Event Stream](../event-stream/event-stream.md) prior to writing the event to the stream. Such schema validation can be done:
 
-1. On the server side by the Event Streaming Platform that receives the event. Events that fail schema validation and thus violate the Data Contract are rejected.
-2. On the client side by the Event Source that creates the event. For example, an Event Source Connector can validate events prior to ingestion into the Event Streaming Platform. Or, an Event Processing Application can use the schema validation functionality provided by a serialization library that supports schemas (e.g., Confluent's serializer/deserializers for Kafka).
+1. On the server side by the [Event Streaming Platform](../event-stream/event-streaming-platform.md) that receives the [Event](../event/event.md). [Events](../event/event.md) that fail schema validation and thus violate the [Data Contract](../event/data-contract.md) are rejected.
+2. On the client side by the [Event Source](../event-source/event-source.md) that creates the [Event](../event/event.md). For example, an [Event Source Connector](../event-source/event-source-connector.md) can validate [Events](../event/event.md) prior to ingestion into the [Event Streaming Platform](../event-stream/event-streaming-platform.md). Or, an [Event Processing Application](../event-processing/event-processing-application.md) can use the schema validation functionality provided by a serialization library that supports schemas (e.g., Confluent's serializer/deserializers for Kafka).
 
 ## Implementation
 With Confluent, schema validation is fully supported with a per-environment hosted [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html). Use the cloud UI to enable schema registry in your cloud provider of choice. Schemas can be managed per topic using the cloud UI or the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html). An example command to create a schema using the CLI:
