@@ -138,7 +138,6 @@ specific problem you're solving.
 See also: 
 
 * [KSQL Server Joins](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/) reference documentation.
-* The [Pipeline](../compositional-patterns/pipeline.md) pattern, for considering events in series (rather than parallel).
+* The [Pipeline](../compositional-patterns/pipeline.md) pattern, for considering events in series (rather than in parallel).
 * The [Projection Table](../table/projection-table.md) pattern, for a memory-efficient way of considering a stream over a potentially-infinite time-period.
 * [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/), chapter 14 for further discussion.
-
