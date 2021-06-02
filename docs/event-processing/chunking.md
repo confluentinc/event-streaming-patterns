@@ -26,7 +26,7 @@ Use metadata to track each chunk so that they can be associated to their respect
 
 - Association between any given chunk and its parent event
 - The chunk’s position in the parent message
-- The total number of chunks in the parent message
+- The total number of chunks of the parent event
 
 ## Considerations
 Chunking places additional burden on client applications.
