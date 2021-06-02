@@ -1,16 +1,16 @@
 # Event Standardizer
-A variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) will need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream Event Processing Applications will require standardized data formats in order to properly process Events of different formats.
+A variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) will need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process [Events](../event/event.md) of different formats.
 
 ## Problem
-How do I process events that are semantically equivalent, but arrive in different formats?
+How do I process [Events](../event/event.md) that are semantically equivalent, but arrive in different formats?
 
 ## Solution
 ![event-standardizer](../img/event-standardizer.png)
 
-Source all the input Event Streams into an Event Standardizer which routes Events to a specialized [Event Translator](../event-processing/event-translator.md) which converts the Event to a normalized form expected by the downstream [Event Processors](../event-processing/event-processor.md).
+Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer which routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md) which converts the [Event](../event/event.md) to a normalized form expected by the downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
-A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input Event Streams and `map` the values to a new type. This `map` function can act as the event router, directing the Event to the proper [Event Translator](../event/event-translator.md) before forwading it to the output stream using the `to` function.
+A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `map` function can act as the event router, directing the [Event](../event/event.md) to the proper [Event Translator](../event/event-translator.md) before forwading it to the output stream using the `to` function.
 
 ```
 SpecificAvroSerde<SpecificRecord> inputValueSerde = ...
