@@ -7,7 +7,7 @@ How do I process [Events](../event/event.md) that are semantically equivalent, b
 ## Solution
 ![event-standardizer](../img/event-standardizer.png)
 
-Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer which routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md) which converts the [Event](../event/event.md) to a normalized form expected by the downstream [Event Processors](../event-processing/event-processor.md).
+Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer that routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md), which in turn converts the [Event](../event/event.md) to a common form understood by the downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
 A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `map` function can act as the event router, directing the [Event](../event/event.md) to the proper [Event Translator](../event/event-translator.md) before forwading it to the output stream using the `to` function.
@@ -37,4 +37,3 @@ TODO: Technology specific reflection on implmenting the pattern 'in the real wor
 ## References
 * This pattern is derived from [Normalizer](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Normalizer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * Kafka Streams [`map` stateless transformation](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#creating-source-streams-from-ak) documentation
-
