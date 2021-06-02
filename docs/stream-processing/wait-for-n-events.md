@@ -39,13 +39,13 @@ and approved by 2 managers.
 We'll start with a stream of signed events from managers:
 
 ```sql
-CREATE OR REPLACE STREAM trade_review (
+CREATE OR REPLACE STREAM trade_reviews (
   trade_id BIGINT,
   manager_id VARCHAR,
   signature VARCHAR,
   approved BOOLEAN
 ) WITH (
-  kafka_topic = 'trade_review_topic',
+  kafka_topic = 'trade_reviews_topic',
   value_format = 'AVRO',
   partitions = 2
 );
@@ -57,7 +57,7 @@ We'll group reviews by their `trade_id`, and `count` how many
 ```sql
 CREATE OR REPLACE TABLE trade_approval AS
   SELECT trade_id, count(*) AS approvals
-  FROM trade_review
+  FROM trade_reviews
   WHERE approved = TRUE
   GROUP BY trade_id;
 ```
@@ -73,23 +73,23 @@ ksql> SELECT *
 ...and inserting some data in another:
 
 ```ksql
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (1, 'alice', '6f797a', TRUE);
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (2, 'alice', 'b523af', TRUE);
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (3, 'alice', 'fe1aaf', FALSE);
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (4, 'alice', 'f41bf3', TRUE);
 
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (2, 'bob', '0441ed', TRUE);
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (4, 'bob', '50f237', TRUE);
 
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (1, 'carol', 'ee52f5', FALSE);
-INSERT INTO trade_review ( trade_id, manager_id, signature, approved )
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (3, 'carol', '4adb7c', TRUE);
 ```
 
