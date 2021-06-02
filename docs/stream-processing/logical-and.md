@@ -6,8 +6,8 @@ seo:
 
 # Logical AND
 
-How do I initiate subsequent processing when two (or more)
-corresponding events arrive on different streams or tables? 
+How can an application initiate subsequent processing when two (or
+more) corresponding events arrive on different streams or tables?
 
 ## Problem
 
@@ -32,10 +32,10 @@ arrives, we consider it alongside the other recently-captured events
 and look for matches. If we find one, we emit a new event.
 
 For stream-stream joins, it's important to think about what we
-consider to be a 'recent' event. We can't join brand new events with
+consider to be a "recent" event. We can't join brand new events with
 arbitrarily-old ones - to join potentially-infinite streams would
-require potentially-infinite memory. Instead we decide on a retention period
-that counts as 'new enough', and only hold on to events in that
+require potentially-infinite memory. Instead we decide on a retention
+period that counts as "new enough", and only hold on to events in that
 period. This is often just fine - a payment will usually happen soon
 after a order is placed. If it doesn't go through within the hour, we
 can reasonably expect a different process to chase the user for
@@ -46,34 +46,34 @@ _(For large retention periods, consider joining a stream to a [Projection Table]
 
 ## Implementation
 
-As an example, imagine a bank that captures `login` events to their
-website, and `withdrawal` events from an ATM. The fraud department
+As an example, imagine a bank that captures `logins` to their
+website, and `withdrawals` from an ATM. The fraud department
 might be keen to hear if the same `user_id` logs in in one country,
 and makes a withdrawal in a different country, within the same
 day. (It's not necessarily fraud, but it's certainly suspicious!)
 
-We start with two event streams:  
+To implement this example, we'll use ksqlDB. We start with two event streams:
 
 ```sql
 -- For simplicity's sake, we'll assume that IP addresses 
 --   have already been converted into country codes.
 
-CREATE OR REPLACE STREAM login (
+CREATE OR REPLACE STREAM logins (
   user_id BIGINT,
   country_code VARCHAR
 ) WITH (
-  kafka_topic = 'login_topic',
+  kafka_topic = 'logins_topic',
   value_format = 'AVRO',
   partitions = 3
 );
 
-CREATE OR REPLACE STREAM withdrawal (
+CREATE OR REPLACE STREAM withdrawals (
   user_id BIGINT,
   country_code VARCHAR,
   amount DECIMAL(10,2),
   success BOOLEAN
 ) WITH (
-  kafka_topic = 'withdrawal_topic',
+  kafka_topic = 'withdrawals_topic',
   value_format = 'AVRO',
   partitions = 3
 );
@@ -84,10 +84,10 @@ considered equal, and we'll specifically look at events that happen
 `WITHIN 1 DAY`:
 
 ```sql
-CREATE STREAM possible_fraud
+CREATE STREAM possible_frauds
   AS
     SELECT l.user_id, l.country_code, w.country_code, w.amount, w.success
-    FROM login l JOIN withdrawal w
+    FROM logins l JOIN withdrawals w
       WITHIN 1 DAY
       ON l.user_id = w.user_id
     WHERE l.country_code != w.country_code
@@ -97,22 +97,24 @@ CREATE STREAM possible_fraud
 Querying that stream in one terminal:
 
 ```sql
-ksql> SELECT * FROM possible_fraud EMIT CHANGES;
+ksql> SELECT *
+> FROM possible_frauds
+> EMIT CHANGES;
 ```
 
 ...and inserting some data in another:
 
 ```sql
-INSERT INTO login (user_id, country_code) VALUES (1, 'gb');
-INSERT INTO login (user_id, country_code) VALUES (2, 'us');
-INSERT INTO login (user_id, country_code) VALUES (3, 'be');
-INSERT INTO login (user_id, country_code) VALUES (2, 'us');
+INSERT INTO logins (user_id, country_code) VALUES (1, 'gb');
+INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
+INSERT INTO logins (user_id, country_code) VALUES (3, 'be');
+INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
 
-INSERT INTO withdrawal (user_id, country_code, amount, success) VALUES (1, 'gb', 10.00, true);
-INSERT INTO withdrawal (user_id, country_code, amount, success) VALUES (1, 'au', 250.00, true);
-INSERT INTO withdrawal (user_id, country_code, amount, success) VALUES (2, 'us', 50.00, true);
-INSERT INTO withdrawal (user_id, country_code, amount, success) VALUES (3, 'be', 20.00, true);
-INSERT INTO withdrawal (user_id, country_code, amount, success) VALUES (2, 'fr', 20.00, true);
+INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'gb', 10.00, true);
+INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'au', 250.00, true);
+INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'us', 50.00, true);
+INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (3, 'be', 20.00, true);
+INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'fr', 20.00, true);
 ```
 
 Results in a stream of possible fraud cases that need further investigation:
