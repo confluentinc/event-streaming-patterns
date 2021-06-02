@@ -17,11 +17,9 @@ CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
           TIMESTAMP='eventTime');
 ```
 
-By default, [ksqlDB](https://ksqldb.io) `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the event payload itself, as shown below.
-
+By default, [ksqlDB](https://ksqldb.io) `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the event payload itself, as shown above.
 
 Every record in ksqlDB has a system column called `ROWTIME` that tracks the timestamp of the event. It could be either when the event occurs (producer system time) or when the event is ingested (broker system time), depending on the `message.timestamp.type` configuration value. ksqlDB also allows streams to use the timestamp from a field in the record payload.
-
 
 ## References
 * See the [ksqlDB documentation](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) on time semantics
