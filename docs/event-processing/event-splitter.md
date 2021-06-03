@@ -23,7 +23,7 @@ The example below processes each input event, un-nesting the array and generatin
 ```
 SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
              EXPLODE(TOTAL)->TOTALAMOUNT AS TOTAL_AMOUNT,
-             EXPLODE(TOTAL)->ID AS CUST_ID
+             EXPLODE(TOTAL)->ID AS CUSTOMER_ID
         FROM my_stream EMIT CHANGES;
 ```
 
