@@ -25,7 +25,7 @@ How do we efficiently watch for logically similar events?
 ![wait for N events](../img/wait-for-n-events.svg)
 
 To consider related events as a group, we need to group them by a given key,
-and then count the occurences of that key.
+and then count the occurrences of that key.
 
 ## Implementation
 
@@ -64,10 +64,10 @@ CREATE OR REPLACE TABLE trade_approval AS
 
 Querying that stream in one terminal:
 ```
-ksql> SELECT * 
-> FROM trade_approval 
-> WHERE approvals = 2 
-> EMIT CHANGES;
+SELECT *
+FROM trade_approval
+WHERE approvals = 2
+EMIT CHANGES;
 ```
 
 ...and inserting some data in another:
@@ -109,7 +109,7 @@ Note that in the example above, we queried for an exact number of
 approvals `WHERE approvals = 2`. We could have used a
 greater-than-or-equal check (`WHERE approvals >= 2`) but that would
 have emitted a new event for a 3rd approval, and a 4th, and so on.
-That would be the wrong behaviour here, but it might be useful feature
+That would be the wrong behavior here, but it might be useful feature
 in a system where you wanted to reward loyal customers, and send out a
 discount email for every order _after_ their first 10.
 
