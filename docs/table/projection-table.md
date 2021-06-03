@@ -6,11 +6,6 @@ seo:
 
 # Projection Table
 
-How can a stream of change events be summarized into the current state
-of the world, efficiently?
-
-## Problem
-
 One of the first questions we want to ask of a stream of events is,
 "Where are we now?"
 
@@ -22,6 +17,11 @@ every minute, we'd like to know where each truck is right now.
 How do we roll up data efficiently? How do we preserve a complete
 event log and enjoy the fast queries of an "update in place"-style
 database?
+
+## Problem
+
+How can a stream of change events be summarized into the current state
+of the world, efficiently?
 
 ## Solution
 ![Projection Table](../img/projection-table.svg)
