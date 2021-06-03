@@ -1,3 +1,8 @@
+---
+seo:
+  title: Event Source Connector
+  description: The Event Source Connector pattern is used to integrate data from existing data systems into the Event Streaming Platform. 
+---
 # Event Source Connector
 [Event Processing Applications](../event-processing/event-processing-application.md) may want to consume data from existing data systems, which are not themselves [Event Sources](event-source.md).
 
@@ -7,7 +12,7 @@ How can we connect cloud services and traditional systems, like relational datab
 ## Solution
 ![event-source-connector](../img/event-source-connector.png)
 
-Generally speaking, we need to find a way to extract data as events from the origin system. For relational databases, for example, a common technique is to use [Change Data Capture[(https://en.wikipedia.org/wiki/Change_data_capture), where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as events, which can then be ingested into another system. The components that perform this extraction and ingestion of events are typically called "connectors". The connectors turn the origin system into an [Event Source](../event-source/event-source.md), then generate [Events](../event/event.md) from that data, and finally sends these [Events](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
+Generally speaking, we need to find a way to extract data as [Events](../event/event.md) from the origin system. For relational databases, for example, a common technique is to use [Change Data Capture](https://en.wikipedia.org/wiki/Change_data_capture), where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as [Events](../event/event.md), which can then be ingested into another system. The components that perform this extraction and ingestion of [Events](../event/event.md) are typically called "connectors". The connectors turn the origin system into an [Event Source](../event-source/event-source.md), then generate [Events](../event/event.md) from that data, and finally sends these [Events](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## Implementation
 When connecting a cloud services and traditional systems to [Apache Kafka](https://kafka.apache.org/), the most common solution is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). There are hundreds of ready-to-use connectors available on [Confluent Hub](https://www.confluent.io/hub/), including blob stores like AWS S3, cloud services like Salesforce and Snowflake, relational databases, data warehouses, traditional message queues, flat files, and more. Confluent also provides many [fully managed Kafka connectors](https://docs.confluent.io/cloud/current/connectors/index.html) in the cloud.
