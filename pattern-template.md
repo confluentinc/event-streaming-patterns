@@ -5,10 +5,10 @@ seo:
 ---
 
 # Pattern Name
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
+TODO: Description of the general pattern. Consider explaining situations in which the pattern might be applied.
 
 ## Problem
-TODO: Technology agnostic English explanation of the problem
+TODO: Short, technology-agnostic English summary of the problem stated as a single "super-punchy" question.
 
 ## Solution
 TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
@@ -30,4 +30,3 @@ TODO: Technology specific reflection on implmenting the pattern 'in the real wor
 * TODO: Reference link to the EIP pattern as citation
 * TODO: pointers to related patterns?
 * TODO: pointers to external material?
-
