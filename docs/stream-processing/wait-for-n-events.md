@@ -6,11 +6,6 @@ seo:
 
 # Wait for N Events
 
-How can an application wait for a certain number of events to occur
-before performing processing?
-
-## Problem
-
 Sometimes events become significant after they've happened several
 times.
 
@@ -20,6 +15,11 @@ the customer to collect it from the depot. A gamer gets a trophy after
 they've killed their 100th Blarg.
 
 How do we efficiently watch for logically similar events?
+
+## Problem
+
+How can an application wait for a certain number of events to occur
+before performing processing?
 
 ## Solution
 ![wait for N events](../img/wait-for-n-events.svg)
