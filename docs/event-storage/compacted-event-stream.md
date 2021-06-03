@@ -31,7 +31,7 @@ Topic: topic-name       PartitionCount: 3       ReplicationFactor: 1    Configs:
 ## Considerations
 Compacted event streams allow for some optimizations:
 
-* First they allow the [Event Streaming Platform](../event-stream/event-streaming-platform.md) to slow down the growth of the Event Stream in a data-specific way (opposed to removing Events temporally).
+* First, they allow the [Event Streaming Platform](../event-stream/event-streaming-platform.md) to limit the storage growth of the Event Stream in a data-specific way, rather than removing Events universally after a pre-configured period of time.
 * Second having smaller Event Streams allows for faster recovery or system migration strategies.
 
 ## References
