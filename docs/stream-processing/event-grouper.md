@@ -29,4 +29,4 @@ SELECT product-name, COUNT(*), SUM(price) FROM purchases
 
 ## References
 * See the full tutorials on using [Session Windows](https://kafka-tutorials.confluent.io/create-session-windows/ksql.html) and [Hopping Windows](https://kafka-tutorials.confluent.io/create-hopping-windows/ksql.html) with [ksqlDB](https://ksqldb.io/).
-* The [Tumbling Windows](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) tutorial provides an end-to-end example for calculating an aggregate calcuation over a window of [Events](../event/event.md).
+* The [Tumbling Windows](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) tutorial provides an end-to-end example for calculating an aggregate calculation over a window of [Events](../event/event.md).
