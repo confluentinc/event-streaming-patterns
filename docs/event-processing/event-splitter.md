@@ -25,6 +25,6 @@ KStream<String, Integer> transformed = stream.flatMap(
 ```
 
 ## Considerations
-* Think about where the child events should be routed to, the same stream or a different stream. See `Event Router` on how to route events to different locations.
+* Should child events be routed to the same stream or a different stream? See [Event Router](../event-processing/event-router.md) on how to route events to different locations.
 * Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
 * Event Lineage: Your use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
