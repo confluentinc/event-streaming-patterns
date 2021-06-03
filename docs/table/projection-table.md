@@ -26,9 +26,13 @@ of the world, efficiently?
 ## Solution
 ![Projection Table](../img/projection-table.svg)
 
-We can maintain summary tables that behave just like materialized
+We can maintain projection tables that behave just like materialized
 views in a traditional database. As new events come in, the table is
 automatically updated, giving us an always-live picture of the system.
+
+Like a materialized view, projection tables are read-only. To change
+them, we change the underlying data by recording new events to their
+underlying streams.
 
 ## Implementation
 
@@ -55,7 +59,7 @@ CREATE OR REPLACE STREAM package_checkins (
 );
 ```
 
-Then we'll create a summary table, tracking each `package_id` and the
+Then we'll create a projection table, tracking each `package_id` and the
 newest `location`:
 
 ```sql
@@ -123,6 +127,7 @@ easily [define your own custom functions][custom_functions] or look to
 [Kafka Streams][kafka_streams] for complete control.
 
 ## References
+
 * [Aggregate functions][summary_functions] in the ksqlDB documentation.
 * Creating [custom ksqlDB functions][custom_functions] in the ksqlDB documentation.
 
