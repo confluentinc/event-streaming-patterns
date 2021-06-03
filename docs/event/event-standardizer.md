@@ -9,7 +9,7 @@ How do I process [Events](../event/event.md) that are semantically equivalent, b
 Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer that routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md), which in turn converts the [Event](../event/event.md) to a common format understood by the downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
-A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `map` function can act as the event router, directing the [Event](../event/event.md) to the proper [Event Translator](../event/event-translator.md) before forwading it to the output stream using the `to` function.
+A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `mapValues` function allows us translate each [Event](../event/event.md) type into the standard type expected on the output [Event Stream](../event-stream/event-stream.md).
 
 ```
 SpecificAvroSerde<SpecificRecord> inputValueSerde = ...
