@@ -97,9 +97,9 @@ CREATE STREAM possible_frauds
 Querying that stream in one terminal:
 
 ```sql
-ksql> SELECT *
-> FROM possible_frauds
-> EMIT CHANGES;
+SELECT *
+FROM possible_frauds
+EMIT CHANGES;
 ```
 
 ...and inserting some data in another:
