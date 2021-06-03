@@ -17,7 +17,7 @@ Then, publish one event per child.
 
 ## Implementation
 Many event processing technologies support this operation.
-ksqlDB has the `EXPLODE()` table function which takes an Array and outputs one value for each of the elements of the array.
+ksqlDB has the `EXPLODE()` table function which takes an array and outputs one value for each of the elements of the array.
 The example below processes each input event, un-nesting the array and generating new events for each element with new column names.
 
 ```
