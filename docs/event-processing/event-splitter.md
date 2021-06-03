@@ -6,7 +6,7 @@ How can I process an event if it contains multiple events, each of which may nee
 
 ## Solution Pattern
 ![event-splitter](img/event-splitter.png)
-First, split the original event into multiple child event. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
+First, split the original event into multiple child events. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
 
 ## Implementation
 ```
