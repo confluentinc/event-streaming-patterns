@@ -2,7 +2,7 @@
 [Event Streams](../event-stream/event-stream.md) often represent keyed snapshots of state, similar to a table in a relational database. That is, the [Events](../event/event.md) contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. [Event Processing Applications](../event-processing/event-processing-application.md) will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.
 
 ## Problem
-How can a (keyed) table be stored in an [Event Stream](../event-stream/event-stream.md) forever using the minimum amount of space?
+How can a (keyed) table be stored in an [Event Stream](../event-stream/event-stream.md) forever, using the minimum amount of space?
 
 ## Solution
 ![compacted-event-stream](../img/compacted-event-stream.png)
