@@ -1,13 +1,12 @@
 # Event Standardizer
-In most businesses, a variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process these Events. However, the reality of having many sources for these Events often results in the lack of such standards or in different interpretations of the same standard.
+In most businesses, a variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process these [Events](../event/event.md). However, the reality of having many sources for these [Events](../event/event.md) often results in the lack of such standards or in different interpretations of the same standard.
 
 ## Problem
 How do I process [Events](../event/event.md) that are semantically equivalent, but arrive in different formats?
 
 ## Solution
 ![event-standardizer](../img/event-standardizer.png)
-
-Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer that routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md), which in turn converts the [Event](../event/event.md) to a common form understood by the downstream [Event Processors](../event-processing/event-processor.md).
+Source all the input [Event Streams](../event-stream/event-stream.md) into an Event Standardizer that routes [Events](../event/event.md) to a specialized [Event Translator](../event-processing/event-translator.md), which in turn converts the [Event](../event/event.md) to a common format understood by the downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
 A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `map` function can act as the event router, directing the [Event](../event/event.md) to the proper [Event Translator](../event/event-translator.md) before forwading it to the output stream using the `to` function.
@@ -32,7 +31,8 @@ builder
 ```
 
 ## Considerations
-TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.
+When possible, diverging data format should be normalized "at the source". This data governence is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an [Event](../event/event.md) to the [Event Stream](../event-stream/event-stream.md), frees [Event](../event/event.md) allows consuming applications to delegate their data format validation logic to the schema validation layer.
+
 
 ## References
 * This pattern is derived from [Normalizer](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Normalizer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
