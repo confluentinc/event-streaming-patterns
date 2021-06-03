@@ -6,11 +6,6 @@ seo:
 
 # Logical AND
 
-How can an application initiate subsequent processing when two (or
-more) corresponding events arrive on different streams or tables?
-
-## Problem
-
 Streams of events become more interesting when they're considered
 together. It's often the case that when two separate events occur, it
 triggers a new fact that we want to capture.
@@ -21,6 +16,11 @@ then we transfer money to them.
 
 How do we look at several different streams and use them to make new
 events?
+
+## Problem
+
+How can an application trigger processing when two (or more) related
+events arrive on different streams?
 
 ## Solution
 ![logical AND](../img/logical-and.svg)
