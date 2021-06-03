@@ -10,7 +10,7 @@ How can systems using different data formats communicate with each other using [
 An Event Translator converts a data format into a standard format familiar to downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
-[ksqlDB](https://ksqldb.io) provides the ability to create [Event Streams](../event-stream/event-stream.md) natively using an ANSI SQL inspired syntax.
+The streaming database [ksqlDB](https://ksqldb.io) provides the ability to create [Event Streams](../event-stream/event-stream.md) with SQL statements.
 
 ```
 CREATE STREAM translated_stream AS
