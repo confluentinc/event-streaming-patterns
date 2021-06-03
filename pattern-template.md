@@ -5,10 +5,10 @@ seo:
 ---
 
 # Pattern Name
-TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.
+TODO: Description of the general pattern. Consider explaining situations in which the pattern might be applied.
 
 ## Problem
-TODO: Technology agnostic English explanation of the problem
+TODO: Short (2 sentence max), technology-agnostic English summary of the problem.
 
 ## Solution
 TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).
