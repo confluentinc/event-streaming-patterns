@@ -37,4 +37,5 @@ Compacted event streams allow for some optimizations:
 It is important to understand that compaction, on purpose, removes historical data from an Event Stream by removing superseded events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the event stream is the primary concern, use an [Infinite Retention Event Stream](infinite-retention-event-stream.md) instead of a compacted stream.
 
 ## References
-* Compacted topics work a bit like simple [Log Structured Merge Trees](http://www.benstopford.com/2015/02/14/log-structured-merge-trees/).
+* Compacted Event Streams are highly related to the [State Table](../table/state-table.md) pattern.
+* Compacted Event Streams work a bit like simple [Log Structured Merge Trees](http://www.benstopford.com/2015/02/14/log-structured-merge-trees/).
