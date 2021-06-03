@@ -2,7 +2,7 @@
 [Event Processing Applications](../event-processing/event-processing-application.md) may want to consume data from existing data systems which are not themselves [Event Sources](event-source.md).
 
 ## Problem
-How can we connect traditional applications or systems, like a database, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md), converting it's data at rest to data in motion with [Events](../event/event.md).
+How can we connect cloud services and traditional systems, like relational databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md), converting their data at rest to data in motion with [Events](../event/event.md).
 
 ## Solution
 ![event-source-connector](../img/event-source-connector.png)
@@ -31,4 +31,3 @@ CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
 ## References
 * This pattern is derived from [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html) for a full Kafka Connect example
-
