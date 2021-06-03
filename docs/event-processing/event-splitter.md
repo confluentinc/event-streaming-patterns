@@ -17,13 +17,13 @@ Then, publish one event per child.
 
 ## Implementation
 Many event processing technologies support this operation.
-ksqlDB has the `EXPLODE()` table function which takes an Array and outputs one value for each of the elements of the array.
+ksqlDB has the `EXPLODE()` table function which takes an array and outputs one value for each of the elements of the array.
 The example below processes each input event, un-nesting the array and generating new events for each element with new column names.
 
 ```
 SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
              EXPLODE(TOTAL)->TOTALAMOUNT AS TOTAL_AMOUNT,
-             EXPLODE(TOTAL)->ID AS CUST_ID
+             EXPLODE(TOTAL)->ID AS CUSTOMER_ID
         FROM my_stream EMIT CHANGES;
 ```
 
@@ -31,12 +31,12 @@ Kafka Streams has an analogous method called `flatMap()`.
 The example below processes each input event, generating new events with new keys and values.
 
 ```java
-KStream<Long, String> stream = ...;
-KStream<String, Integer> transformed = stream.flatMap(
-    (key, value) -> {
+KStream<Long, String> myStream = ...;
+KStream<String, Integer> splitStream = myStream.flatMap(
+    (eventKey, eventValue) -> {
       List<KeyValue<String, Integer>> result = new LinkedList<>();
-      result.add(KeyValue.pair(value.toUpperCase(), 1000));
-      result.add(KeyValue.pair(value.toLowerCase(), 9000));
+      result.add(KeyValue.pair(eventValue.toUpperCase(), 1000));
+      result.add(KeyValue.pair(eventValue.toLowerCase(), 9000));
       return result;
     }
   );
