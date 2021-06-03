@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Splitter
-  description: Split a single stream of events into multiple other streams so that they can be processed in a different ways
+  description: Split an event into multiple events so that they can be processed in a different ways
 ---
 
 # Event Splitter
