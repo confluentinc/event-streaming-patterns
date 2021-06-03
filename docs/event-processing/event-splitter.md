@@ -31,7 +31,7 @@ Kafka Streams has an analogous method called `flatMap()`.
 The example below processes each input event, generating new events with new keys and values.
 
 ```java
-KStream<Long, String> stream = ...;
+KStream<Long, String> myStream = ...;
 KStream<String, Integer> splitStream = myStream.flatMap(
     (key, value) -> {
       List<KeyValue<String, Integer>> result = new LinkedList<>();
