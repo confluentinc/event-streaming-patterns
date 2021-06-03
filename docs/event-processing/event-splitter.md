@@ -1,20 +1,38 @@
+---
+seo:
+  title: Event Splitter
+  description: Split a single stream of events into multiple other streams so that they can be processed in a different ways
+---
+
 # Event Splitter
-Event Splitter takes a single [event](../event/events.md) and splits it into multiple events.
+One [Event](../event/events.md) may actually contain multiple child events within it, each of which may need to be processed in different ways.
 
 ## Problem
-How can I process an event if it contains multiple events, each of which may need to be processed in a different way?
+How can an [Event](../event/events.md) be split into multiple events?
 
-## Solution Pattern
+## Solution
 ![event-splitter](img/event-splitter.png)
-First, split the original event into multiple child events. Most event processing technologies support this operation, for example the `EXPLODE()` table function in ksqlDB or the `flatMap()` operator in Kafka Streams. Then publish one event per child event. 
+First, split the original event into multiple child events.
+Then, publish one event per child.
 
 ## Implementation
+Many event processing technologies support this operation.
+ksqlDB has the `EXPLODE()` table function which takes an Array and outputs one value for each of the elements of the array.
+The example below processes each input event, un-nesting the array and generating new events for each element with new column names.
+
 ```
+SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
+             EXPLODE(TOTAL)->TOTALAMOUNT AS TOTAL_AMOUNT,
+             EXPLODE(TOTAL)->ID AS CUST_ID
+        FROM my_stream EMIT CHANGES;
+```
+
+Kafka Streams has an analogous method called `flatMap()`.
+The example below processes each input event, generating new events with new keys and values.
+
+```java
 KStream<Long, String> stream = ...;
 KStream<String, Integer> transformed = stream.flatMap(
-     // Here, we generate two output records for each input record.
-     // We also change the key and value types.
-     // Example: (345L, "Hello") -> ("HELLO", 1000), ("hello", 9000)
     (key, value) -> {
       List<KeyValue<String, Integer>> result = new LinkedList<>();
       result.add(KeyValue.pair(value.toUpperCase(), 1000));
@@ -25,6 +43,9 @@ KStream<String, Integer> transformed = stream.flatMap(
 ```
 
 ## Considerations
-* Should child events be routed to the same stream or a different stream? See [Event Router](../event-processing/event-router.md) on how to route events to different locations.
+* If child events need to be routed to different streams, see [Event Router](../event-processing/event-router.md) for routing events to different locations.
 * Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
 * Event Lineage: Your use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
+
+## References
+* This pattern is derived from [Splitter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
