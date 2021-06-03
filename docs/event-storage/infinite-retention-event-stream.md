@@ -1,5 +1,5 @@
 # Infinite Retention Event Stream
-Storing all [Events](../event/event.md) over time of an [Event Stream](../event-stream/event-stream.md) enables systems to be agile and evolve by providing the capability of rebuilding global historical state.
+Many use cases demand that [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md) will be stored for forever or for long periods of time, such as several years in the case of financial transactions because of legal requirements and compliance.
 
 ## Problem
 How can an operator ensure that events in a stream are retained forever?
