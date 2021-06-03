@@ -7,7 +7,7 @@ How can we connect cloud services and traditional systems, like relational datab
 ## Solution
 ![event-source-connector](../img/event-source-connector.png)
 
-When connecting a system like a relational database to [Apache Kafka](https://kafka.apache.org/), the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads data from the [Event Source](../event-source/event-source.md), then generate [Events](../event/event.md) from that data, and finally sends these [Events](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
+Generally speaking, we need to find a way to extract data as events from the origin system. For relational databases, for example, a common technique is to use [Change Data Capture[(https://en.wikipedia.org/wiki/Change_data_capture), where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as events, which can then be ingested into another system. The components that perform this extraction and ingestion of events are typically called "connectors". The connectors turn the origin system into an [Event Source](../event-source/event-source.md), then generate [Events](../event/event.md) from that data, and finally sends these [Events](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## Implementation
 [ksqlDB](https://ksqldb.io/) provides an ability to manage [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) with a SQL like syntax.
