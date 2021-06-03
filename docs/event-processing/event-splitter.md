@@ -32,7 +32,7 @@ The example below processes each input event, generating new events with new key
 
 ```java
 KStream<Long, String> stream = ...;
-KStream<String, Integer> transformed = stream.flatMap(
+KStream<String, Integer> splitStream = myStream.flatMap(
     (key, value) -> {
       List<KeyValue<String, Integer>> result = new LinkedList<>();
       result.add(KeyValue.pair(value.toUpperCase(), 1000));
