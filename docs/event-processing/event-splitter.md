@@ -11,7 +11,7 @@ One [Event](../event/events.md) may actually contain multiple child events withi
 How can an [Event](../event/events.md) be split into multiple events?
 
 ## Solution
-![event-splitter](img/event-splitter.png)
+![event-splitter](../img/event-splitter.png)
 First, split the original event into multiple child events.
 Then, publish one event per child.
 
