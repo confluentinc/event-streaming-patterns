@@ -13,15 +13,16 @@ Remove events from the Event Stream that represent outdated information and have
 Apache Kafka provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. A stream (topic in Kafka) is scanned periodically to remove any old events that have been superseded by newer events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
 
 To create a compacted event stream called `customer-profiles` with Kafka:
-```
-kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic customer-profiles --config cleanup.policy=compact
+```bash
+➜ kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic customer-profiles --config cleanup.policy=compact
 
 Created topic topic-name.
 ```
 
 The `kafka-topics` command can also verify the current topics configuration:
-```
-kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
+```bash
+➜ kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
+
 Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
         Topic: customer-profiles       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
         Topic: customer-profiles       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
