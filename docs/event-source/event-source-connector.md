@@ -19,15 +19,13 @@ When connecting a cloud services and traditional systems to [Apache Kafka](https
 
 There are several options to deploy such connectors. For example, the streaming database [ksqlDB](https://ksqldb.io/) provides an ability to manage Kafka connectors with SQL statements.
 ```
-CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
-    'connector.class'= 'io.confluent.connect.jdbc.JdbcSourceConnector',
-    'connection.url'= 'jdbc:postgresql://postgres:5432/postgres',
-    'connection.user'= 'postgres',
-    'connection.password'= 'postgres',
-    'mode'= 'incrementing',
-    'incrementing.column.name'= 'city_id',
-    'topic.prefix'= 'postgres_'
-);
+CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
+    "connector.class"='io.confluent.connect.jdbc.JdbcSourceConnector',
+    "connection.url"='jdbc:postgresql://localhost:5432/my.db',
+    "mode"='bulk',
+    "topic.prefix"='jdbc-',
+    "table.whitelist"='users',
+    "key"='username');
 ```
 
 ## Considerations
