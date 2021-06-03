@@ -9,7 +9,7 @@ Databases conflate the writing of data and the reading of data in the same place
 For example, a user adding and removing items from their cart would all be recorded as a stream of immutable events: t-shirt added, t-shirt removed, etc. These are then summarized into a separate view that used to serve reads, for example summarizing the various user events to represent the accurate contents of the cart. 
 
 ## Problem
-How can we update the value in a datastore and create an associated event (with at-least-once guarantees) that updates a queryable view of the data?
+How can we store and hold data in the exact form in which it arrived but read from a summarized and curated view?
 
 ## Solution
 ![command-query-responsibility-segregation](../img/command-query-responsibility-segregation.png)
