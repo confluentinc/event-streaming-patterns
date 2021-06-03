@@ -14,18 +14,18 @@ Apache Kafka provides this functionality natively through its [Topic Compaction]
 
 To create a compacted event stream called `customer-profiles` with Kafka:
 ```
-kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic topic-name --config cleanup.policy=compact
+kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic customer-profiles --config cleanup.policy=compact
 
 Created topic topic-name.
 ```
 
 The `kafka-topics` command can also verify the current topics configuration:
 ```
-kafka-topics --bootstrap-server localhost:9092 --topic topic-name --describe
-Topic: topic-name       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
-        Topic: topic-name       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: topic-name       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: topic-name       Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Offline:
+kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
+Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
+        Topic: customer-profiles       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
+        Topic: customer-profiles       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
+        Topic: customer-profiles       Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Offline:
 ```
 
 ## Considerations
