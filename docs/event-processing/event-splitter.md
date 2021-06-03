@@ -35,7 +35,7 @@ KStream<Long, String> myStream = ...;
 KStream<String, Integer> splitStream = myStream.flatMap(
     (eventKey, eventValue) -> {
       List<KeyValue<String, Integer>> result = new LinkedList<>();
-      result.add(KeyValue.pair(value.toUpperCase(), 1000));
+      result.add(KeyValue.pair(eventValue.toUpperCase(), 1000));
       result.add(KeyValue.pair(value.toLowerCase(), 9000));
       return result;
     }
