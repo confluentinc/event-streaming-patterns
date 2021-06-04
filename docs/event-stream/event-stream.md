@@ -4,7 +4,7 @@ seo:
   description: 
 ---
 # Event Stream
-[Event Processing Applications](../event-processing/event-processing-application.md) need to communicate, and ideally the communication is faciliated with [Events](../event/event.md). The applications need a standard mechanism to use for this communication.
+[Event Processing Applications](../event-processing/event-processing-application.md) need to communicate, and ideally the communication is facilitated with [Events](../event/event.md). The applications need a standard mechanism to use for this communication.
 
 ## Problem
 How can we coordinate [Event Processors](../event-processing/event-processor.md) using event streaming?
@@ -15,7 +15,7 @@ How can we coordinate [Event Processors](../event-processing/event-processor.md)
 Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named allowing communication over a specific stream of [Events](../event/event.md). Additionally, [Event](../event/event.md) data formats are often validated in order to govern the communication between [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation
-The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams natively. Use familiar SQL syntax to create a new Event Stream. This creates a stream of events representing locations of riders in `JSON` format named `riderLocations`.
+The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following creates a stream of events representing locations of riders in `JSON` format named `riderLocations`.
 ```sql
 CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
   WITH (kafka_topic='locations', value_format='json');
