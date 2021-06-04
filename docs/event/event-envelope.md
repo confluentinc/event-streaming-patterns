@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Envelope
-[Event Streaming Platforms](../event-stream/event-streaming-platform.md) allow many different types of applications to work together. Occasionally, an existing application cannot adopt its [Event](../event/event.md) format to match what is needed by other applications on the platform.
+[Event Streaming Platforms](../event-stream/event-streaming-platform.md) allow many different types of applications to work together. Standardizing on several well known fields used to wrap any [Event](../event/event.md) sent through the platform can ease adoption by new [Event Streaming Applications](../event-stream/event-streaming-application.md). Envelopes provide such fields in a format that all consumers can understand, for example referencing the encryption type, schema, key, serialization format. Envelopes are analogous to protocol headers in networking (TCP-IP etc.)
 
 ## Problem
 How to convey information to all participants in an [Event Streaming Platform](../event-stream/event-streaming-platform.md) independently of the event payload, e.g. how to decrypt an  [Event](../event/event.md), what schema is used, or what ID defines the uniqueness of the event?
