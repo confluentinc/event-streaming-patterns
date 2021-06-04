@@ -48,7 +48,12 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to Event Streaming Patterns</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -74,6 +79,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -150,7 +157,7 @@
 <p><img alt="event-filter" src="../../img/event-filter.png" /></p>
 <h2 id="implementation">Implementation</h2>
 <p>The Kafka Streams DSL provides a <code>filter</code> operator which filters out events that do not match a given predicate.</p>
-<pre><code>KStream&lt;String, Event&gt; eventStream = builder.stream(.....);
+<pre><code class="java">KStream&lt;String, Event&gt; eventStream = builder.stream(.....);
 eventStream.filter((key, value) -&gt; value.type() == &quot;foo&quot;).to(&quot;foo-events&quot;);
 </code></pre>
 

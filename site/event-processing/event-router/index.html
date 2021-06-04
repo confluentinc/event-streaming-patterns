@@ -48,7 +48,12 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to Event Streaming Patterns</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -74,6 +79,8 @@
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -155,7 +162,7 @@
 </ul>
 <p>You can use any or all of these three to pull the required information to route records to different topics at runtime.  The <code>RecordContext</code> provides access to the headers of the record, which can contain user provided information for routing purposes.</p>
 <h2 id="example-implementation">Example Implementation</h2>
-<pre><code>CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
+<pre><code class="java">CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
 
    String extract(String key, String value, RecordContext recordContext) {
          // Assuming the first ten characters of the key
@@ -179,7 +186,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../event-sink/event-sink-connector/" class="btn btn-neutral float-right" title="Event Sink Connector">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-splitter/" class="btn btn-neutral float-right" title="Event Splitter">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../event-processor/" class="btn btn-neutral" title="Event Processor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -211,7 +218,7 @@
         <span><a href="../event-processor/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../event-sink/event-sink-connector/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-splitter/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

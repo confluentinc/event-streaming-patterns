@@ -48,7 +48,12 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to Event Streaming Patterns</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -76,6 +81,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -155,7 +162,7 @@
 <p>When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.</p>
 <h2 id="implementation">Implementation</h2>
 <p>Java Basic Kafka Consumer</p>
-<pre><code>while (keepConsuming) {
+<pre><code class="java">while (keepConsuming) {
   try {
     final ConsumerRecords&lt;K, V&gt; records = consumer.poll(Duration.ofSeconds(1));
     try {
@@ -171,7 +178,7 @@
 </code></pre>
 
 <p>Python Basic Kafka Consumer</p>
-<pre><code>while True:
+<pre><code class="python">while True:
     try:
         event = consumer.poll(1000)
 
@@ -208,7 +215,7 @@
         <a href="../event-filter/" class="btn btn-neutral float-right" title="Event Filter">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Welcome to Event Streaming Patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../compositional-patterns/event-collaboration/" class="btn btn-neutral" title="Event Collaboration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -234,7 +241,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../compositional-patterns/event-collaboration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../event-filter/" style="color: #fcfcfc">Next &raquo;</a></span>
