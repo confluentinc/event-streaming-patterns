@@ -39,4 +39,4 @@ Note that this type of replication between clusters is asynchronous, which means
 There is also synchronous replication across clusters (e.g. [Multi Region Clusters](https://docs.confluent.io/platform/current/multi-dc-deployments/index.html)) but this is often limited to when the datacenters are in the same operational domain.
 
 ## References
-* This pattern is derived from [Message Bridge](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBridge.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* This pattern is derived from [Messaging Bridge](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingBridge.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
