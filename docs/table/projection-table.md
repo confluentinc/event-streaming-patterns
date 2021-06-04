@@ -29,6 +29,7 @@ of the world, efficiently?
 We can maintain projection tables that behave just like materialized
 views in a traditional database. As new events come in, the table is
 automatically updated, giving us an always-live picture of the system.
+Events with the same key are considered related, with newer events being interpreted as updates or deletions (depending on their contents) of older events.
 
 Like a materialized view, projection tables are read-only. To change
 them, we change the underlying data by recording new events to their
@@ -130,6 +131,7 @@ easily [define your own custom functions][custom_functions] or look to
 
 * [Aggregate functions][summary_functions] in the ksqlDB documentation.
 * Creating [custom ksqlDB functions][custom_functions] in the ksqlDB documentation.
+* Related patterns: [State Table](../table/state-table.md)
 
 [summary_functions]: https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/aggregate-functions/
 [custom_functions]: https://docs.ksqldb.io/en/latest/concepts/functions/
