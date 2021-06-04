@@ -1,7 +1,7 @@
 ---
 seo:
   title: Command Query Responsibility Segregation
-  description: Command Query Responsibibility Segregation (CQRS) describes segmentation of models for updating and querying of data.
+  description: Command Query Responsibility Segregation (CQRS) describes segmentation of models for updating and querying of data.
 ---
 
 # Command Query Responsibility Segregation (CQRS)
@@ -15,7 +15,7 @@ How can we store and hold data in the exact form in which it arrived but read fr
 ## Solution
 ![command-query-responsibility-segregation](../img/command-query-responsibility-segregation.png)
 
-Represent changes to state as [Events](../event/event.md) that describe changes to the state (commands). Subsequently, aggregate those [Events](../event/event.md) into a snapshot of the current state, allowing appliations to query for current values.
+Represent changes to state as [Events](../event/event.md) that describe changes to the state (commands). Subsequently, aggregate those [Events](../event/event.md) into a snapshot of the current state, allowing applications to query for current values.
 
 ## Implementation
 
