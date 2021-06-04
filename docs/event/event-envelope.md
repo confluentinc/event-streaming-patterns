@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Envelope
-[Event Streaming Platforms](../event-stream/event-streaming-platform.md) allow many different types of applications to work together. Occasionally, an existing application cannot adopt it's [Event](../event/event.md) format to match what is needed by other applications on the platform.
+[Event Streaming Platforms](../event-stream/event-streaming-platform.md) allow many different types of applications to work together. Occasionally, an existing application cannot adopt its [Event](../event/event.md) format to match what is needed by other applications on the platform.
 
 ## Problem
 How can we operate existing systems on the [Event Streaming Platform](../event-stream/event-streaming-platform.md) when there are specific requirements on the [Event](../event/event.md) format that the existing system does not support?
