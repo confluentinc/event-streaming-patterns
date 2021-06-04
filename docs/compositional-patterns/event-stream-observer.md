@@ -9,7 +9,7 @@ How can multiple event streaming platforms be connected so that events available
 
 ## Solution
 ![event-stream-observer](../img/event-stream-observer.png)
-Create a connection between the two systems, enabling the destination system to read from the source system.
+Create a connection between the two [Event Streaming Platforms](../event-stream/event-streaming-platform.md) , enabling the destination platform to read from the source one.
 Ideally this is done in realtime such that as new events are published in the source datacenter, they can be immediately copied, byte for byte, to the destination datacenter.
 This allows the client applications in the destination to leverage the same set of data.
 
