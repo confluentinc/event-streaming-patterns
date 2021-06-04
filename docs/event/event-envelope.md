@@ -30,4 +30,4 @@ static <T> T unwrap(Envelope<T> envelope) {
 ## References
 * This pattern is derived from [Envelope Wrapper](https://www.enterpriseintegrationpatterns.com/patterns/messaging/EnvelopeWrapper.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf 
 * [How to Choose Between Strict and Dynamic Schemas](https://www.confluent.io/blog/spring-kafka-protobuf-part-1-event-data-modeling/)
-* See [Cloud Events](https://cloudevents.io/) for a specification on describing event data in a common way.
+* See [Cloud Events](https://cloudevents.io/) for a specification on describing event header information in a common way.
