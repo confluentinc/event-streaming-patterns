@@ -22,7 +22,7 @@ CREATE STREAM translated_stream AS
 ```
 
 ## Considerations
-The [Event Standardizer](../event-processing/event-standardizer.md) pattern ties together an [Event Router](../event-processing/event-router.md) and multiple Event Translators, allowing disparate systems with multiple [Event](../event/event.md) formats to communicate.
+- In some cases translations will be unidirectional if data is lost, for example translating XML to json will often lose information meaning the original form cannot be recreated. 
 
 ## References
 * This pattern is derived from [Event Translator](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageTranslator.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
