@@ -1,19 +1,19 @@
 ---
 seo:
-  title: Schema-on-Read
-  description: The general use case for Schema-on-Read is when the sequencing matters between messages of different types.  
+  title: Lifecycle Event
+  description: The general use case for Lifecycle Event is when the sequencing matters between messages of different types.  
 ---
 
-# Schema-on-Read
-The general use case for Schema-on-Read is when the sequencing matters between messages of different types.
+# Lifecycle Event
+The general use case for Lifecycle Event is when the sequencing matters between messages of different types.
 For example, consider a finserv use case where first a customer opens an account, then gets approval, then makes a deposit, etc; the sequencing really matters.
-Put these heterogeneous event types into the same stream, allowing the event streaming platform maintain ordering and the consumer application deserialize the events.
+Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
 
 ## Problem
 How do I read events from a stream that may have multiple schemas, with different code paths in the [Event Processor](../event-processing/event-processor.md) to handle each one?
 
 ## Solution
-![schema-on-read](../img/schema-on-read.png)
+![lifecycle-event](../img/lifecycle-event.png)
 
 ## Implementation
 Confluent Schema Registry checks that schema changes are compatible with previous versions.
