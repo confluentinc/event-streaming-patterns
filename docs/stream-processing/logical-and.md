@@ -6,9 +6,10 @@ seo:
 
 # Logical AND
 
-Streams of events become more interesting when they're considered
-together. It's often the case that when two separate events occur, it
-triggers a new fact that we want to capture.
+[Event Streams](../event-stream/event-stream.md) become more interesting when
+they're considered together. It's often the case that when two separate
+[Events](../event/event.md) occur, it triggers a new fact that we want to
+capture.
 
 A product can only be dispatched when there's an order *and* a
 successful payment. If someone places a bet *and* their horse wins,
@@ -42,7 +43,6 @@ can reasonably expect a different process to chase the user for
 updated credit card details.
 
 _(For large retention periods, consider joining a stream to a [Projection Table](../table/projection-table.md) instead.)_
-
 
 ## Implementation
 
