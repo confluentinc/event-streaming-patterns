@@ -2,7 +2,7 @@
 Building distributed business workflows requires coordinating multiple services and [Event Processing Applications](../event-processing/event-processing-application.md). Business actions and reactions must be coordinated asynchronously as complex workflows transition through various states.
 
 ## Problem
-How can I build a distributed workflow in a way that allows components to evolve independently? 
+How can we build a distributed workflow in a way that allows components to evolve independently? 
 
 ## Solution
 ![event-collaboration](../img/event-collaboration.png)
@@ -16,4 +16,3 @@ Event Collaboration allows services and applications to collaborate around a sin
 
 ## References
 [Event Collaboration by Martin Fowler](https://martinfowler.com/eaaDev/EventCollaboration.html)
-* TODO: pointers to external material?
