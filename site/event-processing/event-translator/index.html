@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Router - Event Streaming Patterns</title>
+  <title>Event Translator - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Router";
-    var mkdocs_page_input_path = "event-processing/event-router.md";
+    var mkdocs_page_name = "Event Translator";
+    var mkdocs_page_input_path = "event-processing/event-translator.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -68,23 +68,25 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Router</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-streaming-api/">Event Streaming API</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-translator/">Event Translator</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Translator</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -142,7 +144,7 @@
         
       
     
-    <li>Event Router</li>
+    <li>Event Translator</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -153,35 +155,30 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-router">Event Router</h1>
+                <h1 id="event-translator">Event Translator</h1>
+<p><a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a> will connect a variety of systems over time, and common data formats may not be feasible across them.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I handle a situation where the implementation of a single logical function (e.g., inventory check) is spread across multiple physical systems?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-router" src="../../img/event-router.png" /></p>
-<p>Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, <code>extract</code>, which accepts three parameters:</p>
-<ul>
-<li>The Key of the record</li>
-<li>The Value of the record</li>
-<li>The RecordContext</li>
-</ul>
-<p>You can use any or all of these three to pull the required information to route records to different topics at runtime.  The <code>RecordContext</code> provides access to the headers of the record, which can contain user provided information for routing purposes.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code class="java">CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
-
-   String extract(String key, String value, RecordContext recordContext) {
-         // Assuming the first ten characters of the key
-         // contains the information determining where 
-         // Kafka Streams forwards the record.
-      return key.substring(0,10);
-   }
-
- KStream&lt;String, String&gt; myStream = builder.stream(...);
- myStream.mapValues(..).to( new CustomExtractor());
+<p>How can systems using different data formats communicate with each other using <a href="../event/event.md">Events</a>?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event-translator" src="../../img/event-translator.png" /></p>
+<p>An Event Translator converts a data format into a standard format familiar to downstream <a href="../event-processor/">Event Processors</a>. This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to Json or Protobuf to Avro.</p>
+<h2 id="implementation">Implementation</h2>
+<p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides the ability to create <a href="../event-stream/event-stream.md">Event Streams</a> with SQL statements.</p>
+<pre><code>CREATE STREAM translated_stream AS
+   SELECT
+      fieldX AS fieldC,
+      field.Y AS fieldA,
+      field.Z AS fieldB
+   FROM untranslated_stream
 </code></pre>
 
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>In some cases translations will be unidirectional if data is lost, for example translating XML to json will often lose information meaning the original form cannot be recreated. </li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">Kafka Tutorial</a>: How to dynamically choose the output topic at runtime </li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageTranslator.html">Event Translator</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
 </ul>
               
             </div>
@@ -190,10 +187,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-splitter/" class="btn btn-neutral float-right" title="Event Splitter">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event-sink/event-sink-connector/" class="btn btn-neutral float-right" title="Event Sink Connector">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-processor/" class="btn btn-neutral" title="Event Processor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-streaming-api/" class="btn btn-neutral" title="Event Streaming API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -219,10 +216,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-processor/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-streaming-api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-splitter/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event-sink/event-sink-connector/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

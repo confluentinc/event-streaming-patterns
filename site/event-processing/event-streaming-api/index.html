@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Router - Event Streaming Patterns</title>
+  <title>Event Streaming API - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Router";
-    var mkdocs_page_input_path = "event-processing/event-router.md";
+    var mkdocs_page_name = "Event Streaming API";
+    var mkdocs_page_input_path = "event-processing/event-streaming-api.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -68,21 +68,19 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Router</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Streaming API</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-streaming-api/">Event Streaming API</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-translator/">Event Translator</a>
                     </li>
@@ -142,7 +140,7 @@
         
       
     
-    <li>Event Router</li>
+    <li>Event Streaming API</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -153,35 +151,18 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-router">Event Router</h1>
+                <h1 id="event-streaming-api">Event Streaming API</h1>
+<p>Applications that connect to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> need to do so in a consistent and reliable way. </p>
 <h2 id="problem">Problem</h2>
-<p>How do I handle a situation where the implementation of a single logical function (e.g., inventory check) is spread across multiple physical systems?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="event-router" src="../../img/event-router.png" /></p>
-<p>Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, <code>extract</code>, which accepts three parameters:</p>
-<ul>
-<li>The Key of the record</li>
-<li>The Value of the record</li>
-<li>The RecordContext</li>
-</ul>
-<p>You can use any or all of these three to pull the required information to route records to different topics at runtime.  The <code>RecordContext</code> provides access to the headers of the record, which can contain user provided information for routing purposes.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code class="java">CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
-
-   String extract(String key, String value, RecordContext recordContext) {
-         // Assuming the first ten characters of the key
-         // contains the information determining where 
-         // Kafka Streams forwards the record.
-      return key.substring(0,10);
-   }
-
- KStream&lt;String, String&gt; myStream = builder.stream(...);
- myStream.mapValues(..).to( new CustomExtractor());
-</code></pre>
-
+<p>How can my application connect to an Event Streaming Platform to send and receive <a href="../event/events.md">Events</a>?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event-streaming-api" src="../../img/event-streaming-api.png" /></p>
+<p>The Event Streaming Platform provides an Application Programming Interface (API) allowing applications to reliably communicate across the platform. The API provides a logical and well documented protocol which defines the message structure and data exchange methods. Higher level libraries implement these protocols allowing a variety of technologies and programming languages to interface with the platform. The highler level libraries allow the application to focus on business logic leaving the details of the platform communication to the API.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">Kafka Tutorial</a>: How to dynamically choose the output topic at runtime </li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageEndpoint.html">Message Endpoint</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>The <a href="https://kafka.apache.org/protocol.html">Apache Kafka Protocol Guide</a> provides details on the wire protocol implemented in Kafka.</li>
+<li>The <a href="https://kafka.apache.org/documentation/#api">Apache Kafka API documentation</a> contains information on the variety of APIs available for reading, writing, and administering Kafka.</li>
 </ul>
               
             </div>
@@ -190,10 +171,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-splitter/" class="btn btn-neutral float-right" title="Event Splitter">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-translator/" class="btn btn-neutral float-right" title="Event Translator">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-processor/" class="btn btn-neutral" title="Event Processor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-splitter/" class="btn btn-neutral" title="Event Splitter"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -219,10 +200,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-processor/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-splitter/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-splitter/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-translator/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
