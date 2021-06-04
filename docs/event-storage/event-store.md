@@ -6,7 +6,7 @@ seo:
 
 # Event Store
 
-When considering an event-streaming architecture, the first
+When considering an architecture based on an [Event Streaming Platform](../event-stream/event-streaming-platform.md), the first
 fundamental question is, "How do we store our events?" This isn't as
 obvious as it first sounds, as we have to consider persistence, query
 performance, write throughput, availability, auditing and many other
@@ -21,7 +21,7 @@ truth for applications?
 ![event store](../img/event-store.svg)
 
 The data structure of choice for storing incoming events is the
-append-only log. It allows for constant-time (Θ(1)) writes, lock-free
+[Event Stream](../event-stream/event-stream.md), which is essentially an append-only log. It allows for constant-time (Θ(1)) writes, lock-free
 concurrent reads, and straightforward replication across multiple
 machines.
 
@@ -48,8 +48,8 @@ event you wish to store. Such logs are:
 It's worth briefly contrasting Apache Kafka® with message queues and
 relational databases.
 
-While queues also concerns themselves with a stream of events, they
-are often consider events as short-lived, independent messages. A
+While queues also concern themselves with a stream of events, they
+often consider events as short-lived, independent messages. A
 message may only exist in memory, or it may be durable enough for data
 to survive server restarts, but in general they aren't intended to
 hold on to events for months or even years. Further, their querying
@@ -61,6 +61,7 @@ persistent state of the world in perpetuity, and answering arbitrary
 questions about it, but they often fall short on _auditing_ -
 answering which events led up to the current state - and on
 _liveness_ - what _new_ events do we need to consider.
+They are predominantly designed for use cases that operate on data at rest, whereas an Event Store is designed from the ground up for data in motion and event streaming.
 
 By beginning with a fundamental data-structure for event capture, and
 building on that to provide long-term persistence and arbitrary
