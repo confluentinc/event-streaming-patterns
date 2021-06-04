@@ -15,6 +15,5 @@ Event Collaboration allows services and applications to collaborate around a sin
 * With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The [Correlation Identifier](../event/correlation-identifier.md) pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.
 
 ## References
-* TODO: pointers to related patterns?
+[Event Collaboration by Martin Fowler](https://martinfowler.com/eaaDev/EventCollaboration.html)
 * TODO: pointers to external material?
-
