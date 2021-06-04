@@ -1,27 +1,27 @@
 # Geo Replication
-Many architectures have streams of events deployed across multiple datacenters spanning boundaries of event streaming platforms, datacenters, or geo-regions.
-In these situations, it may be useful for client applications in one datacenter to have access to events produced in another datacenter.
-All clients shouldn't be forced to read from the source datacenter, which can incur high latency and data egress costs.
-Instead, with a move-once-read-many approach, the data can be replicated to the destination datacenter and then the client there can process the data.
+Many architectures have streams of events deployed across multiple datacenters spanning boundaries of [Event Streaming Platforms](../event-stream/event-streaming-platform.md), datacenters, or geo-regions.
+In these situations, it may be useful for client applications in one event streaming platform to have access to [Events](../event/event.md) produced in another one.
+All clients shouldn't be forced to read from the source event streaming platform, which can incur high latency and data egress costs.
+Instead, with a move-once-read-many approach, the data can be replicated to the destination one and then the client there can process the data.
 
 ## Problem
-How can multiple event streaming platforms be connected so that events available in one site are also available on the others?
+How can multiple [Event Streaming Platforms](../event-stream/event-streaming-platform.md) be connected so that events available in one site are also available on the others?
 
 ## Solution
 ![geo-replication](../img/geo-replication.png)
-Create a connection between the two [Event Streaming Platforms](../event-stream/event-streaming-platform.md) , enabling the destination platform to read from the source one.
-Ideally this is done in realtime such that as new events are published in the source datacenter, they can be immediately copied, byte for byte, to the destination datacenter.
+Create a connection between the two [Event Streaming Platforms](../event-stream/event-streaming-platform.md), enabling the destination platform to read from the source one.
+Ideally this is done in realtime such that as new events are published in the source event streaming platform, they can be immediately copied, byte for byte, to the destination event streaming platform.
 This allows the client applications in the destination to leverage the same set of data.
 
 ## Implementation
-Practically, replication is not enabled on two complete datacenters, as there are always exceptions, organizational limitations, technical constraints, or other reasons why you wouldn't want to copy absolutely everything.
+Practically, replication is not enabled completely on all data streams, as there are always exceptions, organizational limitations, technical constraints, or other reasons why you wouldn't want to copy absolutely everything.
 Instead, you can do this on a per topic basis, where you can map a source topic to a destination topic.
 
 With Apache Kafka, you can do this in one of several ways.
 
-Option 1: [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html)
+### Option 1: [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html)
 
-Cluster Linking enables easy data sharing between datacenters, mirroring topics across clusters.
+Cluster Linking enables easy data sharing between event streaming platforms, mirroring topics across them.
 Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.
 
 ```
@@ -29,14 +29,16 @@ ccloud kafka link create east-west ...
 ccloud kafka topic create <destination topic> --link east-west --mirror-topic <source topic> ...
 ```
 
-Option 2: [Replicator](https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html) or [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
+Other messaging systems like RabbitMQ, Active MQ, etc., provide similar functionality but without the same levels of parallelism.
+
+### Option 2: [Replicator](https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html) or [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
 
 Operators can set up such inter-cluster data flows with Confluent's Replicator or Kafka's MirrorMaker (version 2), tools that replicate data between different Kafka environments.
 Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.
 
 ## Considerations
-Note that this type of replication between clusters is asynchronous, which means an event that is recorded in the source cluster may be available before that event is recorded in the destination cluster.
-There is also synchronous replication across clusters (e.g. [Multi Region Clusters](https://docs.confluent.io/platform/current/multi-dc-deployments/index.html)) but this is often limited to when the datacenters are in the same operational domain.
+Note that this type of replication between event streaming platforms is asynchronous, which means an event that is recorded in the source may be available before that event is recorded in the destination.
+There is also synchronous replication across event streaming platforms (e.g. [Multi Region Clusters](https://docs.confluent.io/platform/current/multi-dc-deployments/index.html)) but this is often limited to when the event streaming platforms are in the same operational domain.
 
 ## References
 * This pattern is derived from [Messaging Bridge](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingBridge.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
