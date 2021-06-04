@@ -8,7 +8,7 @@ seo:
 [Event Streaming Platforms](../event-stream/event-streaming-platform.md) allow many different types of applications to work together. Occasionally, an existing application cannot adopt its [Event](../event/event.md) format to match what is needed by other applications on the platform.
 
 ## Problem
-How can we operate existing systems on the [Event Streaming Platform](../event-stream/event-streaming-platform.md) when there are specific requirements on the [Event](../event/event.md) format that the existing system does not support?
+How to convey information to all participants in an [Event Streaming Platform](../event-stream/event-streaming-platform.md) independently of the event payload, e.g. how to decrypt an  [Event](../event/event.md), what schema is used, or what ID defines the uniqueness of the event?
 
 ## Solution
 ![event-envelope](../img/event-envelope.png)
