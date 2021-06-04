@@ -19,9 +19,9 @@ Instead, you can do this on a per topic basis, where you can map a source topic 
 
 With Apache Kafka, you can do this in one of several ways.
 
-### Option 1: [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html)
+### Option 1: Cluster Linking
 
-Cluster Linking enables easy data sharing between event streaming platforms, mirroring topics across them.
+[Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html) enables easy data sharing between event streaming platforms, mirroring topics across them.
 Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.
 
 ```
@@ -31,9 +31,9 @@ ccloud kafka topic create <destination topic> --link east-west --mirror-topic <s
 
 Other messaging systems like RabbitMQ, Active MQ, etc., provide similar functionality but without the same levels of parallelism.
 
-### Option 2: [Replicator](https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html) or [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
+### Option 2: Connect-based Replication
 
-Operators can set up such inter-cluster data flows with Confluent's Replicator or Kafka's MirrorMaker (version 2), tools that replicate data between different Kafka environments.
+Operators can set up such inter-cluster data flows with Confluent's [Replicator](https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html) or Kafka's [MirrorMaker](https://kafka.apache.org/documentation/#georeplication) (version 2), tools that replicate data between different Kafka environments.
 Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.
 
 ## Considerations
