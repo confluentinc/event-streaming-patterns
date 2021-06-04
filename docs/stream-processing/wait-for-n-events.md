@@ -6,8 +6,8 @@ seo:
 
 # Wait for N Events
 
-Sometimes events become significant after they've happened several
-times.
+Sometimes [Events](../event/event.md) become significant after they've
+happened several times.
 
 A user can try to log in 5 times, but after that we'll lock their
 account.  A parcel delivery will be attempted 3 times before asking
