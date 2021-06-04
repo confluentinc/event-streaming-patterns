@@ -1,4 +1,4 @@
-# Event Stream Observer
+# Geo Replication
 Many architectures have streams of events deployed across multiple datacenters spanning boundaries of event streaming platforms, datacenters, or geo-regions.
 In these situations, it may be useful for client applications in one datacenter to have access to events produced in another datacenter.
 All clients shouldn't be forced to read from the source datacenter, which can incur high latency and data egress costs.
