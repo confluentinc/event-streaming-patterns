@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Database Write Aside - Event Streaming Patterns</title>
+  <title>Schema Validator - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Database Write Aside";
-    var mkdocs_page_input_path = "event-source/database-write-aside.md";
+    var mkdocs_page_name = "Schema Validator";
+    var mkdocs_page_input_path = "event-source/schema-validator.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -86,19 +86,7 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Database Write Aside</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
                     </li>
@@ -106,7 +94,19 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Schema Validator</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -146,7 +146,7 @@
         
       
     
-    <li>Database Write Aside</li>
+    <li>Schema Validator</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -157,38 +157,32 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="database-write-aside">Database Write Aside</h1>
+                <h1 id="schema-validator">Schema Validator</h1>
+<p>In an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, <a href="../event-source/">Event Sources</a>, which create and write <a href="../event/event.md">Events</a>, are decoupled from <a href="../../event-sink/event-sink/">Event Sinks</a> and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, which read and process these events. Ensuring interoperability between the producers and the consumers of events requires that they agree on the data schemas for the events, which is an important aspect of putting <a href="../event/data-contract.md">Data Contracts</a> in place for data governance purposes.</p>
 <h2 id="problem">Problem</h2>
-<p>How do I update a value in a database and create an associated event with the least amount of effort?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="database-write-aside" src="../../img/database-write-aside.png" />
-Write to a database, then write to Kafka. Perform the write to Kafka as the last step in a database transaction to ensure an atomic dual commit (aborting the transaction if the write to Kafka fails). </p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code>//Enable transactions
-db.setAutoCommit(false);
-
-try{
-   //insert into the DB
-   sql = db.prepareStatement(&quot;insert mydb.events values (?)&quot;);
-   sql.setString(event.toString());
-   sql.executeUpdate();
-
-   //insert into Kafka
-   producer.send(event.key(), event.value());
-
-   //commit to the DB
-   db.commit();
-} catch (SQLException e ) {
-   db.rollback();
-}
+<p>How do I enforce that <a href="../event/event.md">Events</a> sent to an <a href="../event-stream/event-stream.md">Event Stream</a> conform to a defined schema for that stream?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="schema-validator" src="../../img/schema-validator.png" />
+Validate whether an <a href="../event/event.md">Event</a> conforms to the defined schema(s) of an <a href="../event-stream/event-stream.md">Event Stream</a> prior to writing the event to the stream. Such schema validation can be done:</p>
+<ol>
+<li>On the server side by the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> that receives the <a href="../event/event.md">Event</a>. <a href="../event/event.md">Events</a> that fail schema validation and thus violate the <a href="../event/data-contract.md">Data Contract</a> are rejected.</li>
+<li>On the client side by the <a href="../event-source/">Event Source</a> that creates the <a href="../event/event.md">Event</a>. For example, an <a href="../event-source-connector/">Event Source Connector</a> can validate <a href="../event/event.md">Events</a> prior to ingestion into the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Or, an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> can use the schema validation functionality provided by a serialization library that supports schemas (e.g., Confluent's serializer/deserializers for Kafka).</li>
+</ol>
+<h2 id="implementation">Implementation</h2>
+<p>With Confluent, schema validation is fully supported with a per-environment hosted <a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Schema Registry</a>. Use the cloud UI to enable schema registry in your cloud provider of choice. Schemas can be managed per topic using the cloud UI or the <a href="https://docs.confluent.io/ccloud-cli/current/index.html">Confluent Cloud CLI</a>. An example command to create a schema using the CLI:</p>
+<pre><code>ccloud schema-registry schema create --subject employees-value --schema employees.json --type AVRO
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>In its default form, this pattern guarantees dual-write for most use cases. However, should the database transaction fail at commit time (say, because the database server has crashed) the write to Kafka cannot be rolled back unless transactions have been enabled. For many use cases, this eventuality will be tolerable as the dual-write can be retried once the failure is fixed, and most event consumers will implement idempotence anyway. However, application programmers need to be aware that there is no firm guarantee. </p>
-<p>Transactional messaging systems like Kafka can be used to provide stronger guarantees so long as all event consumers have the transactions feature enabled. </p>
+<ul>
+<li>Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is <a href="../event/schema-on-read.md">Schema On Read</a>, where data formats are not enforced on write. Instead, consuming Event Processing Applications are required to validate data formats as they read each event. </li>
+<li>Server-side schema validation is preferable when you want to enforce this pattern centrally inside an organization.  In contrast, client-side validation assumes the cooperation of client applications and their developers, which may or may not be acceptable (e.g., in regulated industries).</li>
+<li>Schema validation results in a load increase because it impacts the write path of every event.  Client-side validation impacts primarily the load of the client applications.  Server-side schema validation increases the load on the event streaming platform, whereas client applications are less affected (here, the main impact is dealing with rejected events; see <a href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>).</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Add references?</li>
+<li>See the <a href="../event-stream/schema-compatibility.md">Schema Compatibility</a> pattern for information on how schemas can evolve over time and be verified.</li>
+<li>Learn more how to <a href="https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html">Manage and Validate Schemas with Confluent and Kafka</a>.</li>
 </ul>
               
             </div>
@@ -197,10 +191,10 @@ try{
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../database-write-through/" class="btn btn-neutral float-right" title="Database Write Through">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event-storage/infiite-retention-event-stream/" class="btn btn-neutral float-right" title="Infinite Retention Event Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../event-sink/event-sink/" class="btn btn-neutral" title="Event Sink"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-source/" class="btn btn-neutral" title="Event Source"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -226,10 +220,10 @@ try{
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../event-sink/event-sink/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-source/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../database-write-through/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event-storage/infiite-retention-event-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
