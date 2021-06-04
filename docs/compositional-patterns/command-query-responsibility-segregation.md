@@ -19,34 +19,34 @@ Represent changes to state as [Events](../event/event.md) that describe changes 
 
 ## Implementation
 
-The streaming database [ksqlDB](https://ksqldb.io/) can implement a CQRS application natively. [Event Streams](../event-stream/event-stream.md) are built into to the streaming database design, allowing [Events](../event/event.md) to be inserted directly using SQL syntax. 
+The streaming database [ksqlDB](https://ksqldb.io/) can implement a CQRS using an [Event Stream](../event-stream/event-stream.md) and [Table](../table/table.md).
+
+[Event Streams](../event-stream/event-stream.md) are built into to the streaming database design. Creating a new stream is straightforward:
 
 ```sql
-CREATE STREAM purchases (customer VARCHAR, item VARCHAR, action VARCHAR)
-  WITH (kafka_topic='purchases-topic', value_format='json');
+CREATE STREAM purchases (customer VARCHAR, item VARCHAR, qty INT WITH (kafka_topic='purchases-topic', value_format='json', partitions=1);
 ```
 
+[Events](../event/event.md) can be directly using familiar SQL syntax. 
 ```sql
-INSERT INTO purchases (customer, item, action) VALUES ('jsmith', 'hats', 'add');
-INSERT INTO purchases (customer, item, action) VALUES ('ybyzek', 'jumpers', 'add');
-INSERT INTO purchases (customer, item, action) VALUES ('jsmith', 'trousers', 'add');
-INSERT INTO purchases (customer, item, action) VALUES ('ybyzek', 'hats', 'remove');
-INSERT INTO purchases (customer, item, action) VALUES ('ybyzek', 'trousers', 'add');
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'hats', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'hats', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'sweaters', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', -1);
 ```
 
-Create a materialized view of the [Events](../event/event.md):
-
-WIP
-```sql
-CREATE TABLE currentPurchases AS
-  SELECT 
+We can create a [Materialized View](https://docs.ksqldb.io/en/latest/concepts/materialized-views/) of the data as a [Table](../table/table.md):
+```sql  
+CREATE TABLE customer_purchases WITH (KEY_FORMAT='JSON') AS
+  SELECT customer, item, SUM(qty) as total_qty from purchases GROUP BY customer, item emit changes;
 ```
 
-The current values for aggregated state can be queried by client applications using common `SELECT` syntax.
-```sql
-SELECT * FROM purchases 
-  WHERE  <= 5 EMIT CHANGES;
-
+And continuously query for changes to the state of the `customer_purchases` table:
+```sql 
+SELECT * FROM customer_purchases EMIT CHANGES;
+```
 
 ## Considerations
 * CQRS adds complexity over a traditional simple [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) database implementation.
