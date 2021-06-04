@@ -24,6 +24,6 @@ confluent.tier.<storage-provider>.region=<REGION>
 ```
 
 ## References 
-* The blog post [Infinite Storage in Confluent Platform](https://www.confluent.io/blog/infinite-kafka-storage-in-confluent-platform/) goes into further detail about tiered storage through tiering.
+* The blog post [Infinite Storage in Confluent](https://www.confluent.io/blog/infinite-kafka-storage-in-confluent-platform/) goes describes the tiered storage approach in more detail.
 * An [Event Sink Connector](../event-sink/event-sink-connector.md) can be used to implement an infinite retention event stream by loading [Event](../event/event.md) into permanent external storage.
 * Documentation on [Tiered Storage](https://docs.confluent.io/platform/current/kafka/tiered-storage.html) on Confluent Platform provides details on configuration and usage.
