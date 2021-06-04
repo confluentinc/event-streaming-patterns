@@ -2,13 +2,13 @@
 Many architectures have streams of events deployed across multiple datacenters spanning boundaries of event streaming platforms, datacenters, or geo-regions.
 In these situations, it may be useful for client applications in one datacenter to have access to events produced in another datacenter.
 All clients shouldn't be forced to read from the source datacenter, which can incur high latency and data egress costs.
-Instead, with a move-once-read-many approach, the data can be mirrored to the destination datacenter and then the client there can "observe" the data.
+Instead, with a move-once-read-many approach, the data can be replicated to the destination datacenter and then the client there can process the data.
 
 ## Problem
 How can multiple event streaming platforms be connected so that events available in one site are also available on the others?
 
 ## Solution
-![event-stream-observer](../img/event-stream-observer.png)
+![geo-replication](../img/geo-replication.png)
 Create a connection between the two [Event Streaming Platforms](../event-stream/event-streaming-platform.md) , enabling the destination platform to read from the source one.
 Ideally this is done in realtime such that as new events are published in the source datacenter, they can be immediately copied, byte for byte, to the destination datacenter.
 This allows the client applications in the destination to leverage the same set of data.
@@ -29,10 +29,10 @@ ccloud kafka link create east-west ...
 ccloud kafka topic create <destination topic> --link east-west --mirror-topic <source topic> ...
 ```
 
-Option 2: [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
+Option 2: [Replicator](https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html) or [MirrorMaker](https://kafka.apache.org/documentation/#georeplication)
 
-Operators can set up such inter-cluster data flows with Kafka's MirrorMaker (version 2), a tool to replicate data between different Kafka environments.
-Unlike Cluster Linking, it's a separate service built upon Kafka Connect, with built-in producers and consumers.
+Operators can set up such inter-cluster data flows with Confluent's Replicator or Kafka's MirrorMaker (version 2), tools that replicate data between different Kafka environments.
+Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.
 
 ## Considerations
 Note that this type of replication between clusters is asynchronous, which means an event that is recorded in the source cluster may be available before that event is recorded in the destination cluster.
