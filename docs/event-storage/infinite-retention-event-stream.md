@@ -14,6 +14,11 @@ When using [Confluent Cloud](https://www.confluent.io/confluent-cloud/), infinit
 
 For on-premises [Event Streaming Platforms](../event-stream/event-streaming-platform.md), [Confluent Platform](https://www.confluent.io/product/confluent-platform/) adds the ability for infinite retention by extending Apache Kafka with [Tiered Storage](https://docs.confluent.io/platform/current/kafka/tiered-storage.html). Tiered storage separates the compute and storage layers, allowing the operator to scale either of those independently as needed. Newly arrived [Events](../event/event.md) are considered "hot", but as time moves on, they get "warm" and migrate to more cost-effective external storage like an AWS S3 bucket. As cloud-native object stores can effectively scale to infinite size, the Kafka cluster can act as the system of record for infinite [Event Streams](../event-stream/event-stream.md). Additionally, by separating storage from compute, operators only need to add brokers to increase compute power.
 
+## Considerations
+* Infinite Retention Streams are typically used to store entire datasets which will be used by many subscribers. For example, storing the canonical customer dataset in an Infinite Retention Event Stream makes it available to any other system, regardless of their database technology. The customer's dataset can be easily imported or reimported as a whole.
+
+* Something about compacted topics being used and commonly as the backing for tables in ksqlDB
+
 ## References 
 * The blog post [Infinite Storage in Confluent](https://www.confluent.io/blog/infinite-kafka-storage-in-confluent-platform/) goes describes the tiered storage approach in more detail.
 * An [Event Sink Connector](../event-sink/event-sink-connector.md) can be used to implement an infinite retention event stream by loading [Event](../event/event.md) into permanent external storage.
