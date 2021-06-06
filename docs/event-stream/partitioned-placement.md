@@ -9,7 +9,7 @@ If service goals mandate high throughput, it is useful to have the ability to di
 Being able to distribute events and process them concurrently enables an application to scale.
 
 ## Problem
-How can events be placed into a stream or table so that they can be processed concurrently by distributed [Event Processors](../event-processing/event-processor.md)?
+How can events be placed into a stream or table so that they can be processed concurrently by a distributed [Event Processor](../event-processing/event-processor.md)?
 
 ## Solution
 ![partitioned-placement](../img/partitioned-placement.png)
