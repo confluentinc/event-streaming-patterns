@@ -41,7 +41,7 @@ CREATE STREAM stream_name
 ## Considerations
 In general, a higher number of topic partitions results in higher throughput, and to maximize throughput, we want enough partitions to utilize all brokers in the cluster.
 Although it might seem tempting just to create topics with a large number of partitions, there are tradeoffs to increasing the number of partitions.
-Be sure to choose the partition count carefully based on producer throughput and consumer throughput and benchmark performance in the environment.
+Be sure to choose the partition count carefully based on the throughput of [Event Sources](../event-source/event-source.md) (e.g., producers in Kafka, including connectors), [Event Processors](../event-processing/event-processor.md) (e.g., ksqlDB, Kafka Streams applications), and [Event Sinks](../event-sink/event-sink.md) (e.g., consumers in Kafka, including connectors), and to benchmark performance in the environment.
 Also take into consideration the design of data patterns and key assignments so that events are distributed as evenly as possible across the topic partitions.
 This will prevent certain topic partitions from getting overloaded relative to other topic partitions.
 
