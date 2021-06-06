@@ -47,4 +47,4 @@ This will prevent certain stream partitions from getting overloaded relative to 
 
 ## References
 * [Review our guidelines](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster) for how to choose the number of partitions.
-* For another approach to parallelism that subdivides the unit of work from a partition down to a key or an event, see the [Parallel Consumer](https://github.com/confluentinc/parallel-consumer).
+* For another approach to processing parallelism that subdivides the unit of work from a partition down to an event or an event key, see the [Confluent Parallel Consumer for Kafka](https://github.com/confluentinc/parallel-consumer).
