@@ -17,7 +17,7 @@ requestEvent.headers().add("requestID", UUID.randomUUID().toString());
 requestEvent.send(producerRecord);
 ```
 
-added to a produced Event using the Kafka record headers:
+In the responding event processor, we first extract the correlation identifier from the request event (here, `requestID`) and then add the identifier to the response event.
 ```Java
 ProducerRecord<String, String> responseEvent = new ProducerRecord<>("response-key", "response-value"); 
 requestEvent.headers().add("requestID", requestEvent.headers().lastHeader("requestID").value());
