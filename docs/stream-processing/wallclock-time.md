@@ -1,5 +1,5 @@
 # Wallclock-Time Processing
-Consistent time semantics are important in stream processing, especially for time-based aggregations when calculating over a window of time.
+Consistent time semantics are of particular importance in stream processing. Many operations in an [Event Processor](TODO: link) are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: (1) event-time, which captures the time at which an event was originally created by its [Event Source](TODO: link), (2) ingestion-time, which captures the time an event was received on the event stream in an [Event Streaming Platform](TODO: link), and (3) wallclock-time or processing-time, which is the time at which a downstream [Event Processor](TODO: link) happens to process the event (which can be milliseconds, hours, months, etc. after event-time) . Depending on the use case, developers need to pick one variant over the others.
 
 ## Problem
 How do I process events from an [Event Source](../event-source/event-source.md) irrespective of the timestamps when they were created originally at the source?
@@ -7,7 +7,7 @@ How do I process events from an [Event Source](../event-source/event-source.md) 
 ## Solution
 ![wallclock-time](../img/wallclock-time.png)
 
-Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was ingested, receive on the event stream, or from a field provided by the [Event](../event/event.md) itself.
+Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was originally created by its [Event Source](TODO: link), when it was received on the event stream in the [Event Streaming Platform](TODO: link), or they can derive a new timestamp from one or more data fields provided by the [Event](../event/event.md) itself (i.e., from the event payload).
 
 ## Implementation
 ```
