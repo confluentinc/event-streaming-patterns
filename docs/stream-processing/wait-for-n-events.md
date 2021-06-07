@@ -29,7 +29,7 @@ and then count the occurrences of that key.
 
 ## Implementation
 
-In KSQL we can easily create a table that groups and counts events by
+In ksqlDB we can easily create a table that groups and counts events by
 a particular key.
 
 As an example, imagine we are handling very large financial
@@ -51,12 +51,12 @@ CREATE OR REPLACE STREAM trade_reviews (
 );
 ```
 
-We'll group reviews by their `trade_id`, and `count` how many
+We'll group reviews by their `trade_id`, and `COUNT()` how many
  approvals (`approved = TRUE`) we see for each:
 
 ```sql
 CREATE OR REPLACE TABLE trade_approval AS
-  SELECT trade_id, count(*) AS approvals
+  SELECT trade_id, COUNT(*) AS approvals
   FROM trade_reviews
   WHERE approved = TRUE
   GROUP BY trade_id;
@@ -72,7 +72,7 @@ EMIT CHANGES;
 
 ...and inserting some data in another:
 
-```ksql
+```sql
 INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (1, 'alice', '6f797a', TRUE);
 INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
@@ -115,5 +115,5 @@ discount email for every order _after_ their first 10.
 
 ## References
 
-* The [Event Aggregator](../stream-processing/event-aggregator.md) pattern, for a more general consideration of `GROUP BY` operations.
+* The [Event Grouping](../stream-processing/event-grouping.md) pattern, for a more general consideration of `GROUP BY` operations.
 * [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/), chapter 15 for further discussion.
