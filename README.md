@@ -30,7 +30,7 @@ Use the diagrams in [this google slidedeck](https://docs.google.com/presentation
 - Avoid Kafka/implementation terms like “topics” in the introduction, Problem, Solution sections. Generally, use implementation-specific terms like “topic” only in the Implementation, Considerations, References sections.
 - Add cross-references to related patterns (where applicable) to the respective “Reference” sections.
 
-Additional style guides (internaly only):
+Additional style guides (internal-access only):
 
 - [Style Guide for Confluent Marketing](https://confluentinc.atlassian.net/wiki/spaces/GM/pages/707101991/Style+Guide+for+Confluent+Marketing)
 - [Style Guide for Confluent Documentation](https://confluentinc.atlassian.net/wiki/spaces/DOC/pages/161743785/Style+Guide+for+Confluent+Documentation)
