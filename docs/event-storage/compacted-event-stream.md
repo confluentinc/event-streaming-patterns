@@ -10,9 +10,9 @@ How can a (keyed) table be stored in an [Event Stream](../event-stream/event-str
 Remove events from the Event Stream that represent outdated information and have been superseded by new Events.
 
 ## Implementation
-Apache Kafka provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. A stream (topic in Kafka) is scanned periodically to remove any old events that have been superseded by newer events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
+Apache Kafka provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. An [Event Stream](../event-stream/event-stream.md) (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
 
-To create a compacted event stream called `customer-profiles` with Kafka:
+To create a compacted [Event Stream](../event-stream/event-stream.md) called `customer-profiles` with Kafka:
 ```bash
 ➜ kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic customer-profiles --config cleanup.policy=compact
 
@@ -30,12 +30,12 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
 ```
 
 ## Considerations
-Compacted event streams allow for some optimizations:
+Compacted [Event Streams](../event-stream/event-stream.md) allow for some optimizations:
 
-* First, they allow the [Event Streaming Platform](../event-stream/event-streaming-platform.md) to limit the storage growth of the Event Stream in a data-specific way, rather than removing Events universally after a pre-configured period of time.
-* Second, having smaller Event Streams allows for faster recovery and system migration strategies.
+* First, they allow the [Event Streaming Platform](../event-stream/event-streaming-platform.md) to limit the storage growth of the [Event Stream](../event-stream/event-stream.md) in a data-specific way, rather than removing [Events](../event/event.md) universally after a pre-configured period of time.
+* Second, having smaller [Event Streams](../event-stream/event-stream.md) allows for faster recovery and system migration strategies.
 
-It is important to understand that compaction, on purpose, removes historical data from an Event Stream by removing superseded events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the event stream is the primary concern, use an [Infinite Retention Event Stream](infinite-retention-event-stream.md) instead of a compacted stream.
+It is important to understand that compaction, on purpose, removes historical data from an [Event Stream](../event-stream/event-stream.md) by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the [Event Stream](../event-stream/event-stream.md) is the primary concern, use an [Infinite Retention Event Stream](infinite-retention-event-stream.md) instead of a compacted stream.
 
 ## References
 * Compacted Event Streams are highly related to the [State Table](../table/state-table.md) pattern.
