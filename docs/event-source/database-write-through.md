@@ -19,21 +19,30 @@ Some applications write directly to a database table, therefore the database tab
 [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) provides the ability to scalably and reliably between Apache Kafka and other data systems. Using the [JDBC Source connector](https://docs.confluent.io/kafka-connect-jdbc/current/source-connector/index.html) for Kafka Connect allows for streaming of changes to a source database to Kafka topics.
 
 ```bash
-curl -X POST http://connect:8083/connectors -H "Content-Type: application/json" -d '{
-        "name": "jdbc_source_mysql",
-        "config": {
-                "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-                "connection.url": "jdbc:mysql://mysql:3306/demo",
-                "connection.user": "db_user",
-                "connection.password": "db_pwd",
-                "topic.prefix": "mysql-",
-                "mode":"bulk",
-                "poll.interval.ms" : 3600000
-                }
-        }'
+  {
+    "connector.class": "MySqlCdcSource",
+    "name": "MySqlCdcSourceConnector_0",
+    "kafka.api.key": "****************",
+    "kafka.api.secret": "******************************",
+    "database.hostname": "database-2.<host-ID>.us-west-2.rds.amazonaws.com",
+    "database.port": "3306",
+    "database.user": "admin",
+    "database.password": "**********",
+    "database.server.name": "mysql",
+    "database.whitelist": "employee",
+    "table.includelist":"employees.departments,
+    "snapshot.mode": "initial",
+    "output.data.format": "AVRO",
+    "tasks.max": "1"
+  }
 ```
 
-The above shows an example command to deploy a Kafka Connector streaming data from a MySQL database to Kafka topics.
+The above shows an example configuration to deploy a MySQL Source CDC Connector (Debezium) streaming data from a MySQL database to Kafka topics.
+
+Confluent Cloud CLI can deploy a connector on the command line from a configuration, for example:
+```bash
+ccloud connector create --config <connector-config-file.json>
+```
 
 ## Considerations
 - This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an [Event Source](../event-source/event-source.md) are captured in an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
