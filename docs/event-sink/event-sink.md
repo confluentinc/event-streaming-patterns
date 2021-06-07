@@ -17,10 +17,10 @@ Use an Event Sink, which typically acts as a client in an [Event Streaming Platf
 ksqlDB example: Reading events from an existing Kafka topic into a ksqlDB event stream for further processing.
 ```
 CREATE STREAM clicks (ip_address VARCHAR, url VARCHAR, timestamp VARCHAR)
-    WITH (kafka_topic = 'clicks-topic',
-          value_format = 'json',
-          timestamp = 'timestamp',
-          timestamp_format = 'yyyy-MM-dd''T''HH:mm:ssXXX');
+    WITH (KAFKA_TOPIC = 'clicks-topic',
+          VALUE_FORMAT = 'json',
+          TIMESTAMP = 'timestamp',
+          TIMESTAMP_FORMAT = 'yyyy-MM-dd''T''HH:mm:ssXXX');
 ```
 
 Generic Kafka Consumer application: See [Getting Started with Apache Kafka and Java](link.tbd) for a full example: 

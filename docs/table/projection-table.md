@@ -54,9 +54,9 @@ CREATE OR REPLACE STREAM package_checkins (
   location VARCHAR,
   processed_by VARCHAR
 ) WITH (
-  kafka_topic = 'package_checkins_topic',
-  value_format = 'AVRO',
-  partitions = 3
+  KAFKA_TOPIC = 'package_checkins_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 3
 );
 ```
 
