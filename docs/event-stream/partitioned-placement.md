@@ -15,15 +15,21 @@ How can events be placed into a stream or table so that they can be processed co
 ![partitioned-placement](../img/partitioned-placement.png)
 
 You can logically group events at different levels to enable concurrent processing.
-A partition is one unit of parallelism that helps scalability in two main ways:
+A partition is one unit of parallelism that helps scalability in these main ways:
 
-1. Platform scalability: enables different servers to store and serve events to consumer client applications concurrently
-2. Application scalability: enable different consumer applications to process those events concurrently
+* Platform scalability: enables different servers to store and serve events to consumer client applications concurrently
+* Application scalability: enable different consumer applications to process those events concurrently
 
 ## Implementation
-When a Kafka topic is created, either by an administrator or by a streaming application like ksqlDB, you can specific the number of partitions it has.
-Events are placed into a specific stream partition according to the partitioning algorithm of the [Event Source](../event-source/event-source.md), such as an [Event Processing Application](../event-processing/event-processing-application.md). The common partitioning schemes are (1) partitioning based on the event key (e.g., the customer ID for a stream of customer payments), where events with the same key are stored in the same partition, (2) partitioning events round-robin across all partitions to achieve an even distribution of events per partition, or (3) a custom partitioning algorithm, tailored to a specific use case.
+When a Kafka topic is created, either by an administrator or by a streaming application like ksqlDB, you can specify the number of partitions it has.
+Events are placed into a specific stream partition according to the partitioning algorithm of the [Event Source](../event-source/event-source.md), such as an [Event Processing Application](../event-processing/event-processing-application.md).
 All events grouped into the same partition have strong ordering guarantees.
+
+The common partitioning schemes are
+
+1. Partitioning based on the event key (e.g., the customer ID for a stream of customer payments), where events with the same key are stored in the same partition
+2. Partitioning events round-robin across all partitions to achieve an even distribution of events per partition
+3. A custom partitioning algorithm, tailored to a specific use case.
 
 If we are using ksqlDB, the processors can scale by working on a set of partitions.
 If an event stream's key content changes because of how the query wants to process the rows, for example to execute a `JOIN` operation between two streams of events, the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation.
