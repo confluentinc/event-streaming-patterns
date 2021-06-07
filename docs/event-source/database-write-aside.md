@@ -1,12 +1,13 @@
 # Database Write Aside
-Applications which write directly to a database may want to produce an associated event to the [Event Streaming Platform](../event-stream/event-streaming-platform.md) for each write operation allowing downstream [Event Processing Applications](../event-processing/event-processing-application.md) to be notified and consume the [Event](../event/event.md).
+Applications which write directly to a database may want to produce an associated [Event](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md) for each write operation allowing downstream [Event Processing Applications](../event-processing/event-processing-application.md) to be notified and consume the [Event](../event/event.md).
 
 ## Problem
-How do I update a value in a database and create an associated event?
+How do we update a value in a database and create an associated [Event](../event/event.md)?
 
 ## Solution
 ![database-write-aside](../img/database-write-aside.png)
-Within a transaction, write the data to the database and produce an [Event](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md). If the produce to the Event Streaming Platform fails, abort the transaction. This pattern provides an atomic dual commit. 
+
+Within a transaction, write the data to the database and produce an [Event](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md). If the produce to the [Event Streaming Platform](./event/event-stream/event-streaming-platform.md) fails, abort the transaction. This pattern provides an atomic dual commit. 
 
 ## Implementation
 ```
