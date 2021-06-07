@@ -12,7 +12,11 @@ How can [Event Processors](../event-processing/event-processor.md) and applicati
 ## Solution
 ![event-stream](../img/event-stream.png)
 
-Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named allowing communication over a specific stream of [Events](../event/event.md). Additionally, [Event](../event/event.md) data formats are often validated in order to govern the communication between [Event Processors](../event-processing/event-processor.md).
+Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named, allowing communication over a specific stream of [Events](../event/event.md). Additionally, Event data formats are often validated in order to govern the communication between Event Processors.
+
+Generally speaking, an event stream records the history of what has happened in the world as a sequence of events. An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.
+
+Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
 
 ## Implementation
 The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following creates a stream of events representing locations of riders in `JSON` format named `riderLocations`.
