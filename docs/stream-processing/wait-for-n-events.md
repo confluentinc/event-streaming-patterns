@@ -45,9 +45,9 @@ CREATE OR REPLACE STREAM trade_reviews (
   signature VARCHAR,
   approved BOOLEAN
 ) WITH (
-  kafka_topic = 'trade_reviews_topic',
-  value_format = 'AVRO',
-  partitions = 2
+  KAFKA_TOPIC = 'trade_reviews_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 2
 );
 ```
 
