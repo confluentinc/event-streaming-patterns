@@ -35,7 +35,7 @@ INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4a7c7b41', 
 INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4ddad000', 37.7857, -122.4011);
 ```
 
-A persistent query can be ran over the Event Stream using a `SELECT`. As new [Events](../event/events.md) arrive, this query will emit new results matching the `WHERE` conditionals.
+A [push query](https://docs.ksqldb.io/en/latest/concepts/queries/#push) a.k.a. a streaming query can be ran continuously over the stream using a `SELECT`, using the `EMIT CHANGES` clause. As new events arrive, this query will emit new results matching the `WHERE` conditionals. The following query looks for riders in close proximity to Mountain View, California, in the United States.
 ```sql
 -- Mountain View lat, long: 37.4133, -122.1162
 SELECT * FROM riderLocations
