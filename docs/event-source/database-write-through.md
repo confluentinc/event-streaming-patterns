@@ -1,3 +1,9 @@
+---
+seo:
+  title: Database Write Through
+  description: Ppdate a value in a database and create an associated event with at-least-once guarantees.
+---
+
 # Database Write Through
 For architectural or legacy purposes, data-centric applications may write directly to a database. [Event Processing Applications](../event-processing/event-processing-application.md) will need to reliably consume data from these systems using [Events](../event/event.md) on [Event Streams](../event-stream/event-stream.md).
 
