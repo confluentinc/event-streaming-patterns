@@ -7,7 +7,7 @@ seo:
 [Event Processing Applications](../event-processing/event-processing-application.md) need to communicate, and ideally the communication is facilitated with [Events](../event/event.md). The applications need a standard mechanism to use for this communication.
 
 ## Problem
-How can we coordinate [Event Processors](../event-processing/event-processor.md) using event streaming?
+How can [Event Processors](../event-processing/event-processor.md) and applications communicate with each other, using event streaming?
 
 ## Solution
 ![event-stream](../img/event-stream.png)
@@ -40,4 +40,3 @@ SELECT * FROM riderLocations
 
 ## References
 * This pattern is derived from [Message Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-
