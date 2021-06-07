@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Database Write Aside - Event Streaming Patterns</title>
+  <title>Wait for N Events - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Database Write Aside";
-    var mkdocs_page_input_path = "event-source/database-write-aside.md";
+    var mkdocs_page_name = "Wait for N Events";
+    var mkdocs_page_input_path = "stream-processing/wait-for-n-events.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -85,28 +85,16 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Database Write Aside</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source-connector/">Event Source Connector</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -115,12 +103,24 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../event-grouper/">Event Grouper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wait-for-n-events/">Wait for N Events</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Wait for N Events</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wallclock-time/">Wallclock-Time Processing</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../wallclock-time/">Wallclock-Time Processing</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Table</span></p>
@@ -149,11 +149,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Stream processing &raquo;</li>
         
       
     
-    <li>Database Write Aside</li>
+    <li>Wait for N Events</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -164,38 +164,97 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="database-write-aside">Database Write Aside</h1>
+                <h1 id="wait-for-n-events">Wait for N Events</h1>
+<p>Sometimes <a href="../event/event.md">Events</a> become significant after they've
+happened several times.</p>
+<p>A user can try to log in 5 times, but after that we'll lock their
+account.  A parcel delivery will be attempted 3 times before asking
+the customer to collect it from the depot. A gamer gets a trophy after
+they've killed their 100th Blarg.</p>
+<p>How do we efficiently watch for logically similar events?</p>
 <h2 id="problem">Problem</h2>
-<p>How do I update a value in a database and create an associated event with the least amount of effort?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="database-write-aside" src="../../img/database-write-aside.png" />
-Write to a database, then write to Kafka. Perform the write to Kafka as the last step in a database transaction to ensure an atomic dual commit (aborting the transaction if the write to Kafka fails). </p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code>//Enable transactions
-db.setAutoCommit(false);
+<p>How can an application wait for a certain number of events to occur
+before performing processing?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="wait for N events" src="../../img/wait-for-n-events.svg" /></p>
+<p>To consider related events as a group, we need to group them by a given key,
+and then count the occurrences of that key.</p>
+<h2 id="implementation">Implementation</h2>
+<p>In ksqlDB we can easily create a <a href="../../table/projection-table/">Projection Table</a> that groups and counts events by
+a particular key.</p>
+<p>As an example, imagine we are handling very large financial
+transactions. We only want to process them once they've been reviewed
+and approved by 2 managers.</p>
+<p>We'll start with a stream of signed events from managers:</p>
+<pre><code class="sql">CREATE OR REPLACE STREAM trade_reviews (
+  trade_id BIGINT,
+  manager_id VARCHAR,
+  signature VARCHAR,
+  approved BOOLEAN
+) WITH (
+  KAFKA_TOPIC = 'trade_reviews_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 2
+);
+</code></pre>
 
-try{
-   //insert into the DB
-   sql = db.prepareStatement(&quot;insert mydb.events values (?)&quot;);
-   sql.setString(event.toString());
-   sql.executeUpdate();
+<p>We'll group reviews by their <code>trade_id</code>, and <code>COUNT()</code> how many
+ approvals (<code>approved = TRUE</code>) we see for each:</p>
+<pre><code class="sql">CREATE OR REPLACE TABLE trade_approval AS
+  SELECT trade_id, COUNT(*) AS approvals
+  FROM trade_reviews
+  WHERE approved = TRUE
+  GROUP BY trade_id;
+</code></pre>
 
-   //insert into Kafka
-   producer.send(event.key(), event.value());
+<p>Querying that stream in one terminal:</p>
+<pre><code>SELECT *
+FROM trade_approval
+WHERE approvals = 2
+EMIT CHANGES;
+</code></pre>
 
-   //commit to the DB
-   db.commit();
-} catch (SQLException e ) {
-   db.rollback();
-}
+<p>...and inserting some data in another:</p>
+<pre><code class="sql">INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (1, 'alice', '6f797a', TRUE);
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (2, 'alice', 'b523af', TRUE);
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (3, 'alice', 'fe1aaf', FALSE);
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (4, 'alice', 'f41bf3', TRUE);
+
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (2, 'bob', '0441ed', TRUE);
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (4, 'bob', '50f237', TRUE);
+
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (1, 'carol', 'ee52f5', FALSE);
+INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
+  VALUES (3, 'carol', '4adb7c', TRUE);
+</code></pre>
+
+<p>Results in a stream of trades that are ready to process:</p>
+<pre><code>+----------+-----------+
+|TRADE_ID  |APPROVALS  |
++----------+-----------+
+|2         |2          |
+|4         |2          |
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>In its default form, this pattern guarantees dual-write for most use cases. However, should the database transaction fail at commit time (say, because the database server has crashed) the write to Kafka cannot be rolled back unless transactions have been enabled. For many use cases, this eventuality will be tolerable as the dual-write can be retried once the failure is fixed, and most event consumers will implement idempotence anyway. However, application programmers need to be aware that there is no firm guarantee. </p>
-<p>Transactional messaging systems like Kafka can be used to provide stronger guarantees so long as all event consumers have the transactions feature enabled. </p>
+<p>Note that in the example above, we queried for an exact number of
+approvals <code>WHERE approvals = 2</code>. We could have used a
+greater-than-or-equal check (<code>WHERE approvals &gt;= 2</code>) but that would
+have emitted a new event for a 3rd approval, and a 4th, and so on.
+That would be the wrong behavior here, but it might be useful feature
+in a system where you wanted to reward loyal customers, and send out a
+discount email for every order <em>after</em> their first 10.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Add references?</li>
+<li>The <a href="../stream-processing/event-grouping.md">Event Grouping</a> pattern, for a more general consideration of <code>GROUP BY</code> operations.</li>
+<li><a href="https://www.confluent.io/designing-event-driven-systems/">Designing Event Driven Systems</a>, chapter 15 for further discussion.</li>
 </ul>
               
             </div>
@@ -204,10 +263,10 @@ try{
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../database-write-through/" class="btn btn-neutral float-right" title="Database Write Through">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../wallclock-time/" class="btn btn-neutral float-right" title="Wallclock-Time Processing">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../event-sink/event-sink/" class="btn btn-neutral" title="Event Sink"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-grouper/" class="btn btn-neutral" title="Event Grouper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -233,10 +292,10 @@ try{
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../event-sink/event-sink/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-grouper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../database-write-through/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../wallclock-time/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

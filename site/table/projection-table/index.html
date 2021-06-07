@@ -106,6 +106,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wait-for-n-events/">Wait for N Events</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wallclock-time/">Wallclock-Time Processing</a>
                     </li>
                 </ul>
@@ -197,9 +199,9 @@ current location.</p>
   location VARCHAR,
   processed_by VARCHAR
 ) WITH (
-  kafka_topic = 'package_checkins_topic',
-  value_format = 'AVRO',
-  partitions = 3
+  KAFKA_TOPIC = 'package_checkins_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 3
 );
 </code></pre>
 
