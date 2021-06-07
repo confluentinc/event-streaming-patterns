@@ -1,17 +1,23 @@
 # Pipeline
 
-A single stream of events can be used by multiple services and may need to go through multiple transformations along the way. 
+A single [Event Stream](../event-stream/event-stream.md) or [Table](../table/state-table.md) can be used by multiple [Event Processing Applications](../event-processing/event-processing-application.md), and its [Events](../event/event.md) may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.
 
 ## Problem
 
-How can we transform a stream of events in separate stages while making the events available at each stage?
+How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?
 
-## Solution Pattern
+## Solution
 ![pipeline](../img/pipeline.png)
 
+We can compose [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) in an [Event Streaming Platform](TODO: link) via an [Event Processing Application](TODO: link) to a create a pipeline—also called a topology—of [Event Processors](TODO: link), which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load), may include [Event Source Connectors](../event-source/event-source-connector.md) and [Event Sink Connectors](../event-sink/event-sink-connector.md), which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.
+
+Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.
 We can run a stream of events through a series of transformations, connected in  a pipeline, using ksqlDB and Kafka topics.
 
-## Example Implementation
+## Implementation
+
+We can use the streaming database ksqlDB as example to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
+
 ```
 CREATE STREAM orders ( 
   customer_id INTEGER, items ARRAY<STRUCT<name VARCHAR, price DOUBLE>>
@@ -34,12 +40,13 @@ CREATE STREAM orders_totaled
 WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
 AS SELECT cust_id, items, name, address,  
   REDUCE(TRANSFORM(items, i=> i->price ), 0E0, (i,x) => (i + x)) AS total 
-FROM orders_enriched EMIT CHANGES;
+FROM orders_enriched
+EMIT CHANGES;
 ```
 
 ## Considerations
-The same stream of events may participate in multiple pipelines, and though each pipeline can be viewed as a stand-alone application, components may be playing a role in multiple pipelines.
+* The same event stream or table can participate in multiple pipelines. Because streams and tables are stored durably, applications have a lot of flexibility how and when they process the respective data, and they can do so independently from each other.
+* The various processing stages in a pipeline create their own derived streams/tables (such as the `orders_enriched` stream in the ksqlDB example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.
 
 ## References
-This pattern was influenced by [Piple and Filters](https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf but is much more powerful and flexible because it is using Kafka topics as the pipes.
-
+This pattern was influenced by [Pipes and Filters](https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf. However, it is much more powerful and flexible because it is using [Event Streams](../event-stream/event-stream.md) as the pipes.
