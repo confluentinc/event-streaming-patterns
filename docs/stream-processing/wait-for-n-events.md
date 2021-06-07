@@ -29,7 +29,7 @@ and then count the occurrences of that key.
 
 ## Implementation
 
-In ksqlDB we can easily create a table that groups and counts events by
+In ksqlDB we can easily create a [Projection Table](../table/projection-table.md) that groups and counts events by
 a particular key.
 
 As an example, imagine we are handling very large financial
