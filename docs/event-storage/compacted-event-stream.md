@@ -10,7 +10,7 @@ How can a (keyed) table be stored in an [Event Stream](../event-stream/event-str
 Remove events from the Event Stream that represent outdated information and have been superseded by new Events.
 
 ## Implementation
-Apache Kafka provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. An [Event Stream](../event-stream/event-stream.md) (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
+Apache Kafka® provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. An [Event Stream](../event-stream/event-stream.md) (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
 
 To create a compacted [Event Stream](../event-stream/event-stream.md) called `customer-profiles` with Kafka:
 ```bash
