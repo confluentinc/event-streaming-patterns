@@ -19,7 +19,7 @@ Generally speaking, an event stream records the history of what has happened in 
 Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
 
 ## Implementation
-The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following creates a stream of events representing locations of riders in `JSON` format named `riderLocations`.
+The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is `JSON`.
 ```sql
 CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
   WITH (kafka_topic='locations', value_format='json');
