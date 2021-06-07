@@ -13,7 +13,27 @@ Follow the pattern defined in [pattern-template.md](pattern-template.md)
 Use the diagrams in [this google slidedeck](https://docs.google.com/presentation/d/1Zf256Z6fBvre3uclIbmxXsDpnTIxiBX66b13pHbGIYc/edit?usp=sharing) to build new diagrams.
 
 ### Style/tech guide
-Follow the [style/tech guide](https://docs.google.com/presentation/d/1NRAYOZdUHLCKvAy1Fc3y5OsI4w--Lgh45g9CGPmRM8g/edit#slide=id.gde62c10fe2_0_0).
+
+- Message → Event
+- All Heading names consistent, e.g. Solution Pattern → Solution
+- Preamble before Problem
+- Problem is a 1-line question with a question mark at the end
+- Diagram shown first in Solution, before text
+- All words pattern names are capitalized, e.g. Event Filter
+- All mentions of patterns (not just the first mention) are hyperlinked to the target pattern 
+- Use double quotes (“) (instead of single quotes (‘) in text; e.g. write “event” instead of ‘event’)
+- The first mention of Kafka should be Apache Kafka®. From then on, you can freely use Apache Kafka or Kafka
+- Good (for some definition of “good”) SEO metadata at the top
+- Validate links (ensure patterns exist)
+- Voice: state Problem as external thing (“when doing X”...no “I”), rest of text/Solution as “we”
+- Bullet list: no periods unless there are multiple complete sentences within one bullet
+- Avoid Kafka/implementation terms like “topics” in the introduction, Problem, Solution sections. Generally, use implementation-specific terms like “topic” only in the Implementation, Considerations, References sections.
+- Add cross-references to related patterns (where applicable) to the respective “Reference” sections.
+
+Additional style guides (internaly only):
+
+- [Style Guide for Confluent Marketing](https://confluentinc.atlassian.net/wiki/spaces/GM/pages/707101991/Style+Guide+for+Confluent+Marketing)
+- [Style Guide for Confluent Documentation](https://confluentinc.atlassian.net/wiki/spaces/DOC/pages/161743785/Style+Guide+for+Confluent+Documentation)
 
 ## Suggesting new patterns
 
