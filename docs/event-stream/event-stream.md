@@ -39,7 +39,8 @@ A [push query](https://docs.ksqldb.io/en/latest/concepts/queries/#push) a.k.a. a
 ```sql
 -- Mountain View lat, long: 37.4133, -122.1162
 SELECT * FROM riderLocations
-  WHERE GEO_DISTANCE(latitude, longitude, 37.4133, -122.1162) <= 5 EMIT CHANGES;
+  WHERE GEO_DISTANCE(latitude, longitude, 37.4133, -122.1162) <= 5
+  EMIT CHANGES;
 ```
 
 ## References
