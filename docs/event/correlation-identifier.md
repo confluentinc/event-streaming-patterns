@@ -4,10 +4,10 @@ seo:
   description: Correlation Identifiers can be used to enable request response protocols on top of Event Streaming platforms, like Apache Kafka®
 ---
 # Correlation Identifier
-[Event Processing Applications](../event-processing/event-processing-application.md) may want to implement an [Event Collaboration](../compositional-patterns/event-collaboration.md) pattern where [Events](../event/event.md) will serve as both requests and responses. Decoupled [Event Processors](../event-processing/event-processor.md) will need to be able to asynchronously correlate Events.
+[Event Processing Applications](../event-processing/event-processing-application.md) may want to implement an [Event Collaboration](../compositional-patterns/event-collaboration.md) pattern where [Events](../event/event.md) are used to transport requests and responses. The applications which collaborate via the [Events](../event/event.md), will need a method for correlating [Event](../event/event.md) response data for specific requests.
 
 ## Problem
-How does an application, that has requested information and received a response, know for which request this is the response?
+How does an application, that has requested information and received a response, know for which request a particular response is for?
 
 ## Solution
 ![correlation-identifier](../img/correlation-identifier.png)
