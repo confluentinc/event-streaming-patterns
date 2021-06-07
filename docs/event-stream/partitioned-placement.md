@@ -1,7 +1,7 @@
 ---
 seo:
   title: Partitioned Placement
-  description: Topic partitions are the unit of parallelism in Kafka. Events can be written to different partitions, based on key or custom partitioner, or just round-robin across all partitions to distribute evenly.
+  description: A partition is a unit of parallelism that enables concurrent processing, and events can be written to different partitions to evenly distribute load.
 ---
 
 # Partitioned Placement
@@ -14,10 +14,10 @@ How can events be placed into a stream or table so that they can be processed co
 ## Solution
 ![partitioned-placement](../img/partitioned-placement.png)
 
-You can logically group events into a single topic, and then further group events into a topic partition.
-A partition is the unit of parallelism within a topic and enables concurrent processing, helping scalability in two main ways:
+You can logically group events at different levels to enable concurrent processing.
+A partition is one unit of parallelism that helps scalability in two main ways:
 
-1. Platform scalability: enables different brokers to store and serve events to consumer client applications concurrently
+1. Platform scalability: enables different servers to store and serve events to consumer client applications concurrently
 2. Application scalability: enable different consumer applications to process those events concurrently
 
 ## Implementation
