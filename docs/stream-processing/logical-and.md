@@ -62,9 +62,9 @@ CREATE OR REPLACE STREAM logins (
   user_id BIGINT,
   country_code VARCHAR
 ) WITH (
-  kafka_topic = 'logins_topic',
-  value_format = 'AVRO',
-  partitions = 3
+  KAFKA_TOPIC = 'logins_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 3
 );
 
 CREATE OR REPLACE STREAM withdrawals (
@@ -73,9 +73,9 @@ CREATE OR REPLACE STREAM withdrawals (
   amount DECIMAL(10,2),
   success BOOLEAN
 ) WITH (
-  kafka_topic = 'withdrawals_topic',
-  value_format = 'AVRO',
-  partitions = 3
+  KAFKA_TOPIC = 'withdrawals_topic',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 3
 );
 ```
 
