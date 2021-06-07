@@ -45,3 +45,5 @@ SELECT * FROM riderLocations
 
 ## References
 * This pattern is derived from [Message Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+[comment]: <> (TODO: reference Kafka Storage & Processing Fundaments page instead of the following blog series directly)
+* The blog post series, [Streams and Tables in Apache Kafka: A Primer](https://www.confluent.io/blog/kafka-streams-tables-part-1-event-streaming/) goes into detail on streams, tables and other Kafka fundamentals.
