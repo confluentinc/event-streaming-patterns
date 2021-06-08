@@ -15,25 +15,26 @@ to agree on shared libraries, synchronized release schedules, or
 common tooling. Data becomes the one true interface.
 
 In reality though, each team will still have to communicate with the
-[Event Store](../event-storage/event-store.md) itself. How do we
-maximize access? How do we ensure that every team can use the event
-store, without insisting they choose from a short-list of approved
-languages?  How do we accommodate the team that insists on using
-Idris<sup>+</sup>?
+[Event Store][event_store] itself. How do we maximize access? How do
+we ensure that every team can use the event store, without insisting
+they choose from a short-list of approved languages?  How do we
+accommodate the team that insists on using Idris<sup>+</sup>?
 
 <i><sup>+</sup>Or Haskell, or Rust, or Erlang, or whatever other
 language we didn't plan for...</i>
 
 ## Problem
 
-![event-gateway](../img/event-gateway.svg)
-
-How does an an event store provide access to the widest-possible range of users?
+How does an an [Event Streaming
+Platform](../event-stream/event-streaming-platform.md) provide access
+to the widest-possible range of users?
 
 ## Solution
 
-Provide clients for every language you can, and then provide a
-universal client that _every_ language can access.
+![event-gateway](../img/event-gateway.svg)
+
+Provide clients for the languages you can support directly, and then
+provide a universal client that _every_ language can access.
 
 ## Implementation
 
@@ -62,9 +63,7 @@ adoption.
 
 ## References
 
-* See also: [Event Store][event_store].
 * The [Confluent REST APIs][rest_apis] documentation.
-* The [Apache Kafka® REST Quickstart](https://docs.confluent.io/3.2.2/kafka-rest/docs/intro.html#quickstart).
 
 [event_store]: ../event-storage/event-store.md
 [rest_apis]: https://docs.confluent.io/platform/current/kafka-rest/index.html
