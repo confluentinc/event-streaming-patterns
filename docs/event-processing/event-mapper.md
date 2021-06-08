@@ -26,7 +26,7 @@ private final Producer<String, PublicationEvent> producer = ...
 
 public void newPublication(String author, String title) {
   Publication newPub = new Publication(author, title);
-  producer.send(author/*key*/, mapper.map(newPub));
+  producer.send(author/*key*/, domainToEventMapper.map(newPub));
 ```
 
 We can implement the reverse operation in a second Mapper that converts `PublicationEvent` instances back into Domain Object updates:
