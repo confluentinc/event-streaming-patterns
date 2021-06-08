@@ -31,7 +31,7 @@ This can be a full URI string, an [abstract data type](https://en.wikipedia.org/
 
   // Write URI to Kafka
   URI record = new URI(bucketName, objectName);
-  producer.send(new ProducerRecord<String, URI>(topic, key, record));
+  producer.send(new ProducerRecord<String, URI>(topic, eventKey, eventValue));
 ```
 
 ## Considerations
