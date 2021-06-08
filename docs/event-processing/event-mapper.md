@@ -40,4 +40,5 @@ public void updatePublication(PublicationEvent pubEvent) {
 ```
 
 ## References
+* Related patterns: [Event Serializer](../event/event-serializer.md) and [Event Deserializer](../event/event-deserializer.md)
 * This pattern is derived from [Messaging Mapper](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
