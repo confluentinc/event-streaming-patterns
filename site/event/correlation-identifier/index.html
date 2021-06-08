@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Source Connector - Event Streaming Patterns</title>
+  <title>Correlation Identifier - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Source Connector";
-    var mkdocs_page_input_path = "event-source/event-source-connector.md";
+    var mkdocs_page_name = "Correlation Identifier";
+    var mkdocs_page_input_path = "event/correlation-identifier.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -59,12 +59,22 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Correlation Identifier</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-envelope/">Event Envelope</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -98,28 +108,16 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Source Connector</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -171,11 +169,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Event Source Connector</li>
+    <li>Correlation Identifier</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -186,34 +184,32 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-source-connector">Event Source Connector</h1>
-<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems, which are not themselves <a href="../event-source/">Event Sources</a>.</p>
+                <h1 id="correlation-identifier">Correlation Identifier</h1>
+<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to implement an <a href="../../compositional-patterns/event-collaboration/">Event Collaboration</a> pattern where <a href="../event/">Events</a> are used to transport requests and responses. The applications which collaborate via the <a href="../event/">Events</a>, will need a method for correlating <a href="../event/">Event</a> response data for specific requests.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we connect cloud services and traditional systems, like relational databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, converting their data at rest to data in motion with <a href="../../event/event/">Events</a>.</p>
+<p>How does an application, that has requested information and received a response, know for which request a particular response is for?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
-<p>Generally speaking, we need to find a way to extract data as <a href="../../event/event/">Events</a> from the origin system. For relational databases, for example, a common technique is to use <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>, where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as <a href="../../event/event/">Events</a>, which can then be ingested into another system. The components that perform this extraction and ingestion of <a href="../../event/event/">Events</a> are typically called "connectors". The connectors turn the origin system into an <a href="../event-source/">Event Source</a>, then generate <a href="../../event/event/">Events</a> from that data, and finally sends these <a href="../../event/event/">Events</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
+<p><img alt="correlation-identifier" src="../../img/correlation-identifier.png" /></p>
+<p>An Event Processor generates an Event which acts as the request. A globally unique identifier is added to the request Event prior to sending. This allows the responding Event Processor to include the identifier in the response Event, allowing the requesting processor to correlate the request and response.</p>
 <h2 id="implementation">Implementation</h2>
-<p>When connecting a cloud services and traditional systems to <a href="https://kafka.apache.org/">Apache Kafka</a>, the most common solution is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. There are hundreds of ready-to-use connectors available on <a href="https://www.confluent.io/hub/">Confluent Hub</a>, including blob stores like AWS S3, cloud services like Salesforce and Snowflake, relational databases, data warehouses, traditional message queues, flat files, and more. Confluent also provides many <a href="https://docs.confluent.io/cloud/current/connectors/index.html">fully managed Kafka connectors</a> in the cloud.</p>
-<p>There are several options to deploy such connectors. For example, the streaming database <a href="https://ksqldb.io/">ksqlDB</a> provides an ability to manage Kafka connectors with SQL statements.</p>
-<pre><code>CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
-    &quot;connector.class&quot;='io.confluent.connect.jdbc.JdbcSourceConnector',
-    &quot;connection.url&quot;='jdbc:postgresql://localhost:5432/my.db',
-    &quot;mode&quot;='bulk',
-    &quot;topic.prefix&quot;='jdbc-',
-    &quot;table.whitelist&quot;='users',
-    &quot;key&quot;='username');
+<p>In Kafka, we can add a globally unique identifier to the Kafka record headers when producing the request event. The following code example uses Kafka's Java producer client.</p>
+<pre><code class="Java">ProducerRecord&lt;String, String&gt; requestEvent = new ProducerRecord&lt;&gt;(&quot;request-event-key&quot;, &quot;request-event-value&quot;); 
+requestEvent.headers().add(&quot;requestID&quot;, UUID.randomUUID().toString());
+requestEvent.send(producerRecord);
 </code></pre>
 
-<h2 id="considerations">Considerations</h2>
-<ul>
-<li>End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery, cf. the <a href="../event-stream/guaranteed-delivery.md">Guaranteed Delivery</a> pattern) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.</li>
-<li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication, and authorization, etc. between Event Source, Event Source Connector, and the destination Event Streaming Platform.</li>
-</ul>
+<p>In the responding event processor, we first extract the correlation identifier from the request event (here, <code>requestID</code>) and then add the identifier to the response event.</p>
+<pre><code class="Java">ProducerRecord&lt;String, String&gt; responseEvent = new ProducerRecord&lt;&gt;(&quot;response-event-key&quot;, &quot;response-event-value&quot;); 
+requestEvent.headers().add(&quot;requestID&quot;, requestEvent.headers().lastHeader(&quot;requestID&quot;).value());
+requestEvent.send(producerRecord);
+</code></pre>
+
 <h2 id="references">References</h2>
 <ul>
-<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html">Channel Adapter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
-<li>See this <a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorial</a> for a full Kafka Connect example</li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CorrelationIdentifier.html">Correlation Identifier</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>For a case study on coordinating microservices towards higher level business goals, see <a href="https://www.confluent.io/blog/building-a-microservices-ecosystem-with-kafka-streams-and-ksql/">Building a Microservices Ecosystem with Kafka Streams and ksqlDB</a></li>
+<li>Correlation Identifiers can be used as part of <a href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>, a pattern in which decentralized Event Processing Applications collaborate to implement a distributed workflow solution.</li>
+<li>The idea of tagging requests and their related responses exists in many other protocols. For example, an email <a href="https://datatracker.ietf.org/doc/html/rfc3501#section-2.2.1">client connecting over IMAP</a> will send commands prefixed with a unique ID (typically, <code>a001</code>, <code>a002</code>, etc.) and the server will respond asynchronously, tagging its responses with the matching ID.</li>
 </ul>
               
             </div>
@@ -222,10 +218,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-source/" class="btn btn-neutral float-right" title="Event Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-envelope/" class="btn btn-neutral float-right" title="Event Envelope">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../database-write-through/" class="btn btn-neutral" title="Database Write Through"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../compositional-patterns/geo-replication/" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -251,10 +247,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../database-write-through/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../compositional-patterns/geo-replication/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-source/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-envelope/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

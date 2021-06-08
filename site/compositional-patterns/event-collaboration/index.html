@@ -70,6 +70,8 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
@@ -195,7 +197,7 @@
 <p>In Event Collaboration, the logic for the choreography of the progression of the business workflow is decentralized and spread across many components. This contrasts with traditional orchestration design where the logic is isolated in a dedicated "controller" service that coordinates the actions and reactions of the workflow components.</p>
 </li>
 <li>
-<p>With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The <a href="../event/correlation-identifier.md">Correlation Identifier</a> pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.</p>
+<p>With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The <a href="../../event/correlation-identifier/">Correlation Identifier</a> pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.</p>
 </li>
 </ul>
 <h2 id="references">References</h2>
