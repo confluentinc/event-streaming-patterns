@@ -5,7 +5,7 @@ seo:
 ---
 
 # Lifecycle Event
-The general use case for Lifecycle Event is when the sequencing matters between messages of different types.
+The general use case for Lifecycle Event is when the sequencing matters between events of different types.
 For example, consider a finserv use case where first a customer opens an account, then gets approval, then makes a deposit, etc; the sequencing really matters.
 Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
 
