@@ -29,3 +29,4 @@ INSERT INTO users (username, name, phone)
 
 ## References
 * [ksqlDB](https://ksqldb.io/) The event streaming database purpose-built for stream processing applications.
+* [How To build client applications](https://docs.confluent.io/cloud/current/client-apps/index.html) for writing events into an [Event Stream](../event-stream/event-stream.md).
