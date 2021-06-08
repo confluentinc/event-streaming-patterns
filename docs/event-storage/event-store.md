@@ -70,6 +70,7 @@ store for modern, data-driven architectures.
 
 ## References
 
+* See also: [Geo Replication](../compositional-patterns/geo-replication.md).
 * [Using logs to build a solid data infrastructure](https://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/)
 * [What Is Apache Kafka?](https://www.confluent.io/what-is-apache-kafka/)
 * [Kafka: The Definitive Guide](https://www.confluent.io/resources/kafka-the-definitive-guide/) free Ebook.
