@@ -27,8 +27,8 @@ CREATE STREAM allisons_races WITH (kafka_topic = 'allisons-races-topic') AS
 The Kafka Streams DSL provides a `filter` operator which filters out events that do not match a given predicate.
 
 ```java
-KStream<String, Race> allRacersStream = builder.stream("all-races-topic);
-allRacersStream
+builder
+  .stream("all-races-topic")
   .filter((key, race) -> race.racer == "Allison")
   .to("allisons-races-topic");
 ```
