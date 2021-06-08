@@ -127,6 +127,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infiite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
@@ -187,7 +192,7 @@
 <p><img alt="event-translator" src="../../img/event-translator.png" /></p>
 <p>An Event Translator converts a data format into a standard format familiar to downstream <a href="../event-processor/">Event Processors</a>. This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to Json or Protobuf to Avro.</p>
 <h2 id="implementation">Implementation</h2>
-<p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides the ability to create <a href="../event-stream/event-stream.md">Event Streams</a> with SQL statements.</p>
+<p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides the ability to create <a href="../../event-stream/event-stream/">Event Streams</a> with SQL statements.</p>
 <pre><code>CREATE STREAM translated_stream AS
    SELECT
       fieldX AS fieldC,

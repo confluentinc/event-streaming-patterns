@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Processor - Event Streaming Patterns</title>
+  <title>Event Stream - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Processor";
-    var mkdocs_page_input_path = "event-processing/event-processor.md";
+    var mkdocs_page_name = "Event Stream";
+    var mkdocs_page_input_path = "event-stream/event-stream.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -66,38 +66,26 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-chunking/">Event Chunking</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-chunking/">Event Chunking</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-mapper/">Event Mapper</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-processing-application/">Event Processing Application</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processing-application/">Event Processing Application</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Processor</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processor/">Event Processor</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-splitter/">Event Splitter</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-streaming-api/">Event Streaming API</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-streaming-api/">Event Streaming API</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-translator/">Event Translator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-translator/">Event Translator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -128,8 +116,18 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Stream</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
@@ -169,11 +167,11 @@
     
       
         
-          <li>Event processing &raquo;</li>
+          <li>Event stream &raquo;</li>
         
       
     
-    <li>Event Processor</li>
+    <li>Event Stream</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -184,22 +182,45 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-processor">Event Processor</h1>
-<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
+                <h1 id="event-stream">Event Stream</h1>
+<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> need to communicate, and ideally the communication is facilitated with <a href="../../event/event/">Events</a>. The applications need a standard mechanism to use for this communication.</p>
 <h2 id="problem">Problem</h2>
-<p>TODO: Technology agnostic English explanation of the problem</p>
+<p>How can <a href="../../event-processing/event-processor/">Event Processors</a> and applications communicate with each other, using event streaming?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-processor" src="../../img/event-processor.png" />
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
+<p><img alt="event-stream" src="../../img/event-stream.png" /></p>
+<p>Connect the <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> with an Event Stream. <a href="../../event-source/event-source/">Event Sources</a> produce <a href="../../event/event/">Events</a> to the Event Stream, and <a href="../../event-processing/event-processor/">Event Processors</a> and <a href="../../event-sink/event-sink/">Event Sinks</a> consume them. Event Streams are named, allowing communication over a specific stream of <a href="../../event/event/">Events</a>. Note how Event Streams decouple the source and sink applications, which communicate indirectly and asynchronously with each other through events. Additionally, Event data formats are often validated in order to govern the communication between applications.</p>
+<p>Generally speaking, an Event Stream records the history of what has happened in the world as a sequence of events (think: a sequence of facts). An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.</p>
+<p>Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.</p>
 <h2 id="implementation">Implementation</h2>
-<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
-<h2 id="considerations">Considerations</h2>
-<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
+<p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named <code>riderLocations</code>, representing locations of riders in a car-sharing service. The data format is <code>JSON</code>.</p>
+<pre><code class="sql">CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
+  WITH (kafka_topic='locations', value_format='json');
+</code></pre>
+
+<p>New <a href="../../event/event/">Events</a> can be written to the <code>riderLocations</code> stream using the <code>INSERT</code> syntax:</p>
+<pre><code class="sql">INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('c2309eec', 37.7877, -122.4205);
+INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('18f4ea86', 37.3903, -122.0643);
+INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4ab5cbad', 37.3952, -122.0813);
+INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('8b6eae59', 37.3944, -122.0813);
+INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4a7c7b41', 37.4049, -122.0822);
+INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4ddad000', 37.7857, -122.4011);
+</code></pre>
+
+<p>A <a href="https://docs.ksqldb.io/en/latest/concepts/queries/#push">push query</a> a.k.a. a streaming query can be ran continuously over the stream using a <code>SELECT</code>, using the <code>EMIT CHANGES</code> clause. As new events arrive, this query will emit new results matching the <code>WHERE</code> conditionals. The following query looks for riders in close proximity to Mountain View, California, in the United States.</p>
+<pre><code class="sql">-- Mountain View lat, long: 37.4133, -122.1162
+SELECT * FROM riderLocations
+  WHERE GEO_DISTANCE(latitude, longitude, 37.4133, -122.1162) &lt;= 5
+  EMIT CHANGES;
+</code></pre>
+
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Reference link to the EIP pattern as citation</li>
-<li>TODO: pointers to related patterns?</li>
-<li>TODO: pointers to external material?</li>
+<li>
+<p>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html">Message Channel</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</p>
+</li>
+<li>
+<p>The blog post series, <a href="https://www.confluent.io/blog/kafka-streams-tables-part-1-event-streaming/">Streams and Tables in Apache Kafka: A Primer</a> goes into detail on streams, tables and other Kafka fundamentals.</p>
+</li>
 </ul>
               
             </div>
@@ -208,10 +229,10 @@ TODO: Provide a technology agnostic diagram and supporting text explaining the p
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-router/" class="btn btn-neutral float-right" title="Event Router">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../stream-processing/event-grouper/" class="btn btn-neutral float-right" title="Event Grouper">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-processing-application/" class="btn btn-neutral" title="Event Processing Application"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../event-storage/infiite-retention-event-stream/" class="btn btn-neutral" title="Infinite Retention Event Stream"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -237,10 +258,10 @@ TODO: Provide a technology agnostic diagram and supporting text explaining the p
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-processing-application/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../event-storage/infiite-retention-event-stream/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-router/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../stream-processing/event-grouper/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

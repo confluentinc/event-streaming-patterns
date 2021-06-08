@@ -127,6 +127,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../infiite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
@@ -180,16 +185,16 @@
             <div class="section">
               
                 <h1 id="compacted-event-stream">Compacted Event Stream</h1>
-<p><a href="../event-stream/event-stream.md">Event Streams</a> often represent keyed snapshots of state, similar to a table in a relational database. That is, the <a href="../../event/event/">Events</a> contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.</p>
+<p><a href="../../event-stream/event-stream/">Event Streams</a> often represent keyed snapshots of state, similar to a table in a relational database. That is, the <a href="../../event/event/">Events</a> contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.</p>
 <h2 id="problem">Problem</h2>
-<p>How can a (keyed) table be stored in an <a href="../event-stream/event-stream.md">Event Stream</a> forever, using the minimum amount of space?</p>
+<p>How can a (keyed) table be stored in an <a href="../../event-stream/event-stream/">Event Stream</a> forever, using the minimum amount of space?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="compacted-event-stream" src="../../img/compacted-event-stream.png" /></p>
-<p>Remove events from the <a href="../event-stream/event-stream.md">Event Stream</a> that represent outdated information and have been superseded by new <a href="../../event/event/">Events</a>. The table's current data (i.e., its latest state) is represented by the remaining <a href="../../event/event/">Events</a> in the stream.</p>
-<p>This approach bounds the storage space of the table's <a href="../event-stream/event-stream.md">Event Stream</a> to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.</p>
+<p>Remove events from the <a href="../../event-stream/event-stream/">Event Stream</a> that represent outdated information and have been superseded by new <a href="../../event/event/">Events</a>. The table's current data (i.e., its latest state) is represented by the remaining <a href="../../event/event/">Events</a> in the stream.</p>
+<p>This approach bounds the storage space of the table's <a href="../../event-stream/event-stream/">Event Stream</a> to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Apache Kafka® provides this functionality natively through its <a href="https://kafka.apache.org/documentation/#compaction">Topic Compaction</a> feature. An <a href="../event-stream/event-stream.md">Event Stream</a> (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.</p>
-<p>To create a compacted <a href="../event-stream/event-stream.md">Event Stream</a> called <code>customer-profiles</code> with Kafka:</p>
+<p>Apache Kafka® provides this functionality natively through its <a href="https://kafka.apache.org/documentation/#compaction">Topic Compaction</a> feature. An <a href="../../event-stream/event-stream/">Event Stream</a> (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.</p>
+<p>To create a compacted <a href="../../event-stream/event-stream/">Event Stream</a> called <code>customer-profiles</code> with Kafka:</p>
 <pre><code class="bash">➜ kafka-topics --create \
     --bootstrap-server &lt;bootstrap-url&gt; \
     --replication-factor 3 \
@@ -210,12 +215,12 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>Compacted <a href="../event-stream/event-stream.md">Event Streams</a> allow for some optimizations:</p>
+<p>Compacted <a href="../../event-stream/event-stream/">Event Streams</a> allow for some optimizations:</p>
 <ul>
-<li>First, they allow the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> to limit the storage growth of the <a href="../event-stream/event-stream.md">Event Stream</a> in a data-specific way, rather than removing <a href="../../event/event/">Events</a> universally after a pre-configured period of time.</li>
-<li>Second, having smaller <a href="../event-stream/event-stream.md">Event Streams</a> allows for faster recovery and system migration strategies.</li>
+<li>First, they allow the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> to limit the storage growth of the <a href="../../event-stream/event-stream/">Event Stream</a> in a data-specific way, rather than removing <a href="../../event/event/">Events</a> universally after a pre-configured period of time.</li>
+<li>Second, having smaller <a href="../../event-stream/event-stream/">Event Streams</a> allows for faster recovery and system migration strategies.</li>
 </ul>
-<p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../event-stream/event-stream.md">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../event-stream/event-stream.md">Event Stream</a> is the primary concern, use an <a href="infinite-retention-event-stream.md">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
+<p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../../event-stream/event-stream/">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../../event-stream/event-stream/">Event Stream</a> is the primary concern, use an <a href="infinite-retention-event-stream.md">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Compacted Event Streams are highly related to the <a href="../table/state-table.md">State Table</a> pattern.</li>

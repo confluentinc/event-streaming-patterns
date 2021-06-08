@@ -127,6 +127,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infiite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
@@ -185,7 +190,7 @@
 <p>How can we connect applications or external systems, like databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> so that it can receive <a href="../../event/event/">Events</a>?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-sink-connector" src="../../img/event-sink-connector.png" /></p>
-<p>Event Sink Connector is a specific implementation of an <a href="../event-sink/">Event Sink</a>. Use an Event Sink Connector to transfer <a href="../../event/event/">Events</a> from the <a href="../event-stream/event-stream.md">Event Stream</a> into the specific external system. </p>
+<p>Event Sink Connector is a specific implementation of an <a href="../event-sink/">Event Sink</a>. Use an Event Sink Connector to transfer <a href="../../event/event/">Events</a> from the <a href="../../event-stream/event-stream/">Event Stream</a> into the specific external system. </p>
 <h2 id="implementation">Implementation</h2>
 <pre><code>CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
     'connector.class'     = 'io.confluent.connect.jdbc.JdbcSinkConnector',

@@ -127,6 +127,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infiite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
@@ -188,7 +193,7 @@
 <p>Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.</p>
 <p>Create (or use an existing) Event Mapper to map the <a href="https://en.wikipedia.org/wiki/Domain_model">Domain Model</a> (or the application's internal data model) to the data formats accepted by the event streaming platform, and vice versa. The mapper reads the domain model and converts it into outgoing events that are sent to the event streaming platform. Conversely, a mapper can be used to create or update domain objects from incoming events.</p>
 <h2 id="implementation">Implementation</h2>
-<p>In this example, we use Kafka's Java producer client to implement a Mapper that constructs an <a href="../../event/event/">Event</a> (<code>PublicationEvent</code>) from the Domain Model (<code>Publication</code>) before the event is written to an <a href="../event-stream/event-stream.md">Event Stream</a> a.k.a. topic in Kafka.</p>
+<p>In this example, we use Kafka's Java producer client to implement a Mapper that constructs an <a href="../../event/event/">Event</a> (<code>PublicationEvent</code>) from the Domain Model (<code>Publication</code>) before the event is written to an <a href="../../event-stream/event-stream/">Event Stream</a> a.k.a. topic in Kafka.</p>
 <pre><code class="java">private final IMapper domainToEventMapper = mapperFactory.buildMapper(Publication.class);
 private final Producer&lt;String, PublicationEvent&gt; producer = ...
 
