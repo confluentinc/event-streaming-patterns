@@ -17,7 +17,7 @@ For on-premises [Event Streaming Platforms](../event-stream/event-streaming-plat
 ## Considerations
 * Infinite Retention Streams are typically used to store entire datasets which will be used by many subscribers. For example, storing the canonical customer dataset in an Infinite Retention Event Stream makes it available to any other system, regardless of their database technology. The customer's dataset can be easily imported or reimported as a whole.
 
-* Compacted Event Streams [TODO] are often used as a form of Infinite Retention Event Stream. However compacted topics are not infinite. Instead, they retain only the most recent events for each key, meaning their contents matches the dataset held in an equivalent CRUD database table. 
+* [Compacted Event Streams](../event-storage/compacted-event-stream.md) are often used as a form of Infinite Retention Event Stream. However compacted streams are not infinite. Instead, they retain only the most recent [Events](../event/event.md) for each key, meaning their contents matches the dataset held in an equivalent CRUD database table. 
 
 ## References 
 * The blog post [Infinite Storage in Confluent](https://www.confluent.io/blog/infinite-kafka-storage-in-confluent-platform/) goes describes the tiered storage approach in more detail.
