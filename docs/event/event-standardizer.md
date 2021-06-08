@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Standardizer
+  description: An event standardizer converts events in multple formats to a common format understood by a downstream event processor.
+---
+
 # Event Standardizer
 In most businesses, a variety of traditional and [Event Processing Applications](../event-processing/event-processing-application.md) need to exchange [Events](../event/event.md) across [Event Streams](../event-stream/event-stream.md). Downstream [Event Processing Applications](../event-processing/event-processing-application.md) will require standardized data formats in order to properly process these [Events](../event/event.md). However, the reality of having many sources for these [Events](../event/event.md) often results in the lack of such standards or in different interpretations of the same standard.
 
