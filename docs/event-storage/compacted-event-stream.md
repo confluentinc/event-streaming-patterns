@@ -14,7 +14,12 @@ Apache Kafka® provides this functionality natively through its [Topic Compactio
 
 To create a compacted [Event Stream](../event-stream/event-stream.md) called `customer-profiles` with Kafka:
 ```bash
-➜ kafka-topics --create --bootstrap-server <bootstrap-url> --replication-factor 3 --partitions 3 --topic customer-profiles --config cleanup.policy=compact
+➜ kafka-topics --create \
+    --bootstrap-server <bootstrap-url> \
+    --replication-factor 3 \
+    --partitions 3 \
+    --topic customer-profiles \
+    --config cleanup.policy=compact
 
 Created topic topic-name.
 ```
