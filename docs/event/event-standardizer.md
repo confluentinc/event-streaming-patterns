@@ -31,7 +31,7 @@ builder
 ```
 
 ## Considerations
-When possible, diverging data format should be normalized "at the source". This data governence is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an [Event](../event/event.md) to the [Event Stream](../event-stream/event-stream.md), frees [Event](../event/event.md) allows consuming applications to delegate their data format validation logic to the schema validation layer.
+When possible, diverging data format should be normalized "at the source". This data governence is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an [Event](../event/event.md) to the [Event Stream](../event-stream/event-stream.md), allows consuming applications to delegate their data format validation logic to the schema validation layer.
 
 
 ## References
