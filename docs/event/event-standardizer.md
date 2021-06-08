@@ -12,7 +12,7 @@ Source all the input [Event Streams](../event-stream/event-stream.md) into an Ev
 A [Kafka Streams](https://kafka.apache.org/documentation/streams/) [Toplogy](https://docs.confluent.io/platform/current/streams/architecture.html#processor-topology) can read from multiple input [Event Streams](../event-stream/event-stream.md) and `map` the values to a new type. This `mapValues` function allows us translate each [Event](../event/event.md) type into the standard type expected on the output [Event Stream](../event-stream/event-stream.md).
 
 ```
-SpecificAvroSerde<SpecificRecord> inputValueSerde = ...
+SpecificAvroSerde<SpecificRecord> inputValueSerde = constructSerde();
 builder
   .stream(List.of("inputStreamA", "inputStreamB", "inputStreamC"),
     Consumed.with(Serdes.String(), inputValueSerde))
