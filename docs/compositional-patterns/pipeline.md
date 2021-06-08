@@ -23,7 +23,7 @@ Taking a step back, we can see that pipelines in an Event Streaming Platform hel
 
 As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
 
-```
+```sql
 CREATE STREAM orders ( 
   customer_id INTEGER, items ARRAY<STRUCT<name VARCHAR, price DOUBLE>>
 ) WITH (
@@ -31,7 +31,9 @@ CREATE STREAM orders (
 );
 ```
 
-```
+Next, we create a new stream by joining the original stream with a table of customer data:
+
+```sql
 CREATE STREAM orders_enriched WITH 
 (KAFKA_TOPIC='orders_enriched', PARTITIONS=1, VALUE_FORMAT='AVRO')
 AS SELECT o.customer_id AS cust_id, o.items, c.name, c.address
@@ -40,8 +42,10 @@ ON o.customer_id = c.customer_id
 EMIT CHANGES;
 ```
 
-```
-CREATE STREAM orders_totaled 
+Next, we create a stream, where we add the order total to each order by aggregating the price of the individual items in the order:
+
+```sql
+CREATE STREAM orders_with_totals
 WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
 AS SELECT cust_id, items, name, address,  
   REDUCE(TRANSFORM(items, i=> i->price ), 0E0, (i,x) => (i + x)) AS total 
