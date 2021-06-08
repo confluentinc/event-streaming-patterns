@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Collaboration - Event Streaming Patterns</title>
+  <title>Event Envelope - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Collaboration";
-    var mkdocs_page_input_path = "compositional-patterns/event-collaboration.md";
+    var mkdocs_page_name = "Event Envelope";
+    var mkdocs_page_input_path = "event/event-envelope.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,25 +52,25 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/geo-replication/">Geo Replication</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Collaboration</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Envelope</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -156,11 +156,11 @@
     
       
         
-          <li>Compositional patterns &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Event Collaboration</li>
+    <li>Event Envelope</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -171,24 +171,29 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-collaboration">Event Collaboration</h1>
-<p>Building distributed business workflows requires coordinating multiple services and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>. Business actions and reactions must be coordinated asynchronously as complex workflows transition through various states.</p>
+                <h1 id="event-envelope">Event Envelope</h1>
+<p><a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a> allow many different types of applications to work together. Event Envelopes provide a standard set of well-known fields across all <a href="../event/event.md">Event</a>s sent through the <a href="../event-stream/event-streaming-application.md">Event Streaming Applications</a>. The envelope is independent of the underlying event format and often references attributes such as the encryption type, schema, key, serialization format. Envelopes are analogous to protocol headers in networking (TCP-IP etc.)</p>
 <h2 id="problem">Problem</h2>
-<p>How can we build a distributed workflow in a way that allows components to evolve independently? </p>
+<p>How to convey information to all participants in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> independently of the event payload, e.g. how to decrypt an  <a href="../event/event.md">Event</a>, what schema is used, or what ID defines the uniqueness of the event?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-collaboration" src="../../img/event-collaboration.png" /></p>
-<p>Event Collaboration allows services and applications to collaborate around a single business workflow on top of an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Service components publish <a href="../event/events.md">Events</a> to <a href="../event-stream/event-streams.md">Event Streams</a> as notification of the completion of a step in the workflow. The Events serve the additional purpose of carrying state information about the workflow which is used by downstream components in the next steps of the workflow. The process repeats the until the workflow is complete.</p>
-<h2 id="considerations">Considerations</h2>
-<ul>
-<li>
-<p>In Event Collaboration, the logic for the choreography of the progression of the business workflow is decentralized and spread across many components. This contrasts with traditional orchestration design where the logic is isolated in a dedicated "controller" service that coordinates the actions and reactions of the workflow components.</p>
-</li>
-<li>
-<p>With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The <a href="../event/correlation-identifier.md">Correlation Identifier</a> pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.</p>
-</li>
-</ul>
+<p><img alt="event-envelope" src="../../img/event-envelope.png" /></p>
+<p>Use an Event Envelope to wrap the event data using a standard format agreed by all participants of the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> or more broadly. <a href="https://cloudevents.io/">Cloud Events</a>–which standardize access to ID, Schema, Key, and other common event attributes–are an industry-standard example of the Event Envelope pattern.</p>
+<h2 id="example-implementation">Example Implementation</h2>
+<p>Using the basic Java consumers and producers, a helper function could be used to wrap an application's immutable payload into an envelope which conforms to the expected format of the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
+<pre><code class="Java">static &lt;T&gt; Envelope&lt;T&gt; wrap(T payload, Iterable&lt;Header&gt; headers) {
+    return new Envelope(serializer(payload), headers);
+}
+static &lt;T&gt; T unwrap(Envelope&lt;T&gt; envelope) {
+    return envelope.payload;
+}
+</code></pre>
+
 <h2 id="references">References</h2>
-<p><a href="https://martinfowler.com/eaaDev/EventCollaboration.html">Event Collaboration by Martin Fowler</a></p>
+<ul>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EnvelopeWrapper.html">Envelope Wrapper</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf </li>
+<li><a href="https://www.confluent.io/blog/spring-kafka-protobuf-part-1-event-data-modeling/">How to Choose Between Strict and Dynamic Schemas</a></li>
+<li>See <a href="https://cloudevents.io/">Cloud Events</a> for a specification on describing event header information in a common way.</li>
+</ul>
               
             </div>
           </div>
@@ -196,10 +201,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../geo-replication/" class="btn btn-neutral float-right" title="Geo Replication">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event-processing/dead-letter-stream/" class="btn btn-neutral float-right" title="Dead Letter Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Event Streaming Patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../compositional-patterns/geo-replication/" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -225,10 +230,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../compositional-patterns/geo-replication/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../geo-replication/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event-processing/dead-letter-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

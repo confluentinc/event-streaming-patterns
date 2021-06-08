@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Collaboration - Event Streaming Patterns</title>
+  <title>Event Stream Merger - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Collaboration";
-    var mkdocs_page_input_path = "compositional-patterns/event-collaboration.md";
+    var mkdocs_page_name = "Event Stream Merger";
+    var mkdocs_page_input_path = "stream-processing/event-stream-merger.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,20 +52,10 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Compositional patterns</span></p>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Collaboration</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/geo-replication/">Geo Replication</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
@@ -120,14 +110,26 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../event-grouper/">Event Grouper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-stream-merger/">Event Stream Merger</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Stream Merger</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wait-for-n-events/">Wait for N Events</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../wait-for-n-events/">Wait for N Events</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wallclock-time/">Wallclock-Time Processing</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../wallclock-time/">Wallclock-Time Processing</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Table</span></p>
@@ -156,11 +158,11 @@
     
       
         
-          <li>Compositional patterns &raquo;</li>
+          <li>Stream processing &raquo;</li>
         
       
     
-    <li>Event Collaboration</li>
+    <li>Event Stream Merger</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -171,24 +173,31 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-collaboration">Event Collaboration</h1>
-<p>Building distributed business workflows requires coordinating multiple services and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>. Business actions and reactions must be coordinated asynchronously as complex workflows transition through various states.</p>
+                <h1 id="event-stream-merger">Event Stream Merger</h1>
+<p>An <a href="../../event-processing/event-processing-application/">Event Streaming Application</a> may contain multiple <a href="../event-stream/event-stream.md">Event Stream</a> instances.  But in some cases it may make sense for the application to merge the different event streams into a single event stream, without changing the individual events.  While this may seem logically related to a join, the merge is a completely different operation.  A join produces results by combining events with the same key to produce a new event, possibly of a different type.  Whereas the merge combines the events from multiple streams into a single stream, but the individual events are unchanged and remain independent of each other.  </p>
 <h2 id="problem">Problem</h2>
-<p>How can we build a distributed workflow in a way that allows components to evolve independently? </p>
+<p>How can an application merge different event streams?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-collaboration" src="../../img/event-collaboration.png" /></p>
-<p>Event Collaboration allows services and applications to collaborate around a single business workflow on top of an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Service components publish <a href="../event/events.md">Events</a> to <a href="../event-stream/event-streams.md">Event Streams</a> as notification of the completion of a step in the workflow. The Events serve the additional purpose of carrying state information about the workflow which is used by downstream components in the next steps of the workflow. The process repeats the until the workflow is complete.</p>
+<p><img alt="event-stream-merger" src="../../img/event-stream-merger.png" /></p>
+<h2 id="implementation">Implementation</h2>
+<p>The Kafka Streams DSL provides a <code>merge</code> operator which merges two streams into a single stream. You can then take the merged stream and use any number of operations on it.</p>
+<pre><code class="java">KStream&lt;String, Event&gt; eventStream = builder.stream(...);
+KStream&lt;String, Event&gt; eventStreamII = builder.stream(...);
+KStream&lt;String, Event&gt; allEventsStream = eventStream.merge(eventStreamII);
+
+allEventsStream.groupByKey()...
+</code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>
-<p>In Event Collaboration, the logic for the choreography of the progression of the business workflow is decentralized and spread across many components. This contrasts with traditional orchestration design where the logic is isolated in a dedicated "controller" service that coordinates the actions and reactions of the workflow components.</p>
-</li>
-<li>
-<p>With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The <a href="../event/correlation-identifier.md">Correlation Identifier</a> pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.</p>
-</li>
+<li>Kafka Streams provides no guarantees on the processing order of records from the underlying streams.</li>
+<li>When merging streams the key and value types must be the same.</li>
 </ul>
 <h2 id="references">References</h2>
-<p><a href="https://martinfowler.com/eaaDev/EventCollaboration.html">Event Collaboration by Martin Fowler</a></p>
+<ul>
+<li><a href="https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/kstreams.html">Kafka Tutorial</a>: Merging with Kafka Streams.</li>
+<li><a href="https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/ksql.html">Kafka Tutorial</a>: Merging streams with ksqlDB.</li>
+</ul>
               
             </div>
           </div>
@@ -196,10 +205,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../geo-replication/" class="btn btn-neutral float-right" title="Geo Replication">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../wait-for-n-events/" class="btn btn-neutral float-right" title="Wait for N Events">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Event Streaming Patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-grouper/" class="btn btn-neutral" title="Event Grouper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -225,10 +234,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-grouper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../geo-replication/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../wait-for-n-events/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
