@@ -2,7 +2,7 @@
 Loosely coupled components in a software architecture allow services and applications to change with minimal impact on dependent systems and applications. On the side of the organization, this loose coupling also allows different development teams to efficiently work independently from each another.
 
 ## Problem
-How can I decouple [Event Sources](../event-source/event-source.md) from [Event Sinks](../event-sink/event-sink.md), both of which may include cloud services, systems like relational databases, as well as applications and microservices?
+How can we decouple [Event Sources](../event-source/event-source.md) from [Event Sinks](../event-sink/event-sink.md), both of which may include cloud services, systems like relational databases, as well as applications and microservices?
 
 ## Solution
 ![event-broker](../img/event-broker.png)
