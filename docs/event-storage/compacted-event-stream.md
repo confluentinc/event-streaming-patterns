@@ -47,4 +47,4 @@ It is important to understand that compaction, on purpose, removes historical da
 ## References
 * Compacted Event Streams are highly related to the [State Table](../table/state-table.md) pattern.
 * Compacted Event Streams work a bit like simple [Log Structured Merge Trees](http://www.benstopford.com/2015/02/14/log-structured-merge-trees/).
-* [Cleanup policy configuration](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy) guide.
+* [Cleanup policy configuration](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy) of Kafka topics.
