@@ -21,7 +21,7 @@ Create (or use an existing) Event Mapper to map the Domain Model (or the applica
 In this example, we use Kafka's Java producer client to implement a Mapper that constructs an [Event](../event/event.md) (`PublicationEvent`) from the Domain Model (`Publication`) before the event is written to an [Event Stream](../event-stream/event-stream.md) a.k.a. topic in Kafka.
 
 ```
-private final IMapper mapper = mapperFactory.buildMapper(Publication.class);
+private final IMapper domainToEventMapper = mapperFactory.buildMapper(Publication.class);
 private final Producer<String, PublicationEvent> producer = ...
 
 public void newPublication(String author, String title) {
