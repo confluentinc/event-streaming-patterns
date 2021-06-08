@@ -24,7 +24,7 @@ With Apache Kafka, you can do this in one of several ways.
 [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html) enables easy data sharing between event streaming platforms, mirroring topics across them.
 Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.
 
-```
+```sh
 ccloud kafka link create east-west ...
 ccloud kafka topic create <destination topic> --link east-west --mirror-topic <source topic> ...
 ```
