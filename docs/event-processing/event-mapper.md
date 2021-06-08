@@ -39,6 +39,11 @@ public void updatePublication(PublicationEvent pubEvent) {
   domainStore.update(newPub);
 ```
 
+## Considerations
+
+* The mapper may optionally validate the schema of the converted objects, see the [Schema Validator](../event-source/schema-validator.md) pattern.
+
+
 ## References
 * Related patterns: [Event Serializer](../event/event-serializer.md) and [Event Deserializer](../event/event-deserializer.md)
 * This pattern is derived from [Messaging Mapper](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
