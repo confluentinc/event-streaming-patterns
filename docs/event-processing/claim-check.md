@@ -1,7 +1,7 @@
 ---
 seo:
    title: Claim Check
-   description: If an event streaming platform has some natural or configured size limit for the events, instead of storing the entire event, just store the reference
+   description: If an event streaming platform has some natural or configured size limit for the events, instead of storing the entire event, just store a reference to the event
 ---
 
 # Claim Check
