@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Filter
+  description: Event Filter allows event processing applications to operate over a subset of Events in an Event Stream
+---
+
 # Event Filter
 [Event Processing Applications](event-processing-application.md) may need to operate over a subset of [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md).
 
