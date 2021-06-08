@@ -1,3 +1,9 @@
+---
+seo:
+  title: Pipeline
+  description: Perform a complex operation on a series of events, in an event stream or table, through a series of independant processing stages.
+---
+
 # Pipeline
 
 A single [Event Stream](../event-stream/event-stream.md) or [Table](../table/state-table.md) can be used by multiple [Event Processing Applications](../event-processing/event-processing-application.md), and its [Events](../event/event.md) may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.
@@ -12,11 +18,10 @@ How can a single processing objective for a set of Event Streams and/or Tables b
 We can compose [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) in an [Event Streaming Platform](TODO: link) via an [Event Processing Application](TODO: link) to a create a pipeline—also called a topology—of [Event Processors](TODO: link), which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load), may include [Event Source Connectors](../event-source/event-source-connector.md) and [Event Sink Connectors](../event-sink/event-sink-connector.md), which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.
 
 Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.
-We can run a stream of events through a series of transformations, connected in  a pipeline, using ksqlDB and Kafka topics.
 
 ## Implementation
 
-We can use the streaming database ksqlDB as example to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
+As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
 
 ```
 CREATE STREAM orders ( 
