@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Source
+  description: An event source writes events into an event streaming platform.
+---
+
 # Event Source 
 Various components in an [Event Streaming Platform](../event-stream/event-streaming-platform.md) will generate [Events](../event/event.md). An Event Source is the generalization of these components, which can include [Event Processing Applications](../event-processing/event-processing-application.md), cloud services, databases, IoT sensors, mainframes, and more.
 
