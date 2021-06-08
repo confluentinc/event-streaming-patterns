@@ -1,5 +1,5 @@
 # Infinite Retention Event Stream
-Many use cases demand that [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md) will be stored for forever or for long periods of time, such as several years in the case of financial transactions because of legal requirements and compliance.
+Many use cases demand that [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md) will be stored for forever so that the dataset is available in its entirity.
 
 ## Problem
 How can we ensure that events in a stream are retained forever?
