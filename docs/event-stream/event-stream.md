@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Stream
-  description: Event Streams are the mechanism for Event Processing Applications to communicate. Connect Event Processing Applications together using an Event Stream, which is a channel for Events. Event streams are often named and contain Events of a well known format.
+  description: Event Streams are the mechanism for Event Processing Applications to communicate. Connect Event Processing Applications together using an Event Stream. Event streams are often named and contain Events of a well known format.
 ---
 # Event Stream
 [Event Processing Applications](../event-processing/event-processing-application.md) need to communicate, and ideally the communication is facilitated with [Events](../event/event.md). The applications need a standard mechanism to use for this communication.
