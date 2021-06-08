@@ -13,7 +13,7 @@ How can events from an [Event Source](../event-source/event-source.md) be proces
 ## Solution
 ![wallclock-time](../img/wallclock-time.png)
 
-Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was originally created by its [Event Source](../event-source/event-source.md), when it was received on the event stream in the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or they can derive a new timestamp from one or more data fields provided by the [Event](../event/event.md) itself (i.e., from the event payload).
+Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was originally created by its [Event Source](../event-source/event-source.md), when it was received on the event stream in the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or they can derive the timestamp from one or more data fields provided by the [Event](../event/event.md) itself (i.e., from the event payload).
 
 ## Implementation
 ```
