@@ -37,4 +37,4 @@ This, in turn, can have implications on memory fragmentation and longer garbage 
 Consumer client applications that are not aware of the protocol used for chunking events may not be able to reconstruct the original event accurately.
 
 ## References
-* To handle large events, an alternative approach that may be preferred is [Pointers](../event-processing/pointers.md)
+* To handle large events, an alternative approach that may be preferred is [Claim Check](../event-processing/claim-check.md)
