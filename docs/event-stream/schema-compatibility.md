@@ -1,6 +1,6 @@
 # Schema Compatibility
 Schemas are like contracts in that they set the terms that guarantee applications can process the data it receives.
-A natural behavior of applications and data is that they evolve over time, so it's important to have a policy about they are allowed to evolve and what compatibility rules are between old and new versions.
+A natural behavior of applications and data is that they evolve over time, so it's important to have a policy about how they are allowed to evolve and what compatibility rules are between old and new versions.
 
 ## Problem
 How do I ensure that a new schema is backward-compatible with a previous schema such that consumers do not need to make code changes to consume events?
