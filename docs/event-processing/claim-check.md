@@ -22,7 +22,7 @@ The producer can write the reference address into the event streaming platform, 
 
 ## Implementation
 
-The message stored in Kafka is just a reference to the object in the external store.
+The event stored in Kafka contains only a reference to the object in the external store.
 This can be a full URI string, an [abstract data type](https://en.wikipedia.org/wiki/Abstract_data_type) (e.g., Java object) with separate fields for bucket name and filename, or whatever fields are required to identify the object. Optionally, the event may contain additional data fields to better describe the object (e.g., metadata such as who created the object).
 
 ```java
