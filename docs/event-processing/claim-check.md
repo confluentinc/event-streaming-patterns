@@ -30,7 +30,7 @@ This can be a full URI string, an [abstract data type](https://en.wikipedia.org/
   storageClient.putObject(bucketName, objectName, object);
 
   // Write URI to Kafka
-  URI record = new URI(bucketName, objectName);
+  URI eventValue = new URI(bucketName, objectName);
   producer.send(new ProducerRecord<String, URI>(topic, eventKey, eventValue));
 ```
 
