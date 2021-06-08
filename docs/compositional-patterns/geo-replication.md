@@ -1,3 +1,9 @@
+---
+seo:
+  title: Geo Replication
+  description: Geo Replication enables multiple Event Streaming Platforms to be connected so that events available in one site are also available on the others
+---
+
 # Geo Replication
 Many architectures have streams of events deployed across multiple datacenters spanning boundaries of [Event Streaming Platforms](../event-stream/event-streaming-platform.md), datacenters, or geographical regions.
 In these situations, it may be useful for client applications in one event streaming platform to have access to [Events](../event/event.md) produced in another one.
