@@ -36,7 +36,7 @@ This can be a full URI String, or an Object with fields for bucket and filename 
 
 ## Considerations
 
-The event producer is responsible for ensuring that the event is properly stored in the external store, such that the pointer passed in Kafka is a valid reference address and contains valid data.
+The [Event Source](../event-source/event-source.md) is responsible for ensuring that the data is properly stored in the external store, such that the reference passed within the [Event](../event/event.md) is valid.
 Since the producer should be doing this atomically, take into consideration the same issues as mentioned in [Database Write Aside](../event-source/database-write-aside.md).
 
 Also, any Kafka compaction on a topic would just remove the message with the pointer, it would not remove the data from the external store, so that data needs another expiry mechanism.
