@@ -29,7 +29,7 @@ public void newPublication(String author, String title) {
   producer.send(author/*key*/, mapper.map(newPub));
 ```
 
-An application wishing to convert `PublicationEvent` instances to Domain Object updates, can do so with a Mapper that can do the reverse operation:
+We can implement the reverse operation in a second Mapper that converts `PublicationEvent` instances back into Domain Object updates:
 ```
 private final IMapper mapper = mapperFactory.buildMapper(Publication.class);
 private final Consumer<String, PublicationEvent> consumer = ...
