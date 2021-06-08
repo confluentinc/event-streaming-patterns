@@ -35,5 +35,6 @@ When possible, diverging data format should be normalized "at the source". This 
 
 
 ## References
+* See also [Stream Merger](stream-processing/event-stream-merger.md) for unifying related streams _without_ changing their format.
 * This pattern is derived from [Normalizer](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Normalizer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * Kafka Streams [`map` stateless transformation](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#creating-source-streams-from-ak) documentation
