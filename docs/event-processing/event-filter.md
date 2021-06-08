@@ -15,11 +15,22 @@ How can an application select only the relevant events (or discard uninteresting
 
 
 ## Implementation
+
+[ksqlDB](https://ksqldb.io) provides the ability to create a filtered Event Stream using familiar SQL syntax:
+```sql
+CREATE STREAM allisons_races WITH (kafka_topic = 'allisons-races-topic') AS
+    SELECT *
+      FROM all_races
+      WHERE racer = 'Allison';
+```
+
 The Kafka Streams DSL provides a `filter` operator which filters out events that do not match a given predicate.
 
-```
-KStream<String, Event> eventStream = builder.stream(.....);
-eventStream.filter((key, value) -> value.type() == "foo").to("foo-events");
+```java
+KStream<String, Race> allRacersStream = builder.stream("all-races-topic);
+allRacersStream
+  .filter((key, race) -> race.racer == "Allison")
+  .to("allisons-races-topic");
 ```
 
 ## References
