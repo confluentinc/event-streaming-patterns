@@ -41,7 +41,7 @@ The following example uses Kafka's Java producer client. Here, we keep things si
 The [Event Source](../event-source/event-source.md) is responsible for ensuring that the data is properly stored in the external store, such that the reference passed within the [Event](../event/event.md) is valid.
 Since the producer should be doing this atomically, take into consideration the same issues as mentioned in [Database Write Aside](../event-source/database-write-aside.md).
 
-Also, any Kafka compaction on a topic would just remove the message with the reference, it would not remove the data from the external store, so that data needs another expiry mechanism.
+Also, if a [Compacted Event Stream](../event-storage/compacted-event-stream.md) is used for storing the "reference" events (e.g., topic compaction in the case of Kafka), then the compaction will remove just the event with the reference. However, it will not remove the referenced (large) object itself from the external store, so that object needs a different expiry mechanism.
 
 ## References
 * This pattern is similar in idea to [Claim Check](https://www.enterpriseintegrationpatterns.com/patterns/messaging/StoreInLibrary.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
