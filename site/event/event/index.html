@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Translator - Event Streaming Patterns</title>
+  <title>Event - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Translator";
-    var mkdocs_page_input_path = "event-processing/event-translator.md";
+    var mkdocs_page_name = "Event";
+    var mkdocs_page_input_path = "event/event.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -59,43 +59,41 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-envelope/">Event Envelope</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-mapper/">Event Mapper</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-processing-application/">Event Processing Application</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-streaming-api/">Event Streaming API</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Translator</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processing-application/">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processor/">Event Processor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-splitter/">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-streaming-api/">Event Streaming API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-translator/">Event Translator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -160,11 +158,11 @@
     
       
         
-          <li>Event processing &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Event Translator</li>
+    <li>Event</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -175,30 +173,28 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-translator">Event Translator</h1>
-<p><a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a> will connect a variety of systems over time, and common data formats may not be feasible across them.</p>
+                <h1 id="event">Event</h1>
+<p>Events represent facts and can help facilitate decoupled applications, services, and systems exchanging data across an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How can systems using different data formats communicate with each other using <a href="../../event/event/">Events</a>?</p>
+<p>How do I represent a fact about something that has happened?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-translator" src="../../img/event-translator.png" /></p>
-<p>An Event Translator converts a data format into a standard format familiar to downstream <a href="../event-processor/">Event Processors</a>. This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to Json or Protobuf to Avro.</p>
-<h2 id="implementation">Implementation</h2>
-<p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides the ability to create <a href="../event-stream/event-stream.md">Event Streams</a> with SQL statements.</p>
-<pre><code>CREATE STREAM translated_stream AS
-   SELECT
-      fieldX AS fieldC,
-      field.Y AS fieldA,
-      field.Z AS fieldB
-   FROM untranslated_stream
-</code></pre>
-
+<p><img alt="event" src="../../img/event.png" />
+An event represents an immutable fact about something that happened. Examples of Events might be: orders, payments, activities, or measurements. Events are produced to, stored in, and consumed from an <a href="../event-stream/event-stream.md">Event Stream</a>. An Event typically contains at least one or more data fields that describe the fact, as well as a timestamp that denotes when this Event was created by its <a href="../../event-source/event-source/">Event Source</a>. The Event may also contain various metadata about itself, such as its source of origin (e.g., the application or cloud services that created the event) and storage-level information (e.g., its position in the event stream).</p>
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>In some cases translations will be unidirectional if data is lost, for example translating XML to json will often lose information meaning the original form cannot be recreated. </li>
+<li>
+<p>To ensure that Events from an Event Source can be read correctly by an <a href="../../event-processing/event-processor/">Event Processor</a>, they are often created in reference to an Event schema. Event Schemas are commonly defined in <a href="https://avro.apache.org/docs/current/spec.html">Avro</a>, <a href="https://developers.google.com/protocol-buffers">Protobuf</a>, or <a href="https://json-schema.org/">JSON schema</a>.</p>
+</li>
+<li>
+<p>For cloud-based architectures, you may want to evaluate the use of <a href="https://cloudevents.io/">CloudEvents</a>. CloudEvents provide a standardized <a href="../event-envelope/">Event Envelope</a> that wraps an event, making common event properties such as source, type, time, and ID universally accessible, regardless of how the event itself was serialized.</p>
+</li>
+<li>
+<p>In certain scenarios, Events may represent commands (think: instructions, actions) that an Event Processor reading the events should carry out. See the <a href="../event/command-event.md">Command Event</a> for details.</p>
+</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageTranslator.html">Event Translator</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>This pattern is derived in part from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html">Message</a>, <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">Event Message</a>, and <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html">Document Message</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
 </ul>
               
             </div>
@@ -207,10 +203,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../event-sink/event-sink-connector/" class="btn btn-neutral float-right" title="Event Sink Connector">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event-processing/dead-letter-stream/" class="btn btn-neutral float-right" title="Dead Letter Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-streaming-api/" class="btn btn-neutral" title="Event Streaming API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-envelope/" class="btn btn-neutral" title="Event Envelope"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -236,10 +232,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-streaming-api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-envelope/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../event-sink/event-sink-connector/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event-processing/dead-letter-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

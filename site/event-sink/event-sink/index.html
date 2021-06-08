@@ -62,6 +62,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -172,10 +174,10 @@
             <div class="section">
               
                 <h1 id="event-sink">Event Sink</h1>
-<p>Various components in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> will read or receive <a href="../event/event.md">Events</a>. An Event Sink is the generalization of these components, which can include <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, cloud services, databases, IoT sensors, mainframes, and more.</p>
+<p>Various components in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> will read or receive <a href="../../event/event/">Events</a>. An Event Sink is the generalization of these components, which can include <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, cloud services, databases, IoT sensors, mainframes, and more.</p>
 <p>Conceptually, an Event Sink is the opposite of an <a href="../../event-source/event-source/">Event Source</a>. In practice, however, components such as an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> can act as both an <a href="../../event-source/event-source/">Event Source</a> and an Event Sink.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we read (or consume / subscribe to) <a href="../event/event.md">Events</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>?</p>
+<p>How can we read (or consume / subscribe to) <a href="../../event/event/">Events</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-sink" src="../../img/event-sink.png" /></p>
 <p>Use an Event Sink, which typically acts as a client in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Examples are an <a href="../event-sink-connector/">Event Sink Connector</a> (which continuously exports <a href="../event-stream/event-stream.md">Event Streams</a> from the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> into an external system such as a cloud service or a relational database) or an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> such as a <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams</a> application and the streaming database <a href="https://ksqldb.io/">ksqlDB</a>.</p>

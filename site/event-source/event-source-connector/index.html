@@ -62,6 +62,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -176,10 +178,10 @@
                 <h1 id="event-source-connector">Event Source Connector</h1>
 <p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems, which are not themselves <a href="../event-source/">Event Sources</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we connect cloud services and traditional systems, like relational databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, converting their data at rest to data in motion with <a href="../event/event.md">Events</a>.</p>
+<p>How can we connect cloud services and traditional systems, like relational databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, converting their data at rest to data in motion with <a href="../../event/event/">Events</a>.</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
-<p>Generally speaking, we need to find a way to extract data as <a href="../event/event.md">Events</a> from the origin system. For relational databases, for example, a common technique is to use <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>, where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as <a href="../event/event.md">Events</a>, which can then be ingested into another system. The components that perform this extraction and ingestion of <a href="../event/event.md">Events</a> are typically called "connectors". The connectors turn the origin system into an <a href="../event-source/">Event Source</a>, then generate <a href="../event/event.md">Events</a> from that data, and finally sends these <a href="../event/event.md">Events</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
+<p>Generally speaking, we need to find a way to extract data as <a href="../../event/event/">Events</a> from the origin system. For relational databases, for example, a common technique is to use <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>, where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as <a href="../../event/event/">Events</a>, which can then be ingested into another system. The components that perform this extraction and ingestion of <a href="../../event/event/">Events</a> are typically called "connectors". The connectors turn the origin system into an <a href="../event-source/">Event Source</a>, then generate <a href="../../event/event/">Events</a> from that data, and finally sends these <a href="../../event/event/">Events</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
 <h2 id="implementation">Implementation</h2>
 <p>When connecting a cloud services and traditional systems to <a href="https://kafka.apache.org/">Apache Kafka</a>, the most common solution is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. There are hundreds of ready-to-use connectors available on <a href="https://www.confluent.io/hub/">Confluent Hub</a>, including blob stores like AWS S3, cloud services like Salesforce and Snowflake, relational databases, data warehouses, traditional message queues, flat files, and more. Confluent also provides many <a href="https://docs.confluent.io/cloud/current/connectors/index.html">fully managed Kafka connectors</a> in the cloud.</p>
 <p>There are several options to deploy such connectors. For example, the streaming database <a href="https://ksqldb.io/">ksqlDB</a> provides an ability to manage Kafka connectors with SQL statements.</p>

@@ -72,6 +72,8 @@
     </li>
     </ul>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -172,9 +174,9 @@
             <div class="section">
               
                 <h1 id="event-envelope">Event Envelope</h1>
-<p><a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a> allow many different types of applications to work together. Event Envelopes provide a standard set of well-known fields across all <a href="../event/event.md">Event</a>s sent through the <a href="../event-stream/event-streaming-application.md">Event Streaming Applications</a>. The envelope is independent of the underlying event format and often references attributes such as the encryption type, schema, key, serialization format. Envelopes are analogous to protocol headers in networking (TCP-IP etc.)</p>
+<p><a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a> allow many different types of applications to work together. Event Envelopes provide a standard set of well-known fields across all <a href="../event/">Event</a>s sent through the <a href="../event-stream/event-streaming-application.md">Event Streaming Applications</a>. The envelope is independent of the underlying event format and often references attributes such as the encryption type, schema, key, serialization format. Envelopes are analogous to protocol headers in networking (TCP-IP etc.)</p>
 <h2 id="problem">Problem</h2>
-<p>How to convey information to all participants in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> independently of the event payload, e.g. how to decrypt an  <a href="../event/event.md">Event</a>, what schema is used, or what ID defines the uniqueness of the event?</p>
+<p>How to convey information to all participants in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> independently of the event payload, e.g. how to decrypt an  <a href="../event/">Event</a>, what schema is used, or what ID defines the uniqueness of the event?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-envelope" src="../../img/event-envelope.png" /></p>
 <p>Use an Event Envelope to wrap the event data using a standard format agreed by all participants of the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> or more broadly. <a href="https://cloudevents.io/">Cloud Events</a>–which standardize access to ID, Schema, Key, and other common event attributes–are an industry-standard example of the Event Envelope pattern.</p>
@@ -201,7 +203,7 @@ static &lt;T&gt; T unwrap(Envelope&lt;T&gt; envelope) {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../event-processing/dead-letter-stream/" class="btn btn-neutral float-right" title="Dead Letter Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event/" class="btn btn-neutral float-right" title="Event">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../../compositional-patterns/geo-replication/" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -233,7 +235,7 @@ static &lt;T&gt; T unwrap(Envelope&lt;T&gt; envelope) {
         <span><a href="../../compositional-patterns/geo-replication/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../event-processing/dead-letter-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -80,6 +80,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -181,7 +183,7 @@
               
                 <h1 id="geo-replication">Geo Replication</h1>
 <p>Many architectures have streams of events deployed across multiple datacenters spanning boundaries of <a href="../event-stream/event-streaming-platform.md">Event Streaming Platforms</a>, datacenters, or geographical regions.
-In these situations, it may be useful for client applications in one event streaming platform to have access to <a href="../event/event.md">Events</a> produced in another one.
+In these situations, it may be useful for client applications in one event streaming platform to have access to <a href="../../event/event/">Events</a> produced in another one.
 All clients shouldn't be forced to read from the source event streaming platform, which can incur high latency and data egress costs.
 Instead, with a move-once-read-many approach, the data can be replicated to a local datacenter where clients can do all their processing quickly and cheaply.</p>
 <h2 id="problem">Problem</h2>
