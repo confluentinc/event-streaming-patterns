@@ -6,7 +6,7 @@ seo:
 
 # Event Chunking
 
-Sometimes compression can reduce message size but there are various use cases that entail large message payloads where compression may not be enough.
+Sometimes compression can reduce message size, but there are various use cases that entail large message payloads where compression may not be enough.
 Often these use cases are related to image, video, or audio processing: image recognition, video analytics, audio analytics, etc.
 
 ## Problem
