@@ -2,7 +2,7 @@
 Loosely coupled components allow my applications to change with minimal impact on dependent systems. This loose coupling also allows my development teams to efficiently work asynchronously with respect to one another. 
 
 ## Problem
-How can I decouple event sources from event destinations?
+How can I decouple [Event Sources](../event-source/event-source.md) from [Event Sinks](../event-sink/event-sink.md), both of which may include cloud services, systems like relational databases, as well as applications and microservices?
 
 ## Solution
 ![event-broker](../img/event-broker.png)
@@ -17,4 +17,3 @@ Use a central Event Broker that routes Events to related [Event Streams](../even
 
 ## References
 * This pattern is derived from [Message Broker](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBroker.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-
