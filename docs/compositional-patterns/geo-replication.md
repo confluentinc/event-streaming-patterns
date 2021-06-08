@@ -2,7 +2,7 @@
 Many architectures have streams of events deployed across multiple datacenters spanning boundaries of [Event Streaming Platforms](../event-stream/event-streaming-platform.md), datacenters, or geographical regions.
 In these situations, it may be useful for client applications in one event streaming platform to have access to [Events](../event/event.md) produced in another one.
 All clients shouldn't be forced to read from the source event streaming platform, which can incur high latency and data egress costs.
-Instead, with a move-once-read-many approach, the data can be replicated to the destination one and then the client there can process the data.
+Instead, with a move-once-read-many approach, the data can be replicated to a local datacenter where clients can do all their processing quickly and cheaply.
 
 ## Problem
 How can multiple [Event Streaming Platforms](../event-stream/event-streaming-platform.md) be connected so that events available in one site are also available on the others?
