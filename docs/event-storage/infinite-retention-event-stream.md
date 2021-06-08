@@ -1,3 +1,9 @@
+---
+seo:
+  title: Infinite Retention Event Stream
+  description: Infinite Retention Event Stream describes retaining events indefinitely making the Event Streaming Platform the system of record. 
+---
+
 # Infinite Retention Event Stream
 Many use cases demand that [Events](../event/event.md) in an [Event Stream](../event-stream/event-stream.md) will be stored for forever so that the dataset is available in its entirity.
 
