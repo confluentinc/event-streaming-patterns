@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Broker
-  description: Event Brokers allow event stream processing applications to communicate in a loosely decoupled manner. Multiple brokers are deployed as a distributed cluster to ensure elasticity, scalability, and fault-tolerance during operations.
+  description: Event Brokers allow applications and services to communicate in a loosely coupled manner. Multiple brokers are deployed as a distributed cluster to ensure elasticity, scalability, and fault-tolerance during operations.
 ---
 
 # Event Broker
