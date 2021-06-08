@@ -11,7 +11,7 @@ An event represents an immutable fact about something that happened. Examples of
 ## Considerations
 * To ensure that Events from an Event Source can be read correctly by an [Event Processor](../event-processing/event-processor.md), they are often created in reference to an Event schema. Event Schemas are commonly defined in [Avro](https://avro.apache.org/docs/current/spec.html), [Protobuf](https://developers.google.com/protocol-buffers), or [JSON schema](https://json-schema.org/).
 
-* For cloud-based architectures, you may want to evaluate the use of [CloudEvents](https://cloudevents.io/). CloudEvent provides a standardized envelope that wraps event, making common event properties such as source, type, time, ID, and more, universally accessible, regardless of how the event itself was serialized.
+* For cloud-based architectures, you may want to evaluate the use of [CloudEvents](https://cloudevents.io/). CloudEvents provide a standardized [Event Envelope](../event/event-envelope.md) that wraps an event, making common event properties such as source, type, time, and ID universally accessible, regardless of how the event itself was serialized.
 
 * In certain scenarios, Events may represent commands (think: instructions, actions) that an Event Processor reading the events should carry out. See the [Command Event](../event/command-event.md) for details.
 
