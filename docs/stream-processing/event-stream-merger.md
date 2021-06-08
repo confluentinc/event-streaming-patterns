@@ -1,3 +1,8 @@
+---
+seo:
+  title: Event Stream Merger
+  description: An Event Stream Merger combines events from multiple streams into a single stream, without changing the underlying data.
+---
 
 # Event Stream Merger
 An [Event Streaming Application](../event-processing/event-processing-application.md) may contain multiple [Event Stream](../event-stream/event-stream.md) instances.  But in some cases it may make sense for the application to merge the different event streams into a single event stream, without changing the individual events.  While this may seem logically related to a join, the merge is a completely different operation.  A join produces results by combining events with the same key to produce a new event, possibly of a different type.  Whereas the merge combines the events from multiple streams into a single stream, but the individual events are unchanged and remain independent of each other.  
