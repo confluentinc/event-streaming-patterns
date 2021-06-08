@@ -19,7 +19,7 @@ To create a compacted [Event Stream](../event-stream/event-stream.md) called `cu
 Created topic topic-name.
 ```
 
-The `kafka-topics` command can also verify the current topics configuration:
+The `kafka-topics` command can also verify the current topic's configuration:
 ```bash
 ➜ kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
 
