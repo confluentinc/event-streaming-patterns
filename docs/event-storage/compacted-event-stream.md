@@ -21,7 +21,7 @@ To create a compacted [Event Stream](../event-stream/event-stream.md) called `cu
     --topic customer-profiles \
     --config cleanup.policy=compact
 
-Created topic topic-name.
+Created topic customer-profiles.
 ```
 
 The `kafka-topics` command can also verify the current topic's configuration:
