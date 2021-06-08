@@ -24,7 +24,7 @@ You can also write events directly using `SQL` syntax, for example, the streamin
 CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
 	with (kafka_topic='users-topic', value_format='json');
 INSERT INTO users (username, name, phone)
-  VALUES ('awalther', 'Allison', '+1 555-555-1234');
+  VALUES ('awilson', 'Allison', '+1 555-555-1234');
 ```
 
 ## References
