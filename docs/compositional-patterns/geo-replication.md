@@ -37,7 +37,7 @@ Operators can set up such inter-cluster data flows with Confluent's [Replicator]
 Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.
 
 ## Considerations
-Note that this type of replication between event streaming platforms is asynchronous, which means an event that is recorded in the source may be available before that event is recorded in the destination.
+Note that this type of replication between event streaming platforms is asynchronous, which means an event that is recorded in the source may not be immediately available at the destination.
 There is also synchronous replication across event streaming platforms (e.g. [Multi Region Clusters](https://docs.confluent.io/platform/current/multi-dc-deployments/index.html)) but this is often limited to when the event streaming platforms are in the same operational domain.
 
 ## References
