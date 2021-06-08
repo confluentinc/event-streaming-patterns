@@ -16,14 +16,15 @@ How can events from an [Event Source](../event-source/event-source.md) be proces
 Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was originally created by its [Event Source](../event-source/event-source.md), when it was received on the event stream in the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or they can derive the timestamp from one or more data fields provided by the [Event](../event/event.md) itself (i.e., from the event payload).
 
 ## Implementation
+
+[ksqlDB](https://ksqldb.io) maintains a system column called `ROWTIME` that tracks the timestamp of the [Event](../event/event.md). By default, `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the [Event](../event/event.md). See [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation for more information.
+
 ```
 CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
     WITH (KAFKA_TOPIC='deviceEvents',
           VALUE_FORMAT='avro',
           TIMESTAMP='eventTime');
 ```
-
-[ksqlDB](https://ksqldb.io) maintains a system column called `ROWTIME` that tracks the timestamp of the [Event](../event/event.md). By default, `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the [Event](../event/event.md). See [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation for more information.
 
 ## References
 * See the tutorial [Event-time semantics](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for a full example
