@@ -30,7 +30,7 @@ public void newPublication(String author, String title) {
 ```
 
 We can implement the reverse operation in a second Mapper that converts `PublicationEvent` instances back into Domain Object updates:
-```
+```java
 private final IMapper eventToDomainMapper = mapperFactory.buildMapper(Publication.class);
 private final Consumer<String, PublicationEvent> consumer = ...
 
