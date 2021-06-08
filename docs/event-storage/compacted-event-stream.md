@@ -7,7 +7,9 @@ How can a (keyed) table be stored in an [Event Stream](../event-stream/event-str
 ## Solution
 ![compacted-event-stream](../img/compacted-event-stream.png)
 
-Remove events from the Event Stream that represent outdated information and have been superseded by new Events.
+Remove events from the [Event Stream](../event-stream/event-stream.md) that represent outdated information and have been superseded by new [Events](../event/event.md). The table's current data (i.e., its latest state) is represented by the remaining [Events](../event/event.md) in the stream.
+
+This approach bounds the storage space of the table's [Event Stream](../event-stream/event-stream.md) to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.
 
 ## Implementation
 Apache Kafka® provides this functionality natively through its [Topic Compaction](https://kafka.apache.org/documentation/#compaction) feature. An [Event Stream](../event-stream/event-stream.md) (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.
