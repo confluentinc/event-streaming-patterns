@@ -35,7 +35,7 @@ private final IMapper eventToDomainMapper = mapperFactory.buildMapper(Publicatio
 private final Consumer<String, PublicationEvent> consumer = ...
 
 public void updatePublication(PublicationEvent pubEvent) {
-  Publication newPub = mapper.map(pubEvent);
+  Publication newPub = eventToDomainMapper.map(pubEvent);
   domainStore.update(newPub);
 ```
 
