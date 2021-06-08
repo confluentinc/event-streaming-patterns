@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Stream
-  description: 
+  description: Event Streams are the mechanism for Event Processing Applications to communicate. Connect Event Processing Applications together using an Event Stream, which is a channel for Events. Event streams are often named and contain Events of a well known format.
 ---
 # Event Stream
 [Event Processing Applications](../event-processing/event-processing-application.md) need to communicate, and ideally the communication is facilitated with [Events](../event/event.md). The applications need a standard mechanism to use for this communication.
@@ -14,7 +14,7 @@ How can [Event Processors](../event-processing/event-processor.md) and applicati
 
 Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named, allowing communication over a specific stream of [Events](../event/event.md). Additionally, Event data formats are often validated in order to govern the communication between Event Processors.
 
-Generally speaking, an event stream records the history of what has happened in the world as a sequence of events. An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.
+Generally speaking, an Event Stream records the history of what has happened in the world as a sequence of events. An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.
 
 Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
 
