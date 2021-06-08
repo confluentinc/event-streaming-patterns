@@ -1,7 +1,7 @@
 ---
 seo:
   title: Lifecycle Event
-  description: The general use case for Lifecycle Event is when the sequencing matters between messages of different types.  
+  description: The general use case for Lifecycle Event is when the sequencing matters between events of different types.  
 ---
 
 # Lifecycle Event
