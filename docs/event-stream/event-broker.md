@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Broker
+  description: Event Brokers allow event stream processing applications to communicate in a loosely decoupled manner. Multiple brokers are deployed as a distributed cluster to ensure elasticity, scalability, and fault-tolerance during operations.
+---
+
 # Event Broker
 Loosely coupled components in a software architecture allow services and applications to change with minimal impact on dependent systems and applications. On the side of the organization, this loose coupling also allows different development teams to efficiently work independently from each another.
 
