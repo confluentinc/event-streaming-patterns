@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Store
-  description: Append-only logs are the data structure of choice for event storage and event-driven architectures.
+  description: Event streams, implemented as append-only logs, are the structure of choice for event storage and event-driven architectures.
 ---
 
 # Event Store
@@ -20,26 +20,27 @@ truth for applications?
 ## Solution
 ![event store](../img/event-store.svg)
 
-The data structure of choice for storing incoming events is the
-[Event Stream](../event-stream/event-stream.md), which is essentially an append-only log. It allows for constant-time (Θ(1)) writes, lock-free
-concurrent reads, and straightforward replication across multiple
-machines.
+Incoming events are stored in an [Event Stream](../event-stream/event-stream.md),
+implemented as an append-only log. By choosing this data structure, we
+can guarantee constant-time (Θ(1)) writes, lock-free concurrent reads,
+and straightforward replication across multiple machines.
 
 ## Implementation
 
-Apache Kafka® maintains a persistent, append-only log for each kind of
-event you wish to store. Such logs are:
+Apache Kafka® is an event store that maintains a persistent,
+append-only stream — a _topic_ — for each kind of event you need to
+store. These topics are:
 
 * Write-efficient - an append-only log is one of the fastest, cheapest
   data structures to write to.
-* Read efficient - multiple readers can consume the same log without
+* Read efficient - multiple readers can consume the same stream without
   blocking.
-* Highly-available - each event is written to multiple disks, and in
-  the event of failure one of the redundant machines takes over.
 * Durable - all events are written to disk, either synchronously (for
   maximum reliability) or asynchronously (for maximum
   throughput). Events can be as long-lived as needed, or stored
   forever.
+* Highly-available - each event is written to multiple disks, and in
+  the event of failure one of the redundant machines takes over.
 * Auditable - every change is captured and persisted. Every result can
   be traced back to its source event(s).
 
@@ -60,8 +61,10 @@ In contrast, relational databases are very good at maintaining a
 persistent state of the world in perpetuity, and answering arbitrary
 questions about it, but they often fall short on _auditing_ -
 answering which events led up to the current state - and on
-_liveness_ - what _new_ events do we need to consider.
-They are predominantly designed for use cases that operate on data at rest, whereas an Event Store is designed from the ground up for data in motion and event streaming.
+_liveness_ - what _new_ events do we need to consider.  They are
+predominantly designed for use cases that operate on data at rest,
+whereas an Event Store is designed from the ground up for data in
+motion and event streaming.
 
 By beginning with a fundamental data-structure for event capture, and
 building on that to provide long-term persistence and arbitrary
