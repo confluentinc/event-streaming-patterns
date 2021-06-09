@@ -8,7 +8,7 @@ seo:
 An event processor is a component that reads events and processes them, and possibly writes new events as the result of its processing. As such, it may act as an [Event Source](todo: link pattern) and/or [Event Sink](todo: link pattern), and in practice often acts as both. An event processor can be distributed (i.e., multi-instance), in which case the processing of events happens concurrently across its instances.
 
 ## Problem
-How do I gain insight from event data? For example, how can I quickly address a customer issue?
+How do I process events in an [Event Streaming Platform](todo: link pattern)? For example, how can I process financial transactions, track shipments, analyze IoT sensors data, or generate continuous intelligence?
 
 ## Solution
 ![event-processor](../img/event-processor.png)
