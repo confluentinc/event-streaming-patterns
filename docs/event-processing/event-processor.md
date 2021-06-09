@@ -12,7 +12,9 @@ How do I process events in an [Event Streaming Platform](todo: link pattern)? Fo
 
 ## Solution
 ![event-processor](../img/event-processor.png)
-You can define any number of event processors inside an [Event Processing Application](event-processing-application.md) to perform such tasks as mapping an event type to a domain object, triggering alerts, real-time report updates, and writing out results for consumption by other applications.
+Typically, you don't define a single event processor in isolation. Instead, you define one or more event processors inside an [Event Processing Application](event-processing-application.md) that implements one particular use case end-to-end, or (e.g., in the case of microservices) a subset of the overall business logic limited to the bounded context of a particular domain. 
+
+An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an [Event Stream](todo: link pattern), enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.
 
 ## Implementation
 
