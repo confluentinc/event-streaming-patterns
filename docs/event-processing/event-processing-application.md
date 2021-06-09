@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Processing Application
-An Event Processing Application uses one or more [Event Processor](event-processor.md) instances to handle streaming event driven data.
+To create, read, process, and/or query the data in an [Event Streaming Platform](../event-stream/event-streaming-platform.md), developers typically implement Event Processing Applications (e.g., in the form of microservices).
 
 ## Problem
 How can I build an application to work with streaming event data?
@@ -30,5 +30,4 @@ kafkaStreams.start()
 When building an Event Processing Application, it's important to generally confine the application to one problem domain.  While it's true the application can have any number of event processors, they should be closely related.
 
 ## References
-
 
