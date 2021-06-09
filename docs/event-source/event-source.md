@@ -18,7 +18,7 @@ How can we create [Events](../event/event.md) in an [Event Streaming Platform](.
 Use an Event Source, which typically acts as a client in an [Event Streaming Platform](../event-stream/event-streaming-platform.md). Examples are an [Event Source Connector](../event-source/event-source-connector.md) (which continuously imports data as [Event Streams](../event-stream/event-stream.md) into the [Event Streaming Platform](../event-stream/event-streaming-platform.md) from an external system such as a cloud services or a relational database) or an [Event Processing Application](../event-processing/event-processing-application.md) such as a [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) application and the streaming database [ksqlDB](https://ksqldb.io/).
 
 ## Implementation
-Normally an actual component would be writing [Events](../event/event.md) into an [Event Stream](../event-stream/event-stream.md), via a client library, API, gateway, etc. You can also write events directly using `SQL` syntax, for example, the streaming database [ksqlDB](https://ksqldb.io/), provides an `INSERT` statement.
+Normally an actual component would be writing [Events](../event/event.md) into an [Event Stream](../event-stream/event-stream.md), via a client library, API, gateway, etc. You can also write events directly using SQL syntax: the streaming database [ksqlDB](https://ksqldb.io/), for example, provides an `INSERT` statement.
 ```
 CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
 	with (kafka_topic='users-topic', value_format='json');
