@@ -33,14 +33,14 @@ store. These topics are:
 
 * Write-efficient - an append-only log is one of the fastest, cheapest
   data structures to write to.
-* Read efficient - multiple readers can consume the same stream without
+* Read efficient - multiple readers (cf. [Event Processor](../event-processing/event-processor.md)) can consume the same stream without
   blocking.
-* Durable - all events are written to disk, either synchronously (for
+* Durable - all events are written to storage (e.g., local disk, network storage device), either synchronously (for
   maximum reliability) or asynchronously (for maximum
-  throughput). Events can be as long-lived as needed, or stored
+  throughput). Events can be as long-lived as needed, and even stored
   forever.
-* Highly-available - each event is written to multiple disks, and in
-  the event of failure one of the redundant machines takes over.
+* Highly-available - each event is written to multiple storage devices and replicated across multiple machines, and in
+  the case of failure one of the redundant machines takes over.
 * Auditable - every change is captured and persisted. Every result can
   be traced back to its source event(s).
 
@@ -73,7 +73,7 @@ store for modern, data-driven architectures.
 
 ## References
 
-* See also: [Geo Replication](../compositional-patterns/geo-replication.md).
+* See also: [Geo-Replication](../compositional-patterns/geo-replication.md).
 * [Using logs to build a solid data infrastructure](https://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/)
 * [What Is Apache Kafka?](https://www.confluent.io/what-is-apache-kafka/)
 * [Kafka: The Definitive Guide](https://www.confluent.io/resources/kafka-the-definitive-guide/) free Ebook.
