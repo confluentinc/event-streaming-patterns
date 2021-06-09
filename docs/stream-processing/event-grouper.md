@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Grouper
+  description: Event Grouper is an Event Processor that groups events together by a common attribute in the Event using an Aggregate function.
+---
+
 # Event Grouper
 An event grouper is a specialized form of an [Event Processor](../event-processing/event-processor.md) that groups events together by a common field, such as a customer ID, and/or by event timestamps (often called _windowing_ or _time-based windowing_).
 
