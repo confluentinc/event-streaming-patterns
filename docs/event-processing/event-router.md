@@ -37,7 +37,7 @@ You can use any of the given parameters to generate and return the desired desti
 ```
 CountryTopicExtractor implements TopicNameExtractor<String, String> {
    String extract(String key, String value, RecordContext recordContext) {
-      switch (value.counter) {
+      switch (value.country) {
         case "france":
           return "france-topic";
         case "spain":
