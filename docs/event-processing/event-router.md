@@ -5,10 +5,10 @@ seo:
 ---
 
 # Event Router
-[Event Streams](../event-stream/event-stream.md) may contain [Events](../event/event.md) which can be separated logically by some attribute. The routing of Events to dedicated Streams may allow for simplified [Event Processing](event-processor.md) and [Event Sink](../event-sink/event-sink.md) solutions.
+[Event Streams](../event-stream/event-stream.md) may contain a subset of [Events](../event/event.md) which need to be processed in isolation. For example, an inventory check system may be distributed across multiple physical systems, and the target system depends on the category of the item being checked. [Event Stream Processors](../event-processing/event-processor.md) can also be optimized when processing [Event Streams](../event-stream/event-stream.md) which contain focused data as they are free from filtering of streams with irrelevant data. Additionally, there may be a desire to do crosscutting data processing where isolating [Events](../event/event.md) will allow for a cleaner separation of concerns. 
 
 ## Problem
-How can we isolate Events into a dedicated Event Stream based on some attribute of the Events?
+How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](../event-stream/event-stream.md) based on some attribute of the [Events](../event/event.md)?
 
 ## Solution
 ![event-router](../img/event-router.png)
@@ -20,19 +20,19 @@ With [ksqlDB](https://ksqldb.io/), continuously routing events to a different st
 CREATE STREAM actingevents_drama AS
     SELECT NAME, TITLE
       FROM ACTINGEVENTS
-     WHERE GENRE='drama';
+      WHERE GENRE='drama';
 
 CREATE STREAM actingevents_fantasy AS
     SELECT NAME, TITLE
       FROM ACTINGEVENTS
-     WHERE GENRE='fantasy';
+      WHERE GENRE='fantasy';
 ```
 
 If using Kafka Streams, the provided [TopicNameExtractor](https://kafka.apache.org/27/javadoc/index.html?org/apache/kafka/streams/processor/TopicNameExtractor.html) interface can redirect events to topics.  The `TopicNameExtractor` has one method, `extract`, which accepts three parameters:
 
 - The event key
 - The event value
-- The [RecordContext](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, ando ther contextual information about the event.
+- The [RecordContext](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and the contextual information about the event.
 
 You can use any of the given parameters to return the destination topic name, and Kafka Streams will complete the routing. 
 
