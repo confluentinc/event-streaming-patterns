@@ -1,42 +1,42 @@
 
 # Suppressed Event Aggregator
-An [Event Streaming Application](../event-processing/event-processing-application.md) can provide aggregation operations like an [Event Aggregator](event-aggregator.md).  If not windowed, the event-aggregator will emit intermediate results, as an event stream is infinite, so there's not really a point where you can have a final result.  However, if the aggregation is windowed i.e results are bucketed by time, then emitting a final result is possible as the event aggregator will suppress intermediate results until the window time passes.
+An [Event Streaming Application](../event-processing/event-processing-application.md) can perform continuous aggregation operations like an [Event Aggregator](event-aggregator.md).  If the input data is not windowed (cf. [Event Grouper](../stream-processing/event-grouper.md)), the aggregator will emit "intermediate" processing results. That's because an event stream is potentially infinite, so generally we do not know when the input is considered "complete", and thus there's not really a point where we can have a "final" result for a continuous operation.  However, if the input data is windowed (e.g., the input is grouped into 5-minute windows in order to compute 5-minute averages), then emitting a "final" result per window is possible, because the aggregator knows when the input for a given window is considered complete, and thus it can be configured to suppress "intermediate" results until the window time passes.
 
 
 ## Problem
-How can an event aggregator provide a final aggregation result?
+How can an event aggregator provide a final aggregation result, rather than "intermediate" results that keep being updated?
 
 ## Solution
 ![suppressed-event-aggregator](../img/suppressed-event-aggregator.png)
 
-The event aggregator should bucket the aggregations by time also known as windowing.  For example consider a aggregation for a stream monitoring a click stream.  By using a window of 1-hour, you could emit a final count for the number of clicks once the one hour window closes.
+First, the input events of the aggregator must be windowed via an [Event Grouper](../stream-processing/event-grouper.md), i.e., the events are being grouped into "windows" based on their timestamps. Depending on the configured grouping, an event is placed exclusively into a single window, or it can be placed into multiple windows.
+Then, the event aggregator performs its operation on each window. Only once the window is considered to have "passed" (e.g., a 5-minute window starting at 09:00am and ending at 09:05am) will the aggregator output a single, final result for this window. For example, consider an aggregation for an event stream of customer payments, where we want to compute the number of payments per hour.  By using a window size of 1 hour, we can emit a final count for the hourly number of payments once the respective 1-hour window closes.
 
 
 ## Implementation
-The Kafka Streams DSL provides a `suppress` operator that you can apply to windowed aggregations.
+For Kafka, the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) provides a `suppress` operator in its DSL, which we can apply to windowed aggregations.
+In the following example we compute hourly aggregations on a stream of orders, using a grace period of five minutes to wait for any orders arriving with a slight delay. The `suppress` operator ensures that there's only a single result event for each hourly window.
 
 ```java
-KStream<String, OrderEvent> orderStream = builder.stream(...)
+KStream<String, OrderEvent> orderStream = builder.stream(...);
 
  orderStream.groupByKey()
             .windowedBy(TimeWindows.of(Duration.ofHours(1)).grace(Duration.ofMinutes(5)))
-            .aggregate(() -> 0.0,
+            .aggregate(() -> 0.0 /* initial value of `total`, per window */,
                        (key, order, total) -> total + order.getPrice(),
                        Materialized.with(Serdes.String(), Serdes.Double()))
             .suppress(untilWindowCloses(unbounded()))
             .toStream()
-            .map((wk, value) -> KeyValue.pair(wk.key(),value))
+            .map((windowKey, value) -> KeyValue.pair(windowKey.key(),value))
             .to(outputTopic, Produced.with(Serdes.String(), Serdes.Double()));
 ```
 
 ## Considerations
 
-* When creating a time window with suppress you should define a grace period as the default grace period is 24 hours
-* To not violate the constraint of a single final output when the window closes, the suppressed operator buffers events until the window closes.  Depending on the number of events and their size the buffer will consume memory possibly causing an OOM error.
-* If your Kafka Streams application is running in a memory constrained environment consider using the `untilTimeLimit` method which will allow for emitting an early record should the buffer reach a configured maximum size.
+* To honor the contract of outputting only a single result per window, the suppressed aggregator typically buffers events in some way until the window closes.  If its implementation uses an in-memory buffer, then, depending on the number of events per window and their payload sizes, there's the risk to run into out-of-memory errors.
 
 ## References
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/window-final-result/kstreams.html): Emit a final result from a time window
+* The tutorial [Emit a final result from a time window with Kafka Streams](https://kafka-tutorials.confluent.io/window-final-result/kstreams.html) provides more details about the `suppress` operator.
 
 
 
