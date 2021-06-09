@@ -1,30 +1,44 @@
+---
+seo:
+  title: State Table
+  description: A state table allows an Event Processor to record and update state.
+---
+
 # State Table
+[Event Processors](../event-processing/event-processor.md) often need to perform stateful operations, such as an aggregation (e.g., counting the number of events). The state is similar to a table in a relational database and is mutable, i.e., it allows for read and write operations. It is essential that the event processor has an efficient and fault-tolerant mechanism for state management, i.e, recording and updating the state while processing input events, to ensure correctness of computations and preventing data loss as well as data duplication.
+
 
 ## Problem
+How can an Event Processor manage (mutable) state, similar to a table in a relational database?
 
-Event streaming applications can process events in a stateless manner, filtering out undesired events or mapping values to a new type for example.  But often an event streaming application will need to perform stateful operations, such as an aggregation.  In these cases it's essential that the event streaming application have a robust mechanism for recording and updating the state for events related by key.  Ideally this state will also be local.
-
-## Solution Pattern
+## Solution
 
 ![state-table](../img/state-table.png)
 
-Developers with event streaming applications requiring state should build in the ability for the application to use a local state store.  By using local state, reads and writes will occur must faster as there is no network latency to contend with.  Also, an approach for restoring the state after a crash destroying the local store occurs.
+We need to implement a mutable state table that allows the Event Processor to record and update state. For example, to count the number of payments per customer, the state table provides a mapping between the customer (e.g., a customer ID) and the current count of payments.
 
-## Example Implementation
+The state's storage backend can vary by implementation: options include local state stores (e.g., RocksDB), remote state stores (e.g., AWS DynamoDB or a NoSQL database), or in-memory caches. Local state stores are usually recommended as they do not incur additional latency for network roundtrips, which improves the end-to-end performance of the Event Processor.
 
-ksqlDB provides local state out of the box for event streaming applications.  Also, the state stores are backed by changelog topics so the data in the applications is durable.
+Irrespective of backend choice, the state table should be fault-tolerant to ensure strong processing guarantees, such as exactly-once semantics. Fault-tolerance can be achieved, for example, by attaching an [Event Source Connector](../event-source/event-source-connector.md) to the state table to perform change data capture (CDC), thus allowing the Event Processor to continuously backup state changes into an [Event Stream](../event-stream/event-stream.md) and, whenever needed, restore the state table in the case of failure or similar scenarios.here is no network latency to contend with.  Also, an approach for restoring the state after a crash destroying the local store occurs.
+
+## Implementation
+
+ksqlDB provides state tables out of the box with its `TABLE` data collection. Its implementation uses local, fault-tolerant state stores that are continuously backed up into ksqlDB's distributed storage layer (Kafka) so the data is durable.
+
+For example, we can maintain a stateful count of all sales with:
 
 ```sql
-CREATE TABLE MOVIE_TICKETS_SOLD AS
-    SELECT TITLE,
-           COUNT(TICKET_TOTAL_VALUE) AS TICKETS_SOLD
-    FROM MOVIE_TICKET_SALES
-    GROUP BY TITLE
+CREATE TABLE movie_tickets_sold AS
+    SELECT title,
+           COUNT(ticket_total_value) AS tickets_sold
+    FROM movie_ticket_sales
+    GROUP BY title
     EMIT CHANGES;
 ```
 
 ## References
 
-* [State store recovery in ksqlDB](https://www.confluent.io/blog/ksqldb-state-stores-in-recovery/)
+* [State store recovery in ksqlDB](https://www.confluent.io/blog/ksqldb-state-stores-in-recovery/) explains the fault-tolerance of ksqlDB's state management in more detail.
+* Related patterns: [Projection Table](../table/projection-table.md)
 
 
