@@ -42,6 +42,16 @@ KStream<String, Integer> splitStream = myStream.flatMap(
   );
 ```
 
+In summary:
+
+<i>
+> There once was a man from Manhattan,  
+> With Events that he needed to flatten,  
+> He cooked up a scheme,  
+> To call `flapMap` on `stream`,  
+> Then he wrote it all down as a pattern.  
+</i>
+
 ## Considerations
 * If child events need to be routed to different streams, see [Event Router](../event-processing/event-router.md) for routing events to different locations.
 * Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
