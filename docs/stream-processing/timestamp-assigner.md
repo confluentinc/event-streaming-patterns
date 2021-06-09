@@ -1,8 +1,7 @@
 ---
 seo:
   title: Timestamp Assigner
-  description: Timestamps are a critical component of a stream processing application and in some cases it's necessary to extract the 
-  timestamp from the event record's payload
+  description: Timestamps are a critical component of a stream processing application and in some cases it's necessary to extract the timestamp from the event record's payload
 ---
 
 # Timestamp Assigner
