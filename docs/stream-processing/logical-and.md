@@ -15,8 +15,8 @@ A product can only be dispatched when there's an order *and* a
 successful payment. If someone places a bet *and* their horse wins,
 then we transfer money to them.
 
-How do we look at several different streams and use them to make new
-events?
+How do we combine information from several different event streams and use them
+to make new events?
 
 ## Problem
 
@@ -26,9 +26,10 @@ events arrive on different streams?
 ## Solution
 ![logical AND](../img/logical-and.svg)
 
-Multiple streams of events can be joined together, similar to
-joins in a relational database. We watch the streams and
-keep their most recent events in memory. Every time a new event
+Multiple streams of events can be joined together, similar to joins in
+a relational database. We watch the streams and remember their most
+recent events (e.g., via an in-memory cache, a local or network
+storage device) for a certain amount of time. Whenever a new event
 arrives, we consider it alongside the other recently-captured events
 and look for matches. If we find one, we emit a new event.
 
@@ -42,21 +43,19 @@ after a order is placed. If it doesn't go through within the hour, we
 can reasonably expect a different process to chase the user for
 updated credit card details.
 
-_(For large retention periods, consider joining a stream to a [Projection Table](../table/projection-table.md) instead.)_
-
 ## Implementation
 
-As an example, imagine a bank that captures `logins` to their
-website, and `withdrawals` from an ATM. The fraud department
-might be keen to hear if the same `user_id` logs in in one country,
-and makes a withdrawal in a different country, within the same
-day. (It's not necessarily fraud, but it's certainly suspicious!)
+As an example, imagine a bank that captures `logins` to their website,
+and `withdrawals` from an ATM. The fraud department might be keen to
+hear if the same `user_id` logs in in one country, and makes a
+withdrawal in a different country, within the same day. (This would
+not necessarily be fraud, but it's certainly suspicious!)
 
 To implement this example, we'll use ksqlDB. We start with two event streams:
 
 ```sql
 -- For simplicity's sake, we'll assume that IP addresses 
---   have already been converted into country codes.
+-- have already been converted into country codes.
 
 CREATE OR REPLACE STREAM logins (
   user_id BIGINT,
@@ -134,6 +133,9 @@ Joining event streams is fairly simple. The big consideration is how
 large a retention period you need, and so the resources your join will
 use. Planning that tradeoff requires careful consideration of the
 specific problem you're solving.
+
+For large retention periods, consider joining a stream to a
+[Projection Table](../table/projection-table.md) instead.
 
 ## References
 
