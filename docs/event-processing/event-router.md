@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Router
-[Event Streams](../event-stream/event-stream.md) may contain a subset of [Events](../event/event.md) which need to be processed in isolation. For example, an inventory check system may be distributed across multiple physical systems, and the target system depends on the category of the item being checked. [Event Stream Processors](../event-processing/event-processor.md) can also be optimized when processing [Event Streams](../event-stream/event-stream.md) which contain focused data as they are free from filtering of streams with irrelevant data. Additionally, there may be a desire to do crosscutting data processing where isolating [Events](../event/event.md) will allow for a cleaner separation of concerns. 
+[Event Streams](../event-stream/event-stream.md) may contain a subset of [Events](../event/event.md) which need to be processed in isolation. For example, an inventory check system may be distributed across multiple physical systems, and the target system depends on the category of the item being checked. 
 
 ## Problem
 How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](../event-stream/event-stream.md) based on some attribute of the [Events](../event/event.md)?
