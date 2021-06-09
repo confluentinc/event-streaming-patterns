@@ -1,7 +1,7 @@
 ---
 seo:
   title: Pipeline
-  description: Perform a complex operation on a series of events, in an event stream or table, through a series of independant processing stages.
+  description: Perform a complex operation on a series of events, in an event stream or table, through a series of independent processing stages.
 ---
 
 # Pipeline
