@@ -27,11 +27,21 @@ As an example we can use the streaming database ksqlDB to run a stream of events
 CREATE STREAM orders ( 
   customer_id INTEGER, items ARRAY<STRUCT<name VARCHAR, price DOUBLE>>
 ) WITH (
-  kafka_topic = 'orders', partitions = 1, value_format = 'AVRO'
+  KAFKA_TOPIC = 'orders', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
 );
 ```
 
-Next, we create a new stream by joining the original stream with a table of customer data:
+We'll also create a table which will contain the current state of all customer events.
+
+```sql
+CREATE TABLE customers (
+  customer_id INTEGER PRIMARY KEY, name VARCHAR, ADDRESS VARCHAR
+) WITH (
+  KAFKA_TOPIC = 'customers', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+);
+```
+
+Next, we create a new stream by joining the orders stream with our customer table:
 
 ```sql
 CREATE STREAM orders_enriched WITH 
@@ -48,7 +58,7 @@ Next, we create a stream, where we add the order total to each order by aggregat
 CREATE STREAM orders_with_totals
 WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
 AS SELECT cust_id, items, name, address,  
-  REDUCE(TRANSFORM(items, i=> i->price ), 0E0, (i,x) => (i + x)) AS total 
+  REDUCE(TRANSFORM(items, i=> i->price ), 0e0, (i,x) => (i + x)) AS total 
 FROM orders_enriched
 EMIT CHANGES;
 ```
