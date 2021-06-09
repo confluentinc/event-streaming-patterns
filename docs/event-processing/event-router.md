@@ -1,3 +1,9 @@
+---
+seo:
+   title: Event Router
+   description: Event Routers are used to route Events to different Event Streams based on data or metadata values contained in each Event. 
+---
+
 # Event Router
 [Event Streams](../event-stream/event-stream.md) may contain [Events](../event/event.md) which can be separated logically by some attribute. The routing of Events to dedicated Streams may allow for simplified [Event Processing](event-processor.md) and [Event Sink](../event-sink/event-sink.md) solutions.
 
