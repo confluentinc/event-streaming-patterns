@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Collaboration - Event Streaming Patterns</title>
+  <title>Pipeline - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Collaboration";
-    var mkdocs_page_input_path = "compositional-patterns/event-collaboration.md";
+    var mkdocs_page_name = "Pipeline";
+    var mkdocs_page_input_path = "compositional-patterns/pipeline.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -53,21 +53,23 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Compositional patterns</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Collaboration</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-collaboration/">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Pipeline</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../pipeline/">Pipeline</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
@@ -183,7 +185,7 @@
         
       
     
-    <li>Event Collaboration</li>
+    <li>Pipeline</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -194,24 +196,56 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-collaboration">Event Collaboration</h1>
-<p>Building distributed business workflows requires coordinating multiple services and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>. Business actions and reactions must be coordinated asynchronously as complex workflows transition through various states.</p>
+                <h1 id="pipeline">Pipeline</h1>
+<p>A single <a href="../../event-stream/event-stream/">Event Stream</a> or <a href="../table/state-table.md">Table</a> can be used by multiple <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, and its <a href="../../event/event/">Events</a> may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we build a distributed workflow in a way that allows components to evolve independently? </p>
+<p>How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-collaboration" src="../../img/event-collaboration.png" /></p>
-<p>Event Collaboration allows services and applications to collaborate around a single business workflow on top of an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Service components publish <a href="../event/events.md">Events</a> to <a href="../event-stream/event-streams.md">Event Streams</a> as notification of the completion of a step in the workflow. The Events serve the additional purpose of carrying state information about the workflow which is used by downstream components in the next steps of the workflow. The process repeats the until the workflow is complete.</p>
+<p><img alt="pipeline" src="../../img/pipeline.png" /></p>
+<p>We can compose <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../table/state-table.md">Tables</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> via an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> to a create a pipeline—also called a topology—of <a href="../../event-processing/event-processor/">Event Processors</a>, which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, may include <a href="../../event-source/event-source-connector/">Event Source Connectors</a> and <a href="../../event-sink/event-sink-connector/">Event Sink Connectors</a>, which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.</p>
+<p>Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.</p>
+<h2 id="implementation">Implementation</h2>
+<p>As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.</p>
+<pre><code class="sql">CREATE STREAM orders ( 
+  customer_id INTEGER, items ARRAY&lt;STRUCT&lt;name VARCHAR, price DOUBLE&gt;&gt;
+) WITH (
+  KAFKA_TOPIC = 'orders', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+);
+</code></pre>
+
+<p>We'll also create a (continuously updated) customers table that will contain the latest profile information about each customer, such as their current home address.</p>
+<pre><code class="sql">CREATE TABLE customers (
+  customer_id INTEGER PRIMARY KEY, name VARCHAR, ADDRESS VARCHAR
+) WITH (
+  KAFKA_TOPIC = 'customers', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+);
+</code></pre>
+
+<p>Next, we create a new stream by joining the orders stream with our customer table:</p>
+<pre><code class="sql">CREATE STREAM orders_enriched WITH 
+(KAFKA_TOPIC='orders_enriched', PARTITIONS=1, VALUE_FORMAT='AVRO')
+AS SELECT o.customer_id AS cust_id, o.items, c.name, c.address
+FROM orders o LEFT JOIN customers c 
+ON o.customer_id = c.customer_id
+EMIT CHANGES;
+</code></pre>
+
+<p>Next, we create a stream, where we add the order total to each order by aggregating the price of the individual items in the order:</p>
+<pre><code class="sql">CREATE STREAM orders_with_totals
+WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
+AS SELECT cust_id, items, name, address,  
+  REDUCE(TRANSFORM(items, i=&gt; i-&gt;price ), 0e0, (i,x) =&gt; (i + x)) AS total 
+FROM orders_enriched
+EMIT CHANGES;
+</code></pre>
+
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>
-<p>In Event Collaboration, the logic for the choreography of the progression of the business workflow is decentralized and spread across many components. This contrasts with traditional orchestration design where the logic is isolated in a dedicated "controller" service that coordinates the actions and reactions of the workflow components.</p>
-</li>
-<li>
-<p>With Event Collaboration, some workflow components will need to be able to ascertain the state of the workflow some time after they have generated their own Event. A classic example would be an order request service which generates a new order request event and wants to be notified when the order is complete. These Events need to be correlated through the distributed workflow to support such functionality. The <a href="../../event/correlation-identifier/">Correlation Identifier</a> pattern describes a method of coupling Events when processed asyncronously by way of a global identifier which traverses the workflow within the events.</p>
-</li>
+<li>The same event stream or table can participate in multiple pipelines. Because streams and tables are stored durably, applications have a lot of flexibility how and when they process the respective data, and they can do so independently from each other.</li>
+<li>The various processing stages in a pipeline create their own derived streams/tables (such as the <code>orders_enriched</code> stream in the ksqlDB example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.</li>
 </ul>
 <h2 id="references">References</h2>
-<p><a href="https://martinfowler.com/eaaDev/EventCollaboration.html">Event Collaboration by Martin Fowler</a></p>
+<p>This pattern was influenced by <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html">Pipes and Filters</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf. However, it is much more powerful and flexible because it is using <a href="../../event-stream/event-stream/">Event Streams</a> as the pipes.</p>
               
             </div>
           </div>
@@ -219,10 +253,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../geo-replication/" class="btn btn-neutral float-right" title="Geo Replication">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event/correlation-identifier/" class="btn btn-neutral float-right" title="Correlation Identifier">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Event Streaming Patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../geo-replication/" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -248,10 +282,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../geo-replication/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../geo-replication/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event/correlation-identifier/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

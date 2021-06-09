@@ -57,6 +57,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/geo-replication/">Geo Replication</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/pipeline/">Pipeline</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul>
@@ -87,9 +89,11 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
@@ -193,34 +197,53 @@
             <div class="section">
               
                 <h1 id="event-router">Event Router</h1>
+<p><a href="../../event-stream/event-stream/">Event Streams</a> may contain a subset of <a href="../../event/event/">Events</a> which need to be processed in isolation. For example, an inventory check system may be distributed across multiple physical systems, and the target system depends on the category of the item being checked. </p>
 <h2 id="problem">Problem</h2>
-<p>How do I handle a situation where the implementation of a single logical function (e.g., inventory check) is spread across multiple physical systems?</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
+<p>How can we isolate <a href="../../event/event/">Events</a> into a dedicated <a href="../../event-stream/event-stream/">Event Stream</a> based on some attribute of the <a href="../../event/event/">Events</a>?</p>
+<h2 id="solution">Solution</h2>
 <p><img alt="event-router" src="../../img/event-router.png" /></p>
-<p>Use the TopicNameExtractor to determine the topic to send records to.  The TopicNameExtractor has one method, <code>extract</code>, which accepts three parameters:</p>
-<ul>
-<li>The Key of the record</li>
-<li>The Value of the record</li>
-<li>The RecordContext</li>
-</ul>
-<p>You can use any or all of these three to pull the required information to route records to different topics at runtime.  The <code>RecordContext</code> provides access to the headers of the record, which can contain user provided information for routing purposes.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<pre><code class="java">CustomExtractor implements TopicNameExtractor&lt;String, String&gt; {
+<h2 id="implementation">Implementation</h2>
+<p>With <a href="https://ksqldb.io/">ksqlDB</a>, you can continuously route events to a different stream using the <code>CREATE STREAM</code> syntax with an appropriate <code>WHERE</code> filter.</p>
+<pre><code>CREATE STREAM payments ...;
 
-   String extract(String key, String value, RecordContext recordContext) {
-         // Assuming the first ten characters of the key
-         // contains the information determining where 
-         // Kafka Streams forwards the record.
-      return key.substring(0,10);
-   }
+CREATE STREAM payments_france AS
+    SELECT * FROM payments WHERE country = 'france';
 
- KStream&lt;String, String&gt; myStream = builder.stream(...);
- myStream.mapValues(..).to( new CustomExtractor());
+CREATE STREAM payments_spain AS
+    SELECT * FROM payments WHERE country = 'spain';
 </code></pre>
 
+<p>With the <a href="https://kafka.apache.org/documentation/streams/">Kafka Streams library</a>, use a <a href="https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html">TopicNameExtractor</a> to route events to different streams (topics).  The <code>TopicNameExtractor</code> has one method to implement, <code>extract()</code>, which accepts three parameters:</p>
+<ul>
+<li>The event key</li>
+<li>The event value</li>
+<li>The <a href="https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html">RecordContext</a>, which provides access to headers, partitions, and other contextual information about the event.</li>
+</ul>
+<p>You can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. </p>
+<pre><code class="java">CountryTopicExtractor implements TopicNameExtractor&lt;String, String&gt; {
+   String extract(String key, String value, RecordContext recordContext) {
+      switch (value.country) {
+        case &quot;france&quot;:
+          return &quot;france-topic&quot;;
+        case &quot;spain&quot;:
+          return &quot;spain-topic&quot;;
+      }
+   }
+}
+
+KStream&lt;String, String&gt; myStream = builder.stream(...);
+myStream.mapValues(..).to(new CountryTopicExtractor());
+</code></pre>
+
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>Event Routers should not modify the Event itself and instead only provide the proper routing to the desired destinations.</li>
+<li>Consider the use of an <a href="../../event/event-envelope/">Event Envelope</a> if an event router should attach additional information or context to an event.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">Kafka Tutorial</a>: How to dynamically choose the output topic at runtime </li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html">Message Router</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>See the tutorial <a href="https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html">How to dynamically choose the output topic at runtime</a> for a full example of dynamically routing events at runtime.</li>
 </ul>
               
             </div>
