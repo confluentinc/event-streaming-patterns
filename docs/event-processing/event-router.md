@@ -17,15 +17,13 @@ How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](.
 With [ksqlDB](https://ksqldb.io/), you can continuously route events to a different stream using the `CREATE STREAM` syntax with an appropriate `WHERE` filter.
 
 ```
-CREATE STREAM actingevents_drama AS
-    SELECT NAME, TITLE
-      FROM ACTINGEVENTS
-      WHERE GENRE='drama';
+CREATE STREAM payments ...;
 
-CREATE STREAM actingevents_fantasy AS
-    SELECT NAME, TITLE
-      FROM ACTINGEVENTS
-      WHERE GENRE='fantasy';
+CREATE STREAM payments_france AS
+    SELECT * FROM payments WHERE country = 'france';
+
+CREATE STREAM payments_spain AS
+    SELECT * FROM payments WHERE country = 'spain';
 ```
 
 With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/), use a [TopicNameExtractor](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html) to route events to different streams (topics).  The `TopicNameExtractor` has one method to implement, `extract()`, which accepts three parameters:
