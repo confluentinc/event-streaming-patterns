@@ -1,10 +1,16 @@
+---
+seo:
+  title: Event Joiner
+  description: A stream of events can be enhanced with lookup data by joining the stream with a table
+---
+
 # Event Joiner
 
-Event streams may need to join with a table or another stream to provide more comprehensive details.
+[Event Streams](../event-stream/event-stream.md) may need to be joined (i.e., enriched) with a [Table](../table/state-table.md) or another stream to provide more comprehensive details about their respective [Events](../event/event.md).
 
 ## Problem
 
-How can I enrich an event stream?
+How can I enrich an event stream or table with additional context?
 
 ## Solution
 
@@ -15,41 +21,45 @@ You can combine events in a stream with another stream or table by performing a 
 
 ## Implementation
 
-With ksqlDB you can create a stream of events based on a Kafka topic:
+With ksqlDB we can create a stream of events from an existing Kafka topic (note this example's similarity to [fact tables](https://en.wikipedia.org/wiki/Fact_table) in data warehouses):
 
-```
+```sql
 CREATE STREAM ratings (MOVIE_ID INT KEY, rating DOUBLE)
-    WITH (kafka_topic='ratings');
+    WITH (KAFKA_TOPIC='ratings');
 ```
 
-Then create a table based on a Kafka topic that changes less frequently serving as reference data
+Then create a table from on another existing Kafka topic that changes less frequently. This table serves as our reference data (cf. [dimension tables](https://en.wikipedia.org/wiki/Dimension_(data_warehouse)) in data warehouses).
 
-```
+```sql
 CREATE TABLE movies (ID INT PRIMARY KEY, title VARCHAR, release_year INT)
-    WITH (kafka_topic='movies');
+    WITH (KAFKA_TOPIC='movies');
 
 ```
 
-To create a stream of enriched events perform a join between the stream and the table
+To create a stream of enriched events, we perform a join between the stream and the table.
 
-```
+```sql
 SELECT ratings.movie_id AS ID, title, release_year, rating
    FROM ratings
    LEFT JOIN movies ON ratings.movie_id = movies.id
    EMIT CHANGES;
-
 ```
 
 ## Considerations
 
-In ksqlDB joins between a stream and a table are driven by the stream side of the join.  Updates to the table only update the state the table.  It's the new event in the stream that results in a new join result.  You can perform an inner or left-outer join between a stream and a table.
+* In ksqlDB, joins between a stream and a table are driven by the stream side of the join.  Updates to the table only update the state of the table.  It's the new event in the stream that results in a new join result.  For example, if you're joining a stream of orders to a table of customers a new order will be enriched if there is a customer record in the table. But if a new customer is added to the table it will not trigger the join condition. The [ksqlDB documentation contains more information on stream-table join semantics](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/#semantics-of-stream-table-joins). 
+
+* You can perform an inner or left-outer join between a stream and a table.
+
+* Joins are also useful to initiate subsequent processing when two (or more) corresponding events arrive on different streams or tables.
 
 
 
 ## References
 
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html): Join a stream and a lookup table
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-stream/ksql.html): Join a stream and a stream
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/join-a-table-to-a-table/ksql.html): Join a table and a table
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/multi-joins/ksql.html): N-way joins
-* [ksqlDB documentation](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/#stream-table-joins): Joins in ksqlDB
+* [Tutorial: How to join a stream and a lookup table in ksqlDB](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html)
+* [Tutorial: Joining a stream and a stream in ksqlDB](https://kafka-tutorials.confluent.io/join-a-stream-to-a-stream/ksql.html)
+* [Tutorial: How to join a table and a table in ksqlDB](https://kafka-tutorials.confluent.io/join-a-table-to-a-table/ksql.html)
+* [Tutorial: Performing N-way joins in ksqlDB](https://kafka-tutorials.confluent.io/multi-joins/ksql.html)
+* [Joining Collections in the ksqlDB documentation](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/)
+
