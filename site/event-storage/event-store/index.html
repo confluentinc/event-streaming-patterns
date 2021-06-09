@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Compacted Event Stream - Event Streaming Patterns</title>
+  <title>Event Store - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Compacted Event Stream";
-    var mkdocs_page_input_path = "event-storage/compacted-event-stream.md";
+    var mkdocs_page_name = "Event Store";
+    var mkdocs_page_input_path = "event-storage/event-store.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -114,7 +114,9 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Compacted Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../compacted-event-stream/">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Store</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
@@ -127,8 +129,6 @@
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-store/">Event Store</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
@@ -183,7 +183,7 @@
         
       
     
-    <li>Compacted Event Stream</li>
+    <li>Event Store</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -194,48 +194,67 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="compacted-event-stream">Compacted Event Stream</h1>
-<p><a href="../../event-stream/event-stream/">Event Streams</a> often represent keyed snapshots of state, similar to a table in a relational database. That is, the <a href="../../event/event/">Events</a> contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.</p>
+                <h1 id="event-store">Event Store</h1>
+<p>When considering an architecture based on an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, the first
+fundamental question is, "How do we store our events?" This isn't as
+obvious as it first sounds, as we have to consider persistence, query
+performance, write throughput, availability, auditing and many other
+concerns. This decision will affect all the ones that follow.</p>
 <h2 id="problem">Problem</h2>
-<p>How can a (keyed) table be stored in an <a href="../../event-stream/event-stream/">Event Stream</a> forever, using the minimum amount of space?</p>
+<p>How can events be stored such that they form a reliable source of
+truth for applications?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="compacted-event-stream" src="../../img/compacted-event-stream.png" /></p>
-<p>Remove events from the <a href="../../event-stream/event-stream/">Event Stream</a> that represent outdated information and have been superseded by new <a href="../../event/event/">Events</a>. The table's current data (i.e., its latest state) is represented by the remaining <a href="../../event/event/">Events</a> in the stream.</p>
-<p>This approach bounds the storage space of the table's <a href="../../event-stream/event-stream/">Event Stream</a> to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.</p>
+<p><img alt="event store" src="../../img/event-store.svg" /></p>
+<p>Incoming events are stored in an <a href="../../event-stream/event-stream/">Event Stream</a>,
+implemented as an append-only log. By choosing this data structure, we
+can guarantee constant-time (Θ(1)) writes, lock-free concurrent reads,
+and straightforward replication across multiple machines.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Apache Kafka® provides this functionality natively through its <a href="https://kafka.apache.org/documentation/#compaction">Topic Compaction</a> feature. An <a href="../../event-stream/event-stream/">Event Stream</a> (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.</p>
-<p>To create a compacted <a href="../../event-stream/event-stream/">Event Stream</a> called <code>customer-profiles</code> with Kafka:</p>
-<pre><code class="bash">➜ kafka-topics --create \
-    --bootstrap-server &lt;bootstrap-url&gt; \
-    --replication-factor 3 \
-    --partitions 3 \
-    --topic customer-profiles \
-    --config cleanup.policy=compact
-
-Created topic customer-profiles.
-</code></pre>
-
-<p>The <code>kafka-topics</code> command can also verify the current topic's configuration:</p>
-<pre><code class="bash">➜ kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
-
-Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
-        Topic: customer-profiles       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Offline:
-</code></pre>
-
-<h2 id="considerations">Considerations</h2>
-<p>Compacted <a href="../../event-stream/event-stream/">Event Streams</a> allow for some optimizations:</p>
+<p>Apache Kafka® is an event store that maintains a persistent,
+append-only stream — a <em>topic</em> — for each kind of event you need to
+store. These topics are:</p>
 <ul>
-<li>First, they allow the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> to limit the storage growth of the <a href="../../event-stream/event-stream/">Event Stream</a> in a data-specific way, rather than removing <a href="../../event/event/">Events</a> universally after a pre-configured period of time.</li>
-<li>Second, having smaller <a href="../../event-stream/event-stream/">Event Streams</a> allows for faster recovery and system migration strategies.</li>
+<li>Write-efficient - an append-only log is one of the fastest, cheapest
+  data structures to write to.</li>
+<li>Read efficient - multiple readers (cf. <a href="../../event-processing/event-processor/">Event Processor</a>) can consume the same stream without
+  blocking.</li>
+<li>Durable - all events are written to storage (e.g., local disk, network storage device), either synchronously (for
+  maximum reliability) or asynchronously (for maximum
+  throughput). Events can be as long-lived as needed, and even stored
+  forever.</li>
+<li>Highly-available - each event is written to multiple storage devices and replicated across multiple machines, and in
+  the case of failure one of the redundant machines takes over.</li>
+<li>Auditable - every change is captured and persisted. Every result can
+  be traced back to its source event(s).</li>
 </ul>
-<p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../../event-stream/event-stream/">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../../event-stream/event-stream/">Event Stream</a> is the primary concern, use an <a href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
+<h2 id="considerations">Considerations</h2>
+<p>It's worth briefly contrasting Apache Kafka® with message queues and
+relational databases.</p>
+<p>While queues also concern themselves with a stream of events, they
+often consider events as short-lived, independent messages. A
+message may only exist in memory, or it may be durable enough for data
+to survive server restarts, but in general they aren't intended to
+hold on to events for months or even years. Further, their querying
+capabilities may be limited to simple filtering, offloading more
+complex queries like joins and aggregations to the application level.</p>
+<p>In contrast, relational databases are very good at maintaining a
+persistent state of the world in perpetuity, and answering arbitrary
+questions about it, but they often fall short on <em>auditing</em> -
+answering which events led up to the current state - and on
+<em>liveness</em> - what <em>new</em> events do we need to consider.  They are
+predominantly designed for use cases that operate on data at rest,
+whereas an Event Store is designed from the ground up for data in
+motion and event streaming.</p>
+<p>By beginning with a fundamental data-structure for event capture, and
+building on that to provide long-term persistence and arbitrary
+analysis capabilities, Apache Kafka® provides an ideal choice of event
+store for modern, data-driven architectures.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Compacted Event Streams are highly related to the <a href="../table/state-table.md">State Table</a> pattern.</li>
-<li>Compacted Event Streams work a bit like simple <a href="http://www.benstopford.com/2015/02/14/log-structured-merge-trees/">Log Structured Merge Trees</a>.</li>
-<li><a href="https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy">Cleanup policy configuration</a> of Kafka topics.</li>
+<li>See also: <a href="../../compositional-patterns/geo-replication/">Geo-Replication</a>.</li>
+<li><a href="https://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/">Using logs to build a solid data infrastructure</a></li>
+<li><a href="https://www.confluent.io/what-is-apache-kafka/">What Is Apache Kafka?</a></li>
+<li><a href="https://www.confluent.io/resources/kafka-the-definitive-guide/">Kafka: The Definitive Guide</a> free Ebook.</li>
 </ul>
               
             </div>
@@ -244,10 +263,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-store/" class="btn btn-neutral float-right" title="Event Store">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../infinite-retention-event-stream/" class="btn btn-neutral float-right" title="Infinite Retention Event Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../event-source/schema-validator/" class="btn btn-neutral" title="Schema Validator"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../compacted-event-stream/" class="btn btn-neutral" title="Compacted Event Stream"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -273,10 +292,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../event-source/schema-validator/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../compacted-event-stream/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-store/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../infinite-retention-event-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

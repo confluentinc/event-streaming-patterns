@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Compacted Event Stream - Event Streaming Patterns</title>
+  <title>Event Broker - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Compacted Event Stream";
-    var mkdocs_page_input_path = "event-storage/compacted-event-stream.md";
+    var mkdocs_page_name = "Event Broker";
+    var mkdocs_page_input_path = "event-stream/event-broker.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -113,8 +113,17 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/compacted-event-stream/">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/event-store/">Event Store</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infinite-retention-event-stream/">Infinite Retention Event Stream</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Compacted Event Stream</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Broker</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
@@ -128,16 +137,7 @@
     </li>
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-store/">Event Store</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Event stream</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-broker/">Event Broker</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/">Event Stream</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
@@ -179,11 +179,11 @@
     
       
         
-          <li>Event storage &raquo;</li>
+          <li>Event stream &raquo;</li>
         
       
     
-    <li>Compacted Event Stream</li>
+    <li>Event Broker</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -194,48 +194,24 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="compacted-event-stream">Compacted Event Stream</h1>
-<p><a href="../../event-stream/event-stream/">Event Streams</a> often represent keyed snapshots of state, similar to a table in a relational database. That is, the <a href="../../event/event/">Events</a> contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.</p>
+                <h1 id="event-broker">Event Broker</h1>
+<p>Loosely coupled components in a software architecture allow services and applications to change with minimal impact on dependent systems and applications. On the side of the organization, this loose coupling also allows different development teams to efficiently work independently from each another.</p>
 <h2 id="problem">Problem</h2>
-<p>How can a (keyed) table be stored in an <a href="../../event-stream/event-stream/">Event Stream</a> forever, using the minimum amount of space?</p>
+<p>How can we decouple <a href="../../event-source/event-source/">Event Sources</a> from <a href="../../event-sink/event-sink/">Event Sinks</a>, both of which may include cloud services, systems like relational databases, as well as applications and microservices?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="compacted-event-stream" src="../../img/compacted-event-stream.png" /></p>
-<p>Remove events from the <a href="../../event-stream/event-stream/">Event Stream</a> that represent outdated information and have been superseded by new <a href="../../event/event/">Events</a>. The table's current data (i.e., its latest state) is represented by the remaining <a href="../../event/event/">Events</a> in the stream.</p>
-<p>This approach bounds the storage space of the table's <a href="../../event-stream/event-stream/">Event Stream</a> to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.</p>
+<p><img alt="event-broker" src="../../img/event-broker.png" /></p>
+<p>We use the Event Broker of an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> for this decoupling. Typically, multiple such brokers are deployed as a distributed cluster to ensure elasticity, scalability, and fault-tolerance during operations.  Event brokers collaborate on receiving and durably storing (write operations) as well as serving (read operations) <a href="../../event/event/">Events</a> into <a href="../event-stream/event-streams.md">Event Streams</a> from one or many clients in parallel. Clients that produce events are called the <a href="../../event-source/event-source/">Event Sources</a>, which are decoupled and isolated through the brokers from the clients that consume events, called the <a href="../../event-sink/event-sink/">Event Sinks</a>. </p>
+<p>Typically, the technical architecture follows the design of "dumb brokers, smart clients". Here, the broker intentionally limits its client-facing functionality to achieve the best performance and scalability. This means that additional work has to be performed by the broker's clients. For example, unlike in traditional messaging brokers, it is the responsibility of an event sink (consumer) to track its individual progress of reading and processing from an event stream.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Apache Kafka® provides this functionality natively through its <a href="https://kafka.apache.org/documentation/#compaction">Topic Compaction</a> feature. An <a href="../../event-stream/event-stream/">Event Stream</a> (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.</p>
-<p>To create a compacted <a href="../../event-stream/event-stream/">Event Stream</a> called <code>customer-profiles</code> with Kafka:</p>
-<pre><code class="bash">➜ kafka-topics --create \
-    --bootstrap-server &lt;bootstrap-url&gt; \
-    --replication-factor 3 \
-    --partitions 3 \
-    --topic customer-profiles \
-    --config cleanup.policy=compact
-
-Created topic customer-profiles.
-</code></pre>
-
-<p>The <code>kafka-topics</code> command can also verify the current topic's configuration:</p>
-<pre><code class="bash">➜ kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
-
-Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
-        Topic: customer-profiles       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Offline:
-</code></pre>
-
+<p><a href="https://kafka.apache.org/">Apache Kafka</a> is an open-source distributed <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, which implements this Event Broker pattern. Kafka runs as a highly scalable and fault-tolerant cluster of brokers. Many <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> can produce, consume, and process Events from the cluster in parallel with strong guarantees such as transactions, using a fully decoupled yet coordinated architecture.</p>
+<p>Additionally, Kafka's protocol provides strong backwards and forwards compatibility guarantees between the server-side brokers and their client applications that produce, consume, and process events. For example, a cluster of brokers running an older version of Kafka can be used by client applications using a new version of Kafka. Similarly, older client applications keep working even when the cluster of brokers is upgraded to a newer version of Kafka (and Kafka also supports in-place version upgrades of clusters). This is another facet of decoupling the various components in a Kafka-based architecture, which results in even better flexibility during design and operations.</p>
 <h2 id="considerations">Considerations</h2>
-<p>Compacted <a href="../../event-stream/event-stream/">Event Streams</a> allow for some optimizations:</p>
 <ul>
-<li>First, they allow the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> to limit the storage growth of the <a href="../../event-stream/event-stream/">Event Stream</a> in a data-specific way, rather than removing <a href="../../event/event/">Events</a> universally after a pre-configured period of time.</li>
-<li>Second, having smaller <a href="../../event-stream/event-stream/">Event Streams</a> allows for faster recovery and system migration strategies.</li>
+<li>Counter to traditional message brokers, event brokers provide a distributed, durable, and fault-tolerant storage layer. This has several important benefits. For instance, client applications can initiate and resume event production and consumption independently from each other. Similarly, they don't need to be connected to the brokers perpetually in order to not miss any events. When an application is taken offline for maintenance and subsequently restarted, then it will automatically resume its consumption and processing of an event stream exactly at the point where it stopped before. The strong guarantees provided by the brokers in the event streaming platform ensure that applications do not suffer from duplicate data or from data loss (e.g., missing out on events that were written during the maintenance window) in these situations, even in the face of failures such as machine or network outages. Another benefit is that client applications can "rewind the time" and re-consume historical data in event streams as often as needed. This is useful in many situations, including training and retraining models for machine learning, A/B testing, auditing and compliance, as well as fixing unexpected application errors and bugs that happened in production.</li>
 </ul>
-<p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../../event-stream/event-stream/">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../../event-stream/event-stream/">Event Stream</a> is the primary concern, use an <a href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Compacted Event Streams are highly related to the <a href="../table/state-table.md">State Table</a> pattern.</li>
-<li>Compacted Event Streams work a bit like simple <a href="http://www.benstopford.com/2015/02/14/log-structured-merge-trees/">Log Structured Merge Trees</a>.</li>
-<li><a href="https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy">Cleanup policy configuration</a> of Kafka topics.</li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBroker.html">Message Broker</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
 </ul>
               
             </div>
@@ -244,10 +220,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-store/" class="btn btn-neutral float-right" title="Event Store">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-stream/" class="btn btn-neutral float-right" title="Event Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../event-source/schema-validator/" class="btn btn-neutral" title="Schema Validator"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../event-storage/infinite-retention-event-stream/" class="btn btn-neutral" title="Infinite Retention Event Stream"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -273,10 +249,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../event-source/schema-validator/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../event-storage/infinite-retention-event-stream/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-store/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
