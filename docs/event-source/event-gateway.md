@@ -47,6 +47,36 @@ The [Confluent REST APIs][rest_apis] provide the broadest-possible
 support for clients to produce and consume data, formatted as JSON,
 Protobuf, Avro or even raw base64-encoded bytes.
 
+As a simple example, we can post JSON-encoded events to a topic called `sales` with:
+
+```sh
+curl -X POST \
+  -H "Content-Type: application/vnd.kafka.json.v2+json" \
+  --data '{"records":[{"key":"alice","value":{"tickets":5}},{"key":"bob","value":{"tickets":10}}]}' \
+  http://localhost:8082/topics/sales
+```
+
+```json
+{
+  "offsets": [
+    {
+      "partition": 0,
+      "offset": 0,
+      "error_code": null,
+      "error": null
+    },
+    {
+      "partition": 0,
+      "offset": 1,
+      "error_code": null,
+      "error": null
+    }
+  ],
+  "key_schema_id": null,
+  "value_schema_id": null
+}
+```
+
 ## Considerations
 
 In a perfect world, every database would have first-class support for
@@ -55,11 +85,10 @@ accommodated than others, but we can still ensure every language has
 access to every important feature.
 
 In practice, this fits well with programmer expectations. Users of
-mainstream languages expect to be well accommodated. But equally, users
-of more niche languages expect to do a little more work to get
-started. As long as the access is possible, logical, and reliable once
-made, a little extra integration work presents little obstacle to
-adoption.
+mainstream languages expect to be well accommodated. But equally,
+users of more niche languages expect to do a little more work to get
+started. As long as the access is possible, logical, and reliable, a
+little extra integration work presents little obstacle to adoption.
 
 ## References
 
@@ -70,3 +99,4 @@ adoption.
 [client_libraries]: https://docs.confluent.io/platform/current/clients/index.html
 [fortran_http]: https://github.com/interkosmos/fortran-curl/blob/master/examples/http/http.f90
 [curl]: https://curl.se/
+
