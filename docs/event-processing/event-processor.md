@@ -5,10 +5,10 @@ seo:
 ---
 
 # Event Processor
-An event processor is a component that reads events and processes them, and possibly writes new events as the result of its processing. As such, it may act as an [Event Source](todo: link pattern) and/or [Event Sink](todo: link pattern), and in practice often acts as both. An event processor can be distributed (i.e., multi-instance), in which case the processing of events happens concurrently across its instances.
+An Event Processor is a component that reads [Events](../event/event.md) and processes them, and possibly writes new [Events](../event/event.md) as the result of its processing. As such, it may act as an [Event Source](../event-source/event-source) and/or [Event Sink](../event-sink/event-sink.md), and in practice often acts as both. An Event Processor can be distributed (i.e., multi-instance), in which case the processing of [Events](../event/event.md) happens concurrently across its instances.
 
 ## Problem
-How do I process events in an [Event Streaming Platform](todo: link pattern)? For example, how can I process financial transactions, track shipments, analyze IoT sensors data, or generate continuous intelligence?
+How do we process [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)? For example, how can I process financial transactions, track shipments, analyze IoT sensors data, or generate continuous intelligence?
 
 ## Solution
 ![event-processor](../img/event-processor.png)
@@ -18,20 +18,47 @@ An event processor performs a specific task within the event processing applicat
 
 ## Implementation
 
+There are multiple ways to create an [Event Processing Application](../event-processing/event-processing-application.md) using Event Processors, we will look at two.
+
+#### ksqlDB
+[ksqlDB](https://ksqldb.io) provides a familiar `SQL` syntax that allows you to create [Event Processing Applications](../event-processing/event-processing-application.md). ksqlDB takes parses SQL commands and constructs and manages the Event Processors you define as part of your [Event Processing Application](../event-processing/event-processing-application.md).
+
+In the following example ksqlDB is reading values into the application from the `readings` [Event Stream](../event-stream/event-stream.md) and "cleaning" the [Event](../event/event.md) values. ksqlDB is publishing the "clean" readings to an [Event Stream](../event-stream/event-stream.md) named `clean_readings`.
+
+```sql
+CREATE STREAM clean_readings AS
+    SELECT sensor,
+           reading,
+           UCASE(location) AS location
+    FROM readings
+    EMIT CHANGES;
 ```
-StreamsBuilder builder = new StreamsBuilder();
-        KStream<String, String> stream = builder.stream("input-events");
-        stream.filter((key, value)-> value.contains("special-code"))
-              .mapValues(value -> to domain object)
-              .to("special-output-events");
+
+With ksqlDB, you can view each section of the command as the construction of a different Event Processor:
+
+* `CREATE STREAM` defines the new output [Event Stream](../event-stream/event-stream.md) that this application will produce [Events](../event/event.md) to.
+* `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and converting it as defined. In this example, raising the case of the `location` field in each input reading.
+* `FROM ...` is an source Event Processor that defines the input [Event Stream](../event-stream/event-stream.md) for the application.
+* `EMIT CHANGES` is ksqlDB syntax which defines our query as continuous, and that incremental changes will be produced as the application runs perpetually.
+
+#### Kafka Streams
+
+!! Work in progress...
+
+```java
+builder
+  .stream("readings");
+  .mapValues((key, value)-> 
+    new Reading(value.sensor, value.reading, value.location.toUpperCase()) 
+  .to("clean");
 ```
 
 ## Considerations
 
-While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the application does. 
+* While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the [Event Processing Application](../event-processing/event-processing-application.md) does. 
 
 
 ## References
-* TODO: Reference link to the EIP pattern as citation
-* TODO: pointers to related patterns?
-* TODO: pointers to external material?
+* [Event Processing Applications](../event-processing/event-processing.md) are componsed of Event Processors.
+* In [Kafka Streams](https://kafka.apache.org/28/documentation/streams/core-concepts#streams_topology), a processor is a node in the processor topology representing a step to transform [Events](../event/event.md).
+* Blog post: [How real-time stream processing works with ksqlDB, Animated](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
