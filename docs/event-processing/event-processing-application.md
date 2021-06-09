@@ -77,5 +77,6 @@ When building an Event Processing Application, it's important to generally confi
 
 ## References
 * The [Event Streaming Platform](../event-stream/event-streaming-platform.md) pattern provides a higher level overview of how Event Processing Applications are utilized across the streaming platform.
+* [Event Processors](../event-processing/event-processor.md) are the sub-components of Event Processing Applications which are composed together to build a full application.
 * The [joining streams and tables in ksqlDB tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html) provides a step by step example of event processing using `SQL`.
 * [How to sum a stream of events](https://kafka-tutorials.confluent.io/create-stateful-aggregation-sum/ksql.html) is a ksqlDB tutorial for applying an aggregate function over an [Event Stream](../event-stream/event-stream.md). 
