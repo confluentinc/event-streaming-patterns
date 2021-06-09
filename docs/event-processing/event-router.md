@@ -53,9 +53,9 @@ myStream.mapValues(..).to( new GenreTopicExtractor());
 ```
 
 ## Considerations
-* Event Routers should not modify the Event contents and instead only provide the proper Event routing.
+* Event Routers should not modify the Event itself and instead only provide the proper routing to the desired destinations.
+* Consider the use of an [Event Envelope](TODO: pattern link) if an event router should attach additional information or context to an event.
 
 ## References
 * This pattern is derived from [Message Router](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * See this [Kafka Tutorial](https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html) for a full example of dynamically routing events at runtime
-
