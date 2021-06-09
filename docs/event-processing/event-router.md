@@ -8,7 +8,7 @@ seo:
 [Event Streams](../event-stream/event-stream.md) may contain [Events](../event/event.md) which can be separated logically by some attribute. The routing of Events to dedicated Streams may allow for simplified [Event Processing](event-processor.md) and [Event Sink](../event-sink/event-sink.md) solutions.
 
 ## Problem
-How can I isolate Events into a dedicated Event Stream based on some attribute of the Events?
+How can we isolate Events into a dedicated Event Stream based on some attribute of the Events?
 
 ## Solution
 ![event-router](../img/event-router.png)
