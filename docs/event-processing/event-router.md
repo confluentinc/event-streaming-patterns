@@ -49,7 +49,7 @@ GenreTopicExtractor implements TopicNameExtractor<String, String> {
 }
 
 KStream<String, String> myStream = builder.stream(...);
-myStream.mapValues(..).to( new GenreTopicExtractor());
+myStream.mapValues(..).to(new GenreTopicExtractor());
 ```
 
 ## Considerations
