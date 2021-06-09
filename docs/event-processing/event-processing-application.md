@@ -1,7 +1,6 @@
----
 seo:
   title: Event Processing Application
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus aliquet consequat. Morbi nec lorem eget mauris posuere consequat in vel sem. Nunc ut malesuada est, fermentum tristique velit. In in odio dui. Nunc sed iaculis mauris. Donec purus tellus, fringilla nec tempor et, tristique sit amet nulla. In pharetra ligula orci, eget mattis odio luctus eu. Praesent porttitor pretium dolor, ut facilisis tortor dignissim vitae.
+  description: Event Processing Applications are composed of one or more connected Event Processors forming a processing topology for streams and tables.
 ---
 
 # Event Processing Application
