@@ -16,7 +16,7 @@ Depending on the use case, developers need to pick one variant over the others.
 
 ## Problem
 
-How do I extract an event's timestamp from a field of the event, i.e., from its payload?
+How do we extract an event's timestamp from a field of the event, i.e., from its payload?
 
 
 ## Solution
