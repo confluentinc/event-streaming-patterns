@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Processor
-An event processor is a component of a larger [Event Processing Application](event-processing-application.md).  The event processor applies discrete, idempotent operations to an event object.
+An event processor is a component that reads events and processes them, and possibly writes new events as the result of its processing. As such, it may act as an [Event Source](todo: link pattern) and/or [Event Sink](todo: link pattern), and in practice often acts as both. An event processor can be distributed (i.e., multi-instance), in which case the processing of events happens concurrently across its instances.
 
 ## Problem
 How do I gain insight from event data? For example, how can I quickly address a customer issue?
@@ -33,4 +33,3 @@ While it could be tempting to build a "multi-purpose" event processor, it's impo
 * TODO: Reference link to the EIP pattern as citation
 * TODO: pointers to related patterns?
 * TODO: pointers to external material?
-
