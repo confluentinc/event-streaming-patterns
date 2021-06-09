@@ -15,7 +15,7 @@ How can individual, but related events from the same [Event Stream](../event-str
 ## Solution
 ![event-grouper](../img/event-grouper.png)
 
-For time-based grouping a.k.a. time-based windowing, we use a `WINDOW` [Event Processor](../event-processing/event-processor.md) to group the related events into windows based on their event timestamps. Most window types have a pre-defined window size, such as ten minutes or 24 hours. An exception are session windows, where the size of each window varies depending on the time characteristics of the grouped events.
+For _time-based grouping_ a.k.a. _time-based windowing_, we use a `WINDOW` [Event Processor](../event-processing/event-processor.md) to group the related events into windows based on their event timestamps. Most window types have a pre-defined window size, such as 10 minutes or 24 hours. An exception is session windows, where the size of each window varies depending on the time characteristics of the grouped events.
 
 For _field-based_ grouping, we use a `GROUP BY` Event Processor that groups events by one or more data fields, irrespective of the event timestamps.
 
