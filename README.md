@@ -28,8 +28,9 @@ Use the diagrams in [this google slidedeck](https://docs.google.com/presentation
 - Voice: state Problem as external thing (“when doing X”...no “I”), rest of text/Solution as “we”
 - Bullet list: no periods unless there are multiple complete sentences within one bullet
 - Avoid Kafka/implementation terms like “topics” in the introduction, Problem, Solution sections. Generally, use implementation-specific terms like “topic” only in the Implementation, Considerations, References sections.
-- Add cross-references to related patterns (where applicable) to the respective “Reference” sections.
+- Add cross-references to related patterns (where applicable) to the respective “References” sections.
 - Before publishing: scan for leftover `TODO` entries (such as links to content that didn’t exist yet at the time of writing a pattern)
+- Once the courses are available, patterns should link to relevant courses in their "References" sections.
 
 Additional style guides (internal-access only):
 
