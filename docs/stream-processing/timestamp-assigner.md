@@ -1,33 +1,48 @@
+---
+seo:
+  title: Timestamp Assigner
+  description: Timestamps are a critical component of a stream processing application and in some cases it's necessary to extract the 
+  timestamp from the event record's payload
+---
+
 # Timestamp Assigner
 
-Consistent time semantics are of particular importance in stream processing. Many operations in an [Event Processor](../event-processing/event-processor.md) are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: (1) event-time, which captures the time at which an event was originally created by its [Event Source](../event-source/event-source.md), (2) ingestion-time, which captures the time an event was received on the event stream in an [Event Streaming Platform](../event-processing/event-processing-application.md), and (3) wallclock-time or processing-time, which is the time at which a downstream [Event Processor](../event-processing/event-processor.md) happens to process the event (which can be milliseconds, hours, months, etc. after event-time) . Depending on the use case, developers need to pick one variant over the others.
+Consistent time semantics are of particular importance in stream processing. Many operations in an [Event Processor](../event-processing/event-processor.md) are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: 
+
+1. Event-time, which captures the time at which an event was originally created by its [Event Source](../event-source/event-source.md).
+2. Ingestion-time, which captures the time an event was received on the event stream in an [Event Streaming Platform](../event-processing/event-processing-application.md).
+3. Wallclock-time or processing-time, which is the time at which a downstream [Event Processor](../event-processing/event-processor.md) happens to process the event (which can be milliseconds, hours, months, etc. after event-time).
+
+Depending on the use case, developers need to pick one variant over the others.
 
 ## Problem
 
-How do I extract the timestamp embedded in the event content?
+How do I extract an event's timestamp from a field of the event, i.e., from its payload?
 
-## Solution Pattern
+
+## Solution
 
 ![timestamp-assigner](../img/timestamp-assigner.png)
 
-Implement a timestamp-extractor in the event processing application that understands the structure of the event payload and knows which field to extract to use for the timestamp.  Since the event processing application will most likely use a `Long` datatype to represent the timestamp and the field could be stored as a `Long` value or a logical `Date` type the timestamp-extractor implementation should convert the extracted value to a `Long` before returning it to the event processing application.
+Implement a timestamp assigner, also called a timestamp extractor, in the [Event Processing Application](../event-processing/event-processing-application.md) that understands the structure of the event payload and knows which field to extract to use for the event's timestamp. The extractor must return the timestamp in a data type (e.g., `Long` or `Date`) that can be understood by the application.
 
 ## Implementation
 
-Every record in ksqlDB has system-column named `ROWTIME` representing the timestamp for the event.  The `ROWTIME` column gets the timestamp from the underlying `ConsumerRecord`.  To use a timestamp in the event payload itself you can add a `WITH(TIMESTAMP='some-field')` which instructs ksqlDB to then get the timestamp from the specified field in the record.
+Every record in ksqlDB has system-column named `ROWTIME` representing the timestamp for the event.  To use a timestamp in the event payload itself you can add a `WITH(l='some-field')` which instructs ksqlDB to then get the timestamp from the specified field in the record.
 
 ```
-CREATE STREAM MY_EVENT_STREM
-    WITH (KAFKA_TOPIC='events',
-          TIMESTAMP='eventTime');
+CREATE STREAM my_event_stream
+    WITH (kafka_topic='events',
+          timestamp='eventTime');
 
 ```
 
 ## Considerations
 
-When using the `WITH(TIMESTAMP='some-field)` clause the underlying field needs to be a type of `Long` (64-bit) representing a Unix epoch time in milliseconds.  If the event stores the timestamp as a `Date` or `Instant`, you'll need to implement a user-defined-function (UDF) that can covert the field from its stored format to the required `Long` one.
+Depending on your use case you may find that ingestion-time or processing-time is sufficient.  Implementing a timestamp assigner is required in cases where you need event-time processing.
+
 
 ## References
 
 * [Timestamp assignment in ksqlDB](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#timestamp-assignment)
-* [Kafka Tutorials]( https://kafka-tutorials.confluent.io/time-concepts/ksql.html): Time concepts
+* See the tutorial [Event-time semantics in ksqlDB]( https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for further details on time concepts
