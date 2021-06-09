@@ -32,7 +32,7 @@ With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/
 
 - The event key
 - The event value
-- The [RecordContext](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, ando ther contextual information about the event.
+- The [RecordContext](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html, which provides access to headers, partitions, and other contextual information about the event.
 
 You can use any of the given parameters to return the destination topic name, and Kafka Streams will complete the routing. 
 
