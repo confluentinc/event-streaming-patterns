@@ -1,0 +1,17 @@
+basePath: /patterns
+layout: pattern
+toc:
+  - items:
+      - index
+  - title: Event Processing
+    items:
+      - event-processing/dead-letter-stream
+      - event-processing/event-streaming-api
+      - event-processing/event-router
+      - event-processing/event-processor
+      - event-processing/event-mapper
+  - title: Event Source
+    items:
+      - event-source/event-source
+      - event-source/database-write-aside
+      - event-processing/event-filter

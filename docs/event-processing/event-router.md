@@ -34,7 +34,7 @@ With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/
 
 You can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. 
 
-```
+```java
 CountryTopicExtractor implements TopicNameExtractor<String, String> {
    String extract(String key, String value, RecordContext recordContext) {
       switch (value.country) {
