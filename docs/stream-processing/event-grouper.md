@@ -17,7 +17,7 @@ How can individual, but related events from the same [Event Stream](../event-str
 
 For time-based grouping a.k.a. time-based windowing, we use a `WINDOW` [Event Processor](../event-processing/event-processor.md) to group the related events into windows based on their event timestamps. Most window types have a pre-defined window size, such as ten minutes or 24 hours. An exception are session windows, where the size of each window varies depending on the time characteristics of the grouped events.
 
-For field-based grouping, we use a `GROUP BY` Event Processor that groups events irrespective of their timestamps.
+For _field-based_ grouping, we use a `GROUP BY` Event Processor that groups events by one or more data fields, irrespective of the event timestamps.
 
 The two grouping approaches are orthogonal and can be composed. For example, to compute 7-day averages for every customer in a stream of payments, we first group the events in the stream by customer ID _and_ by 7-day windows, and then compute the respective averages for each customer+window grouping.
 
