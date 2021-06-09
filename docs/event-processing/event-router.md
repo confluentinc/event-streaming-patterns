@@ -30,29 +30,29 @@ With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/
 
 - The event key
 - The event value
-- The [RecordContext](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html, which provides access to headers, partitions, and other contextual information about the event.
+- The [RecordContext](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event.
 
 You can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. 
 
 ```
-GenreTopicExtractor implements TopicNameExtractor<String, String> {
+CountryTopicExtractor implements TopicNameExtractor<String, String> {
    String extract(String key, String value, RecordContext recordContext) {
-      switch (value.genre) {
-        case "drama":
-          return "drama-topic";
-        case "fantasy":
-          return "fantasy-topic";
+      switch (value.counter) {
+        case "france":
+          return "france-topic";
+        case "spain":
+          return "spain-topic";
       }
    }
 }
 
 KStream<String, String> myStream = builder.stream(...);
-myStream.mapValues(..).to(new GenreTopicExtractor());
+myStream.mapValues(..).to(new CountryTopicExtractor());
 ```
 
 ## Considerations
 * Event Routers should not modify the Event itself and instead only provide the proper routing to the desired destinations.
-* Consider the use of an [Event Envelope](TODO: pattern link) if an event router should attach additional information or context to an event.
+* Consider the use of an [Event Envelope](../event/event-envelope.md) if an event router should attach additional information or context to an event.
 
 ## References
 * This pattern is derived from [Message Router](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
