@@ -14,7 +14,7 @@ How can we isolate Events into a dedicated Event Stream based on some attribute 
 ![event-router](../img/event-router.png)
 
 ## Implementation
-With [ksqlDB](https://ksqldb.io/), continuously routing events to a different stream is as simple as using the `CREATE STREAM` syntax with the appropriate `WHERE` filter.
+With [ksqlDB](https://ksqldb.io/), you can continuously route events to a different stream using the `CREATE STREAM` syntax with an appropriate `WHERE` filter.
 
 ```
 CREATE STREAM actingevents_drama AS
