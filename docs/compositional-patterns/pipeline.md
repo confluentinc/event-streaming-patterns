@@ -31,7 +31,7 @@ CREATE STREAM orders (
 );
 ```
 
-We'll also create a table which will contain the current state of all customer events.
+We'll also create a (continuously updated) customers table that will contain the latest profile information about each customer, such as their current home address.
 
 ```sql
 CREATE TABLE customers (
