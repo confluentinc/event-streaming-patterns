@@ -9,7 +9,7 @@ An event grouper is a specialized form of an [Event Processor](../event-processi
 
 ## Problem
 
-How can individual, but related events from the same [Event Stream](../event-stream/event-stream.md) or [Table](../table/state-table.md) be grouped, so that they can subsequently be processed as a whole?
+How can we group individual but related events from the same [Event Stream](../event-stream/event-stream.md) or [Table](../table/state-table.md), so that they can subsequently be processed as a whole?
 
 
 ## Solution
