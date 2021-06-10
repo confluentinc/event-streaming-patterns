@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Source - Event Streaming Patterns</title>
+  <title>Command Query Responsibility Segregation (CQRS) - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Source";
-    var mkdocs_page_input_path = "event-source/event-source.md";
+    var mkdocs_page_name = "Command Query Responsibility Segregation (CQRS)";
+    var mkdocs_page_input_path = "compositional-patterns/command-query-responsibility-segregation.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,14 +52,26 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Compositional patterns</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/command-query-responsibility-segregation/">Command Query Responsibility Segregation (CQRS)</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Command Query Responsibility Segregation (CQRS)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-collaboration/">Event Collaboration</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/geo-replication/">Geo Replication</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/pipeline/">Pipeline</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../pipeline/">Pipeline</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
@@ -104,26 +116,16 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source-connector/">Event Source Connector</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Source</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -181,11 +183,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Compositional patterns &raquo;</li>
         
       
     
-    <li>Event Source</li>
+    <li>Command Query Responsibility Segregation (CQRS)</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -196,26 +198,57 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-source">Event Source</h1>
-<p>Various components in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> will generate <a href="../../event/event/">Events</a>. An Event Source is the generalization of these components, which can include <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, cloud services, databases, IoT sensors, mainframes, and more.</p>
-<p>Conceptually, an event source is the opposite of an <a href="../../event-sink/event-sink/">Event Sink</a>. In practice, however, components such as an event processing application can act as both an event source and an event sink.</p>
+                <h1 id="command-query-responsibility-segregation-cqrs">Command Query Responsibility Segregation (CQRS)</h1>
+<p>Databases conflate the writing of data and the reading of data in the same place: the database. In some situations, it is preferable to separate reads from writes. There are several reasons to do this but the most prevalent is that the application can now save data in the exact form in which it arrives, accurately reflecting what happened in the real world, while reading it in a different form, one that is optimized for reading. </p>
+<p>For example, a user adding and removing items from their cart would all be recorded as a stream of immutable events: t-shirt added, t-shirt removed, etc. These are then summarized into a separate view that used to serve reads, for example summarizing the various user events to represent the accurate contents of the cart. </p>
 <h2 id="problem">Problem</h2>
-<p>How can we create <a href="../../event/event/">Events</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>?</p>
+<p>How can we store and hold data in the exact form in which it arrived but read from a summarized and curated view?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-source" src="../../img/event-source.png" /></p>
-<p>Use an Event Source, which typically acts as a client in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Examples are an <a href="../event-source-connector/">Event Source Connector</a> (which continuously imports data as <a href="../../event-stream/event-stream/">Event Streams</a> into the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> from an external system such as a cloud services or a relational database) or an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> such as a <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams</a> application and the streaming database <a href="https://ksqldb.io/">ksqlDB</a>.</p>
+<p><img alt="command-query-responsibility-segregation" src="../../img/command-query-responsibility-segregation.png" /></p>
+<p>Represent changes that happen in the real world as <a href="../../event/event/">Events</a> - an order is shipped, a ride is accepted, etc. - and retain these events as the system of record. Subsequently, aggregate those <a href="../../event/event/">Events</a> into a view that summarizes the events to represent the current state, allowing applications to query the current values. 
+So for example, the current balance of your account would be the total of all the payment events that added money to or removed it from your account. The system of record is the stream of payment events. The view you read from would be the account balance. </p>
 <h2 id="implementation">Implementation</h2>
-<p>Normally, an actual component such as an application for Kafka would be writing <a href="../../event/event/">Events</a> into an <a href="../../event-stream/event-stream/">Event Stream</a>, via a client library, API, gateway, etc. You can also write events directly using SQL syntax: the streaming database <a href="https://ksqldb.io/">ksqlDB</a>, for example, provides an <code>INSERT</code> statement.</p>
-<pre><code>CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
-    with (kafka_topic='users-topic', value_format='json');
-INSERT INTO users (username, name, phone)
-  VALUES ('awilson', 'Allison', '+1 555-555-1234');
+<p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> can implement a CQRS using an <a href="../../event-stream/event-stream/">Event Stream</a> and <a href="../table/table.md">Table</a>.</p>
+<p><a href="../../event-stream/event-stream/">Event Streams</a> are built into to the streaming database design. Creating a new stream is straightforward:</p>
+<pre><code class="sql">CREATE STREAM purchases (customer VARCHAR, item VARCHAR, qty INT WITH (kafka_topic='purchases-topic', value_format='json', partitions=1);
 </code></pre>
 
+<p><a href="../../event/event/">Events</a> can be directly using familiar SQL syntax. </p>
+<pre><code class="sql">INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'hats', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'hats', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'sweaters', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
+INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', -1);
+</code></pre>
+
+<p>We can create a <a href="https://docs.ksqldb.io/en/latest/concepts/materialized-views/">Materialized View</a> of the data as a <a href="../table/table.md">Table</a>:</p>
+<pre><code class="sql">CREATE TABLE customer_purchases WITH (KEY_FORMAT='JSON') AS
+  SELECT customer, item, SUM(qty) as total_qty from purchases GROUP BY customer, item emit changes;
+</code></pre>
+
+<p>And continuously query for changes to the state of the <code>customer_purchases</code> table:</p>
+<pre><code class="sql">SELECT * FROM customer_purchases EMIT CHANGES;
+</code></pre>
+
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>
+<p>CQRS adds complexity over a traditional simple <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> database implementation.</p>
+</li>
+<li>
+<p>High performance applications may benefit from a CQRS design. Isolating the load of writing and reading of data may allow you to scale those aspects independently and properly. </p>
+</li>
+<li>
+<p>Microserivces applications often use CQRS to scale-out with many views provided for different services. The same pattern is applicable to geographically dispersed applications such as a flight booking system which are read heavy across many locations.</p>
+</li>
+<li>
+<p>A write to a CQRS system is eventually consistent. Writes cannot be read immediately as there is a delay between the write of the command <a href="../../event/event/">Event</a> and the query-model being updated. This can cause complexity for some client applications, particularly online services.</p>
+</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://ksqldb.io/">ksqlDB</a> The event streaming database purpose-built for stream processing applications.</li>
-<li><a href="https://docs.confluent.io/cloud/current/client-apps/index.html">How to build client applications</a> for writing events into an <a href="../../event-stream/event-stream/">Event Stream</a>.</li>
+<li>See Martin Fowler's <a href="https://martinfowler.com/bliki/CQRS.html">detailed explanation of CQRS</a> for more information.</li>
 </ul>
               
             </div>
@@ -224,10 +257,10 @@ INSERT INTO users (username, name, phone)
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../schema-validator/" class="btn btn-neutral float-right" title="Schema Validator">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-collaboration/" class="btn btn-neutral float-right" title="Event Collaboration">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-source-connector/" class="btn btn-neutral" title="Event Source Connector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral" title="Event Streaming Patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -253,10 +286,10 @@ INSERT INTO users (username, name, phone)
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-source-connector/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../schema-validator/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-collaboration/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
