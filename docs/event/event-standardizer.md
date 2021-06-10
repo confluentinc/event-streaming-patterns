@@ -22,7 +22,7 @@ SpecificAvroSerde<SpecificRecord> inputValueSerde = constructSerde();
 builder
   .stream(List.of("inputStreamA", "inputStreamB", "inputStreamC"),
     Consumed.with(Serdes.String(), inputValueSerde))
-  .mapValues((k, v) -> {
+  .mapValues((eventKey, eventValue) -> {
     if (v.getClass() == TypeA.class)
       return typeATranslator.normalize(v);
     else if (v.getClass() == TypeB.class)
