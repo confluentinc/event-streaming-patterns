@@ -18,7 +18,7 @@ You can logically group [Events](../event/event.md) at different levels to enabl
 A partition is one unit of parallelism that helps scalability in these main ways:
 
 * Platform scalability: enables different [Event Brokers](../event-stream/event-broker.md) to store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md) concurrently
-* Application scalability: enable different consumer applications to process those events concurrently
+* Application scalability: enable different [Event Processing Applications](../event-processing/event-processing-application.md) to process [Events](../event/event.md) concurrently
 
 ## Implementation
 When a Kafka topic is created, either by an administrator or by a streaming application like ksqlDB, you can specify the number of partitions it has.
