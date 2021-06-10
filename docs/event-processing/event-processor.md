@@ -39,7 +39,7 @@ CREATE STREAM clean_readings AS
 With ksqlDB, you can view each section of the command as the construction of a different Event Processor:
 
 * `CREATE STREAM` defines the new output [Event Stream](../event-stream/event-stream.md) that this application will produce [Events](../event/event.md) to.
-* `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and "cleaning" it as defined. In this example, this simply means uppercasing the `location` field in each input reading.
+* `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and "cleaning" it as defined. In this example, this simply means upper casing the `location` field in each input reading.
 * `FROM ...` is a source Event Processor that defines the input [Event Stream](../event-stream/event-stream.md) for the overall application.
 * `EMIT CHANGES` is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.
 
@@ -65,7 +65,7 @@ In the above example we use the [Kafka Streams Builder](https://kafka.apache.org
 * While it could be tempting to build a "multi-purpose" event processor, it's important that processors are designed in a composable way. By building processors as discrete units, it's easier to reason about what each processor does and, by extension, what the [Event Processing Application](../event-processing/event-processing-application.md) does. 
 
 ## References
-* [Event Processing Applications](../event-processing/event-processing.md) are componsed of Event Processors.
+* [Event Processing Applications](../event-processing/event-processing.md) are composed of Event Processors.
 * In [Kafka Streams](https://kafka.apache.org/28/documentation/streams/core-concepts#streams_topology), a processor is a node in the processor topology representing a step to transform [Events](../event/event.md).
 * Blog post: [How real-time stream processing works with ksqlDB, Animated](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
 * [Introduction to Apache Kafka: How Kafka works](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/) provides details on the core Kafka concepts like [Events](../event/event.md) and topics.
