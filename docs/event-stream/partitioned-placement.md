@@ -17,7 +17,7 @@ How can we allocate events across [Event Streams](../event-stream/event-streams.
 You can logically group [Events](../event/event.md) at different levels to enable concurrent processing.
 A partition is one unit of parallelism that helps scalability in these main ways:
 
-* Platform scalability: enables different servers to store and serve events to consumer client applications concurrently
+* Platform scalability: enables different [Event Brokers](../event-stream/event-broker.md) to store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md) concurrently
 * Application scalability: enable different consumer applications to process those events concurrently
 
 ## Implementation
