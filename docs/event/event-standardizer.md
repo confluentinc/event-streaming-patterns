@@ -23,7 +23,7 @@ builder
   .stream(List.of("inputStreamA", "inputStreamB", "inputStreamC"),
     Consumed.with(Serdes.String(), inputValueSerde))
   .mapValues((eventKey, eventValue) -> {
-    if (v.getClass() == TypeA.class)
+    if (eventValue.getClass() == TypeA.class)
       return typeATranslator.normalize(v);
     else if (v.getClass() == TypeB.class)
       return typeBTranslator.normalize(v);
