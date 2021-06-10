@@ -6,7 +6,7 @@ seo:
 
 # Schema-on-Read
 Schema-on-Read enables the reader of data to apply any schema it wants to events that are processed.
-There are several use cases for this pattern:
+There are several use cases for this pattern, all of which provide a lot of flexibility to [Event Processors](../event-processing/event-processor.md):
 
 1. When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Here, the sequencing really matters.  Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
 
