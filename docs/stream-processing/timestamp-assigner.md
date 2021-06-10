@@ -27,14 +27,39 @@ Implement a timestamp assigner, also called a timestamp extractor, in the [Event
 
 ## Implementation
 
-Every record in ksqlDB has system-column named `ROWTIME` representing the timestamp for the event.  To use a timestamp in the event payload itself you can add a `WITH(l='some-field')` which instructs ksqlDB to then get the timestamp from the specified field in the record.
+There are a few ways to implement a timestamp assigner, in this section we'll look at two.
+
+#### Kafka Streams
+
+Kafka Streams provides the `TimestampExtractor` interface for extracting the timestamp from events.  The default implementation retrieves the timestamp on the event, set by Kafka, either the producer or broker depending on the configuration, event-time or log-append-time respectively.  
+
+But for those cases where you need the timestamp from the event payload you can create your own `TimestampExtractor` implementation:
+
+```java
+class OrderTimestampExtractor implements TimestampExtractor {
+@Override
+public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
+    ElectronicOrder order = (ElectronicOrder)record.value();
+    return order.getTime();
+}
 
 ```
+
+
+#### ksqlDB 
+
+Every record in ksqlDB has system-column named `ROWTIME` representing the timestamp for the event.  To use a timestamp in the event payload itself you can add a `WITH(timestamp='some-field')` which instructs ksqlDB to then get the timestamp from the specified field in the record. 
+
+
+```sql
 CREATE STREAM my_event_stream
     WITH (kafka_topic='events',
           timestamp='eventTime');
 
 ```
+
+By specifying the `eventTime` field that exists on every event in the stream ksqlDB simplifies this process and provide a no-code option for extracting a timestamp from the event payload.
+
 
 ## Considerations
 
