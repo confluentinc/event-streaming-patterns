@@ -5,15 +5,14 @@ seo:
 ---
 
 # Schema-on-Read
-Schema on Read enables the reader of data to determine which schema to apply to the data that is processed.
-
-There are several use cases:
+Schema-on-Read enables the reader of data to apply any schema it wants to events that are processed.
+There are several use cases for this pattern:
 
 1. When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Here, the sequencing really matters.  Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
 
-2. When there are different versions of the same schema, and the reader chooses which version to apply to a given event.
+2. When there are different versions of the same schema type, and the reader chooses which version to apply to a given event.
 
-3. When unstructured data is written into an [Event Stream](../event-stream/event-stream.md), and the reader then applies whatever schema it wants.
+3. When unstructured data is written into an [Event Stream](../event-stream/event-stream.md), and the reader then applies whichever schema it wants.
 
 ## Problem
 How can an [Event Processor](../event-processing/event-processor.md) apply a schema on the data it is reading from an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
