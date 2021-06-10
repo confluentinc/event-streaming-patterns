@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Processor
-An Event Processor is a component that reads [Events](../event/event.md) and processes them, and possibly writes new [Events](../event/event.md) as the result of its processing. As such, it may act as an [Event Source](../event-source/event-source) and/or [Event Sink](../event-sink/event-sink.md), and in practice often acts as both. An Event Processor can be distributed (i.e., multi-instance), in which case the processing of [Events](../event/event.md) happens concurrently across its instances.
+Once data such as financial transactions, tracking information for shipments, IoT sensor measurements, etc. is set in motion as [streams of events](../event-stream/event-stream.md) on an [Event Streaming Platform](../event-stream/event-streaming-platform.md), we want to put it to use and create value from it. How do we do this?
 
 ## Problem
 How do we process [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)? For example, how can I process financial transactions, track shipments, analyze IoT sensors data, or generate continuous intelligence?
