@@ -1,6 +1,7 @@
 # Event-Time Processing
 
 Consistent time semantics are of particular importance in stream processing. Many operations in an [Event Processor](../event-processing/event-processor.md) are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: 
+
 1. Event-time, which captures the time at which an event was originally created by its [Event Source](../event-source/event-source.md).
 2. Ingestion-time, which captures the time an event was received on the event stream in an [Event Streaming Platform](../event-processing/event-processing-application.md).
 3. Wallclock-time or processing-time, which is the time at which a downstream [Event Processor](../event-processing/event-processor.md) happens to process the event (which can be milliseconds, hours, months, etc. after event-time) .
@@ -12,7 +13,7 @@ How do I extract an event's timestamp from a field of the event, i.e., from its 
 
 ## Solution
 
-![event-time-processing](../img/timestamp-assigner.png)
+![event-time-processing](../img/event-time-processing.png)
 
 For event-time processing, you'll need to implement a [Timestamp Assigner](timestamp-assigner.md) that will extract the timestamp of when the event was originally created at the [Event Source](../event-source/event-source.md)
 
