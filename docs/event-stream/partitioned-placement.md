@@ -52,5 +52,5 @@ Also take into consideration the design of data patterns and key assignments so 
 This will prevent certain stream partitions from getting overloaded relative to other stream partitions. See [Streams and Tables in Apache Kafka: Elasticity, Fault Tolerance, and Other Advanced Concepts](https://www.confluent.io/blog/kafka-streams-tables-part-4-elasticity-fault-tolerance-advanced-concepts/) for further details on understanding and dealing with partition skew.
 
 ## References
-* [Review our guidelines](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster) for how to choose the number of partitions.
+* The blog post [How to choose the number of topics/partitions in a Kafka cluster](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster) provides helpful guidance for selecting partition counts for your topics.
 * For another approach to processing parallelism that subdivides the unit of work from a partition down to an event or an event key, see the [Confluent Parallel Consumer for Kafka](https://github.com/confluentinc/parallel-consumer).
