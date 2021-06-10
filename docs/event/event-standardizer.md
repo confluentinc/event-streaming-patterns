@@ -28,7 +28,7 @@ builder
       return typeATranslator.normalize(eventValue);
     else if (v.getClass() == TypeB.class)
       return typeBTranslator.normalize(eventValue);
-    else if (v.getClass() == TypeC.class)
+    else if (eventValue.getClass() == TypeC.class)
       return typeCTranslator.normalize(eventValue);
     else {
       // exception or dead letter stream
