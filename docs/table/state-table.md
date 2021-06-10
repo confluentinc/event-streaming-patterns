@@ -1,7 +1,7 @@
 ---
 seo:
   title: State Table
-  description: A state table allows an Event Processor to record and update state.
+  description: A state table allows an Event Processor to record and update state, similar to a table in a relational database.
 ---
 
 # State Table
@@ -25,7 +25,7 @@ Irrespective of backend choice, the state table should be fault-tolerant to ensu
 
 ksqlDB provides state tables out of the box with its `TABLE` data collection. Its implementation uses local, fault-tolerant state stores that are continuously backed up into ksqlDB's distributed storage layer (Kafka) so the data is durable.
 
-For example, we can maintain a stateful count of all sales with:
+For example, we can maintain a stateful count of all sales with by aggregating the `movie_ticket_sales` stream into a `movie_tickets_sold` table:
 
 ```sql
 CREATE TABLE movie_tickets_sold AS
@@ -40,5 +40,4 @@ CREATE TABLE movie_tickets_sold AS
 
 * [State store recovery in ksqlDB](https://www.confluent.io/blog/ksqldb-state-stores-in-recovery/) explains the fault-tolerance of ksqlDB's state management in more detail.
 * Related patterns: [Projection Table](../table/projection-table.md)
-
 
