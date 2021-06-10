@@ -4,7 +4,7 @@ Combing multiple events into a single encompassing event—e.g., to compute tota
 
 ## Problem
 
-How can multiple individual, but related events be combined to produce new event?
+How can multiple individual, but related events be combined to produce a new event?
 
 ## Solution
 ![event-aggregator](../img/event-aggregator.png)
