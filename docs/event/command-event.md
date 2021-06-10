@@ -13,7 +13,7 @@ Some of those events seem like plain facts - a user sends us their new
 address, a product leaves the warehouse - and we record those facts
 first, without immediately considering what happens next.
 
-Others events seem more like commands to invoke a specific action - a
+Other events seem more like commands to invoke a specific action - a
 user clicks a `[BUY]` button - and it's time to immediately trigger
 order processing. How do we model command-like events?
 
