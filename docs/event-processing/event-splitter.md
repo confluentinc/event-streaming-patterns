@@ -42,15 +42,13 @@ KStream<String, Integer> splitStream = myStream.flatMap(
   );
 ```
 
-Or as my grandmother Edith Vent used to say:
+Or as my grandmother used to say:
 
-<i>
-> There once was a man from Manhattan,  
-> With Events that he needed to flatten,  
-> He cooked up a scheme,  
-> To call `flapMap` on `stream`,  
-> Then he wrote it all down as a pattern.  
-</i>
+> _There once was a man from Manhattan,_  
+> _With Events that he needed to flatten,_  
+> _He cooked up a scheme,_  
+> _To call `flapMap` on `stream`,_  
+> _Then he wrote it all down as a pattern._
 
 ## Considerations
 * If child events need to be routed to different streams, see [Event Router](../event-processing/event-router.md) for routing events to different locations.
