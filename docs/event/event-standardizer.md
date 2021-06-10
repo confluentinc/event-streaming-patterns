@@ -24,7 +24,7 @@ builder
     Consumed.with(Serdes.String(), inputValueSerde))
   .mapValues((eventKey, eventValue) -> {
     if (eventValue.getClass() == TypeA.class)
-      return typeATranslator.normalize(v);
+      return typeATranslator.normalize(eventValue);
     else if (v.getClass() == TypeB.class)
       return typeBTranslator.normalize(v);
     else if (v.getClass() == TypeC.class)
