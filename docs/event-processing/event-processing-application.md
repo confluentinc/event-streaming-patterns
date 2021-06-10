@@ -18,7 +18,7 @@ For example, an application can read a stream of customer payments from an [Even
 
 
 ## Implementation
-Apache Kafka® is the most popular [Event Streaming Platform](../event-stream/event-streaming-platform.md). There are several options for building Event Processing Aplications when using Kafka, and we'll show two here.
+Apache Kafka® is the most popular [Event Streaming Platform](../event-stream/event-streaming-platform.md). There are several options for building Event Processing Applications when using Kafka, and we'll show two here.
 
 ### ksqlDB
 [ksqlDB](https://ksqldb.io) is a purpose-built event streaming database used to build Event Processing Applications. Using ksqlDB built-in support for [Tables](../table/table.md) and Streams (../event-stream/event-stream.md), you can build full Event Processing Applications using a familiar SQL syntax.
@@ -48,7 +48,7 @@ CREATE STREAM rated_movies
 ```
 
 ### Kafka Streams
-With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/), you can use Java code to construct a stream processing topology to create the application. A similiar Kafka Streams example to the ksqlDB one above may look similar to: 
+With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/), you can use Java code to construct a stream processing topology to create the application. A similar Kafka Streams example to the ksqlDB one above may look similar to: 
 ```java
 Stream<String, Movie> movieStream = builder
   .stream(movieTopic)
