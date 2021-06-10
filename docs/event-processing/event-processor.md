@@ -23,7 +23,7 @@ An event processor performs a specific task within the event processing applicat
 There are multiple ways to create an [Event Processing Application](../event-processing/event-processing-application.md) using Event Processors, we will look at two.
 
 #### ksqlDB
-[ksqlDB](https://ksqldb.io) provides a familiar `SQL` syntax that allows you to create [Event Processing Applications](../event-processing/event-processing-application.md). ksqlDB takes parses SQL commands and constructs and manages the Event Processors you define as part of your [Event Processing Application](../event-processing/event-processing-application.md).
+The streaming database [ksqlDB](https://ksqldb.io) provides a familiar SQL syntax that allows us to create [Event Processing Applications](../event-processing/event-processing-application.md). ksqlDB takes parses SQL commands and constructs and manages the Event Processors we define as part of an [Event Processing Application](../event-processing/event-processing-application.md).
 
 In the following example ksqlDB is reading values into the application from the `readings` [Event Stream](../event-stream/event-stream.md) and "cleaning" the [Event](../event/event.md) values. ksqlDB is publishing the "clean" readings to an [Event Stream](../event-stream/event-stream.md) named `clean_readings`.
 
