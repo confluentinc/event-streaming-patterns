@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Standardizer
-  description: An event standardizer converts events in multple formats to a common format understood by a downstream event processor.
+  description: An event standardizer converts events in multiple formats to a common format understood by a downstream event processor.
 ---
 
 # Event Standardizer
