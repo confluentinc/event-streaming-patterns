@@ -52,7 +52,7 @@ SELECT * FROM customer_purchases EMIT CHANGES;
 ## Considerations
 * CQRS adds complexity over a traditional simple [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) database implementation.
 
-* High performance applications may benefit from a CQRS design. Isolating the load of writing and reading of data may allow you to scale aspects independently and properly. 
+* High performance applications may benefit from a CQRS design. Isolating the load of writing and reading of data may allow you to scale those aspects independently and properly. 
 
 * Microserivces applications often use CQRS to scale-out with many views provided in or for different services. The same pattern is applicable to geographically dispersed applications such as a flight booking system which are read heavy across many locations.
 
