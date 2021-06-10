@@ -86,8 +86,8 @@ Choosing the right naming and representation for events is both easy
 and hard, and could be jokingly summarized with the ksqlDB command:
 
 ```sql
-CREATE STREAM <make a good decision here> AS (
-  <make more good decisions here>
+CREATE STREAM <choose a good name here> AS (
+  <choose good names here too>
 )
   ...
 ```
