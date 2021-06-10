@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Processor
-  description: Event Processors are components of larger Event Processing Applications which applies a discrete idempotent operation on an Event. 
+  description: Event Processors apply a specific processing operation on an event, and are typically used and composed by larger Event Processing Applications. 
 ---
 
 # Event Processor
