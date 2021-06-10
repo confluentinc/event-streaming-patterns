@@ -42,7 +42,7 @@ KStream<String, Integer> splitStream = myStream.flatMap(
   );
 ```
 
-In summary:
+Or as my grandmother Edith Vent used to say:
 
 <i>
 > There once was a man from Manhattan,  
