@@ -1,19 +1,25 @@
 ---
 seo:
-  title: Lifecycle Event
-  description: The general use case for Lifecycle Event is when the sequencing matters between events of different types.  
+  title: Schema-on-Read
+  description: Schema on Read enables the reader of data to determine which schema to apply to the data that is processed.
 ---
 
-# Lifecycle Event
-The general use case for Lifecycle Event is when the sequencing matters between events of different types.
-For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Here, the sequencing really matters.
-Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
+# Schema-on-Read
+Schema on Read enables the reader of data to determine which schema to apply to the data that is processed.
+
+There are several use cases:
+
+1. When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Here, the sequencing really matters.  Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain ordering and the consumer application deserialize the events.
+
+2. When there are different versions of the same schema, and the reader chooses which version to apply to a given event.
+
+3. When unstructured data is written into an event stream, and the reader then applies whatever schema it wants.
 
 ## Problem
 How do I read events from a stream that may have multiple schemas, with different code paths in the [Event Processor](../event-processing/event-processor.md) to handle each one?
 
 ## Solution
-![lifecycle-event](../img/lifecycle-event.png)
+![schema-on-read](../img/schema-on-read.png)
 
 ## Implementation
 Confluent Schema Registry checks that schema changes are compatible with previous versions.
