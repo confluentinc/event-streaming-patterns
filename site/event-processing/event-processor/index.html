@@ -90,6 +90,12 @@
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ksqldb">ksqlDB</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kafka-streams">Kafka Streams</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
@@ -197,21 +203,59 @@
             <div class="section">
               
                 <h1 id="event-processor">Event Processor</h1>
-<p>TODO: Short (2 sentence max) description that describes the pattern generally. Consider explaining situations in which the pattern might be applied.</p>
+<p>Once data such as financial transactions, tracking information for shipments, IoT sensor measurements, etc. is set in motion as <a href="../../event-stream/event-stream/">streams of events</a> on an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, we want to put it to use and create value from it. How do we do this?</p>
 <h2 id="problem">Problem</h2>
-<p>TODO: Technology agnostic English explanation of the problem</p>
+<p>How do we process <a href="../../event/event/">Events</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-processor" src="../../img/event-processor.png" />
-TODO: Provide a technology agnostic diagram and supporting text explaining the pattern's implementation (placing the diagram first).</p>
+We build an Event Processor, which is a component that reads <a href="../../event/event/">Events</a> and processes them, and possibly writes new <a href="../../event/event/">Events</a> as the result of its processing. As such, it may act as an <a href="../event-source/event-source">Event Source</a> and/or <a href="../../event-sink/event-sink/">Event Sink</a>, and in practice often acts as both. An event processor can be distributed, which means it has multiple instances that run across different machines. In this case the processing of <a href="../../event/event/">Events</a> happens concurrently across these instances.</p>
+<p>An important characteristic of an event processor is that it should allow for composition with other event processors. That's because, in practice, we rarely use a single event processor in isolation. Instead, we compose and connect (via <a href="../../event-stream/event-stream/">Event Streams</a>) one or more event processors inside an <a href="../event-processing-application/">Event Processing Application</a> that fully implements one particular use case end-to-end, or (e.g., in the case of microservices) that implements a subset of the overall business logic limited to the bounded context of a particular domain. </p>
+<p>An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an <a href="../../event-stream/event-stream/">Event Stream</a>, enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.</p>
 <h2 id="implementation">Implementation</h2>
-<p>TODO: Technology specific code example, ksqlDB preferred. (Not every pattern will have code)</p>
+<p>There are multiple ways to create an <a href="../event-processing-application/">Event Processing Application</a> using Event Processors, we will look at two.</p>
+<h4 id="ksqldb">ksqlDB</h4>
+<p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides a familiar SQL syntax that allows us to create <a href="../event-processing-application/">Event Processing Applications</a>. ksqlDB takes parses SQL commands and constructs and manages the Event Processors we define as part of an <a href="../event-processing-application/">Event Processing Application</a>.</p>
+<p>In the following example, we create a ksqlDB query to reading data from the <code>readings</code> <a href="../../event-stream/event-stream/">Event Stream</a> and "cleaning" the <a href="../../event/event/">Event</a> values. The query publishes the clean readings to a new stream called <code>clean_readings</code>. Here, this query acts as an event processing application comprised of multiple event processors that are connected to each other.</p>
+<pre><code class="sql">CREATE STREAM clean_readings AS
+    SELECT sensor,
+           reading,
+           UCASE(location) AS location
+    FROM readings
+    EMIT CHANGES;
+</code></pre>
+
+<p>With ksqlDB, you can view each section of the command as the construction of a different Event Processor:</p>
+<ul>
+<li><code>CREATE STREAM</code> defines the new output <a href="../../event-stream/event-stream/">Event Stream</a> that this application will produce <a href="../../event/event/">Events</a> to.</li>
+<li><code>SELECT ...</code> is a mapping function, taking each input <a href="../../event/event/">Event</a> and "cleaning" it as defined. In this example, this simply means upper casing the <code>location</code> field in each input reading.</li>
+<li><code>FROM ...</code> is a source Event Processor that defines the input <a href="../../event-stream/event-stream/">Event Stream</a> for the overall application.</li>
+<li><code>EMIT CHANGES</code> is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.</li>
+</ul>
+<h4 id="kafka-streams">Kafka Streams</h4>
+<p>The <a href="https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html">Kafka Streams DSL</a> provides abstractions for <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../table/table.md">Tables</a> as well as stateful and stateless transformation functions (<code>map</code>, <code>filter</code>, etc...). These functions act as the Event Processor in the larger <a href="../event-processing/event-processing.md">Event Processing Application</a> you build with the Kafka Streams library.</p>
+<pre><code class="java">builder
+  .stream(&quot;readings&quot;);
+  .mapValues((key, value)-&gt; 
+    new Reading(value.sensor, value.reading, value.location.toUpperCase()) 
+  .to(&quot;clean&quot;);
+</code></pre>
+
+<p>In the above example we use the <a href="https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/StreamsBuilder.html">Kafka Streams Builder</a> to construct the stream processing topology. </p>
+<ul>
+<li>First we create an input stream with the <code>stream</code> function. This creates an <a href="../../event-stream/event-stream/">Event Stream</a> from the designated Kafka topic.</li>
+<li>Next we transform the <a href="../../event/event/">Events</a> using the <code>mapValues</code> function. This function accepts each <a href="../../event/event/">Event</a> and returns a new <a href="../../event/event/">Event</a> with any desired transformations to the values.</li>
+<li>Finally we write our transformed <a href="../../event/event/">Events</a> to a destination Kafka topic using the <code>to</code> function. This function terminates our stream processing topology.</li>
+</ul>
 <h2 id="considerations">Considerations</h2>
-<p>TODO: Technology specific reflection on implmenting the pattern 'in the real world'. Considerations may include optional subsequent decisions or consequences of implementing the pattern.</p>
+<ul>
+<li>While it could be tempting to build a "multi-purpose" event processor, it's important that processors are designed in a composable way. By building processors as discrete units, it's easier to reason about what each processor does and, by extension, what the <a href="../event-processing-application/">Event Processing Application</a> does. </li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li>TODO: Reference link to the EIP pattern as citation</li>
-<li>TODO: pointers to related patterns?</li>
-<li>TODO: pointers to external material?</li>
+<li><a href="../event-processing/event-processing.md">Event Processing Applications</a> are composed of Event Processors.</li>
+<li>In <a href="https://kafka.apache.org/28/documentation/streams/core-concepts#streams_topology">Kafka Streams</a>, a processor is a node in the processor topology representing a step to transform <a href="../../event/event/">Events</a>.</li>
+<li>Blog post: <a href="https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/">How real-time stream processing works with ksqlDB, Animated</a>.</li>
+<li><a href="https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/">Introduction to Apache Kafka: How Kafka works</a> provides details on the core Kafka concepts like <a href="../../event/event/">Events</a> and topics.</li>
 </ul>
               
             </div>
