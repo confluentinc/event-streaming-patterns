@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Joiner
-  description: A stream of events can be enhanced with lookup data by joining the stream with a table
+  description: A stream of events can be enhanced with lookup data by joining the stream with a table or another stream
 ---
 
 # Event Joiner
@@ -62,4 +62,3 @@ SELECT ratings.movie_id AS ID, title, release_year, rating
 * [Tutorial: How to join a table and a table in ksqlDB](https://kafka-tutorials.confluent.io/join-a-table-to-a-table/ksql.html)
 * [Tutorial: Performing N-way joins in ksqlDB](https://kafka-tutorials.confluent.io/multi-joins/ksql.html)
 * [Joining Collections in the ksqlDB documentation](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/)
-
