@@ -28,6 +28,8 @@ CREATE STREAM my_event_stream
 
 ```
 
+Additionally, Kafka has the notion of event-time vs. processing-time (wallclock) vs. ingestion time, similar to ksqlDB.  Clients like Kafka Streams make it possible to select which variant of time you want to work with in your application.
+
 ## Considerations
 
 When considering which time semantics to use, it comes down to the problem domain.  In most cases, the difference between event-time and ingestion-time should be minimal.  The same could be said for processing time as well.  But there are some business domains where specific event-time is critical.  Consider financial services, for example, where even a few milliseconds can significantly impact business outcomes.  It also depends on your event processing infrastructure.  If, for some reason, there is a significant delay between event capture and delivery to the [Event Streaming Platform](../event-processing/event-processing-application.md), then using event-time would seem to be a better option.
