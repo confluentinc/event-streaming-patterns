@@ -39,7 +39,7 @@ CREATE STREAM clean_readings AS
 With ksqlDB, you can view each section of the command as the construction of a different Event Processor:
 
 * `CREATE STREAM` defines the new output [Event Stream](../event-stream/event-stream.md) that this application will produce [Events](../event/event.md) to.
-* `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and converting it as defined. In this example, raising the case of the `location` field in each input reading.
+* `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and "cleaning" it as defined. In this example, this simply means uppercasing the `location` field in each input reading.
 * `FROM ...` is an source Event Processor that defines the input [Event Stream](../event-stream/event-stream.md) for the application.
 * `EMIT CHANGES` is ksqlDB syntax which defines our query as continuous, and that incremental changes will be produced as the application runs perpetually.
 
