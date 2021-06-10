@@ -19,6 +19,7 @@ As an example, we can use the [Kafka Streams client library](https://docs.conflu
 
 ```
 SpecificAvroSerde<SpecificRecord> inputValueSerde = constructSerde();
+
 builder
   .stream(List.of("inputStreamA", "inputStreamB", "inputStreamC"),
     Consumed.with(Serdes.String(), inputValueSerde))
