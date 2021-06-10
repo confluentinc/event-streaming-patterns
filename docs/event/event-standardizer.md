@@ -26,7 +26,7 @@ builder
   .mapValues((eventKey, eventValue) -> {
     if (eventValue.getClass() == TypeA.class)
       return typeATranslator.normalize(eventValue);
-    else if (v.getClass() == TypeB.class)
+    else if (eventValue.getClass() == TypeB.class)
       return typeBTranslator.normalize(eventValue);
     else if (eventValue.getClass() == TypeC.class)
       return typeCTranslator.normalize(eventValue);
