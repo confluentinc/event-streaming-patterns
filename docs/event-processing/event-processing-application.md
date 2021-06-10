@@ -23,7 +23,7 @@ Apache Kafka® is the most popular [Event Streaming Platform](../event-stream/ev
 ### ksqlDB
 [ksqlDB](https://ksqldb.io) is a purpose-built event streaming database used to build Event Processing Applications. Using ksqlDB's built-in support for [Tables](../table/table.md) and [Streams](../event-stream/event-stream.md), you can build full Event Processing Applications using a familiar SQL syntax.
 
-You can create [Tables](../table/table.md) and [Streams](../event-stream/event-stream.md) with Kafka topics as the storage layer built-in commands:
+You can create [Tables](../table/table.md) and [Streams](../event-stream/event-stream.md) with Kafka topics as the storage layer using built-in commands:
 ```sql
 CREATE TABLE movies (ID INT PRIMARY KEY, title VARCHAR, release_year INT)
     WITH (kafka_topic='movies', partitions=1, value_format='avro');
