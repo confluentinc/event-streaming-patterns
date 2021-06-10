@@ -8,7 +8,7 @@ seo:
 Once data such as financial transactions, tracking information for shipments, IoT sensor measurements, etc. is set in motion as [streams of events](../event-stream/event-stream.md) on an [Event Streaming Platform](../event-stream/event-streaming-platform.md), we want to put it to use and create value from it. How do we do this?
 
 ## Problem
-How do we process [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)? For example, how can I process financial transactions, track shipments, analyze IoT sensors data, or generate continuous intelligence?
+How do we process [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
 ![event-processor](../img/event-processor.png)
