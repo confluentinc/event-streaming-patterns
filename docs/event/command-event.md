@@ -1,7 +1,7 @@
 ---
 seo:
   title: Command Event
-  description: Command Events are a common pattern in evolving event streaming architectures. They may indicate opportunities for further decoupling and separation of responsibilities.
+  description: Command Events are a common pattern in evolving event streaming architectures, where events are used as triggers for further processing. They may indicate opportunities for further decoupling and separation of responsibilities.
 ---
 
 # Command Event
@@ -91,5 +91,5 @@ actually handles payment.
 
 ## References
 
-* See [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/), chapter 5 for further discussion
+* See [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 5: Events: A Basis for Collaboration" for further discussion
 * This pattern is derived from [Command Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
