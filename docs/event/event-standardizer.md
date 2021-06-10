@@ -34,7 +34,7 @@ builder
       // exception or dead letter stream
     }
   })
-  .to("outputStream", Produced.with(Serdes.String(), outputSerdeType));
+  .to("my-standardized-output-stream", Produced.with(Serdes.String(), outputSerdeType));
 ```
 
 ## Considerations
