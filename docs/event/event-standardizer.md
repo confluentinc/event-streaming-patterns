@@ -27,7 +27,7 @@ builder
     if (eventValue.getClass() == TypeA.class)
       return typeATranslator.normalize(eventValue);
     else if (v.getClass() == TypeB.class)
-      return typeBTranslator.normalize(v);
+      return typeBTranslator.normalize(eventValue);
     else if (v.getClass() == TypeC.class)
       return typeCTranslator.normalize(v);
     else {
