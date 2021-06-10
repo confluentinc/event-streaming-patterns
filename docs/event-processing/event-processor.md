@@ -16,7 +16,7 @@ We build an Event Processor, which is a component that reads [Events](../event/e
 
 An important characteristic of an event processor is that it should allow for composition with other event processors. That's because, in practice, we rarely use a single event processor in isolation. Instead, we compose and connect (via [Event Streams](../event-stream/event-stream.md)) one or more event processors inside an [Event Processing Application](event-processing-application.md) that fully implements one particular use case end-to-end, or (e.g., in the case of microservices) that implements a subset of the overall business logic limited to the bounded context of a particular domain. 
 
-An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an [Event Stream](todo: link pattern), enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.
+An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an [Event Stream](../event-stream/event-stream.md), enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.
 
 ## Implementation
 
