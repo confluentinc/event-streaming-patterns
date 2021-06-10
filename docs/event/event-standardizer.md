@@ -37,10 +37,12 @@ builder
 ```
 
 ## Considerations
-When possible, diverging data format should be normalized "at the source". This data governance is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an [Event](../event/event.md) to the [Event Stream](../event-stream/event-stream.md), allows consuming applications to delegate their data format validation logic to the schema validation layer.
+* When possible, diverging data format should be normalized "at the source". This data governance is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an [Event](../event/event.md) to the [Event Stream](../event-stream/event-stream.md), allows consuming applications to delegate their data format validation logic to the schema validation layer.
+* Error handling should be considered in the design of the standardizer. Categories of errors may include serialization failures, unexpected or missing values, and unknown types (as in the example above). [Dead Letter Stream](../event-processing/dead-letter-stream.md) is one pattern commonly used to handle exceptional events in your [Event Processing Application](../event-processing/event-processing-application.md). 
 
 
 ## References
 * See also [Stream Merger](stream-processing/event-stream-merger.md) for unifying related streams _without_ changing their format.
 * This pattern is derived from [Normalizer](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Normalizer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * Kafka Streams [`map` stateless transformation](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#creating-source-streams-from-ak) documentation
+* [Error Handling Patterns for Apache Kafka Applications](https://www.confluent.io/blog/error-handling-patterns-in-kafka/) is a blog post with details on strategies and patterns for error handling in [Event Processing Applications](../event-processing/event-processing-application.md)
