@@ -25,7 +25,7 @@ There are multiple ways to create an [Event Processing Application](../event-pro
 #### ksqlDB
 The streaming database [ksqlDB](https://ksqldb.io) provides a familiar SQL syntax that allows us to create [Event Processing Applications](../event-processing/event-processing-application.md). ksqlDB takes parses SQL commands and constructs and manages the Event Processors we define as part of an [Event Processing Application](../event-processing/event-processing-application.md).
 
-In the following example ksqlDB is reading values into the application from the `readings` [Event Stream](../event-stream/event-stream.md) and "cleaning" the [Event](../event/event.md) values. ksqlDB is publishing the "clean" readings to an [Event Stream](../event-stream/event-stream.md) named `clean_readings`.
+In the following example, we create a ksqlDB query to reading data from the `readings` [Event Stream](../event-stream/event-stream.md) and "cleaning" the [Event](../event/event.md) values. The query publishes the clean readings to a new stream called `clean_readings`. Here, this query acts as an event processing application comprised of multiple event processors that are connected to each other.
 
 ```sql
 CREATE STREAM clean_readings AS
