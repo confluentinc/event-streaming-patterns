@@ -13,18 +13,23 @@ There are several use cases:
 
 2. When there are different versions of the same schema, and the reader chooses which version to apply to a given event.
 
-3. When unstructured data is written into an event stream, and the reader then applies whatever schema it wants.
+3. When unstructured data is written into an [Event Stream](../event-stream/event-stream.md), and the reader then applies whatever schema it wants.
 
 ## Problem
-How do I read events from a stream that may have multiple schemas, with different code paths in the [Event Processor](../event-processing/event-processor.md) to handle each one?
+How can an [Event Processor](../event-processing/event-processor.md) apply a schema on the data it is reading from an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
 ![schema-on-read](../img/schema-on-read.png)
 
 ## Implementation
-Confluent Schema Registry checks that schema changes are compatible with previous versions.
+Each Kafka client applications can decide on how read data, and which version of which schema to apply to every [Event](../events/event.md) that it reads.
+Confluent Schema Registry makes schema management easy, with a centralized schema repository that can store multiple versions of different schemas.
+
+In addition to just storing the schema information, Schema Registry also checks that schema changes are compatible with previous versions.
 In order to have different event types in the same Kafka topic, set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
-Then the consumer application can cast each event to the appropriate type at processing time and follow the appropriate code path:
+Schema Registry will then let schema evolution and compatibility checking to happen within the scope of each event type instead of the topic.
+
+The consumer application can read schema versions assigned to the data type, and in the case where there are different data types in any given stream, the application can cast each event to the appropriate type at processing time and follow the appropriate code path:
 
 ```java
 if (Account.equals(record.getClass()) {
