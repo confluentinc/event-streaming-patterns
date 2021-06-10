@@ -15,7 +15,7 @@ How can we store and hold data in the exact form in which it arrived but read fr
 ## Solution
 ![command-query-responsibility-segregation](../img/command-query-responsibility-segregation.png)
 
-Represent changes to state as [Events](../event/event.md) that describe changes to the state (commands). Subsequently, aggregate those [Events](../event/event.md) into a snapshot of the current state, allowing applications to query for current values.
+Represent changes that happen in the real world as [Events](../event/event.md), an order is shipped, a ride is accepted, etc. and retain these events as the system of record. Subsequently, aggregate those [Events](../event/event.md) into a snapshot that represents the current state, allowing applications to query for current values. So for example, the current balance of your account would be the total of all the payment events that added money to or removed it from your account. The system of record is the stream of payment events. The view you read from would be the account balance. 
 
 ## Implementation
 
