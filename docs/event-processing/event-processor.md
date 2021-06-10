@@ -44,8 +44,7 @@ With ksqlDB, you can view each section of the command as the construction of a d
 * `EMIT CHANGES` is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.
 
 #### Kafka Streams
-
-!! Work in progress...
+The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/table.md) as well as stateful and stateless transformation functions (`map`, `filter`, etc...). These functions act as the Event Processor in the larger [Event Processing Application](../event-processing/event-processing.md) you build with the Kafka Streams library.
 
 ```java
 builder
@@ -55,12 +54,18 @@ builder
   .to("clean");
 ```
 
+In the above example we use the [Kafka Streams Builder](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/StreamsBuilder.html) to construct the stream processing topology. 
+
+* First we create an input stream with the `stream` function. This creates an [Event Stream](../event-stream/event-stream.md) from the designated Kafka topic.
+* Next we transform the [Events](../event/event.md) using the `mapValues` function. This function accepts each [Event](../event/event.md) and returns a new [Event](../event/event.md) with any desired transformations to the values.
+* Finally we write our transformed [Events](../event/event.md) to a destination Kafka topic using the `to` function. This function terminates our stream processing topology.
+
 ## Considerations
 
-* While it could be tempting to build a "multi-purpose" event processor, it's important that processor performs a discrete, idempotent action.  By building processors this way, it's easier to reason about what each processor does and by extension what the [Event Processing Application](../event-processing/event-processing-application.md) does. 
-
+* While it could be tempting to build a "multi-purpose" event processor, it's important that processors are designed in a composable way. By building processors as discrete units, it's easier to reason about what each processor does and, by extension, what the [Event Processing Application](../event-processing/event-processing-application.md) does. 
 
 ## References
 * [Event Processing Applications](../event-processing/event-processing.md) are componsed of Event Processors.
 * In [Kafka Streams](https://kafka.apache.org/28/documentation/streams/core-concepts#streams_topology), a processor is a node in the processor topology representing a step to transform [Events](../event/event.md).
 * Blog post: [How real-time stream processing works with ksqlDB, Animated](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
+* [Introduction to Apache Kafka: How Kafka works](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/) provides details on the core Kafka concepts like [Events](../event/event.md) and topics.
