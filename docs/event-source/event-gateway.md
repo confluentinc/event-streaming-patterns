@@ -17,7 +17,7 @@ common tooling. Data becomes the one true interface.
 In reality though, each team will still have to communicate with the
 [Event Store][event_store] itself. How do we maximize access? How do
 we ensure that every team can use the event store, without insisting
-they choose from a short-list of approved languages?  How do we
+they choose from a shortlist of supported languages?  How do we
 accommodate the team that insists on using Idris<sup>+</sup>?
 
 <i><sup>+</sup>Or Haskell, or Rust, or Erlang, or whatever other
@@ -33,21 +33,19 @@ to the widest-possible range of users?
 
 ![event-gateway](../img/event-gateway.svg)
 
-Provide clients for the languages you can support directly, and then
-provide a universal client that _every_ language can access.
+Provide an event gateway via a standardized, well-supported interface
+that gives access to the widest possible range of users.
 
 ## Implementation
 
-Confluent Cloud provides [client libraries][client_libraries] for 5
-popular languages, with community support for a further 12 (and
-counting). On top of that, universal access is provided by the one
-protocol that [every language][fortran_http] can access: HTTP.
+Confluent Cloud provides a broad set of [REST APIs][rest_apis] that
+allow nearly every language to access the event store using
+HTTP(S). Further, it provides support to produce and consume data,
+formatted as JSON, Protobuf, Avro or even raw base64-encoded bytes,
+for maximum adoption.
 
-The [Confluent REST APIs][rest_apis] provide the broadest-possible
-support for clients to produce and consume data, formatted as JSON,
-Protobuf, Avro or even raw base64-encoded bytes.
-
-As a simple example, we can post JSON-encoded events to a topic called `sales` with:
+As a simple example, we can post JSON-encoded events to a topic called
+`sales` using [curl][curl]:
 
 ```sh
 curl -X POST \
@@ -82,21 +80,13 @@ curl -X POST \
 In a perfect world, every database would have first-class support for
 every language. Realistically some languages will be better
 accommodated than others, but we can still ensure every language has
-access to every important feature.
-
-In practice, this fits well with programmer expectations. Users of
-mainstream languages expect to be well accommodated. But equally,
-users of more niche languages expect to do a little more work to get
-started. As long as the access is possible, logical, and reliable, a
-little extra integration work presents little obstacle to adoption.
+access to every important feature through a standards-based interface.
 
 ## References
 
-* The [Confluent REST APIs][rest_apis] documentation.
+* The [Confluent REST APIs][rest_apis] documentation
 
 [event_store]: ../event-storage/event-store.md
 [rest_apis]: https://docs.confluent.io/platform/current/kafka-rest/index.html
-[client_libraries]: https://docs.confluent.io/platform/current/clients/index.html
-[fortran_http]: https://github.com/interkosmos/fortran-curl/blob/master/examples/http/http.f90
 [curl]: https://curl.se/
 
