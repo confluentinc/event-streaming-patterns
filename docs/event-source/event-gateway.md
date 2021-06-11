@@ -38,11 +38,10 @@ that gives access to the widest possible range of users.
 
 ## Implementation
 
-Confluent Cloud provides a broad set of [REST APIs][rest_apis] that
-allow nearly every language to access the event store using
-HTTP(S). Further, it provides support to produce and consume data,
-formatted as JSON, Protobuf, Avro or even raw base64-encoded bytes,
-for maximum adoption.
+Confluent provides a broad set of [REST APIs][rest_apis] that allow any
+language or CLI to access the event store using HTTP(S). Further, it provides
+support to produce and consume Kafka data, formatted as JSON, Protobuf, Avro or
+even raw base64-encoded bytes.
 
 As a simple example, we can post JSON-encoded events to a topic called
 `sales` using [curl][curl]:
@@ -77,10 +76,11 @@ curl -X POST \
 
 ## Considerations
 
-In a perfect world, every database would have first-class support for
-every language. Realistically some languages will be better
-accommodated than others, but we can still ensure every language has
-access to every important feature through a standards-based interface.
+In a perfect world, every Event Streaming Platform (and every relational
+database) would have first-class support for every language. Realistically some
+languages will be better accommodated than others, but we can still ensure
+every language has access to every important feature through a standards-based
+interface.
 
 ## References
 
