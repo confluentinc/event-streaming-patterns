@@ -31,7 +31,7 @@ CREATE STREAM ratings (MOVIE_ID INT KEY, rating DOUBLE)
     WITH (kafka_topic='ratings', partitions=1, value_format='avro');
 ```
 
-Writing [Events](../event/event.md) is supported using `INSERT`:
+As one would expect, we can add new [Events](../event/event.md) with `INSERT`:
 ```sql
 INSERT INTO movies (id, title, release_year) VALUES (294, 'Die Hard', 1998);
 INSERT INTO ratings (movie_id, rating) VALUES (294, 8.2);
