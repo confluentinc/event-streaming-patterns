@@ -21,7 +21,7 @@ For example, an application can read a stream of customer payments from an [Even
 Apache Kafka® is the most popular [Event Streaming Platform](../event-stream/event-streaming-platform.md). There are several options for building Event Processing Applications when using Kafka, and we'll show two here.
 
 ### ksqlDB
-[ksqlDB](https://ksqldb.io) is a purpose-built event streaming database used to build Event Processing Applications. Using ksqlDB's built-in support for [Tables](../table/table.md) and [Streams](../event-stream/event-stream.md), you can build full Event Processing Applications using a familiar SQL syntax.
+[ksqlDB](https://ksqldb.io) is a streaming database with which we can build Event Processing Applications using SQL syntax. It has first-class support for [Streams](../event-stream/event-stream.md) and [Tables](../table/table.md).
 
 You can create [Tables](../table/table.md) and [Streams](../event-stream/event-stream.md) with Kafka topics as the storage layer using built-in commands:
 ```sql
