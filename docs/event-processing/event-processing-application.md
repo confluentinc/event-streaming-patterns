@@ -75,5 +75,5 @@ return builder.build();
 
 ## References
 * The [Event Streaming Platform](../event-stream/event-streaming-platform.md) pattern provides a higher-level overview of how Event Processing Applications are utilized across the streaming platform.
-* The [joining streams and tables in ksqlDB tutorial](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html) provides a step by step example of event processing using `SQL`.
+* The tutorial [Joining Streams and Tables in ksqlDB](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html) provides a step-by-step example of event processing using SQL.
 * [How to sum a stream of events](https://kafka-tutorials.confluent.io/create-stateful-aggregation-sum/ksql.html) is a ksqlDB tutorial for applying an aggregate function over an [Event Stream](../event-stream/event-stream.md). 
