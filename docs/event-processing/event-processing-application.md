@@ -48,26 +48,17 @@ CREATE STREAM rated_movies
 ```
 
 ### Kafka Streams
+
 With the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka, we implement an event processing application in Java, Scala, or other JVM languages. A Kafka Streams example similar to the ksqlDB one above is:
+
 ```java
-Stream<String, Movie> movieStream = builder
-  .stream(movieTopic)
-  .map((key, movie) -> new KeyValue<>(movie.getId(), movie));
-
-movieStream.to(rekeyedMovieTopic);
-
-KTable<String, Movie> movies = builder.table(rekeyedMovieTopic);
-
-KStream<String, Rating> ratings = builder
-  .stream(ratingTopic)
-  .map((key, rating) -> new KeyValue<>(rating.getId(), rating));
-
-KStream<String, RatedMovie> ratedMovie = ratings.join(movies, new MovieRatingJoiner());
-
-ratedMovie.to(ratedMoviesTopic);
-
-return builder.build();
+KStream<Integer, Rating> ratings = builder.table(<blabla>);
+KTable<Integer, Movie> movies = builder.stream(<blabla>);
+MovieRatingJoiner joiner = new MovieRatingJoiner();
+KStream <Integer, EnrichedRating> enrichedRatings = ratings.join(movies, joiner);
 ```
+
+See the tutorial [How ot join a stream and lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html) for a full example using Kafka Streams.
 
 ## Considerations
 * When building an Event Processing Application, it's recommended to confine the application to one problem domain.  While it's possible to use any number of event processors in the application, they should be closely related in most cases (similar to how one would design a microservice).
