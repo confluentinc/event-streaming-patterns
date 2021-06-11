@@ -37,7 +37,7 @@ INSERT INTO movies (id, title, release_year) VALUES (294, 'Die Hard', 1998);
 INSERT INTO ratings (movie_id, rating) VALUES (294, 8.2);
 ```
 
-Stream processing is accomplished using `SQL`. The command `CREATE STREAM .. AS SELECT ..` in the following example joins the `movies` table and the `ratings` stream to create a new stream of [Events](../event/event.md) that represent the `ratings` enriched with data from the `movies` table:
+We can also perform stream processing with ksqlDB's SQL. The command `CREATE STREAM .. AS SELECT ..` in the following example continuously joins the `ratings` stream and the `movies` table  to create a new stream of enriched ratings.
 ```sql
 CREATE STREAM rated_movies
     WITH (kafka_topic='rated_movies',
