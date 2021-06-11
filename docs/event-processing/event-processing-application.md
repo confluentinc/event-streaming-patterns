@@ -5,7 +5,7 @@ seo:
 ---
 
 # Event Processing Application
-To create, read, process, and/or query the data in an [Event Streaming Platform](../event-stream/event-streaming-platform.md), developers typically implement Event Processing Applications (e.g., in the form of microservices).
+Once data such as financial transactions, tracking information for shipments, IoT sensor measurements, etc. is set in motion as streams of events on an Event Streaming Platform, we want to put it to use and create value from it. [Event Processors](../event-processing/event-processor.md) are the building blocks for achieving this, but they solve only a specific part or step of a use case.
 
 ## Problem
 How can we build an application for data in motion that creates, reads, processes, and/or queries [Event Streams](../event-stream/event-stream.md)?
