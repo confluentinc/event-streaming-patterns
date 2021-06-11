@@ -36,7 +36,7 @@ This approach is fine and it works, but it may be a missed opportunity.
 Consider what happens when we need more actions. Suppose that `[BUY]`
 should also trigger an email and a text notification to the customer.
 Should the warehouse software finish its work and then write
-`SendEmail` and `SendText` commands to two new topics? Or should all
+`SendEmail` and `SendText` commands to two new topics? Or should
 these two new events be written by the same process that wrote `DispatchProduct`?  
 Then a month later, when we need our sales figures, should we count
 the number of products dispatched or the number of emails sent?
@@ -55,7 +55,7 @@ growing pains<sup>2</sup>.
 The real solution is to realize our "Command Event" is actually two
 concepts woven together: "What happened?" and "Who cares?" 
 
-By teasing those concepts apart, we clean up our architecture. We
+By teasing those concepts apart, we can clean up our architecture. We
 allow one process to focus on recording the facts of what happened,
 while other processes decide for themselves if they care.  
 When the `[BUY]` click happens, we should just write an `Order`
@@ -71,14 +71,6 @@ Seeing systems this way requires a slight shift of perspective - a new
 way of modeling our processes - and opens up the opportunity for
 systems that collaborate more easily while actually taking on less
 individual responsibility.
-
-_<sup>1</sup> This is very similar to the Actor model. Actors have an
-inbox; we write messages to that inbox and trust they'll be handled in
-due course._
-
-_<sup>2</sup> It's at that point that that someone in the team will
-usually say, "We were better off just calling the function directly."
-And if we stopped there, they'd have a fair point._
 
 ## Implementation
 
@@ -104,10 +96,20 @@ revisit old design choices.
 We've mostly focused on a single step with multiple interested
 listeners. Many processes require a series of steps, using [Event
 Collaboration](../compositional-patterns/event-collaboration.md). (For
-example, you may be wondering when our buy/dispatch example above
+example, you may be wondering how our buy/dispatch example above
 actually handles payment.)
 
 ## References
 
 * See [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 5: Events: A Basis for Collaboration" for further discussion
 * This pattern is derived from [Command Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+
+## Footnotes
+
+_<sup>1</sup> This is very similar to the Actor model. Actors have an
+inbox; we write messages to that inbox and trust they'll be handled in
+due course._
+
+_<sup>2</sup> It's at that point that that someone in the team will
+say, "We were better off just calling the function directly."  And if
+we stopped there, they'd have a fair point._
