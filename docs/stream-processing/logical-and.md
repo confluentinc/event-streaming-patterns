@@ -144,4 +144,4 @@ See also:
 * [Joining Streams and Tables](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/) in the ksqlDB documentation.
 * The [Pipeline](../compositional-patterns/pipeline.md) pattern, for considering events in series (rather than in parallel).
 * The [Projection Table](../table/projection-table.md) pattern, for a memory-efficient way of considering a stream over a potentially-infinite time-period.
-* [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/), chapter 14 for further discussion.
+* [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 14: Kafka Streams and KSQL" for further discussion.
