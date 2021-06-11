@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event-Time processing
+  description: Event-Time processing allows an event streaming application to process events with the timestamp when the event originally occurred. 
+---
+
 # Event-Time Processing
 
 Consistent time semantics are of particular importance in stream processing. Many operations in an [Event Processor](../event-processing/event-processor.md) are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: 
