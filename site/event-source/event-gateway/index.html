@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Pipeline - Event Streaming Patterns</title>
+  <title>Event Gateway - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Pipeline";
-    var mkdocs_page_input_path = "compositional-patterns/pipeline.md";
+    var mkdocs_page_name = "Event Gateway";
+    var mkdocs_page_input_path = "event-source/event-gateway.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,26 +52,14 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Compositional patterns</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../command-query-responsibility-segregation/">Command Query Responsibility Segregation (CQRS)</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/command-query-responsibility-segregation/">Command Query Responsibility Segregation (CQRS)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-collaboration/">Event Collaboration</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/event-collaboration/">Event Collaboration</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../geo-replication/">Geo Replication</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/geo-replication/">Geo Replication</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Pipeline</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../compositional-patterns/pipeline/">Pipeline</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
@@ -118,18 +106,30 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-gateway/">Event Gateway</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Gateway</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -191,11 +191,11 @@
     
       
         
-          <li>Compositional patterns &raquo;</li>
+          <li>Event source &raquo;</li>
         
       
     
-    <li>Pipeline</li>
+    <li>Event Gateway</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -206,56 +206,72 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="pipeline">Pipeline</h1>
-<p>A single <a href="../../event-stream/event-stream/">Event Stream</a> or <a href="../../table/state-table/">Table</a> can be used by multiple <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, and its <a href="../../event/event/">Events</a> may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.</p>
+                <h1 id="event-gateway">Event Gateway</h1>
+<p>One of the key benefits of adopting an
+<a href="../../event/event/">Event</a>-first architecture is to foster
+collaboration. Our aim is to ensure that Team A can produce data, Team
+B can process it and Team C can report on it, with only one thing
+coupling the teams together - the data itself.  Teams shouldn't have
+to agree on shared libraries, synchronized release schedules, or
+common tooling. Data becomes the one true interface.</p>
+<p>In reality though, each team will still have to communicate with the
+<a href="../../event-storage/event-store/">Event Store</a> itself. How do we maximize access? How do
+we ensure that every team can use the event store, without insisting
+they choose from a shortlist of supported languages?  How do we
+accommodate the team that insists on using Idris<sup>+</sup>?</p>
+<p><i><sup>+</sup>Or Haskell, or Rust, or Erlang, or whatever other
+language we didn't plan for...</i></p>
 <h2 id="problem">Problem</h2>
-<p>How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?</p>
+<p>How does an an <a href="../event-stream/event-streaming-platform.md">Event Streaming
+Platform</a> provide access
+to the widest-possible range of users?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="pipeline" src="../../img/pipeline.png" /></p>
-<p>We can compose <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../../table/state-table/">Tables</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> via an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> to a create a pipeline—also called a topology—of <a href="../../event-processing/event-processor/">Event Processors</a>, which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, may include <a href="../../event-source/event-source-connector/">Event Source Connectors</a> and <a href="../../event-sink/event-sink-connector/">Event Sink Connectors</a>, which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.</p>
-<p>Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.</p>
+<p><img alt="event-gateway" src="../../img/event-gateway.svg" /></p>
+<p>Provide an event gateway via a standardized, well-supported interface
+that gives access to the widest possible range of users.</p>
 <h2 id="implementation">Implementation</h2>
-<p>As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.</p>
-<pre><code class="sql">CREATE STREAM orders ( 
-  customer_id INTEGER, items ARRAY&lt;STRUCT&lt;name VARCHAR, price DOUBLE&gt;&gt;
-) WITH (
-  KAFKA_TOPIC = 'orders', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
-);
+<p>Confluent provides a broad set of <a href="https://docs.confluent.io/platform/current/kafka-rest/index.html">REST APIs</a> that allow any
+language or CLI to access the event store using HTTP(S). Further, it provides
+support to produce and consume Kafka data, formatted as JSON, Protobuf, Avro or
+even raw base64-encoded bytes.</p>
+<p>As a simple example, we can post JSON-encoded events to a topic called
+<code>sales</code> using <a href="https://curl.se/">curl</a>:</p>
+<pre><code class="sh">curl -X POST \
+  -H &quot;Content-Type: application/vnd.kafka.json.v2+json&quot; \
+  --data '{&quot;records&quot;:[{&quot;key&quot;:&quot;alice&quot;,&quot;value&quot;:{&quot;tickets&quot;:5}},{&quot;key&quot;:&quot;bob&quot;,&quot;value&quot;:{&quot;tickets&quot;:10}}]}' \
+  http://localhost:8082/topics/sales
 </code></pre>
 
-<p>We'll also create a (continuously updated) customers table that will contain the latest profile information about each customer, such as their current home address.</p>
-<pre><code class="sql">CREATE TABLE customers (
-  customer_id INTEGER PRIMARY KEY, name VARCHAR, ADDRESS VARCHAR
-) WITH (
-  KAFKA_TOPIC = 'customers', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
-);
-</code></pre>
-
-<p>Next, we create a new stream by joining the orders stream with our customer table:</p>
-<pre><code class="sql">CREATE STREAM orders_enriched WITH 
-(KAFKA_TOPIC='orders_enriched', PARTITIONS=1, VALUE_FORMAT='AVRO')
-AS SELECT o.customer_id AS cust_id, o.items, c.name, c.address
-FROM orders o LEFT JOIN customers c 
-ON o.customer_id = c.customer_id
-EMIT CHANGES;
-</code></pre>
-
-<p>Next, we create a stream, where we add the order total to each order by aggregating the price of the individual items in the order:</p>
-<pre><code class="sql">CREATE STREAM orders_with_totals
-WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
-AS SELECT cust_id, items, name, address,  
-  REDUCE(TRANSFORM(items, i=&gt; i-&gt;price ), 0e0, (i,x) =&gt; (i + x)) AS total 
-FROM orders_enriched
-EMIT CHANGES;
+<pre><code class="json">{
+  &quot;offsets&quot;: [
+    {
+      &quot;partition&quot;: 0,
+      &quot;offset&quot;: 0,
+      &quot;error_code&quot;: null,
+      &quot;error&quot;: null
+    },
+    {
+      &quot;partition&quot;: 0,
+      &quot;offset&quot;: 1,
+      &quot;error_code&quot;: null,
+      &quot;error&quot;: null
+    }
+  ],
+  &quot;key_schema_id&quot;: null,
+  &quot;value_schema_id&quot;: null
+}
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<ul>
-<li>The same event stream or table can participate in multiple pipelines. Because streams and tables are stored durably, applications have a lot of flexibility how and when they process the respective data, and they can do so independently from each other.</li>
-<li>The various processing stages in a pipeline create their own derived streams/tables (such as the <code>orders_enriched</code> stream in the ksqlDB example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.</li>
-</ul>
+<p>In a perfect world, every Event Streaming Platform (and every relational
+database) would have first-class support for every language. Realistically some
+languages will be better accommodated than others, but we can still ensure
+every language has access to every important feature through a standards-based
+interface.</p>
 <h2 id="references">References</h2>
-<p>This pattern was influenced by <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html">Pipes and Filters</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf. However, it is much more powerful and flexible because it is using <a href="../../event-stream/event-stream/">Event Streams</a> as the pipes.</p>
+<ul>
+<li>The <a href="https://docs.confluent.io/platform/current/kafka-rest/index.html">Confluent REST APIs</a> documentation</li>
+</ul>
               
             </div>
           </div>
@@ -263,10 +279,10 @@ EMIT CHANGES;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../event/correlation-identifier/" class="btn btn-neutral float-right" title="Correlation Identifier">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-source-connector/" class="btn btn-neutral float-right" title="Event Source Connector">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../geo-replication/" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../database-write-through/" class="btn btn-neutral" title="Database Write Through"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -292,10 +308,10 @@ EMIT CHANGES;
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../geo-replication/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../database-write-through/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../event/correlation-identifier/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-source-connector/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
