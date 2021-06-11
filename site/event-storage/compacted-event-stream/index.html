@@ -150,6 +150,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-joiner/">Event Joiner</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-stream-merger/">Event Stream Merger</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/logical-and/">Logical AND</a>
@@ -162,6 +164,8 @@
                 <p class="caption"><span class="caption-text">Table</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../table/projection-table/">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../table/state-table/">State Table</a>
                     </li>
                 </ul>
       </div>
@@ -239,7 +243,7 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
 <p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../../event-stream/event-stream/">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../../event-stream/event-stream/">Event Stream</a> is the primary concern, use an <a href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Compacted Event Streams are highly related to the <a href="../table/state-table.md">State Table</a> pattern.</li>
+<li>Compacted Event Streams are highly related to the <a href="../../table/state-table/">State Table</a> pattern.</li>
 <li>Compacted Event Streams work a bit like simple <a href="http://www.benstopford.com/2015/02/14/log-structured-merge-trees/">Log Structured Merge Trees</a>.</li>
 <li><a href="https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy">Cleanup policy configuration</a> of Kafka topics.</li>
 </ul>

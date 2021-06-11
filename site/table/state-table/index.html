@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Wallclock-Time Processing - Event Streaming Patterns</title>
+  <title>State Table - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Wallclock-Time Processing";
-    var mkdocs_page_input_path = "stream-processing/wallclock-time.md";
+    var mkdocs_page_name = "State Table";
+    var mkdocs_page_input_path = "table/state-table.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -135,35 +135,35 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-joiner/">Event Joiner</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-stream-merger/">Event Stream Merger</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/logical-and/">Logical AND</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wait-for-n-events/">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/wallclock-time/">Wallclock-Time Processing</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Table</span></p>
                 <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../event-grouper/">Event Grouper</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../projection-table/">Projection Table</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-joiner/">Event Joiner</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream-merger/">Event Stream Merger</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../logical-and/">Logical AND</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../wait-for-n-events/">Wait for N Events</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Wallclock-Time Processing</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">State Table</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution-pattern">Solution Pattern</a>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#example-implementation">Example Implementation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Table</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../table/projection-table/">Projection Table</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../table/state-table/">State Table</a>
                     </li>
                 </ul>
       </div>
@@ -187,11 +187,11 @@
     
       
         
-          <li>Stream processing &raquo;</li>
+          <li>Table &raquo;</li>
         
       
     
-    <li>Wallclock-Time Processing</li>
+    <li>State Table</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -202,26 +202,30 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="wallclock-time-processing">Wallclock-Time Processing</h1>
+                <h1 id="state-table">State Table</h1>
+<p><a href="../../event-processing/event-processor/">Event Processors</a> often need to perform stateful operations, such as an aggregation (e.g., counting the number of events). The state is similar to a table in a relational database and is mutable, i.e., it allows for read and write operations. It is essential that the event processor has an efficient and fault-tolerant mechanism for state management, i.e, recording and updating the state while processing input events, to ensure correctness of computations and preventing data loss as well as data duplication.</p>
 <h2 id="problem">Problem</h2>
-<p>Consistent time semantics are important in stream processing, especially for time-based aggregations when calculating over a window of time.
-Depending on the use case, the application may use the time when the event occurs (either system <code>wallclock</code> time or embedded time in the payload) or when the event is ingested.</p>
-<h2 id="solution-pattern">Solution Pattern</h2>
-<p><img alt="wallclock-time" src="../../img/wallclock-time.png" /></p>
-<p>Every record in ksqlDB has a system-column called <code>ROWTIME</code> that tracks the timestamp of the event.
-It could be either when the event occurs (producer system time) or when the event is ingested (broker system time), depending on the <code>message.timestamp.type</code> configuration value.
-ksqlDB also allows streams to use the timestamp from a field in the record payload.</p>
-<h2 id="example-implementation">Example Implementation</h2>
-<p>By default, ksqlDB <code>ROWTIME</code> is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the event payload itself, as shown below.</p>
-<pre><code>CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
-    WITH (KAFKA_TOPIC='deviceEvents',
-          VALUE_FORMAT='avro',
-          TIMESTAMP='eventTime');
+<p>How can an Event Processor manage (mutable) state, similar to a table in a relational database?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="state-table" src="../../img/state-table.png" /></p>
+<p>We need to implement a mutable state table that allows the Event Processor to record and update state. For example, to count the number of payments per customer, the state table provides a mapping between the customer (e.g., a customer ID) and the current count of payments.</p>
+<p>The state's storage backend can vary by implementation: options include local state stores (e.g., RocksDB), remote state stores (e.g., AWS DynamoDB or a NoSQL database), or in-memory caches. Local state stores are usually recommended as they do not incur additional latency for network roundtrips, which improves the end-to-end performance of the Event Processor.</p>
+<p>Irrespective of backend choice, the state table should be fault-tolerant to ensure strong processing guarantees, such as exactly-once semantics. Fault-tolerance can be achieved, for example, by attaching an <a href="../../event-source/event-source-connector/">Event Source Connector</a> to the state table to perform change data capture (CDC), thus allowing the Event Processor to continuously backup state changes into an <a href="../../event-stream/event-stream/">Event Stream</a> and, whenever needed, restore the state table in the case of failure or similar scenarios.here is no network latency to contend with.  Also, an approach for restoring the state after a crash destroying the local store occurs.</p>
+<h2 id="implementation">Implementation</h2>
+<p>ksqlDB provides state tables out of the box with its <code>TABLE</code> data collection. Its implementation uses local, fault-tolerant state stores that are continuously backed up into ksqlDB's distributed storage layer (Kafka) so the data is durable.</p>
+<p>For example, we can maintain a stateful count of all sales with by aggregating the <code>movie_ticket_sales</code> stream into a <code>movie_tickets_sold</code> table:</p>
+<pre><code class="sql">CREATE TABLE movie_tickets_sold AS
+    SELECT title,
+           COUNT(ticket_total_value) AS tickets_sold
+    FROM movie_ticket_sales
+    GROUP BY title
+    EMIT CHANGES;
 </code></pre>
 
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://kafka-tutorials.confluent.io/time-concepts/ksql.html">Kafka Tutorial</a>: Event-time semantics</li>
+<li><a href="https://www.confluent.io/blog/ksqldb-state-stores-in-recovery/">State store recovery in ksqlDB</a> explains the fault-tolerance of ksqlDB's state management in more detail.</li>
+<li>Related patterns: <a href="../projection-table/">Projection Table</a></li>
 </ul>
               
             </div>
@@ -230,10 +234,8 @@ ksqlDB also allows streams to use the timestamp from a field in the record paylo
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../table/projection-table/" class="btn btn-neutral float-right" title="Projection Table">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../wait-for-n-events/" class="btn btn-neutral" title="Wait for N Events"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../projection-table/" class="btn btn-neutral" title="Projection Table"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -259,10 +261,8 @@ ksqlDB also allows streams to use the timestamp from a field in the record paylo
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../wait-for-n-events/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../projection-table/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../../table/projection-table/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

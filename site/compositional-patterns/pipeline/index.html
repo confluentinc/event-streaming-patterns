@@ -150,6 +150,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-joiner/">Event Joiner</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-stream-merger/">Event Stream Merger</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/logical-and/">Logical AND</a>
@@ -162,6 +164,8 @@
                 <p class="caption"><span class="caption-text">Table</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../table/projection-table/">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../table/state-table/">State Table</a>
                     </li>
                 </ul>
       </div>
@@ -201,12 +205,12 @@
             <div class="section">
               
                 <h1 id="pipeline">Pipeline</h1>
-<p>A single <a href="../../event-stream/event-stream/">Event Stream</a> or <a href="../table/state-table.md">Table</a> can be used by multiple <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, and its <a href="../../event/event/">Events</a> may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.</p>
+<p>A single <a href="../../event-stream/event-stream/">Event Stream</a> or <a href="../../table/state-table/">Table</a> can be used by multiple <a href="../../event-processing/event-processing-application/">Event Processing Applications</a>, and its <a href="../../event/event/">Events</a> may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.</p>
 <h2 id="problem">Problem</h2>
 <p>How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="pipeline" src="../../img/pipeline.png" /></p>
-<p>We can compose <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../table/state-table.md">Tables</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> via an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> to a create a pipeline—also called a topology—of <a href="../../event-processing/event-processor/">Event Processors</a>, which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, may include <a href="../../event-source/event-source-connector/">Event Source Connectors</a> and <a href="../../event-sink/event-sink-connector/">Event Sink Connectors</a>, which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.</p>
+<p>We can compose <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../../table/state-table/">Tables</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> via an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> to a create a pipeline—also called a topology—of <a href="../../event-processing/event-processor/">Event Processors</a>, which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, may include <a href="../../event-source/event-source-connector/">Event Source Connectors</a> and <a href="../../event-sink/event-sink-connector/">Event Sink Connectors</a>, which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.</p>
 <p>Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.</p>
 <h2 id="implementation">Implementation</h2>
 <p>As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.</p>

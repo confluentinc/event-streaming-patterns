@@ -150,6 +150,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-grouper/">Event Grouper</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-joiner/">Event Joiner</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/event-stream-merger/">Event Stream Merger</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../stream-processing/logical-and/">Logical AND</a>
@@ -162,6 +164,8 @@
                 <p class="caption"><span class="caption-text">Table</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../table/projection-table/">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../table/state-table/">State Table</a>
                     </li>
                 </ul>
       </div>
@@ -231,6 +235,14 @@ KStream&lt;String, Integer&gt; splitStream = myStream.flatMap(
   );
 </code></pre>
 
+<p>Or as my grandmother used to say:</p>
+<blockquote>
+<p><em>There once was a man from Manhattan,</em><br />
+<em>With Events that he needed to flatten,</em><br />
+<em>He cooked up a scheme,</em><br />
+<em>To call <code>flapMap</code> on <code>stream</code>,</em><br />
+<em>Then he wrote it all down as a pattern.</em></p>
+</blockquote>
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>If child events need to be routed to different streams, see <a href="../event-router/">Event Router</a> for routing events to different locations.</li>
