@@ -48,7 +48,7 @@ CREATE STREAM rated_movies
 ```
 
 ### Kafka Streams
-With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/), you can use Java code to construct a stream processing topology to create the application. A similar Kafka Streams example to the ksqlDB one above may look similar to: 
+With the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka, we implement an event processing application in Java, Scala, or other JVM languages. A Kafka Streams example similar to the ksqlDB one above is:
 ```java
 Stream<String, Movie> movieStream = builder
   .stream(movieTopic)
