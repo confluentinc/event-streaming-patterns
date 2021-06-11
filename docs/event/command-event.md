@@ -94,7 +94,7 @@ revisit old design choices.
 ## Considerations
 
 We've mostly focused on a single step with multiple interested
-listeners. Many processes require a series of steps, using [Event
+[Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md). Many processes require a series of steps, using [Event
 Collaboration](../compositional-patterns/event-collaboration.md). (For
 example, you may be wondering how our buy/dispatch example above
 actually handles payment.)
@@ -110,6 +110,6 @@ _<sup>1</sup> This is very similar to the Actor model. Actors have an
 inbox; we write messages to that inbox and trust they'll be handled in
 due course._
 
-_<sup>2</sup> It's at that point that that someone in the team will
+_<sup>2</sup> It's at that point that someone in the team will
 say, "We were better off just calling the function directly."  And if
 we stopped there, they'd have a fair point._
