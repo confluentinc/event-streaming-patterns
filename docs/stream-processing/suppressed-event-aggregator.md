@@ -16,7 +16,7 @@ Ideally, the aggregator is able to handle out-of-order or "late" events, which i
 
 
 ## Implementation
-For Kafka, the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) provides a `suppress` operator in its DSL, which we can apply to windowed aggregations.
+For Apache Kafka®, the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) provides a `suppress` operator in its DSL, which we can apply to windowed aggregations.
 In the following example we compute hourly aggregations on a stream of orders, using a grace period of five minutes to wait for any orders arriving with a slight delay. The `suppress` operator ensures that there's only a single result event for each hourly window.
 
 ```java
@@ -39,6 +39,5 @@ KStream<String, OrderEvent> orderStream = builder.stream(...);
 
 ## References
 * The tutorial [Emit a final result from a time window with Kafka Streams](https://kafka-tutorials.confluent.io/window-final-result/kstreams.html) provides more details about the `suppress` operator.
-
 
 
