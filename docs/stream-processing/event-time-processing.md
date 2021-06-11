@@ -21,18 +21,35 @@ How do we implement event-time based processing of events?
 
 ![event-time-processing](../img/event-time-processing.png)
 
-For event-time processing, the [Event Source](../event-source/event-source.md) must include a timestamp in the event (e.g., in a data field or header metadata) that denotes the time at which the event was created by the source. Then, on the consuming side in an [Event Processing Application](../event-processing/event-processing-application.md), we need to implement a [Timestamp Assigner](timestamp-assigner.md) that will extract this timestamp from the event, which allows the application process events based on their original timeline.
+For event-time processing, the [Event Source](../event-source/event-source.md) must include a timestamp in the event (e.g., in a data field or header metadata) that denotes the time at which the event was created by the source. Then, on the consuming side in an [Event Processing Application](../event-processing/event-processing-application.md), we need to extract this timestamp from the event, which allows the application process events based on their original timeline.
 
 ## Implementation
+
+#### ksqlDB
 
 In the streaming database ksqlDB, every event/record has a system-column named `ROWTIME` representing the timestamp for the event, which defaults to the time at which the event was originally created by its [Event Source](../event-source/event-source.md). For example, when we create a ksqlDB `STREAM` or `TABLE` from an existing Kafka topic, then the timestamp embedded in a Kafka message is extracted and assigned to the event in ksqlDB. (cf. [CreateTime of a Kafka `ProducerRecord`](https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html) and the [Kafka message format](http://kafka.apache.org/protocol.html)).
 
 Sometimes, this default behavior of ksqlDB is not what we want. Maybe the events have a custom data field containing their actual timestamps (e.g., some legacy data that has been around for a while was ingested into Kafka only recently, so we can't trust the `CreateTime` information in the Kafka messages because they are much newer than the original timestamps). To use a timestamp in the event payload itself, we can add a `WITH(TIMESTAMP='some-field')` clause when creating a stream or table, which instructs ksqlDB to then get the timestamp from the specified field in the record:
 
-```
+```sql
 CREATE STREAM my_event_stream
     WITH (kafka_topic='events',
           timestamp='eventTime');
+
+```
+
+#### Kafka Streams
+
+Kafka Streams provides the `TimestampExtractor` interface for extracting the timestamp from events.  The default implementation retrieves the timestamp set by Kafka.
+But for those cases where you need the timestamp from the event payload you can create your own `TimestampExtractor` implementation:
+
+```java
+class OrderTimestampExtractor implements TimestampExtractor {
+@Override
+public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
+    ElectronicOrder order = (ElectronicOrder)record.value();
+    return order.getTime();
+}
 
 ```
 
