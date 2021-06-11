@@ -1,3 +1,4 @@
+---
 seo:
   title: Event Processing Application
   description: An Event Processing Application is composed of one or more connected Event Processors, which form a processing topology to continuously process for data in event streams and tables.
