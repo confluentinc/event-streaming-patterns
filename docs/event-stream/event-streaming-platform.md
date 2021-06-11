@@ -1,7 +1,7 @@
 ---
 seo:
-	title: Event Streaming Platform
-	description: Event Streaing Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
+  title: Event Streaming Platform
+  description: Event Streaing Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
 ---
 
 # Event Streaming Platform
