@@ -1,3 +1,8 @@
+---
+seo:
+  title: Event Aggregator
+  description: Aggregate multiple related events, or the values from those events, into a single new event.
+---
 # Event Aggregator
 
 Combing multiple events into a single encompassing event—e.g., to compute totals or averages, or to re-aggregate events split by an [Event Splitter](../event-processing/event-splitter.md)—is a common task in event streaming and streaming analytics.
