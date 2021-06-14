@@ -115,5 +115,5 @@ discount email for every order _after_ their first 10.
 
 ## References
 
-* The [Event Grouping](../stream-processing/event-grouping.md) pattern, for a more general consideration of `GROUP BY` operations.
+* The [Event Grouping](../stream-processing/event-grouper.md) pattern, for a more general consideration of `GROUP BY` operations.
 * [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 15: Building Streaming Services" for further discussion.

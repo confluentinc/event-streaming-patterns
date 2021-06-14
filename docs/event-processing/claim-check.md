@@ -45,4 +45,4 @@ Also, if a [Compacted Event Stream](../event-storage/compacted-event-stream.md) 
 
 ## References
 * This pattern is similar in idea to [Claim Check](https://www.enterpriseintegrationpatterns.com/patterns/messaging/StoreInLibrary.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-* An alternative approach to handling large messages is [Event Chunking](../event-processing/chunking.md)
+* An alternative approach to handling large messages is [Event Chunking](../event-processing/event-chunking.md)

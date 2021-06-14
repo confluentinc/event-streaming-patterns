@@ -7,7 +7,7 @@ How can we build a distributed workflow in a way that allows components to evolv
 ## Solution
 ![event-collaboration](../img/event-collaboration.png)
 
-Event Collaboration allows services and applications to collaborate around a single business workflow on top of an [Event Streaming Platform](../event-stream/event-streaming-platform.md). Service components publish [Events](../event/events.md) to [Event Streams](../event-stream/event-streams.md) as notification of the completion of a step in the workflow. The Events serve the additional purpose of carrying state information about the workflow which is used by downstream components in the next steps of the workflow. The process repeats the until the workflow is complete.
+Event Collaboration allows services and applications to collaborate around a single business workflow on top of an [Event Streaming Platform](../event-stream/event-streaming-platform.md). Service components publish [Events](../event/event.md) to [Event Streams](../event-stream/event-stream.md) as notification of the completion of a step in the workflow. The Events serve the additional purpose of carrying state information about the workflow which is used by downstream components in the next steps of the workflow. The process repeats the until the workflow is complete.
 
 ## Considerations
 * In Event Collaboration, the logic for the choreography of the progression of the business workflow is decentralized and spread across many components. This contrasts with traditional orchestration design where the logic is isolated in a dedicated "controller" service that coordinates the actions and reactions of the workflow components.
