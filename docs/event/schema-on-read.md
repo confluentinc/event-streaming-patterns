@@ -25,7 +25,7 @@ To make schema management easier, the design can use a centralized repository th
 
 ## Implementation
 With Confluent Schema Registry, all the schemas are managed in a centralized repository.
-In addition to just storing the schema information, Schema Registry also checks that schema changes are compatible with previous versions.
+In addition to just storing the schema information, Schema Registry can also be configured to check and/or enforce that schema changes are compatible with previous versions.
 
 For example, if the use case warrants writing different event types into a single stream, with Apache Kafka you could set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
 Schema Registry will then let schema evolution and compatibility checking to happen within the scope of each event type instead of the topic.
