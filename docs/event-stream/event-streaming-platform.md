@@ -24,6 +24,7 @@ Apache Kafka® is the most popular Event Streaming Platform, designed to address
 ### Fundamentals
 Data in Kafka is exchanged as [Events](../event/event.md), which represent facts about something that has occurred. Examples of [Events](../event/event.md) include orders, payments, activities, or measurements. In Kafka, [Events](../event/event.md) are sometimes also referred to as _records_ or _messages_, and they contain data and metadata describing the [Event](../event/event.md).
 
+<!-- TODO: The youtube link below needs to be to the DCI 101 course-->
 [Events](../event/event.md) are written to, stored, and read from [Event Streams](../event-stream/event-stream.md). In Kafka, these streams are called _topics_. Topics have names and generally contain "related" records of a particular use case, such as customer payments. Topics are modeled as durable, distributed, append only logs in the [Event Store](../event-storage/event-store.md). See this [Apache Kafka 101 video](https://www.youtube.com/watch?v=kj9JH3ZdsBQ) for more details on Kafka topics.
 
 Applications wishing to write [Events](../event/event.md) to topics are called [Producers](https://docs.confluent.io/platform/current/clients/producer.html). Producers may come in many forms and can be generalized in the pattern [Event Source](../event-source/event-source.md). Reading [Events](../event/event.md) is performed by [Consumers](https://docs.confluent.io/platform/current/clients/consumer.html), which can be generalized into [Event Sinks](../event-sink/event-sink.md). Consumers typically operate in a coordinated fashion to increase scale and fault tolerance. [Event Processing Applications](../event-processing/event-processing-application.md) act as both event sources and event sinks. 
@@ -52,4 +53,5 @@ The [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.htm
 ## References
 * This pattern is derived from [Message Bus](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBus.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * [Confluent Cloud](https://www.confluent.io/confluent-cloud/) is a cloud-native service for Apache Kafka®
+<!-- TODO: the following link needs to be to the new DCI 101 course-->
 * [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?"
