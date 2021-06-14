@@ -13,27 +13,30 @@ How can multiple individual, but related events be combined to produce a new eve
 
 ## Solution A
 
-If we need to produce a single event containing an aggregation of values in simliar events within a window of time, we can use a windowed aggregator to collect the values from those events and emit a single event at the close of the window.
+If we need to produce a single event containing an aggregation of values from events within a window of time (e.g., to compute 5-minute averages), we can use a windowed aggregator to collect and process the values from those events, and then emit a single event at the close of the window. (See also the [Suppressed Event Aggregator](../stream-processing/suppressed-event-aggregator.md) pattern.)
 
 ## Implementation A
 ![event-aggregator](../img/event-aggregator_a.png)
 
-We can use ksqlDB and Apache Kafka® to perform this aggregation.
+For example, we can use the streaming database [ksqlDB](https://ksqldb.io/) and Apache Kafka® to perform this aggregation.
 
-We'll start by creating a stream based on an existing Kafka topic:
+We'll start by creating a stream in ksqlDB called `orders`, based on an existing Kafka topic of the same name:
 ```sql
-  CREATE STREAM orders (orderid INT, itemid INT, total_units DOUBLE)
-  WITH (KAFKA_TOPIC='orders', VALUE_FORMAT='AVRO');
-```
+  CREATE STREAM orders (order_id INT, item_id INT, total_units DOUBLE)
+    WITH (KAFKA_TOPIC='orders', VALUE_FORMAT='AVRO');
+```java
 
 Then we'll create a table containing the aggregated events from that stream:
 ```sql
   CREATE TABLE item_stats AS 
-  SELECT itemid, COUNT(*) AS total_orders, AVG(orderunits) AS avg_units
-  FROM agg_orders WINDOW TUMBLING (SIZE 1 HOUR)
-  GROUP BY itemid 
-  EMIT CHANGES;  
+    SELECT item_id, COUNT(*) AS total_orders, AVG(orderunits) AS avg_units
+    FROM orders
+    WINDOW TUMBLING (SIZE 1 HOUR)
+    GROUP BY item_id 
+    EMIT CHANGES;  
 ```
+
+This table will be continuously updated whenever new events arrive in the `orders` stream.
 
 ## Solution B
 
@@ -69,7 +72,11 @@ while (keepConsuming) {
 ```
 
 ## Considerations
-In event streaming, a key technical challenge is that it is generally not possible to tell whether input is "complete" at a given point in time. For this reason, stream processing technologies such as ksqlDB and Kafka Streams employ techniques such as grace periods (see [`GRACE PERIOD`](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/) clause in ksqlDB) to define cutoff points after which an [Event Processor](TODO: add link) will discard any late-arriving input events from its processing.
+* In event streaming, a key technical challenge is that—with few exceptions—it is generally not possible to tell whether the input data is "complete" at a given point in time. For this reason, stream processing technologies such as the streaming database [ksqlDB](https://ksqldb.io/) and the Kafka Streams client library of Apache Kafka employ techniques such as _slack time_<sup>1</sup> and _grace periods_ (see [`GRACE PERIOD`](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/) clause in ksqlDB) or watermarks to define cutoff points after which an [Event Processor](../event-processing/event-processor.md) will discard any late-arriving input events from its processing. See the [Suppressed Event Aggregator](../stream-processing/suppressed-event-aggregator.md) pattern for additional information.
 
 ## References
 This pattern was derived from [Aggregator](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html) pattern in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+
+## Footnotes
+
+<sup>1</sup>Slack time: [Beyond Analytics: The Evolution of Stream Processing Systems (SIGMOD 2020)](https://dl.acm.org/doi/abs/10.1145/3318464.3383131), [Aurora: a new model and architecture for data stream management (VLDB Journal 2003)](https://dl.acm.org/doi/10.1007/s00778-003-0095-z)
