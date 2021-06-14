@@ -24,12 +24,12 @@ We'll start by creating a stream in ksqlDB called `orders`, based on an existing
 ```sql
   CREATE STREAM orders (order_id INT, item_id INT, total_units DOUBLE)
     WITH (KAFKA_TOPIC='orders', VALUE_FORMAT='AVRO');
-```java
+```
 
 Then we'll create a table containing the aggregated events from that stream:
 ```sql
   CREATE TABLE item_stats AS 
-    SELECT item_id, COUNT(*) AS total_orders, AVG(orderunits) AS avg_units
+    SELECT item_id, COUNT(*) AS total_orders, AVG(total_units) AS avg_units
     FROM orders
     WINDOW TUMBLING (SIZE 1 HOUR)
     GROUP BY item_id 
