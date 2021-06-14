@@ -15,7 +15,7 @@ How can multiple individual, but related events be combined to produce a new eve
 
 If we need to produce a single event containing an aggregation of values in simliar events within a window of time, we can use a windowed aggregator to collect the values from those events and emit a single event at the close of the window.
 
-## Example Implementation A
+## Implementation A
 ![event-aggregator](../img/event-aggregator_a.png)
 
 We can use ksqlDB and Apache Kafka® to perform this aggregation.
@@ -39,7 +39,7 @@ Then we'll create a table containing the aggregated events from that stream:
 
 Sometimes we may need to aggregate whole events, either within a time window, or based on a completion condition, into a set that will be bundled into a new event. We can do this with an aggregator that will collect and hold the events until the completion condition or timeout occurs.
 
-## Example Implementation
+## Implementation
 ![event-aggregator](../img/event-aggregator_b.png)
 
 In this example, we'll build an aggregator in which we will use a value in the event, perhaps a [Correlation Identifer](../docs/event/correlation-identifier.md) to find related events and add them to an aggregate if one exists.  If no aggregate exists, we create one and add the event. Then we check a completion condition and if true, we will produce a new event with that aggregate. The completion condition will vary by use case, but in our example it will be an expected total included in each event.
