@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Logical AND - Event Streaming Patterns</title>
+  <title>Event-Time Processing - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Logical AND";
-    var mkdocs_page_input_path = "stream-processing/logical-and.md";
+    var mkdocs_page_name = "Event-Time Processing";
+    var mkdocs_page_input_path = "stream-processing/event-time-processing.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -144,21 +144,27 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event-stream-merger/">Event Stream Merger</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-time-processing/">Event-Time Processing</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Logical AND</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event-Time Processing</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ksqldb">ksqlDB</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kafka-streams">Kafka Streams</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
     </li>
     </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../logical-and/">Logical AND</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../suppressed-event-aggregator/">Suppressed Event Aggregator</a>
                     </li>
@@ -199,7 +205,7 @@
         
       
     
-    <li>Logical AND</li>
+    <li>Event-Time Processing</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -210,122 +216,51 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="logical-and">Logical AND</h1>
-<p><a href="../../event-stream/event-stream/">Event Streams</a> become more interesting when
-they're considered together. It's often the case that when two separate
-<a href="../../event/event/">Events</a> occur, it triggers a new fact that we want to
-capture.</p>
-<p>A product can only be dispatched when there's an order <em>and</em> a
-successful payment. If someone places a bet <em>and</em> their horse wins,
-then we transfer money to them.</p>
-<p>How do we combine information from several different event streams and use them
-to make new events?</p>
+                <h1 id="event-time-processing">Event-Time Processing</h1>
+<p>Consistent time semantics are of particular importance in stream processing. Many operations in an <a href="../../event-processing/event-processor/">Event Processor</a> are dependent on time, such as joins, aggregations when computed over a window of time (e.g., 5-minute averages), and the handling out-of-order and "late" data. In many systems, developers have the choice between different variants of time for an event: </p>
+<ol>
+<li>Event-time, which captures the time at which an event was originally created by its <a href="../../event-source/event-source/">Event Source</a>.</li>
+<li>Ingestion-time, which captures the time an event was received on the event stream in an <a href="../../event-processing/event-processing-application/">Event Streaming Platform</a>.</li>
+<li>Wallclock-time or processing-time, which is the time at which a downstream <a href="../../event-processing/event-processor/">Event Processor</a> happens to process the event (which can be milliseconds, hours, months, etc. after event-time) .
+Depending on the use case, developers need to pick one variant over the others.</li>
+</ol>
 <h2 id="problem">Problem</h2>
-<p>How can an application trigger processing when two (or more) related
-events arrive on different streams?</p>
+<p>How do we implement event-time based processing of events?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="logical AND" src="../../img/logical-and.svg" /></p>
-<p>Multiple streams of events can be joined together, similar to joins in
-a relational database. We watch the streams and remember their most
-recent events (e.g., via an in-memory cache, a local or network
-storage device) for a certain amount of time. Whenever a new event
-arrives, we consider it alongside the other recently-captured events
-and look for matches. If we find one, we emit a new event.</p>
-<p>For stream-stream joins, it's important to think about what we
-consider to be a "recent" event. We can't join brand new events with
-arbitrarily-old ones - to join potentially-infinite streams would
-require potentially-infinite memory. Instead we decide on a retention
-period that counts as "new enough", and only hold on to events in that
-period. This is often just fine - a payment will usually happen soon
-after a order is placed. If it doesn't go through within the hour, we
-can reasonably expect a different process to chase the user for
-updated credit card details.</p>
+<p><img alt="event-time-processing" src="../../img/event-time-processing.png" /></p>
+<p>For event-time processing, the <a href="../../event-source/event-source/">Event Source</a> must include a timestamp in the event (e.g., in a data field or header metadata) that denotes the time at which the event was created by the source. Then, on the consuming side in an <a href="../../event-processing/event-processing-application/">Event Processing Application</a>, we need to extract this timestamp from the event, which allows the application process events based on their original timeline.</p>
 <h2 id="implementation">Implementation</h2>
-<p>As an example, imagine a bank that captures <code>logins</code> to their website,
-and <code>withdrawals</code> from an ATM. The fraud department might be keen to
-hear if the same <code>user_id</code> logs in in one country, and makes a
-withdrawal in a different country, within the same day. (This would
-not necessarily be fraud, but it's certainly suspicious!)</p>
-<p>To implement this example, we'll use ksqlDB. We start with two event streams:</p>
-<pre><code class="sql">-- For simplicity's sake, we'll assume that IP addresses 
--- have already been converted into country codes.
+<h3 id="ksqldb">ksqlDB</h3>
+<p>In the streaming database ksqlDB, every event/record has a system-column named <code>ROWTIME</code> representing the timestamp for the event, which defaults to the time at which the event was originally created by its <a href="../../event-source/event-source/">Event Source</a>. For example, when we create a ksqlDB <code>STREAM</code> or <code>TABLE</code> from an existing Kafka topic, then the timestamp embedded in a Kafka message is extracted and assigned to the event in ksqlDB. (cf. <a href="https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html">CreateTime of a Kafka <code>ProducerRecord</code></a> and the <a href="http://kafka.apache.org/protocol.html">Kafka message format</a>).</p>
+<p>Sometimes, this default behavior of ksqlDB is not what we want. Maybe the events have a custom data field containing their actual timestamps (e.g., some legacy data that has been around for a while was ingested into Kafka only recently, so we can't trust the <code>CreateTime</code> information in the Kafka messages because they are much newer than the original timestamps). To use a timestamp in the event payload itself, we can add a <code>WITH(TIMESTAMP='some-field')</code> clause when creating a stream or table, which instructs ksqlDB to get the timestamp from the specified field in the record:</p>
+<pre><code class="sql">CREATE STREAM my_event_stream
+    WITH (kafka_topic='events',
+          timestamp='eventTime');
 
-CREATE OR REPLACE STREAM logins (
-  user_id BIGINT,
-  country_code VARCHAR
-) WITH (
-  KAFKA_TOPIC = 'logins_topic',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 3
-);
-
-CREATE OR REPLACE STREAM withdrawals (
-  user_id BIGINT,
-  country_code VARCHAR,
-  amount DECIMAL(10,2),
-  success BOOLEAN
-) WITH (
-  KAFKA_TOPIC = 'withdrawals_topic',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 3
-);
 </code></pre>
 
-<p>We can now join those two streams. Events with the same <code>user_id</code> are
-considered equal, and we'll specifically look at events that happen
-<code>WITHIN 1 DAY</code>:</p>
-<pre><code class="sql">CREATE STREAM possible_frauds
-  AS
-    SELECT l.user_id, l.country_code, w.country_code, w.amount, w.success
-    FROM logins l JOIN withdrawals w
-      WITHIN 1 DAY
-      ON l.user_id = w.user_id
-    WHERE l.country_code != w.country_code
-    EMIT CHANGES;
+<h3 id="kafka-streams">Kafka Streams</h3>
+<p>The Kafka Streams client library of Apache Kafka provides the <code>TimestampExtractor</code> interface for extracting the timestamp from events.  The default implementation retrieves the timestamp from the Kafka message (see discussion above) as set by the producer of the message. Normally, this setup results in event-time processing, which is what we want.</p>
+<p>But for those cases where you need the timestamp from the event payload, you can create your own <code>TimestampExtractor</code> implementation:</p>
+<pre><code class="java">class OrderTimestampExtractor implements TimestampExtractor {
+@Override
+public long extract(ConsumerRecord&lt;Object, Object&gt; record, long partitionTime) {
+    ElectronicOrder order = (ElectronicOrder)record.value();
+    return order.getTime();
+}
+
 </code></pre>
 
-<p>Querying that stream in one terminal:</p>
-<pre><code class="sql">SELECT *
-FROM possible_frauds
-EMIT CHANGES;
-</code></pre>
-
-<p>...and inserting some data in another:</p>
-<pre><code class="sql">INSERT INTO logins (user_id, country_code) VALUES (1, 'gb');
-INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
-INSERT INTO logins (user_id, country_code) VALUES (3, 'be');
-INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
-
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'gb', 10.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'au', 250.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'us', 50.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (3, 'be', 20.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'fr', 20.00, true);
-</code></pre>
-
-<p>Results in a stream of possible fraud cases that need further investigation:</p>
-<pre><code>+-----------+----------------+----------------+--------+---------+
-|L_USER_ID  |L_COUNTRY_CODE  |W_COUNTRY_CODE  |AMOUNT  |SUCCESS  |
-+-----------+----------------+----------------+--------+---------+
-|1          |gb              |au              |250.00  |true     |
-|2          |us              |fr              |20.00   |true     |
-|2          |us              |fr              |20.00   |true     |
-</code></pre>
-
+<p>Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using Kafka Streams or ksqlDB themselves.</p>
+<p>Additionally, Kafka has the notion of event-time vs. processing-time (wallclock) vs. ingestion time, similar to ksqlDB.  Clients like Kafka Streams make it possible to select which variant of time you want to work with in your application.</p>
 <h2 id="considerations">Considerations</h2>
-<p>Joining event streams is fairly simple. The big consideration is how
-large a retention period you need, and so the resources your join will
-use. Planning that tradeoff requires careful consideration of the
-specific problem you're solving.</p>
-<p>For large retention periods, consider joining a stream to a
-<a href="../../table/projection-table/">Projection Table</a> instead.</p>
+<p>When considering which time semantics to use, it comes down to the problem domain. In most cases, event-time processing is the recommended option. For example, when re-processing historical event streams (such as for A/B testing, for training machine learning models), only event-time yields correct processing results. If we use processing-time (wall-clock time) to process the last four weeks of events, then an <a href="../../event-processing/event-processor/">Event Processor</a> will falsely believe that these four weeks of data were created just now in a matter of minutes, which totally breaks the original timeline and temporal distribution of the data and thus leads to incorrect processing results.</p>
+<p>The difference of event-time to ingestion-time is typically less pronounced than to processing-time as described above, but ingestion-time still suffers from the same conceptual discrepancy between when an event actually occurred in the real world (event-time) vs. when the event was received and stored in the <a href="../../event-processing/event-processing-application/">Event Streaming Platform</a> (ingestion-time). If, for some reason, there is a significant delay between event capture and delivery to the <a href="../../event-processing/event-processing-application/">Event Streaming Platform</a>, then event-time is the better option.</p>
+<p>One reason not to use event-time is when we cannot trust the <a href="../../event-source/event-source/">Event Source</a> to provide us with reliable data, which includes the embedded timestamps of events. In this case, ingestion-time can become the preferred option, if fixing the root cause (unreliable event sources) is not a feasible option.</p>
 <h2 id="references">References</h2>
-<p>See also: </p>
 <ul>
-<li><a href="https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/">Joining Streams and Tables</a> in the ksqlDB documentation.</li>
-<li>The <a href="../../compositional-patterns/pipeline/">Pipeline</a> pattern, for considering events in series (rather than in parallel).</li>
-<li>The <a href="../../table/projection-table/">Projection Table</a> pattern, for a memory-efficient way of considering a stream over a potentially-infinite time-period.</li>
-<li><a href="https://www.confluent.io/designing-event-driven-systems/">Designing Event Driven Systems</a> - "Chapter 14: Kafka Streams and KSQL" for further discussion.</li>
+<li><a href="https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#timestamp-assignment">Timestamp assignment in ksqlDB</a></li>
+<li>See the tutorial <a href="https://kafka-tutorials.confluent.io/time-concepts/ksql.html">Event-time semantics in ksqlDB</a> for further details on time concepts</li>
 </ul>
               
             </div>
@@ -334,10 +269,10 @@ specific problem you're solving.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../suppressed-event-aggregator/" class="btn btn-neutral float-right" title="Suppressed Event Aggregator">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../logical-and/" class="btn btn-neutral float-right" title="Logical AND">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-time-processing/" class="btn btn-neutral" title="Event-Time Processing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-stream-merger/" class="btn btn-neutral" title="Event Stream Merger"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -363,10 +298,10 @@ specific problem you're solving.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-time-processing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-stream-merger/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../suppressed-event-aggregator/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../logical-and/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
