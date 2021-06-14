@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Streaming Platform
-  description: Event Streaing Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
+  description: Event Streming Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
 ---
 
 # Event Streaming Platform
@@ -26,7 +26,9 @@ Data in Kafka is exchanged as [Events](../event/event.md), which represent facts
 
 [Events](../event/event.md) are written to, stored, and read from [Event Streams](../event-stream/event-stream.md). In Kafka, these streams are called _topics_. Topics have names and generally contain "related" records of a particular use case, such as customer payments. Topics are modeled as durable, distributed, append only logs in the [Event Store](../event-storage/event-store.md). See this [Apache Kafka 101 video](https://www.youtube.com/watch?v=kj9JH3ZdsBQ) for more details on Kafka topics.
 
-Applications wishing to write [Events](../event/event.md) to topics are called [Producers](https://docs.confluent.io/platform/current/clients/producer.html). Producers may come in many forms and can be generalized in the pattern [Event Source](../event-source/event-source.md). Reading [Events](../event/event.md) is performed by [Consumers](https://docs.confluent.io/platform/current/clients/consumer.html), which can be generalized into [Event Sinks](../event-sink/event-sink.md). Consumers typically operate in a coordinated fashion to increase scale and fault tolerance. [Event Processing Applications](../event-processing/event-processing-application.md) act as both event sources and event sinks.
+Applications wishing to write [Events](../event/event.md) to topics are called [Producers](https://docs.confluent.io/platform/current/clients/producer.html). Producers may come in many forms and can be generalized in the pattern [Event Source](../event-source/event-source.md). Reading [Events](../event/event.md) is performed by [Consumers](https://docs.confluent.io/platform/current/clients/consumer.html), which can be generalized into [Event Sinks](../event-sink/event-sink.md). Consumers typically operate in a coordinated fashion to increase scale and fault tolerance. [Event Processing Applications](../event-processing/event-processing-application.md) act as both event sources and event sinks. 
+
+Applications which use the basic producing and consuming described above are referred to as "clients". These client applications can be authored in a variety of programming languages, including: [Java](https://docs.confluent.io/clients-kafka-java/current/), [Go](https://docs.confluent.io/clients-confluent-kafka-go/current/), [C/C++](https://docs.confluent.io/clients-librdkafka/current/), [.NET](https://docs.confluent.io/clients-confluent-kafka-dotnet/current/), and [Python](https://docs.confluent.io/clients-confluent-kafka-python/current/).
 
 ### Stream Processing
 [Event Processing Applications](../event-processing/event-processing-application.md) can be built using a variety of techniques on top of Kafka. 
