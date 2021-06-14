@@ -50,5 +50,5 @@ The less restrictive is `RecordNameStrategy`, which sets the namespace to the re
 The more restrictive is `TopicRecordNameStrategy`, which sets the namespace to both, the record and the topic the event is  written to.
 
 ## References
-* [Blog Should You Put Several Event Types in the Same Kafka Topic?"](https://www.confluent.io/blog/put-several-event-types-kafka-topic/)
+* Confluent blog [Should You Put Several Event Types in the Same Kafka Topic?](https://www.confluent.io/blog/put-several-event-types-kafka-topic/)
 * [Confluent Schema Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
