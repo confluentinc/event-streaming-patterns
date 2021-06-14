@@ -8,6 +8,21 @@ How do I represent a fact about something that has happened?
 ![event](../img/event.png)
 An event represents an immutable fact about something that happened. Examples of Events might be: orders, payments, activities, or measurements. Events are produced to, stored in, and consumed from an [Event Stream](../event-stream/event-stream.md). An Event typically contains at least one or more data fields that describe the fact, as well as a timestamp that denotes when this Event was created by its [Event Source](../event-source/event-source.md). The Event may also contain various metadata about itself, such as its source of origin (e.g., the application or cloud services that created the event) and storage-level information (e.g., its position in the event stream).
 
+## Implementation
+With Apache Kafka®, Events are referred to as _records_. Records are modeled as a key / value pair and with a timestamp and optional metadata (called headers). The _value_ of the record usually contains the representation of an application domain object or some form of raw message value, like the output of a sensor or other metric reading. The record _key_ is useful for a few reasons, but critically they are used by Kafka to determine how the data is partitioned within a topic. _Keys_ are often best thought of as a categorization of the Event, like identity of a particular user or connected device. Headers are a place for record metadata which can help describe the Event data itself, and are themselves modeled as a _map_ of keys and values.
+
+Record keys, values, and headers are opaque data types, meaning that, Kafka does not define a type interface for them and views them only as arrays of bytes. Client applications are responsible for the serialization and deserialization of the data within the record keys, values, and headers.
+
+When using the standard Java client library, Events are created using the `ProducerRecord` type and sent to Kafka using the `KafkaProducer`. In this example we have set the Key and Value types as strings and added a header:
+
+```java
+ProducerRecord<String, String> newEvent = new ProducerRecord<>(userId.toString(), event.toString());
+
+producerRecord.headers().add("client-id", clientId.getBytes(StandardCharsets.UTF_8)); 
+
+producer.send(producerRecord);
+```
+
 ## Considerations
 * To ensure that Events from an Event Source can be read correctly by an [Event Processor](../event-processing/event-processor.md), they are often created in reference to an Event schema. Event Schemas are commonly defined in [Avro](https://avro.apache.org/docs/current/spec.html), [Protobuf](https://developers.google.com/protocol-buffers), or [JSON schema](https://json-schema.org/).
 
@@ -17,3 +32,5 @@ An event represents an immutable fact about something that happened. Examples of
 
 ## References
 * This pattern is derived in part from [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html), [Event Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html), and [Document Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+<!-- TODO: the following link needs to be to the new DCI 101 course-->
+* [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?" including information on core concepts like Events
