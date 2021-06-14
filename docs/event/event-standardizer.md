@@ -43,7 +43,7 @@ builder
 
 
 ## References
-* See also [Stream Merger](stream-processing/event-stream-merger.md) for unifying related streams _without_ changing their format.
+* See also [Stream Merger](../stream-processing/event-stream-merger.md) for unifying related streams _without_ changing their format.
 * This pattern is derived from [Normalizer](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Normalizer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * Kafka Streams [`map` stateless transformation](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#creating-source-streams-from-ak) documentation
 * [Error Handling Patterns for Apache Kafka Applications](https://www.confluent.io/blog/error-handling-patterns-in-kafka/) is a blog post with details on strategies and patterns for error handling in [Event Processing Applications](../event-processing/event-processing-application.md)

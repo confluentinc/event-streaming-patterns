@@ -2,7 +2,7 @@
 Applications that connect to the [Event Streaming Platform](../event-stream/event-streaming-platform.md) need to do so in a consistent and reliable way. 
 
 ## Problem
-How can my application connect to an Event Streaming Platform to send and receive [Events](../event/events.md)?
+How can my application connect to an Event Streaming Platform to send and receive [Events](../event/event.md)?
 
 ## Solution
 ![event-streaming-api](../img/event-streaming-api.png)

@@ -5,10 +5,10 @@ seo:
 ---
 
 # Event Splitter
-One [Event](../event/events.md) may actually contain multiple child events within it, each of which may need to be processed in different ways.
+One [Event](../event/event.md) may actually contain multiple child events within it, each of which may need to be processed in different ways.
 
 ## Problem
-How can an [Event](../event/events.md) be split into multiple events?
+How can an [Event](../event/event.md) be split into multiple events?
 
 ## Solution
 ![event-splitter](../img/event-splitter.png)
