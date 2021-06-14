@@ -1,11 +1,11 @@
 ---
 seo:
   title: Event Streaming Platform
-  description: Event Streming Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
+  description: Event Streaming Platforms, like Apache Kafka®, allow businesses to design processes and applications around Event Streams.
 ---
 
 # Event Streaming Platform
-Companies are rarely built on a single datastore and a single application to interact with it. Typically a company may have hundreds or thousands of applications, databases, data warehouses, or other data stores. The company's data is spread across these resources and the interconnection between them is immensely complicated. In larger enterprises, multiple lines of business can complicate the situation even further. Modern software architectures, like microservices and SaaS applications, are also adding complexity as engineers are tasked with weaving the entire infastructure together cohesively.
+Companies are rarely built on a single datastore and a single application to interact with it. Typically a company may have hundreds or thousands of applications, databases, data warehouses, or other data stores. The company's data is spread across these resources and the interconnection between them is immensely complicated. In larger enterprises, multiple lines of business can complicate the situation even further. Modern software architectures, like microservices and SaaS applications, are also adding complexity as engineers are tasked with weaving the entire infrastructure together cohesively.
 
 Furthermore, companies can no longer survive without reacting to [Events](../event/event.md) within their business in real-time. Customers and business partners expect immediate reactions and rich interactive applications. Today, data is in motion, and engineering teams needs to model applications to process business requirements as a stream of [Events](../event/event.md), not as data at rest, sitting idly in a traditional data store.
 
@@ -42,14 +42,14 @@ The [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.htm
 
 ### Data Integrations 
 
-The [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) framework of Apache Kafka allows you to scalably and reliably integrate cloud services and data systems external to Kafka into the Event Streaming Platform. Here, data of these systems is set in motion by continuously importing and/or exporting this data as [Event Streams](../event-stream/event-stream.md). Onboarding existing data systems onto Kafka is often the first step in the journey of adopting an Event Streaming Platform.
+The [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html) framework of Apache Kafka allows you to scalably and reliably integrate cloud services and data systems external to Kafka into the Event Streaming Platform. Here, data of these systems is set in motion by continuously importing and/or exporting this data as [Event Streams](../event-stream/event-stream.md). On-boarding existing data systems onto Kafka is often the first step in the journey of adopting an Event Streaming Platform.
 
 [Source Connectors](../event-source/event-source-connector.md) pull data into Kafka topics from sources such as traditional databases, cloud object storage services, or SaaS products like Salesforce. Advanced integrations are possible with patterns such as [Database Write Through](../event-source/database-write-through.md) and [Database Write Aside](../event-source/database-write-aside.md).
 
 [Sink Connectors](../event-sink/event-sink-connector.md) are the complementary pattern to [Source Connectors](../event-source/event-source.md). While source connectors bring data into the Event Streaming Platform continuously, sinks continuously deliver data from Kafka streams to external cloud services and systems. Common destination systems include cloud data warehouse services, function-based serverless compute services, relational databases, Elasticsearch, and cloud object storage services.
 
 ## Considerations 
-Event Streaming Platforms are distributed computing systems made up of a diverse set of components. Building and managing the platform will require expertise across multiple computing disciplines in addition to dedicated hardware resources. In addition to concerns related to building and managing, properly scaling up an Event Streaming Platform that grows with your business requires careful coordination between engineering groups and business functions. Organizations can choose to self manage an Event Streaming Platform or opt for a managed Kafka service, like [Confluent Cloud](https://www.confluent.io/confluent-cloud/). Managed services free your organziation from the burden of infastructure management leaving more resources for building core business value.
+Event Streaming Platforms are distributed computing systems made up of a diverse set of components. Building and managing the platform will require expertise across multiple computing disciplines in addition to dedicated hardware resources. In addition to concerns related to building and managing, properly scaling up an Event Streaming Platform that grows with your business requires careful coordination between engineering groups and business functions. Organizations can choose to self manage an Event Streaming Platform or opt for a managed Kafka service, like [Confluent Cloud](https://www.confluent.io/confluent-cloud/). Managed services free your organization from the burden of infrastructure management leaving more resources for building core business value.
 
 ## References
 * This pattern is derived from [Message Bus](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBus.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
