@@ -25,11 +25,11 @@ For event-time processing, the [Event Source](../event-source/event-source.md) m
 
 ## Implementation
 
-#### ksqlDB
+### ksqlDB
 
 In the streaming database ksqlDB, every event/record has a system-column named `ROWTIME` representing the timestamp for the event, which defaults to the time at which the event was originally created by its [Event Source](../event-source/event-source.md). For example, when we create a ksqlDB `STREAM` or `TABLE` from an existing Kafka topic, then the timestamp embedded in a Kafka message is extracted and assigned to the event in ksqlDB. (cf. [CreateTime of a Kafka `ProducerRecord`](https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html) and the [Kafka message format](http://kafka.apache.org/protocol.html)).
 
-Sometimes, this default behavior of ksqlDB is not what we want. Maybe the events have a custom data field containing their actual timestamps (e.g., some legacy data that has been around for a while was ingested into Kafka only recently, so we can't trust the `CreateTime` information in the Kafka messages because they are much newer than the original timestamps). To use a timestamp in the event payload itself, we can add a `WITH(TIMESTAMP='some-field')` clause when creating a stream or table, which instructs ksqlDB to then get the timestamp from the specified field in the record:
+Sometimes, this default behavior of ksqlDB is not what we want. Maybe the events have a custom data field containing their actual timestamps (e.g., some legacy data that has been around for a while was ingested into Kafka only recently, so we can't trust the `CreateTime` information in the Kafka messages because they are much newer than the original timestamps). To use a timestamp in the event payload itself, we can add a `WITH(TIMESTAMP='some-field')` clause when creating a stream or table, which instructs ksqlDB to get the timestamp from the specified field in the record:
 
 ```sql
 CREATE STREAM my_event_stream
@@ -38,10 +38,11 @@ CREATE STREAM my_event_stream
 
 ```
 
-#### Kafka Streams
+### Kafka Streams
 
-Kafka Streams provides the `TimestampExtractor` interface for extracting the timestamp from events.  The default implementation retrieves the timestamp set by Kafka.
-But for those cases where you need the timestamp from the event payload you can create your own `TimestampExtractor` implementation:
+The Kafka Streams client library of Apache Kafka provides the `TimestampExtractor` interface for extracting the timestamp from events.  The default implementation retrieves the timestamp from the Kafka message (see discussion above) as set by the producer of the message. Normally, this setup results in event-time processing, which is what we want.
+
+But for those cases where you need the timestamp from the event payload, you can create your own `TimestampExtractor` implementation:
 
 ```java
 class OrderTimestampExtractor implements TimestampExtractor {
@@ -53,7 +54,7 @@ public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
 
 ```
 
-Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using ksqlDB themselves.
+Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using Kafka Streams or ksqlDB themselves.
 
 Additionally, Kafka has the notion of event-time vs. processing-time (wallclock) vs. ingestion time, similar to ksqlDB.  Clients like Kafka Streams make it possible to select which variant of time you want to work with in your application.
 
