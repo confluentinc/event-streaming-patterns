@@ -20,12 +20,14 @@ How can an [Event Processor](../event-processing/event-processor.md) apply a sch
 ## Solution
 ![schema-on-read](../img/schema-on-read.png)
 
-## Implementation
-Each Kafka client applications can decide on how read data, and which version of which schema to apply to every [Event](../events/event.md) that it reads.
-Confluent Schema Registry makes schema management easy, with a centralized schema repository that can store multiple versions of different schemas.
+The Schema-on-Read approach approach enables each reader to decide on how to read data, and which version of which schema to apply to every [Event](../events/event.md) that it reads.
+To make schema management easier, the design can use a centralized repository that can store multiple versions of different schemas, and then the client applications then choose which schema to apply to events at runtime.
 
+## Implementation
+With Confluent Schema Registry, all the schemas are managed in a centralized repository.
 In addition to just storing the schema information, Schema Registry also checks that schema changes are compatible with previous versions.
-In order to have different event types in the same Kafka topic, set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
+
+For example, if the use case warrants writing different event types into a single stream, with Apache Kafka you could set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
 Schema Registry will then let schema evolution and compatibility checking to happen within the scope of each event type instead of the topic.
 
 The consumer application can read schema versions assigned to the data type, and in the case where there are different data types in any given stream, the application can cast each event to the appropriate type at processing time and follow the appropriate code path:
