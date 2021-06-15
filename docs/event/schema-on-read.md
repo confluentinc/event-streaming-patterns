@@ -29,7 +29,8 @@ In addition to just storing the schema information, Schema Registry can also be 
 
 For example, if a business started with a schema definition for an event that has 2 fields, but then the business needs evolved to now warrant an optional 3rd field, then that schema evolves with it.
 Schema Registry will ensure that the new schema is compatible with the old schema.
-In this particular case, for backward compatibility, the 3rd field `status` can be defined with a default value which will be used for the missing field when deserializing the data encoded with the old schema 
+In this particular case, for backward compatibility, the 3rd field `status` can be defined with a default value which will be used for the missing field when deserializing the data encoded with the old schema.
+This ensures that all events in a given stream follow [Schema Compatibility](../event-stream/schema-compatibility.md) rules, and the applications can continue to process those events.
 
 ```
 {
@@ -45,7 +46,7 @@ In this particular case, for backward compatibility, the 3rd field `status` can 
 ```
 
 In another example, if the use case warrants writing different event types into a single stream, with Apache Kafka you could set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
-Schema Registry will then let schema evolution and compatibility checking to happen within the scope of each event type instead of the topic.
+Schema Registry will then let [Schema Evolution](../event-stream/schema-evolution.md) and [Schema Compatibility](../event-stream/schema-compatibility.md) checking to happen within the scope of each event type instead of the topic.
 
 The consumer application can read schema versions assigned to the data type, and in the case where there are different data types in any given stream, the application can cast each event to the appropriate type at processing time and follow the appropriate code path:
 
