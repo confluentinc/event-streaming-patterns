@@ -29,7 +29,7 @@ Using Avro as the serialization format, if the original schema is
  "type": "record",
  "name": "Event",
  "fields": [
-     {"name": "field1", "type": "long"},
+     {"name": "field1", "type": "boolean", "default": true},
      {"name": "field2", "type": "string"}
  ]
 }
