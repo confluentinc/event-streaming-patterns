@@ -32,6 +32,7 @@ Use the diagrams in [this google slidedeck](https://docs.google.com/presentation
 - Before publishing: scan for leftover `TODO` entries (such as links to content that didn’t exist yet at the time of writing a pattern)
 - Once the courses are available, patterns should link to relevant courses in their "References" sections.
 - Preferably, every pattern has some direct information/reference to Apache Kafka in its Implementation section.
+- When the pattern is ready to be published, add it to the table of contents file at [docs/meta.yml](./docs/meta.yml).
 
 Additional style guides (internal-access only):
 
