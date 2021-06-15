@@ -56,7 +56,7 @@ Examples of compatible changes would be:
  "type": "record",
  "name": "Event",
  "fields": [
-     {"name": "field1", "type": "long"},
+     {"name": "field1", "type": "boolean", "default": true},
      {"pame": "field2", "type": "string"},
      {"pame": "field3", "type": "int", "default": 0}
  ]
