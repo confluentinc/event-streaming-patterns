@@ -24,7 +24,7 @@ The Schema-on-Read approach approach enables each reader to decide on how to rea
 To make schema management easier, the design can use a centralized repository that can store multiple versions of different schemas, and then the client applications then choose which schema to apply to events at runtime.
 
 ## Implementation
-With Confluent Schema Registry, all the schemas are managed in a centralized repository.
+With [Confluent Schema Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html), all the schemas are managed in a centralized repository.
 In addition to just storing the schema information, Schema Registry can also be configured to check and/or enforce that schema changes are compatible with previous versions.
 
 For example, if a business started with a schema definition for an event that has 2 fields, but then the business needs evolved to now warrant an optional 3rd field, then that schema evolves with it.
