@@ -8,12 +8,19 @@ How do I ensure that schemas can evolve without breaking existing readers and wr
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.png)
 
-Backward schema compatibility means that consumers referencing the new schema version of the schema can read data produced with the previous version of the schema.
-Two types of backward compatible changes:
+There are two types of schema compatibility to consider.
 
-1. _Removal of a mandatory field_: a new consumer that was developed to process events without the field will be able to process events written with the previous schema that contain the field – the consumer will just ignore the field.
-2. _Addition of an optional field_: a new consumer that was developed to process events with this optional field will be able to process events written with the previous schema that do not contain the field – the consumer will not error because the field is optional.
+* Backwards compatibility ensures that _readers_ can update their schema and still consume old data.
+* Forwards compatibility ensures that _writers_ can update their schema and still be read by older readers.
 
+This leaves us with two types of safe changes:
+
+1. _Removal of a field that had a default value_: 
+  * Old writers included this field; new readers will just ignore it.
+  * New writers can stop writing this field; old readers will just use the old default.
+2. _Addition of a field that has a default value_:
+  * Old writers will not write this field; new readers will just use the new default.
+  * New writers will write the new field; old readers will just ignore it.
 ## Implementation
 Using Avro as the serialization format, if the original schema is
 
