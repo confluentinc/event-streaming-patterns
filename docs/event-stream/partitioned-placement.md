@@ -21,7 +21,12 @@ A partition is one unit of parallelism that helps scalability in these main ways
 * Application scalability: enable different [Event Processing Applications](../event-processing/event-processing-application.md) to process [Events](../event/event.md) concurrently
 
 ## Implementation
-With Apache Kafka®, topics are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). Partition count is specified at the time the topic is created.
+With Apache Kafka®, topics are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). Partition count is specified at the time the topic is created.  For example:
+
+```
+ccloud kafka topic create myTopic --partitions 30
+```
+
 [Events](../event/event.md) are placed into a specific partition according to the partitioning algorithm of the [Event Source](../event-source/event-source.md), such as an [Event Processing Application](../event-processing/event-processing-application.md).
 All events grouped into the same partition have strong ordering guarantees.
 
