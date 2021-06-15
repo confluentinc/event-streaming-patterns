@@ -37,7 +37,7 @@ Using Avro as the serialization format, if the original schema is
 
 Examples of compatible changes would be:
 
-1. _Removal of a mandatory field_: notice `field2` is removed
+1. _Removal of a field that had a field_: notice `field1` is removed
 
 ```
 {"namespace": "io.confluent.examples.client",
