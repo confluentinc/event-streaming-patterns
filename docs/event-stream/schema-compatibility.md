@@ -49,7 +49,7 @@ Examples of compatible changes would be:
 }
 ```
 
-2. _Addition of an optional field_: notice `field3` is added with a default value of 0.
+2. _Addition of a field with a default_: notice `field3` is added with a default value of 0.
 
 ```
 {"namespace": "io.confluent.examples.client",
