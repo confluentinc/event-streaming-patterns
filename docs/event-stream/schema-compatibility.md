@@ -35,7 +35,7 @@ Using Avro as the serialization format, if the original schema is
 }
 ```
 
-Examples of backward compatible changes:
+Examples of compatible changes would be:
 
 1. _Removal of a mandatory field_: notice `field2` is removed
 
