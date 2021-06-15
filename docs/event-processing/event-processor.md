@@ -44,7 +44,7 @@ With ksqlDB, you can view each section of the command as the construction of a d
 * `EMIT CHANGES` is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.
 
 #### Kafka Streams
-The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/table.md) as well as stateful and stateless transformation functions (`map`, `filter`, etc...). These functions act as the Event Processor in the larger [Event Processing Application](../event-processing/event-processor.md) you build with the Kafka Streams library.
+The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) as well as stateful and stateless transformation functions (`map`, `filter`, etc...). These functions act as the Event Processor in the larger [Event Processing Application](../event-processing/event-processor.md) you build with the Kafka Streams library.
 
 ```java
 builder
