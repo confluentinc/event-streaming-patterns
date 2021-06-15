@@ -220,7 +220,7 @@
 <p>Represent changes that happen in the real world as <a href="../../event/event/">Events</a> - an order is shipped, a ride is accepted, etc. - and retain these events as the system of record. Subsequently, aggregate those <a href="../../event/event/">Events</a> into a view that summarizes the events to represent the current state, allowing applications to query the current values. 
 So for example, the current balance of your account would be the total of all the payment events that added money to or removed it from your account. The system of record is the stream of payment events. The view you read from would be the account balance. </p>
 <h2 id="implementation">Implementation</h2>
-<p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> can implement a CQRS using an <a href="../../event-stream/event-stream/">Event Stream</a> and <a href="../table/table.md">Table</a>.</p>
+<p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> can implement a CQRS using an <a href="../../event-stream/event-stream/">Event Stream</a> and <a href="../../table/state-table/">Table</a>.</p>
 <p><a href="../../event-stream/event-stream/">Event Streams</a> are built into to the streaming database design. Creating a new stream is straightforward:</p>
 <pre><code class="sql">CREATE STREAM purchases (customer VARCHAR, item VARCHAR, qty INT WITH (kafka_topic='purchases-topic', value_format='json', partitions=1);
 </code></pre>
@@ -234,7 +234,7 @@ INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
 INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', -1);
 </code></pre>
 
-<p>We can create a <a href="https://docs.ksqldb.io/en/latest/concepts/materialized-views/">Materialized View</a> of the data as a <a href="../table/table.md">Table</a>:</p>
+<p>We can create a <a href="https://docs.ksqldb.io/en/latest/concepts/materialized-views/">Materialized View</a> of the data as a <a href="../../table/state-table/">Table</a>:</p>
 <pre><code class="sql">CREATE TABLE customer_purchases WITH (KEY_FORMAT='JSON') AS
   SELECT customer, item, SUM(qty) as total_qty from purchases GROUP BY customer, item emit changes;
 </code></pre>

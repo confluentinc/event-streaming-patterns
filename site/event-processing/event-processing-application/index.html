@@ -227,8 +227,8 @@
 <h2 id="implementation">Implementation</h2>
 <p>Apache Kafka® is the most popular <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. There are several options for building Event Processing Applications when using Kafka, and we'll show two here.</p>
 <h3 id="ksqldb">ksqlDB</h3>
-<p><a href="https://ksqldb.io">ksqlDB</a> is a streaming database with which we can build Event Processing Applications using SQL syntax. It has first-class support for <a href="../../event-stream/event-stream/">Streams</a> and <a href="../table/table.md">Tables</a>.</p>
-<p>When we create <a href="../table/table.md">Tables</a> and <a href="../../event-stream/event-stream/">Streams</a> in ksqlDB, then Kafka topics are used as the storage layer behind the scenes. In the example below, the ksqlDB table <code>movies</code> is backed by a Kafka topic of the same name.</p>
+<p><a href="https://ksqldb.io">ksqlDB</a> is a streaming database with which we can build Event Processing Applications using SQL syntax. It has first-class support for <a href="../../event-stream/event-stream/">Streams</a> and <a href="../../table/state-table/">Tables</a>.</p>
+<p>When we create <a href="../../table/state-table/">Tables</a> and <a href="../../event-stream/event-stream/">Streams</a> in ksqlDB, then Kafka topics are used as the storage layer behind the scenes. In the example below, the ksqlDB table <code>movies</code> is backed by a Kafka topic of the same name.</p>
 <pre><code class="sql">CREATE TABLE movies (ID INT PRIMARY KEY, title VARCHAR, release_year INT)
     WITH (kafka_topic='movies', partitions=1, value_format='avro');
 CREATE STREAM ratings (MOVIE_ID INT KEY, rating DOUBLE)
