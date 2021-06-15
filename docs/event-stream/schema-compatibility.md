@@ -44,7 +44,7 @@ Examples of compatible changes would be:
  "type": "record",
  "name": "Event",
  "fields": [
-     {"name": "field1", "type": "long"}
+     {"name": "field2", "type": "string"}
  ]
 }
 ```
