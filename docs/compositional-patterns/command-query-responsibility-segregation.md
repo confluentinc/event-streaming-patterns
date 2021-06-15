@@ -20,7 +20,7 @@ So for example, the current balance of your account would be the total of all th
 
 ## Implementation
 
-The streaming database [ksqlDB](https://ksqldb.io/) can implement a CQRS using an [Event Stream](../event-stream/event-stream.md) and [Table](../table/table.md).
+The streaming database [ksqlDB](https://ksqldb.io/) can implement a CQRS using an [Event Stream](../event-stream/event-stream.md) and [Table](../table/state-table.md).
 
 [Event Streams](../event-stream/event-stream.md) are built into to the streaming database design. Creating a new stream is straightforward:
 
@@ -38,7 +38,7 @@ INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', 1);
 INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', -1);
 ```
 
-We can create a [Materialized View](https://docs.ksqldb.io/en/latest/concepts/materialized-views/) of the data as a [Table](../table/table.md):
+We can create a [Materialized View](https://docs.ksqldb.io/en/latest/concepts/materialized-views/) of the data as a [Table](../table/state-table.md):
 ```sql  
 CREATE TABLE customer_purchases WITH (KEY_FORMAT='JSON') AS
   SELECT customer, item, SUM(qty) as total_qty from purchases GROUP BY customer, item emit changes;
