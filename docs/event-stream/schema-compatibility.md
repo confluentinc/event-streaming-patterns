@@ -8,19 +8,20 @@ How do we ensure that schemas can evolve without breaking existing [Event Sinks]
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.png)
 
-There are two types of schema compatibility to consider.
+There are two types of compatibility to consider: backwards compatibility and forwards compatability.
 
-* Backwards compatibility ensures that _readers_ can update their schema and still consume old data.
-* Forwards compatibility ensures that _writers_ can update their schema and still be read by older readers.
+Backwards compatibility ensures that newer _readers_ can update their schema and still consume events written by older writers.
+The types of backwards compatible changes include:
 
-This leaves us with two types of safe changes:
+* deletion of fields: old writers can continue to include this field, new readers ignore it
+* addition of optional fields with a default value: old writers do not write this field, new readers use the default value
 
-1. _Removal of a field that had a default value_: 
-  * Old writers included this field; new readers will just ignore it.
-  * New writers can stop writing this field; old readers will just use the old default.
-2. _Addition of a field that has a default value_:
-  * Old writers will not write this field; new readers will just use the new default.
-  * New writers will write the new field; old readers will just ignore it.
+Forwards compatibility ensures that newer _writers_ can produce events with an updated schema that can still be read by older readers.
+The types of forwards compatible changes include:
+
+* addition of fields: new writers include this field, old readers ignore it
+* deletion of optional fields with a default value: new writers do not write this field, old readers use the default value
+
 ## Implementation
 Using Avro as the serialization format, if the original schema is
 
