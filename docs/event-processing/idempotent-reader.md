@@ -5,9 +5,9 @@ seo:
 ---
 
 # Idempotent Reader
-Generally speaking, we want to believe that [Events](../event/event.md) get written into an [Event Streaming Platform](../event-stream/event-streaming-platform.md) once and read from it once, and that we don't need to handle multiple occurences of published events.
+Generally speaking, we want to believe that [Events](../event/event.md) get written into an [Event Streaming Platform](../event-stream/event-streaming-platform.md) once and read from it once, and that we don't need to handle multiple occurrences of published events.
 However, depending on how the [Event Source](../event-source/event-source.md) is configured and what failures happen, we do need to think about potential duplicates.
-There are two types of duplications:
+There are two types of duplicates:
 
 1. True single event: due to a failure, a writer could produce the same event twice or a reader could consume the same event twice
 2. True duplicate events: an [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become true multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md)
@@ -38,6 +38,6 @@ A solution that necessitates strong EOS guarantees should enable EOS at all stag
 This means on the writer, with idempotent producers and transactions, as well as the reader.
 
 ## References
-* This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in Enterpris Integration Patterns by Gregor Hohpe and Bobby Woolf
+* This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * Blog on [Exactly-once semantics in Apache Kafka](https://www.confluent.io/blog/simplified-robust-exactly-one-semantics-in-kafka-2-5/)
 * [Idempotent Producer Kafka Tutorial](https://kafka-tutorials.confluent.io/message-ordering/kafka.html)
