@@ -28,10 +28,13 @@ If it comes across another event with the same ID, it discards it.
 ## Implementation
 To handle the first scenario of a true single event, you can enable EOS in your Kafka Streams application so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
 For Kafka consumers, automatic commits of consumer offsets are convenient for developers, but they don’t give enough control to avoid duplicate messages.
-So disable auto commit to maintain full control over when the application commits offsets.
+So disable auto commit to maintain full control over when the application commits offsets to minimize duplicates.
 
 To handle the second scenario of duplicate events that are truly written to the Kafka commit log (they look like distinct events to the platform), the consumer application needs to maintain a local store for tracking these IDs.
 Then all event reading will entail checking the ID against the already-processed IDs before proceeding.
+
+Although it may apply to a subset of use cases, it may also be possible to design the consumer processing logic to be idempotent.
+Thus, instead of the strategy of avoiding duplicate events or discarding duplicate events, you could design the application such that the same event could be processed more than once and have the same net effect as if it had been processed just once.
 
 ## Considerations
 A solution that necessitates strong EOS guarantees should enable EOS at all stages of the pipeline, not just on the reader.
