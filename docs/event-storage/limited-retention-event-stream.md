@@ -1,7 +1,7 @@
 ---
 seo:
   title: Limited Retention Event Stream
-  description: Limited Retention Event Streams allow oudated or otherwise undesired Events to be removed from an Event Stream.
+  description: Limited Retention Event Streams allow outdated or otherwise undesired Events to be removed from an Event Stream.
 ---
 
 # Limited Retention Event Stream
@@ -32,13 +32,13 @@ With size based retention, [Events](../event/event.md) will begin to be removed 
 log.retention.bytes=107374127424
 ```
 
-For either method of configuring retention, Kafka _does not immediately_ remove [Events](../event/event.md) one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Topics are further broken down into partitions (see [Partitioned Placement](../event-stream/partitioned-placement.md)). Partitions themselves are further divided into files on disk called segments. Segements represent a sequence of the [Events](../event/event.md) in a particular partition, and these files are what is removed once a violation of the retention policy has occurred. Additionally, the cleaning algorithm is subject to additional configuration such as `log.retention.check.interval.ms` and segement configuration, such as `log.segment.bytes`. The [Apache Kafka documentation](https://kafka.apache.org/documentation/) goes into more detail.
+For either method of configuring retention, Kafka _does not immediately_ remove [Events](../event/event.md) one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Topics are further broken down into partitions (see [Partitioned Placement](../event-stream/partitioned-placement.md)). Partitions themselves are further divided into files on disk called segments. Segments represent a sequence of the [Events](../event/event.md) in a particular partition, and these files are what is removed once a violation of the retention policy has occurred. Additionally, the cleaning algorithm is subject to additional configuration such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. The [Apache Kafka documentation](https://kafka.apache.org/documentation/) goes into more detail.
 
 ## Considerations
-* When [Event Streams](../event-stream/event-stream.md) have limited retention, consideration for failure scenarios should be taken. If there is a need for [Event Processing Applications](../event-processing/event-processing-application.md) to observe all [Events](../event/event.md) at least once, the configured retention must cover timeframes of potential outages experienced by applications.
+* When [Event Streams](../event-stream/event-stream.md) have limited retention, consideration for failure scenarios should be taken. If there is a need for [Event Processing Applications](../event-processing/event-processing-application.md) to observe all [Events](../event/event.md) at least once, the configured retention must cover time frames of potential outages experienced by applications.
 
 ## References
-* This pattern is similiar to [Message Expiration](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageExpiration.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* This pattern is similar to [Message Expiration](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageExpiration.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 <!-- TODO: the following link needs to be to the new DCI 101 course-->
 * [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?"
 * A related pattern is the [Infinite Retention Event Stream](infinite-retention-event-stream.md) pattern which details [Event Streams](../event-stream/event-stream.md) that stores [Events](../event/event.md) indefinitely.
