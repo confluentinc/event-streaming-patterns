@@ -13,7 +13,7 @@ With Apache Kafka®, Events are referred to as _records_. Records are modeled as
 
 Record keys, values, and headers are opaque data types, meaning that Kafka, by deliberate design to achieve its high scalability and performance, does not define a type interface for them: they are read, stored, and written by Kafka's server-side brokers as raw arrays of bytes. Instead, it is the responsibility of Kafka's _client_ applications like the streaming database [ksqlDB](https://ksqldb.io/) or microservices implemented with the client libraries such as [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) or the [Kafka Go client](https://docs.confluent.io/clients-confluent-kafka-go/current/overview.html) to perform the serialization and deserialization of the data within the record keys, values, and headers.
 
-When using the standard Java client library, Events are created using the `ProducerRecord` type and sent to Kafka using the `KafkaProducer`. In this example we have set the Key and Value types as strings and added a header:
+When using the Java client library, events are created using the `ProducerRecord` type and sent to Kafka using the `KafkaProducer`. In this example, we have set the key and value types as strings and added a header:
 
 ```java
 ProducerRecord<String, String> newEvent = new ProducerRecord<>(userId.toString(), event.toString());
