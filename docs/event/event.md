@@ -18,7 +18,7 @@ When using the Java client library, events are created using the `ProducerRecord
 ```java
 ProducerRecord<String, String> newEvent = new ProducerRecord<>(paymentEvent.getCustomerId().toString() /* key */, paymentEvent.toString() /* value */);
 
-producerRecord.headers().add("client-id", clientId.getBytes(StandardCharsets.UTF_8)); 
+producerRecord.headers().add("origin-cloud", "aws".getBytes(StandardCharsets.UTF_8)); 
 
 producer.send(producerRecord);
 ```
