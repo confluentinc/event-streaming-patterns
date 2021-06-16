@@ -20,7 +20,7 @@ Use the diagrams in [this google slidedeck](https://docs.google.com/presentation
 - Problem is a 1-line question with a question mark at the end
 - Diagram shown first in Solution, before text
 - All words pattern names are capitalized, e.g. Event Filter
-- All mentions of patterns (not just the first mention) are hyperlinked to the target pattern 
+- Hyperlink at least the first mention of another pattern (hyperlink additional mentions judiciously)
 - Use double quotes (“) (instead of single quotes (‘) in text; e.g. write “event” instead of ‘event’)
 - The first mention of Kafka should be Apache Kafka®. From then on, you can freely use Apache Kafka or Kafka
 - Good (for some definition of “good”) SEO metadata at the top
