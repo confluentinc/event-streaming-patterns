@@ -1,10 +1,10 @@
 ---
 seo:
-  title: Partitioned Placement
+  title: Partitioned Parallelism
   description: A partition is a unit of parallelism that enables concurrent processing, and events can be written to different partitions to evenly distribute load.
 ---
 
-# Partitioned Placement
+# Partitioned Parallelism
 If service goals mandate high throughput, it is useful to have the ability to distribute event storage and consumption for parallel processing.
 Being able to distribute events and process them concurrently enables an application to scale.
 
@@ -12,13 +12,15 @@ Being able to distribute events and process them concurrently enables an applica
 How can we allocate events across [Event Streams](../event-stream/event-streams.md) and [Tables](../table/table.md) so that they can be processed concurrently by distributed [Event Processors](../event-processing/event-processor.md)?
 
 ## Solution
-![partitioned-placement](../img/partitioned-placement.png)
+![partitioned-parallelism](../img/partitioned-parallelism.png)
 
 You can logically group [Events](../event/event.md) at different levels to enable concurrent processing.
 A partition is one unit of parallelism that helps scalability in these main ways:
 
 * Platform scalability: enables different [Event Brokers](../event-stream/event-broker.md) to store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md) concurrently
 * Application scalability: enable different [Event Processing Applications](../event-processing/event-processing-application.md) to process [Events](../event/event.md) concurrently
+
+Partitioning events also results in application semantics for event ordering within each partition, such that all events placed into a given partitioned are guaranteed to preserve message order.
 
 ## Implementation
 With Apache Kafka®, topics are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). Partition count is specified at the time the topic is created.  For example:
