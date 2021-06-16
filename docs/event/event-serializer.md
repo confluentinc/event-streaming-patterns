@@ -19,7 +19,7 @@ For maximum utility and longevity, data should be written in a way
 that doesn't obscure it from future readers and writers. The data is
 more important than today's technology choices.
 
-How is this affect an event-based system? Are there any special
+How does this affect an event-based system? Are there any special
 concerns for this kind of architecture, or will the programming
 language's serialization tools suffice?
 
@@ -114,7 +114,7 @@ it becomes necessary.
 * The counterpart of an event serializer (for writing) is an [Event Deserializer](./event-deserializer.md) (for reading).
 * Serializers and deserializers are closely related to [Data
   Contracts](./data-contract.d), in which we want to adhere to a
-  specific serialization format, _and_ constrain the individual events
+  specific serialization format _and_ constrain the individual events
   to a certain schema within that format.
 * See also: [Event Mapper](../event-processing/event-mapper.md).
 
