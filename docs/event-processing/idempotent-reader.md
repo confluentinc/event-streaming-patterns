@@ -10,7 +10,7 @@ However, depending on the behavior and technical limits of the [Event Source](..
 There are two types of duplicates:
 
 1. Duplicate events caused by operational failures: due to an error like a machine failure or a brief network outage, an event source could produce the same event twice, or an [Event Sink](../event-sink/event-sink.md) could consume the same event twice. This type of duplicates is caused by the perils of distributed systems. The [Event Streaming Platform](../event-stream/event-streaming-platform.md) should automatically guard against this type of duplicates by providing strong delivery and processing guarantees, such as transactions.
-2. True duplicate events: an [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become true multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md)
+2. Duplicate events caused by incorrect application logic: an [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md). For example, imagine a bug in the event source that results in always writing a customer payment three times instead of once into an event stream. The event streaming platform rightly considers these as three independent, distinct payments, and it cannot guard against this type of duplicates automatically.
 
 ## Problem
 How can an application deal with duplicate events?
