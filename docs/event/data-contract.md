@@ -15,12 +15,12 @@ How can an application send an [Event](../event/event.md) such that a receiving 
 ## Solution
 ![data-contract](../img/data-contract.png)
 
-Using a Data Contract or Schema, different [Event Processing Applications](../event-processing/event-processing-application.md) can share [Events](../event/event.md) and understand how to process them without either the sender or receiver to know any details of the other.  The Data Contract pattern allows these different applications to cooperate while remaining loosely coupled thus insulated from any internal changes they may implement.
+Using a Data Contract or Schema, different [Event Processing Applications](../event-processing/event-processing-application.md) can share [Events](../event/event.md) and understand how to process them without either the sender or receiver to know any details of the other.  The Data Contract pattern allows these different applications to cooperate while remaining loosely coupled, and thus insulated from any internal changes they may implement.
 
 ## Implementation
 
-By using a schema to modeling event objects the client libraries of Apache Kafka (R) (Producer, Consumer, Kafka Streams) or the streaming database ksqlDB can understand how to handle events from different applications using the same schema.
-
+By using a schema to modeling event objects the client libraries of Apache Kafka&reg; (Producer, Consumer, Kafka Streams) or the streaming database ksqlDB can understand how to handle events from different applications using the same schema.
+For example, we can use Avro to describe a schema such as:
 ```json
 {
   "type":"record",
@@ -34,7 +34,7 @@ By using a schema to modeling event objects the client libraries of Apache Kafka
 }
 ```
 
-Additionally, using a central repository like [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) makes is seamless for Kafka clients leverage schemas.
+Additionally, using a central repository like [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) makes it easy for Kafka clients to leverage schemas.
 
 ## Considerations
 
