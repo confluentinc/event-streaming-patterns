@@ -9,7 +9,7 @@ Generally speaking, we want to believe that [Events](../event/event.md) get writ
 However, depending on the behavior and technical limits of the [Event Source](../event-source/event-source.md), how it is configured, and what failures may happen, we do need to think about whether there is the risk of duplicate events and, if there are, how we can deal with them.
 There are two types of duplicates:
 
-1. True single event: due to a failure, a writer could produce the same event twice or a reader could consume the same event twice
+1. Duplicate events caused by operational failures: due to an error like a machine failure or a brief network outage, an event source could produce the same event twice, or an [Event Sink](../event-sink/event-sink.md) could consume the same event twice. This type of duplicates is caused by the perils of distributed systems. The [Event Streaming Platform](../event-stream/event-streaming-platform.md) should automatically guard against this type of duplicates by providing strong delivery and processing guarantees, such as transactions.
 2. True duplicate events: an [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become true multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md)
 
 ## Problem
