@@ -8,7 +8,7 @@ seo:
 Move functionality from a montolithic application to microservices gradually until the monolith is no longer being used and can be shut down.
 
 ## Problem
-How can we migrate a monolithic application to a microservices architecture without the risk of a cut-over rewrite?
+How can we migrate a monolithic application to a microservices architecture without the risks associated with a large cut-over rewrite?
 
 ## Solution
 ![strangler-fig](../img/strangler-fig.png)
