@@ -22,7 +22,7 @@ CREATE SINK CONNECTOR JDBC_SINK_POSTGRES_01 WITH (
 );
 ```
 
-When connecting a system like a relational database to Kafka, the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads events from the [Event Streaming Platform](../event-stream/event-streaming-platform.md), performs any necessary transformations, and writes the [Events](../event/event.md) to the specified [Event Sink](../event-sink/event-sink.md).
+When connecting a system like a relational database to Apache Kafka®, the most common option is to use [Kafka Connect](https://docs.confluent.io/platform/current/connect/index.html). The connector reads events from the [Event Streaming Platform](../event-stream/event-streaming-platform.md), performs any necessary transformations, and writes the [Events](../event/event.md) to the specified [Event Sink](../event-sink/event-sink.md).
 
 ## Considerations
 * There are many Event Sink Connectors readily available for Apache Kafka, e.g. connectors for relational databases or object storage systems like AWS S3.  See [Confluent Hub](https://www.confluent.io/hub/) for available connectors.
