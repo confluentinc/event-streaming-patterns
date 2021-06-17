@@ -23,7 +23,7 @@ A partition is one unit of parallelism that helps scalability in these main ways
 Partitioning events also impacts application semantics: placing events into a given partition guarantees that the _ordering_ of events is preserved, per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases as, very often, the sequencing of events matters, e.g., when processing retail orders (an order must be paid before it can be shipped).
 
 ## Implementation
-With Apache Kafka®, topics are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). Partition count is specified at the time the topic is created.  For example:
+With Apache Kafka®, streams (called _topics_) are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). The number of partitions is specified at the time the topic is created.  For example:
 
 ```
 ccloud kafka topic create myTopic --partitions 30
