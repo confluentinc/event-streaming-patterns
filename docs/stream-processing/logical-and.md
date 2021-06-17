@@ -130,9 +130,9 @@ Results in a stream of possible fraud cases that need further investigation:
 ## Considerations
 
 Joining event streams is fairly simple. The big consideration is how
-large a retention period you need, and so the resources your join will
+large a retention period we need, and so the resources our join will
 use. Planning that tradeoff requires careful consideration of the
-specific problem you're solving.
+specific problem we're solving.
 
 For large retention periods, consider joining a stream to a
 [Projection Table](../table/projection-table.md) instead.

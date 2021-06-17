@@ -20,10 +20,10 @@ Ideally this is done in realtime such that as new events are published in the so
 This allows the client applications in the destination to leverage the same set of data.
 
 ## Implementation
-Practically, replication is not enabled completely on all data streams, as there are always exceptions, organizational limitations, technical constraints, or other reasons why you wouldn't want to copy absolutely everything.
-Instead, you can do this on a per topic basis, where you can map a source topic to a destination topic.
+Practically, replication is not enabled completely on all data streams, as there are always exceptions, organizational limitations, technical constraints, or other reasons why we wouldn't want to copy absolutely everything.
+Instead, we can do this on a per topic basis, where we can map a source topic to a destination topic.
 
-With Apache Kafka®, you can do this in one of several ways.
+With Apache Kafka®, we can do this in one of several ways.
 
 ### Option 1: Cluster Linking
 

@@ -16,7 +16,7 @@ How can I enrich an event stream or table with additional context?
 
 ![event joiner](../img/event-joiner.png)
 
-You can combine events in a stream with another stream or table by performing a join between the two.  The join is based on a key the stream and the "other" stream or table have in common.  Also you can provide a window buffering mechanism based on timestamps so you can produce join results when events from both streams aren't immediately available.  Another approach is to join a stream and a table where the table contains more static data resulting in an enriched event stream. 
+We can combine events in a stream with another stream or table by performing a join between the two.  The join is based on a key the stream and the "other" stream or table have in common.  Also we can provide a window buffering mechanism based on timestamps so we can produce join results when events from both streams aren't immediately available.  Another approach is to join a stream and a table where the table contains more static data resulting in an enriched event stream. 
 
 
 ## Implementation
@@ -47,9 +47,9 @@ SELECT ratings.movie_id AS ID, title, release_year, rating
 
 ## Considerations
 
-* In ksqlDB, joins between a stream and a table are driven by the stream side of the join.  Updates to the table only update the state of the table.  It's the new event in the stream that results in a new join result.  For example, if you're joining a stream of orders to a table of customers a new order will be enriched if there is a customer record in the table. But if a new customer is added to the table it will not trigger the join condition. The [ksqlDB documentation contains more information on stream-table join semantics](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/#semantics-of-stream-table-joins). 
+* In ksqlDB, joins between a stream and a table are driven by the stream side of the join.  Updates to the table only update the state of the table.  It's the new event in the stream that results in a new join result.  For example, if we're joining a stream of orders to a table of customers a new order will be enriched if there is a customer record in the table. But if a new customer is added to the table it will not trigger the join condition. The [ksqlDB documentation contains more information on stream-table join semantics](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/#semantics-of-stream-table-joins). 
 
-* You can perform an inner or left-outer join between a stream and a table.
+* We can perform an inner or left-outer join between a stream and a table.
 
 * Joins are also useful to initiate subsequent processing when two (or more) corresponding events arrive on different streams or tables.
 

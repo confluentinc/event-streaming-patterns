@@ -16,7 +16,7 @@ Connect the [Event Processing Applications](../event-processing/event-processing
 
 Generally speaking, an Event Stream records the history of what has happened in the world as a sequence of events (think: a sequence of facts). An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.
 
-Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
+Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and we can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
 
 ## Implementation
 The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is `JSON`.

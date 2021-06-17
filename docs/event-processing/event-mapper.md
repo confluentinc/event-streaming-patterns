@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Mapper
-  description: How do you move data between domain objects and events in an event streaming platform?
+  description: How do we move data between domain objects and events in an event streaming platform?
 ---
 
 # Event Mapper

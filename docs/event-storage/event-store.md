@@ -28,7 +28,7 @@ and straightforward replication across multiple machines.
 ## Implementation
 
 Apache Kafka® is an event store that maintains a persistent,
-append-only stream — a _topic_ — for each kind of event you need to
+append-only stream — a _topic_ — for each kind of event we need to
 store. These topics are:
 
 * Write-efficient - an append-only log is one of the fastest, cheapest

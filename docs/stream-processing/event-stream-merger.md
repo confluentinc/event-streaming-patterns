@@ -15,7 +15,7 @@ How can an application merge different event streams?
 
 
 ## Implementation
-The Kafka Streams DSL provides a `merge` operator which merges two streams into a single stream. You can then take the merged stream and use any number of operations on it.
+The Kafka Streams DSL provides a `merge` operator which merges two streams into a single stream. We can then take the merged stream and use any number of operations on it.
 
 ```java
 KStream<String, Event> eventStream = builder.stream(...);

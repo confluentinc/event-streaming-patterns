@@ -123,8 +123,8 @@ key, or not specified one at all, we'd get very different results.
 
 `LATEST_BY_OFFSET` is only one of the many [summary
 functions ksqlDB supports][summary_functions], from simple sums and
-averages to time-aware functions and histograms. And beyond those, you can
-easily [define your own custom functions][custom_functions] or look to
+averages to time-aware functions and histograms. And beyond those, we can
+easily [define our own custom functions][custom_functions] or look to
 [Kafka Streams][kafka_streams] for complete control.
 
 ## References

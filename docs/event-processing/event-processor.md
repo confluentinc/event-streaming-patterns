@@ -16,7 +16,7 @@ We build an Event Processor, which is a component that reads [Events](../event/e
 
 An important characteristic of an event processor is that it should allow for composition with other event processors. That's because, in practice, we rarely use a single event processor in isolation. Instead, we compose and connect (via [Event Streams](../event-stream/event-stream.md)) one or more event processors inside an [Event Processing Application](event-processing-application.md) that fully implements one particular use case end-to-end, or (e.g., in the case of microservices) that implements a subset of the overall business logic limited to the bounded context of a particular domain. 
 
-An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an [Event Stream](../event-stream/event-stream.md), enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.
+An event processor performs a specific task within the event processing application. Think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an [Event Stream](../event-stream/event-stream.md), enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.
 
 ## Implementation
 
@@ -36,7 +36,7 @@ CREATE STREAM clean_readings AS
     EMIT CHANGES;
 ```
 
-With ksqlDB, you can view each section of the command as the construction of a different Event Processor:
+With ksqlDB, we can view each section of the command as the construction of a different Event Processor:
 
 * `CREATE STREAM` defines the new output [Event Stream](../event-stream/event-stream.md) that this application will produce [Events](../event/event.md) to.
 * `SELECT ...` is a mapping function, taking each input [Event](../event/event.md) and "cleaning" it as defined. In this example, this simply means upper casing the `location` field in each input reading.
@@ -44,7 +44,7 @@ With ksqlDB, you can view each section of the command as the construction of a d
 * `EMIT CHANGES` is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.
 
 #### Kafka Streams
-The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) as well as stateful and stateless transformation functions (`map`, `filter`, etc...). These functions act as the Event Processor in the larger [Event Processing Application](../event-processing/event-processor.md) you build with the Kafka Streams library.
+The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) as well as stateful and stateless transformation functions (`map`, `filter`, etc...). These functions act as the Event Processor in the larger [Event Processing Application](../event-processing/event-processor.md) we build with the Kafka Streams library.
 
 ```java
 builder

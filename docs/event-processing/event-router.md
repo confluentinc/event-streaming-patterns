@@ -14,7 +14,7 @@ How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](.
 ![event-router](../img/event-router.png)
 
 ## Implementation
-With [ksqlDB](https://ksqldb.io/), you can continuously route events to a different stream using the `CREATE STREAM` syntax with an appropriate `WHERE` filter.
+With [ksqlDB](https://ksqldb.io/), we can continuously route events to a different stream using the `CREATE STREAM` syntax with an appropriate `WHERE` filter.
 
 ```
 CREATE STREAM payments ...;
@@ -32,7 +32,7 @@ With the [Kafka Streams library](https://kafka.apache.org/documentation/streams/
 - The event value
 - The [RecordContext](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event.
 
-You can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. 
+We can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. 
 
 ```java
 CountryTopicExtractor implements TopicNameExtractor<String, String> {

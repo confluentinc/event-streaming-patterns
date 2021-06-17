@@ -42,7 +42,7 @@ CREATE STREAM my_event_stream
 
 The Kafka Streams client library of Apache Kafka provides the `TimestampExtractor` interface for extracting the timestamp from events.  The default implementation retrieves the timestamp from the Kafka message (see discussion above) as set by the producer of the message. Normally, this setup results in event-time processing, which is what we want.
 
-But for those cases where you need the timestamp from the event payload, you can create your own `TimestampExtractor` implementation:
+But for those cases where we need the timestamp from the event payload, we can create our own `TimestampExtractor` implementation:
 
 ```java
 class OrderTimestampExtractor implements TimestampExtractor {
@@ -56,7 +56,7 @@ public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
 
 Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using Kafka Streams or ksqlDB themselves.
 
-Additionally, Kafka has the notion of event-time vs. processing-time (wallclock) vs. ingestion time, similar to ksqlDB.  Clients like Kafka Streams make it possible to select which variant of time you want to work with in your application.
+Additionally, Kafka has the notion of event-time vs. processing-time (wallclock) vs. ingestion time, similar to ksqlDB.  Clients like Kafka Streams make it possible to select which variant of time we want to work with in our application.
 
 ## Considerations
 
