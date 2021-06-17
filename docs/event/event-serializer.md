@@ -32,12 +32,11 @@ How can I convert an event into a format understood by the event streaming platf
 ![event serializer](../img/event-serializer.svg)
 
 [Event Streaming
-Platforms](../event-stream/event-streaming-platform.md) such as Apache
-Kafka&reg; are typically serialization-agnostic, accepting any
-serialized data from human-readable text to raw bytes. However, by
-constraining ourselves to more widely-accepted, structured data
-formats, we can open the door to easier collaboration with other
-projects and programming languages.
+Platforms](../event-stream/event-streaming-platform.md) are typically
+serialization-agnostic, accepting any serialized data from
+human-readable text to raw bytes. However, by constraining ourselves
+to more widely-accepted, structured data formats, we can open the door
+to easier collaboration with other projects and programming languages.
 
 Finding a "universal" serialization format isn't a new problem, or
 one unique to event streaming. As such we have a number of
@@ -47,9 +46,9 @@ few:
 * [JSON](https://www.json.org/). Arguably the most successful
   serialization format in the history of computing. JSON is a
   text-based format that's easy to read, write and
-  decipher<sup>1</sup>, as evidenced by the number of languages and
-  projects that produce and consume JSON data across the world with
-  minimal collaboration.
+  [discover](https://en.wikipedia.org/wiki/Discoverability)<sup>1</sup>,
+  as evidenced by the number of languages and projects that produce
+  and consume JSON data across the world with minimal collaboration.
 * [Protocol
   buffers](https://developers.google.com/protocol-buffers). Backed by
   Google and supported by a wide variety of languages, Protobuf is a
@@ -84,7 +83,8 @@ trade deals as:
 ...and then use our language's Avro libraries to serialize data in
 this format. Alternatively we can define an [Event
 Stream](../event-stream/event-stream.md) directly in ksqlDB in a way
-that enforces that format and records the Avro definition with a [Schema Validator](../event-source/schema-validator.md):
+that enforces that format and records the Avro definition with a
+[Schema Validator](../event-source/schema-validator.md):
 
 ```sql
 CREATE OR REPLACE STREAM fx_trade (
@@ -104,10 +104,12 @@ CREATE OR REPLACE STREAM fx_trade (
 ## Considerations
 
 While the choice of serialization format is important, it doesn't have
-to be set in stone. Using an [Event
+to be set in stone. It's straightforward to [translate between
+supported formats with
+ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). And
+in more complex scenarios we can use an [Event
 Translator](../event-processing/event-translator.md ) or [Event
-Standardizer](./event-standardizer.md) we can revisit this decision if
-it becomes necessary.
+Standardizer](./event-standardizer.md) to reformat data.
 
 ## References
 
