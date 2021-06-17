@@ -40,7 +40,7 @@ deserialization easy.
 
 While some data formats are reasonably
 [discoverable](https://en.wikipedia.org/wiki/Discoverability), in
-practice it become invaluable to have a precise, permanent record of
+practice it becomes invaluable to have a precise, permanent record of
 how the data was encoded at the time it was written. This is
 particularly true if the data format has evolved over time and the
 [Event Stream](../event-stream/event-stream.md) may contain more than
@@ -50,7 +50,7 @@ one encoding of semantically-equivalent data.
 
 
 Confluent’s [Schema
-Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
+Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
 stores a versioned history of the data's schema in Apache Kafka&reg;
 itself. The client libraries can then use this metadata to seamlessly
 reconstruct the original event data, while we can use the registry API
@@ -155,7 +155,7 @@ Schema. See [Event Serializer](./event-serializer.md) for a discussion
 of these formats.
 
 While the choice of serialization format is important, it doesn't have
-to be set in stone. It's straightforward to [translate between
+to be set in stone. For example, it's straightforward to [translate between
 supported formats with
 ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). And
 in more complex scenarios we can use an [Event

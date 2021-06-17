@@ -39,7 +39,7 @@ degree of backwards and forwards -compatibility. We recommend
 
 An optional, recommended step is to register the serialization details
 with a schema registry. A registry provides a reliable,
-machine-readably reference point for [Event
+machine-readable reference point for [Event
 Deserializers](./event-deserializer.md) and [Schema
 Validators](../event-source/schema-validator.md), making event
 consumption vastly simpler.
