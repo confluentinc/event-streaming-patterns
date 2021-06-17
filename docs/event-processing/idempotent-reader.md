@@ -18,7 +18,7 @@ How can an application deal with duplicate events?
 ## Solution
 ![idempotent-reader](../img/idempotent-reader.png)
 
-Duplicates should ideally be prevented from being written more than once into the [Event Streaming Platform](../event-stream/event-streaming-platform.md), which can be done on the writer side with strong exactly-once semantics (EOS).
+To prevent duplicates caused by operational failures when writing events into the [Event Streaming Platform](../event-stream/event-streaming-platform.md), the platform should support strong delivery guarantees and, in particular, exactly-once semantics (EOS).  For [Event Sources](../event-source/event-source.md), i.e., on the writing side, a common choice to achieve EOS is the use of an [Idempotent Writer](TODO: do we have a pattern for this?]. For [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), i.e., the reading side, ...blabla...idempotent reader...ideally first-class transactions...blabla...
 EOS allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, which ensures that computed results are always accurate. 
 
 However, if the Event Source is still capable of duplicating the same logical event, the consumer application will need to track unique IDs within each event.
