@@ -20,7 +20,7 @@ A partition is one unit of parallelism that helps scalability in these main ways
 * Platform scalability: enables different [Event Brokers](../event-stream/event-broker.md) to store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md) concurrently
 * Application scalability: enable different [Event Processing Applications](../event-processing/event-processing-application.md) to process [Events](../event/event.md) concurrently
 
-Partitioning events also results in application semantics for event ordering within each partition, such that all events placed into a given partitioned are guaranteed to preserve message order.
+Partitioning events also impacts application semantics: placing events into a given partition guarantees that the _ordering_ of events is preserved, per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases as, very often, the sequencing of events matters, e.g., when processing retail orders (an order must be paid before it can be shipped).
 
 ## Implementation
 With Apache Kafka®, topics are created either by an administrator or by a streaming application like [ksqlDB](https://ksqldb.io). Partition count is specified at the time the topic is created.  For example:
