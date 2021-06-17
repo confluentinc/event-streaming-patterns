@@ -30,7 +30,7 @@ ccloud kafka topic create myTopic --partitions 30
 ```
 
 [Events](../event/event.md) are placed into a specific partition according to the partitioning algorithm of the [Event Source](../event-source/event-source.md), such as an [Event Processing Application](../event-processing/event-processing-application.md).
-All events grouped into the same partition have strong ordering guarantees.
+All events assigned into the same partition have strong ordering guarantees.
 
 The common partitioning schemes are
 
