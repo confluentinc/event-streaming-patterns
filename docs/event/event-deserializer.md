@@ -166,7 +166,7 @@ Standardizer](./event-standardizer.md) to reformat data.
 
 * The counterpart of an event deserializer (for reading) is an [Event Serializer](./event-serializer.md) (for writing).
 * Serializers and deserializers are closely related to [Data
-  Contracts](./data-contract.d), in which we want to adhere to a
+  Contracts](./data-contract.md), in which we want to adhere to a
   specific serialization format, _and_ constrain the individual events
   to a certain schema within that format.
 * See also: [Event Mapper](../event-processing/event-mapper.md).
