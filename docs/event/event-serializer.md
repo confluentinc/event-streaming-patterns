@@ -25,7 +25,7 @@ language's serialization tools suffice?
 
 ## Problem
 
-How can I convert an event into a format understood by the event streaming platform?
+How can I convert an event into a format understood by the event streaming platform and applications that use it?
 
 ## Solution
 
@@ -64,7 +64,7 @@ few:
 
 ## Implementation
 
-For example we can use Avro to define a structure for Foreign Exchange
+For example, we can use Avro to define a structure for Foreign Exchange
 trade deals as:
 
 ```json
@@ -81,8 +81,10 @@ trade deals as:
 ```
 
 ...and then use our language's Avro libraries to serialize data in
-this format. Alternatively we can define an [Event
-Stream](../event-stream/event-stream.md) directly in ksqlDB in a way
+this format.
+
+In the example of the streaming database [ksqDB](https://ksqldb.io/), we can define an [Event
+Stream](../event-stream/event-stream.md) directly in a way
 that enforces that format and records the Avro definition with a
 [Schema Validator](../event-source/schema-validator.md):
 
