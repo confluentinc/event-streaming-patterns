@@ -148,8 +148,10 @@ migration:
   discusses splitting and joining streams to simplify serving
   consumers that can only handle certain versions of the event's
   schema.
-* And an [Event Standardizer](./event-standardizer.md) can reformat
+* An [Event Standardizer](./event-standardizer.md) can reformat
   disparate data encodings into a single unified format.
+* And as a fallback we can push the problem to the consumer's code
+  with a [Schema-on-Read](./schema-on-read.md) strategy.
 
 ## References
 
