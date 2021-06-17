@@ -48,7 +48,6 @@ one encoding of semantically-equivalent data.
 
 ## Implementation
 
-
 Confluent’s [Schema
 Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
 stores a versioned history of the data's schema in Apache Kafka&reg;
@@ -157,10 +156,24 @@ of these formats.
 While the choice of serialization format is important, it doesn't have
 to be set in stone. For example, it's straightforward to [translate between
 supported formats with
-ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). And
-in more complex scenarios we can use an [Event
-Translator](../event-processing/event-translator.md ) or [Event
-Standardizer](./event-standardizer.md) to reformat data.
+ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). For
+more complex scenarios, we have several strategies for managing schema
+migration:
+
+* [Schema
+  Compatibility](http://localhost:8000/event-stream/schema-evolution/)
+  discusses the kinds of "safe" schema changes that Avro is designed
+  to handle transparently.
+* [Event Translators](../event-processing/event-translator.md ) can
+  convert between different encodings to aid consumption by different
+  systems.
+* [Schema
+  Evolution](http://localhost:8000/event-stream/schema-evolution/)
+  discusses splitting and joining streams to simplify serving
+  consumers that can only handle certain versions of the event's
+  schema.
+* And an [Event Standardizer](./event-standardizer.md) can reformat
+  disparate data encodings into a single unified format.
 
 ## References
 
