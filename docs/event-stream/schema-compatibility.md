@@ -8,7 +8,7 @@ How do we ensure that schemas can evolve without breaking existing [Event Sinks]
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.png)
 
-There are two types of compatibility to consider: backwards compatibility and forwards compatability.
+There are two types of compatibility to consider: backwards compatibility and forwards compatibility.
 
 Backwards compatibility ensures that newer _readers_ can update their schema and still consume events written by older writers.
 The types of backwards compatible changes include:
