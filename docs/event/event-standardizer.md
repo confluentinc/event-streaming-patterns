@@ -39,7 +39,7 @@ builder
 
 ## Considerations
 * When possible, diverging data formats should be normalized "at the source". This data governance is often called "Schema on Write", and may be implemented with the [Schema Validator](../event-source/schema-validator.md) pattern. Enforcing schema validation prior to writing an event to the [Event Stream](../event-stream/event-stream.md), allows consuming applications to delegate their data format validation logic to the schema validation layer.
-* Error handling should be considered in the design of the standardizer. Categories of errors may include serialization failures, unexpected or missing values, and unknown types (as in the example above). [Dead Letter Stream](../event-processing/dead-letter-stream.md) is one pattern commonly used to handle exceptional events in your [Event Processing Application](../event-processing/event-processing-application.md). 
+* Error handling should be considered in the design of the standardizer. Categories of errors may include serialization failures, unexpected or missing values, and unknown types (as in the example above). [Dead Letter Stream](../event-processing/dead-letter-stream.md) is one pattern commonly used to handle exceptional events in our [Event Processing Application](../event-processing/event-processing-application.md). 
 
 
 ## References

@@ -53,7 +53,7 @@ Or as my grandmother used to say:
 ## Considerations
 * If child events need to be routed to different streams, see [Event Router](../event-processing/event-router.md) for routing events to different locations.
 * Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
-* Event Lineage: Your use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
+* Event Lineage: a use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
 
 ## References
 * This pattern is derived from [Splitter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
