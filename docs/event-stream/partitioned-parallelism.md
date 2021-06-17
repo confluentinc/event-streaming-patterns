@@ -5,7 +5,7 @@ seo:
 ---
 
 # Partitioned Parallelism
-If service goals mandate high throughput, it is useful to have the ability to distribute event storage and consumption for parallel processing.
+If service goals mandate high throughput, it is useful to have the ability to distribute event storage as well as event production and consumption for parallel processing.
 Being able to distribute events and process them concurrently enables an application to scale.
 
 ## Problem
