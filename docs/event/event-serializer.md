@@ -25,11 +25,78 @@ language's serialization tools suffice?
 
 ## Problem
 
-How can I convert an event into a format understood by the event streaming platform and applications that use it?
+How can I convert an event into a format understood by the event
+streaming platform and applications that use it?
 
 ## Solution
 
 ![event serializer](../img/event-serializer.svg)
+
+Use a language-agnostic serialization format. The ideal format would
+be self-documenting, space-efficient, and designed to support some
+degree of backwards and forwards -compatibility. We recommend
+[Avro][avro]. (See "Considerations".)
+
+An optional, recommended step is to register the serialization details
+with a schema registry. A registry provides a reliable,
+machine-readably reference point for [Event
+Deserializers](./event-deserializer.md) and [Schema
+Validators](../event-source/schema-validator.md), making event
+consumption vastly simpler.
+
+## Implementation
+
+For example, we can use Avro to define a structure for Foreign Exchange
+trade deals as:
+
+```json
+{"namespace": "io.confluent.developer",
+ "type": "record",
+ "name": "FxTrade",
+ "fields": [
+     {"name": "trade_id", "type": "long"},
+     {"name": "from_currency", "type": "string"},
+     {"name": "to_currency", "type": "string"},
+     {"name": "price", "type": "bytes", "logicalType": "decimal", "precision": 10, "scale": 5}
+ ]
+}
+```
+
+...and then use our language's Avro libraries to take care of serialization for us:
+
+```java
+  FxTrade fxTrade = new FxTrade( ... );
+
+  ProducerRecord<long, FxTrade> producerRecord =
+    new ProducerRecord<>("fx_trade", fxTrade.getTradeId(), fxTrade);
+
+  producer.send(producerRecord);
+```
+
+
+Alternatively, with the streaming database [ksqlDB](https://ksqldb.io/),
+we can define an [Event Stream](../event-stream/event-stream.md) in a
+way that enforces that format and records the Avro definition with a
+[Schema Validator](../event-source/schema-validator.md) for us:
+
+```sql
+CREATE OR REPLACE STREAM fx_trade (
+  trade_id BIGINT KEY,
+  from_currency VARCHAR(3),
+  to_currency VARCHAR(3),
+  price DECIMAL(10,5)
+) WITH (
+  KAFKA_TOPIC = 'fx_trade',
+  KEY_FORMAT = 'avro',
+  VALUE_FORMAT = 'avro',
+  PARTITIONS = 3
+);
+```
+
+With this setup, both serialization and deserialization of data is
+performed automatically by ksqlDB behind the scenes.
+
+## Considerations
 
 [Event Streaming
 Platforms](../event-stream/event-streaming-platform.md) are typically
@@ -57,53 +124,11 @@ few:
   bandwidth. Protobuf is also a strongly-typed format, allowing
   enforcement of a particular data schema from writers, and describing
   the structure of that data to readers.
-* [Avro](https://avro.apache.org/). A binary format similar to
+* [Avro][avro]. A binary format similar to
   Protocol Buffers, Avro's design has focuses on supporting the
   evolution of schemas, allowing the data format to change over time
   while minimizing the impact to future readers and writer.
 
-## Implementation
-
-For example, we can use Avro to define a structure for Foreign Exchange
-trade deals as:
-
-```json
-{"namespace": "io.confluent.developer",
- "type": "record",
- "name": "FxTrade",
- "fields": [
-     {"name": "trade_id", "type": "long"},
-     {"name": "from_currency", "type": "string"},
-     {"name": "to_currency", "type": "string"},
-     {"name": "price", "type": "long"}
- ]
-}
-```
-
-...and then use our language's Avro libraries to serialize data in
-this format.
-
-In the example of the streaming database [ksqDB](https://ksqldb.io/), we can define an [Event
-Stream](../event-stream/event-stream.md) directly in a way
-that enforces that format and records the Avro definition with a
-[Schema Validator](../event-source/schema-validator.md):
-
-```sql
-CREATE OR REPLACE STREAM fx_trade (
-  trade_id BIGINT KEY,
-  from_currency VARCHAR(3),
-  to_currency VARCHAR(3),
-  price DECIMAL(10,5)
-) WITH (
-  KAFKA_TOPIC = 'fx_trade',
-  KEY_FORMAT = 'avro',
-  VALUE_FORMAT = 'avro',
-  PARTITIONS = 3
-);
-```
-
-
-## Considerations
 
 While the choice of serialization format is important, it doesn't have
 to be set in stone. It's straightforward to [translate between
@@ -129,3 +154,5 @@ less-discoverable serialization formats used by banks in the 80s, in
 which deciphering the meaning of a message meant wading through a
 thick, ring-bound printout of the data specification which explained the
 meaning of "Field 78" by cross-referencing "Encoding Subformat 22"._
+
+[Avro]: https://avro.apache.org/docs/current/
