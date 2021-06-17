@@ -14,7 +14,7 @@ How can we allocate events across [Event Streams](../event-stream/event-streams.
 ## Solution
 ![partitioned-parallelism](../img/partitioned-parallelism.png)
 
-You can logically group [Events](../event/event.md) at different levels to enable concurrent processing.
+We should use a partitioned event stream, and then assign the events to different partitions of the stream. Essentially, a partition is a unit of parallelism for storage as well as reading, writing, and processing events. Partitioning helps concurrency and scalability in these main ways:
 A partition is one unit of parallelism that helps scalability in these main ways:
 
 * Platform scalability: enables different [Event Brokers](../event-stream/event-broker.md) to store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md) concurrently
