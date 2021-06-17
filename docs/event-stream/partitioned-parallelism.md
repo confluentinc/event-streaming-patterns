@@ -1,7 +1,7 @@
 ---
 seo:
   title: Partitioned Parallelism
-  description: A partition is a unit of parallelism that enables concurrent processing, and events can be written to different partitions to evenly distribute load.
+  description: A partition is a unit of parallelism that enables concurrent reading, writing, and processing of events at scale.
 ---
 
 # Partitioned Parallelism
