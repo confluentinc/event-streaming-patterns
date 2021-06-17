@@ -145,6 +145,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -221,7 +223,7 @@ An event represents an immutable fact about something that happened. Examples of
 <p>To ensure that Events from an Event Source can be read correctly by an <a href="../../event-processing/event-processor/">Event Processor</a>, they are often created in reference to an Event schema. Event Schemas are commonly defined in <a href="https://avro.apache.org/docs/current/spec.html">Avro</a>, <a href="https://developers.google.com/protocol-buffers">Protobuf</a>, or <a href="https://json-schema.org/">JSON schema</a>.</p>
 </li>
 <li>
-<p>For cloud-based architectures, you may want to evaluate the use of <a href="https://cloudevents.io/">CloudEvents</a>. CloudEvents provide a standardized <a href="../event-envelope/">Event Envelope</a> that wraps an event, making common event properties such as source, type, time, and ID universally accessible, regardless of how the event itself was serialized.</p>
+<p>For cloud-based architectures, evaluate the use of <a href="https://cloudevents.io/">CloudEvents</a>. CloudEvents provide a standardized <a href="../event-envelope/">Event Envelope</a> that wraps an event, making common event properties such as source, type, time, and ID universally accessible, regardless of how the event itself was serialized.</p>
 </li>
 <li>
 <p>In certain scenarios, Events may represent commands (think: instructions, actions) that an Event Processor reading the events should carry out. See the <a href="../event/command-event.md">Command Event</a> for details.</p>

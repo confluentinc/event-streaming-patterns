@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -211,14 +213,14 @@
             <div class="section">
               
                 <h1 id="event-standardizer">Event Standardizer</h1>
-<p>In most businesses, a variety of traditional and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> need to exchange <a href="../event/">Events</a> across <a href="../../event-stream/event-stream/">Event Streams</a>. Downstream <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will require standardized data formats in order to properly process these <a href="../event/">Events</a>. However, the reality of having many sources for these <a href="../event/">Events</a> often results in the lack of such standards or in different interpretations of the same standard.</p>
+<p>In most businesses, a variety of traditional and <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> need to exchange <a href="../event/">Events</a> across <a href="../../event-stream/event-stream/">Event Streams</a>. Downstream <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will require standardized data formats in order to properly process these events. However, the reality of having many sources for these events often results in the lack of such standards or in different interpretations of the same standard.</p>
 <h2 id="problem">Problem</h2>
 <p>How do we process <a href="../event/">Events</a> that are semantically equivalent, but arrive in different formats?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-standardizer" src="../../img/event-standardizer.png" />
-Source all the input <a href="../../event-stream/event-stream/">Event Streams</a> into an Event Standardizer that passes <a href="../event/">Events</a> to a specialized <a href="../../event-processing/event-translator/">Event Translator</a>, which in turn converts the <a href="../event/">Event</a> to a common format understood by the downstream <a href="../../event-processing/event-processor/">Event Processors</a>.</p>
+Source all the input <a href="../../event-stream/event-stream/">Event Streams</a> into an Event Standardizer that passes events to a specialized <a href="../../event-processing/event-translator/">Event Translator</a>, which in turn converts the event to a common format understood by the downstream <a href="../../event-processing/event-processor/">Event Processors</a>.</p>
 <h2 id="implementation">Implementation</h2>
-<p>As an example, we can use the <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a> of Apache Kafka to build an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> that reads from multiple input <a href="../../event-stream/event-stream/">Event Streams</a> and then "maps" the values to a new type. Specifically, we use the <code>mapValues</code> function to translate each <a href="../event/">Event</a> type into the standard type expected on the output <a href="../../event-stream/event-stream/">Event Stream</a>.</p>
+<p>As an example, we can use the <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a> of Apache Kafka® to build an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> that reads from multiple input <a href="../../event-stream/event-stream/">Event Streams</a> and then "maps" the values to a new type. Specifically, we use the <code>mapValues</code> function to translate each event type into the standard type expected on the output <a href="../../event-stream/event-stream/">Event Stream</a>.</p>
 <pre><code>SpecificAvroSerde&lt;SpecificRecord&gt; inputValueSerde = constructSerde();
 
 builder
@@ -240,8 +242,8 @@ builder
 
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>When possible, diverging data formats should be normalized "at the source". This data governance is often called "Schema on Write", and may be implemented with the <a href="../../event-source/schema-validator/">Schema Validator</a> pattern. Enforcing schema validation prior to writing an <a href="../event/">Event</a> to the <a href="../../event-stream/event-stream/">Event Stream</a>, allows consuming applications to delegate their data format validation logic to the schema validation layer.</li>
-<li>Error handling should be considered in the design of the standardizer. Categories of errors may include serialization failures, unexpected or missing values, and unknown types (as in the example above). <a href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a> is one pattern commonly used to handle exceptional events in your <a href="../../event-processing/event-processing-application/">Event Processing Application</a>. </li>
+<li>When possible, diverging data formats should be normalized "at the source". This data governance is often called "Schema on Write", and may be implemented with the <a href="../../event-source/schema-validator/">Schema Validator</a> pattern. Enforcing schema validation prior to writing an event to the <a href="../../event-stream/event-stream/">Event Stream</a>, allows consuming applications to delegate their data format validation logic to the schema validation layer.</li>
+<li>Error handling should be considered in the design of the standardizer. Categories of errors may include serialization failures, unexpected or missing values, and unknown types (as in the example above). <a href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a> is one pattern commonly used to handle exceptional events in our <a href="../../event-processing/event-processing-application/">Event Processing Application</a>. </li>
 </ul>
 <h2 id="references">References</h2>
 <ul>

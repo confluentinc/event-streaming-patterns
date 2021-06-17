@@ -145,6 +145,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -217,7 +219,7 @@
 <p><img alt="event-source" src="../../img/event-source.png" /></p>
 <p>Use an Event Source, which typically acts as a client in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Examples are an <a href="../event-source-connector/">Event Source Connector</a> (which continuously imports data as <a href="../../event-stream/event-stream/">Event Streams</a> into the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> from an external system such as a cloud services or a relational database) or an <a href="../../event-processing/event-processing-application/">Event Processing Application</a> such as a <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams</a> application and the streaming database <a href="https://ksqldb.io/">ksqlDB</a>.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Normally, an actual component such as an application for Kafka would be writing <a href="../../event/event/">Events</a> into an <a href="../../event-stream/event-stream/">Event Stream</a>, via a client library, API, gateway, etc. You can also write events directly using SQL syntax: the streaming database <a href="https://ksqldb.io/">ksqlDB</a>, for example, provides an <code>INSERT</code> statement.</p>
+<p>Normally, an actual component such as an application for Kafka would be writing <a href="../../event/event/">Events</a> into an <a href="../../event-stream/event-stream/">Event Stream</a>, via a client library, API, gateway, etc. We can also write events directly using SQL syntax: the streaming database <a href="https://ksqldb.io/">ksqlDB</a>, for example, provides an <code>INSERT</code> statement.</p>
 <pre><code>CREATE STREAM users (username VARCHAR, name VARCHAR, phone VARCHAR)
     with (kafka_topic='users-topic', value_format='json');
 INSERT INTO users (username, name, phone)

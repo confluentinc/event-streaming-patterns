@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -218,7 +220,7 @@
 <h2 id="solution">Solution</h2>
 <p><img alt="command-query-responsibility-segregation" src="../../img/command-query-responsibility-segregation.png" /></p>
 <p>Represent changes that happen in the real world as <a href="../../event/event/">Events</a> - an order is shipped, a ride is accepted, etc. - and retain these events as the system of record. Subsequently, aggregate those <a href="../../event/event/">Events</a> into a view that summarizes the events to represent the current state, allowing applications to query the current values. 
-So for example, the current balance of your account would be the total of all the payment events that added money to or removed it from your account. The system of record is the stream of payment events. The view you read from would be the account balance. </p>
+So for example, the current balance of an account would be the total of all the payment events that added money to or removed it from the account. The system of record is the stream of payment events. The view we read from would be the account balance. </p>
 <h2 id="implementation">Implementation</h2>
 <p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> can implement a CQRS using an <a href="../../event-stream/event-stream/">Event Stream</a> and <a href="../../table/state-table/">Table</a>.</p>
 <p><a href="../../event-stream/event-stream/">Event Streams</a> are built into to the streaming database design. Creating a new stream is straightforward:</p>
@@ -249,10 +251,10 @@ INSERT INTO purchases (customer, item, qty) VALUES ('jsmith', 'pants', -1);
 <p>CQRS adds complexity over a traditional simple <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> database implementation.</p>
 </li>
 <li>
-<p>High performance applications may benefit from a CQRS design. Isolating the load of writing and reading of data may allow you to scale those aspects independently and properly. </p>
+<p>High performance applications may benefit from a CQRS design. Isolating the load of writing and reading of data may allow us to scale those aspects independently and properly. </p>
 </li>
 <li>
-<p>Microserivces applications often use CQRS to scale-out with many views provided for different services. The same pattern is applicable to geographically dispersed applications such as a flight booking system which are read heavy across many locations.</p>
+<p>Microservices applications often use CQRS to scale-out with many views provided for different services. The same pattern is applicable to geographically dispersed applications such as a flight booking system which are read heavy across many locations.</p>
 </li>
 <li>
 <p>A write to a CQRS system is eventually consistent. Writes cannot be read immediately as there is a delay between the write of the command <a href="../../event/event/">Event</a> and the query-model being updated. This can cause complexity for some client applications, particularly online services.</p>

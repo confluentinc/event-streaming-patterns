@@ -153,6 +153,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -224,7 +226,7 @@
 <p><img alt="event-processor" src="../../img/event-processor.png" />
 We build an Event Processor, which is a component that reads <a href="../../event/event/">Events</a> and processes them, and possibly writes new <a href="../../event/event/">Events</a> as the result of its processing. As such, it may act as an <a href="../event-source/event-source">Event Source</a> and/or <a href="../../event-sink/event-sink/">Event Sink</a>, and in practice often acts as both. An event processor can be distributed, which means it has multiple instances that run across different machines. In this case the processing of <a href="../../event/event/">Events</a> happens concurrently across these instances.</p>
 <p>An important characteristic of an event processor is that it should allow for composition with other event processors. That's because, in practice, we rarely use a single event processor in isolation. Instead, we compose and connect (via <a href="../../event-stream/event-stream/">Event Streams</a>) one or more event processors inside an <a href="../event-processing-application/">Event Processing Application</a> that fully implements one particular use case end-to-end, or (e.g., in the case of microservices) that implements a subset of the overall business logic limited to the bounded context of a particular domain. </p>
-<p>An event processor performs a specific task within the event processing application. You can think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an <a href="../../event-stream/event-stream/">Event Stream</a>, enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.</p>
+<p>An event processor performs a specific task within the event processing application. Think of it as one processing node (or processing step) of a larger processing topology. Examples are the mapping of an event type to a domain object, filtering only the important events out of an <a href="../../event-stream/event-stream/">Event Stream</a>, enriching an event stream with additional data by joining it to another stream or database table, triggering alerts, or creating new events for consumption by other applications.</p>
 <h2 id="implementation">Implementation</h2>
 <p>There are multiple ways to create an <a href="../event-processing-application/">Event Processing Application</a> using Event Processors, we will look at two.</p>
 <h4 id="ksqldb">ksqlDB</h4>
@@ -238,7 +240,7 @@ We build an Event Processor, which is a component that reads <a href="../../even
     EMIT CHANGES;
 </code></pre>
 
-<p>With ksqlDB, you can view each section of the command as the construction of a different Event Processor:</p>
+<p>With ksqlDB, we can view each section of the command as the construction of a different Event Processor:</p>
 <ul>
 <li><code>CREATE STREAM</code> defines the new output <a href="../../event-stream/event-stream/">Event Stream</a> that this application will produce <a href="../../event/event/">Events</a> to.</li>
 <li><code>SELECT ...</code> is a mapping function, taking each input <a href="../../event/event/">Event</a> and "cleaning" it as defined. In this example, this simply means upper casing the <code>location</code> field in each input reading.</li>
@@ -246,7 +248,7 @@ We build an Event Processor, which is a component that reads <a href="../../even
 <li><code>EMIT CHANGES</code> is ksqlDB syntax which defines our query as continuously running, and that incremental changes will be produced as the query runs perpetually.</li>
 </ul>
 <h4 id="kafka-streams">Kafka Streams</h4>
-<p>The <a href="https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html">Kafka Streams DSL</a> provides abstractions for <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../../table/state-table/">Tables</a> as well as stateful and stateless transformation functions (<code>map</code>, <code>filter</code>, etc...). These functions act as the Event Processor in the larger <a href="./">Event Processing Application</a> you build with the Kafka Streams library.</p>
+<p>The <a href="https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html">Kafka Streams DSL</a> provides abstractions for <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../../table/state-table/">Tables</a> as well as stateful and stateless transformation functions (<code>map</code>, <code>filter</code>, etc...). These functions act as the Event Processor in the larger <a href="./">Event Processing Application</a> we build with the Kafka Streams library.</p>
 <pre><code class="java">builder
   .stream(&quot;readings&quot;);
   .mapValues((key, value)-&gt; 

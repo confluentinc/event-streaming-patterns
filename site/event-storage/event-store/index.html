@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -227,7 +229,7 @@ can guarantee constant-time (Θ(1)) writes, lock-free concurrent reads,
 and straightforward replication across multiple machines.</p>
 <h2 id="implementation">Implementation</h2>
 <p>Apache Kafka® is an event store that maintains a persistent,
-append-only stream — a <em>topic</em> — for each kind of event you need to
+append-only stream — a <em>topic</em> — for each kind of event we need to
 store. These topics are:</p>
 <ul>
 <li>Write-efficient - an append-only log is one of the fastest, cheapest

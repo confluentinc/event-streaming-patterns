@@ -135,6 +135,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul class="current">
@@ -295,7 +297,7 @@ approvals <code>WHERE approvals = 2</code>. We could have used a
 greater-than-or-equal check (<code>WHERE approvals &gt;= 2</code>) but that would
 have emitted a new event for a 3rd approval, and a 4th, and so on.
 That would be the wrong behavior here, but it might be useful feature
-in a system where you wanted to reward loyal customers, and send out a
+in a system where we wanted to reward loyal customers, and send out a
 discount email for every order <em>after</em> their first 10.</p>
 <h2 id="references">References</h2>
 <ul>

@@ -135,6 +135,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -303,8 +305,8 @@ newest event for each package. If we'd chosen a different partitioning
 key, or not specified one at all, we'd get very different results.</p>
 <p><code>LATEST_BY_OFFSET</code> is only one of the many <a href="https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/aggregate-functions/">summary
 functions ksqlDB supports</a>, from simple sums and
-averages to time-aware functions and histograms. And beyond those, you can
-easily <a href="https://docs.ksqldb.io/en/latest/concepts/functions/">define your own custom functions</a> or look to
+averages to time-aware functions and histograms. And beyond those, we can
+easily <a href="https://docs.ksqldb.io/en/latest/concepts/functions/">define our own custom functions</a> or look to
 <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">Kafka Streams</a> for complete control.</p>
 <h2 id="references">References</h2>
 <ul>

@@ -135,6 +135,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul class="current">
@@ -217,7 +219,7 @@
 <h2 id="solution">Solution</h2>
 <p><img alt="event-stream-merger" src="../../img/event-stream-merger.png" /></p>
 <h2 id="implementation">Implementation</h2>
-<p>The Kafka Streams DSL provides a <code>merge</code> operator which merges two streams into a single stream. You can then take the merged stream and use any number of operations on it.</p>
+<p>The Kafka Streams DSL provides a <code>merge</code> operator which merges two streams into a single stream. We can then take the merged stream and use any number of operations on it.</p>
 <pre><code class="java">KStream&lt;String, Event&gt; eventStream = builder.stream(...);
 KStream&lt;String, Event&gt; eventStreamII = builder.stream(...);
 KStream&lt;String, Event&gt; allEventsStream = eventStream.merge(eventStreamII);

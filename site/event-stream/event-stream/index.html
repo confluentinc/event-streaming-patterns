@@ -145,6 +145,8 @@
     </li>
     </ul>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -216,7 +218,7 @@
 <p><img alt="event-stream" src="../../img/event-stream.png" /></p>
 <p>Connect the <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> with an Event Stream. <a href="../../event-source/event-source/">Event Sources</a> produce <a href="../../event/event/">Events</a> to the Event Stream, and <a href="../../event-processing/event-processor/">Event Processors</a> and <a href="../../event-sink/event-sink/">Event Sinks</a> consume them. Event Streams are named, allowing communication over a specific stream of <a href="../../event/event/">Events</a>. Note how Event Streams decouple the source and sink applications, which communicate indirectly and asynchronously with each other through events. Additionally, Event data formats are often validated in order to govern the communication between applications.</p>
 <p>Generally speaking, an Event Stream records the history of what has happened in the world as a sequence of events (think: a sequence of facts). An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.</p>
-<p>Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and you can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.</p>
+<p>Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and we can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.</p>
 <h2 id="implementation">Implementation</h2>
 <p>The streaming database <a href="https://ksqldb.io/">ksqlDB</a> supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named <code>riderLocations</code>, representing locations of riders in a car-sharing service. The data format is <code>JSON</code>.</p>
 <pre><code class="sql">CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
@@ -255,7 +257,7 @@ SELECT * FROM riderLocations
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../stream-processing/event-grouper/" class="btn btn-neutral float-right" title="Event Grouper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../partitioned-parallelism/" class="btn btn-neutral float-right" title="Partitioned Parallelism">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../event-broker/" class="btn btn-neutral" title="Event Broker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -287,7 +289,7 @@ SELECT * FROM riderLocations
         <span><a href="../event-broker/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../stream-processing/event-grouper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../partitioned-parallelism/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -236,7 +238,7 @@ that gives access to the widest possible range of users.</p>
 <h2 id="implementation">Implementation</h2>
 <p>Confluent provides a broad set of <a href="https://docs.confluent.io/platform/current/kafka-rest/index.html">REST APIs</a> that allow any
 language or CLI to access the event store using HTTP(S). Further, it provides
-support to produce and consume Kafka data, formatted as JSON, Protobuf, Avro or
+support to produce and consume Apache Kafka® data, formatted as JSON, Protobuf, Avro or
 even raw base64-encoded bytes.</p>
 <p>As a simple example, we can post JSON-encoded events to a topic called
 <code>sales</code> using <a href="https://curl.se/">curl</a>:</p>

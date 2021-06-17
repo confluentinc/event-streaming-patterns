@@ -135,6 +135,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul class="current">
@@ -314,9 +316,9 @@ INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'fr'
 
 <h2 id="considerations">Considerations</h2>
 <p>Joining event streams is fairly simple. The big consideration is how
-large a retention period you need, and so the resources your join will
+large a retention period we need, and so the resources our join will
 use. Planning that tradeoff requires careful consideration of the
-specific problem you're solving.</p>
+specific problem we're solving.</p>
 <p>For large retention periods, consider joining a stream to a
 <a href="../../table/projection-table/">Projection Table</a> instead.</p>
 <h2 id="references">References</h2>

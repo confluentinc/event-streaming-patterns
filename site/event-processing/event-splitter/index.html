@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -253,7 +255,7 @@ KStream&lt;String, Integer&gt; splitStream = myStream.flatMap(
 <ul>
 <li>If child events need to be routed to different streams, see <a href="../event-router/">Event Router</a> for routing events to different locations.</li>
 <li>Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.</li>
-<li>Event Lineage: Your use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.</li>
+<li>Event Lineage: a use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>

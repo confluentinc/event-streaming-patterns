@@ -147,6 +147,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul>
@@ -217,7 +219,7 @@
 <h2 id="solution">Solution</h2>
 <p><img alt="event-router" src="../../img/event-router.png" /></p>
 <h2 id="implementation">Implementation</h2>
-<p>With <a href="https://ksqldb.io/">ksqlDB</a>, you can continuously route events to a different stream using the <code>CREATE STREAM</code> syntax with an appropriate <code>WHERE</code> filter.</p>
+<p>With <a href="https://ksqldb.io/">ksqlDB</a>, we can continuously route events to a different stream using the <code>CREATE STREAM</code> syntax with an appropriate <code>WHERE</code> filter.</p>
 <pre><code>CREATE STREAM payments ...;
 
 CREATE STREAM payments_france AS
@@ -233,7 +235,7 @@ CREATE STREAM payments_spain AS
 <li>The event value</li>
 <li>The <a href="https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html">RecordContext</a>, which provides access to headers, partitions, and other contextual information about the event.</li>
 </ul>
-<p>You can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. </p>
+<p>We can use any of the given parameters to generate and return the desired destination topic name for the given event, and Kafka Streams will complete the routing. </p>
 <pre><code class="java">CountryTopicExtractor implements TopicNameExtractor&lt;String, String&gt; {
    String extract(String key, String value, RecordContext recordContext) {
       switch (value.country) {
