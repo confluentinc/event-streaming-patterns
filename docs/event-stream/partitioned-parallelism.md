@@ -38,7 +38,7 @@ The common partitioning schemes are:
 2. Partitioning events round-robin across all partitions to achieve an even distribution of events per partition
 3. A custom partitioning algorithm, tailored to a specific use case.
 
-If we are using ksqlDB, the processors can scale by working on a set of partitions.
+If we are using a Kafka-based technology such as a [Kafka Streams application](https://docs.confluent.io/platform/current/streams/index.html) or the streaming database [ksqlDB](https://ksqldb.io/), the processors can scale by working on a set of partitions concurrently and in distributed manner.
 If an event stream's key content changes because of how the query wants to process the rows, for example to execute a `JOIN` operation between two streams of events, the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation.
 
 ```
