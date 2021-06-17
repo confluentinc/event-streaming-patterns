@@ -110,7 +110,7 @@ approvals `WHERE approvals = 2`. We could have used a
 greater-than-or-equal check (`WHERE approvals >= 2`) but that would
 have emitted a new event for a 3rd approval, and a 4th, and so on.
 That would be the wrong behavior here, but it might be useful feature
-in a system where you wanted to reward loyal customers, and send out a
+in a system where we wanted to reward loyal customers, and send out a
 discount email for every order _after_ their first 10.
 
 ## References

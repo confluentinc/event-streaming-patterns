@@ -40,7 +40,7 @@ that gives access to the widest possible range of users.
 
 Confluent provides a broad set of [REST APIs][rest_apis] that allow any
 language or CLI to access the event store using HTTP(S). Further, it provides
-support to produce and consume Apach Kafka® data, formatted as JSON, Protobuf, Avro or
+support to produce and consume Apache Kafka® data, formatted as JSON, Protobuf, Avro or
 even raw base64-encoded bytes.
 
 As a simple example, we can post JSON-encoded events to a topic called
