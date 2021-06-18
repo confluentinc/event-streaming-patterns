@@ -23,7 +23,7 @@ Depending on the use case, [Event Processors](../event-processing/event-processo
 
 ## Implementation
 
-[ksqlDB](https://ksqldb.io) maintains a system column called `ROWTIME` that tracks the timestamp of the [Event](../event/event.md). By default, `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the [Event](../event/event.md). See [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation for more information.
+As an example, the streaming database [ksqlDB](https://ksqldb.io) maintains a system column called `ROWTIME` that tracks the timestamp of the [Event](../event/event.md). By default, `ROWTIME` is inherited from the timestamp in the underlying Kafka record metadata, but it can also be pulled from a field in the [Event](../event/event.md). See [time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation for more information.
 
 ```
 CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
