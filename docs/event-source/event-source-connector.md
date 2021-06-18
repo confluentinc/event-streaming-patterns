@@ -29,7 +29,7 @@ CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
 ```
 
 ## Considerations
-* End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery, cf. the [Guaranteed Delivery](../event-stream/guaranteed-delivery.md) pattern) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.
+* End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.
 * Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication, and authorization, etc. between Event Source, Event Source Connector, and the destination Event Streaming Platform.
 
 ## References
