@@ -41,4 +41,5 @@ See the [ksqlDB supported window types](https://docs.ksqldb.io/en/latest/concept
 
 ## References
 * The [Tumbling Windows in ksqlDB](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) and the [Tumbling Windows in Kafka Streams](https://kafka-tutorials.confluent.io/create-tumbling-windows/kstreams.html) tutorials provide an end-to-end example for calculating an aggregate calculation over a window of events.
-* The [Tumbling Windows](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) tutorial provides an end-to-end example for calculating an aggregate calculation over a window of events.
+* The [Tumbling Windows in ksqlDB](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) and the [Tumbling Windows in Kafka Streams](https://kafka-tutorials.confluent.io/create-tumbling-windows/kstreams.html) tutorials provide an end-to-end example for calculating an aggregate calculation over a window of events.
+* Related full tutorials are [Session Windows in ksqlDB](https://kafka-tutorials.confluent.io/create-session-windows/ksql.html) and [Session Windows in Kafka Streams](https://kafka-tutorials.confluent.io/create-session-windows/kstreams.html), as well as [Hopping Windows in ksqlDB](https://kafka-tutorials.confluent.io/create-hopping-windows/ksql.html).
