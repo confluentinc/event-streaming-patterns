@@ -25,7 +25,7 @@ EOS allows [Event Streaming Applications](../event-processing/event-processing-a
 
 To prevent duplicates caused by operational failures when writing events into the [Event Streaming Platform](../event-stream/event-streaming-platform.md), the platform should support strong delivery guarantees and, in particular, EOS.  For [Event Sources](../event-source/event-source.md), i.e., on the writing side, a common choice to achieve EOS is the use of an Idempotent Writer. For [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), i.e., the reading side, an idempotent reader can be configured to read just committed transactions.
 
-However, if the Event Source is still capable of duplicating the same logical event, then the consumer application logic will need to handle duplicates.
+Meanwhile, if the Event Source is still capable of duplicating the same logical event, then the consumer application logic will need to handle those duplicates.
 It can do this by tracking unique IDs within each event.
 The ID could be the event key or a field embedded in the event message, and it is up to the consumer application to track when IDs have been processed.
 If it comes across another event with the same ID, it discards it.
