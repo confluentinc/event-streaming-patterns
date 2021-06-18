@@ -17,7 +17,7 @@ Depending on the use case, developers need to pick one variant over the others.
 How can events from an [Event Source](../event-source/event-source.md) be processed irrespective of the timestamps when they were created originally at the source?
 
 ## Solution
-![wallclock-time](../img/wallclock-time.png)
+![wallclock-time](../img/wallclock-time.svg)
 
 Depending on the use case, [Event Processors](../event-processing/event-processor.md) may use the time when the event was originally created by its [Event Source](../event-source/event-source.md), when it was received on the event stream in the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or they can derive the timestamp from one or more data fields provided by the [Event](../event/event.md) itself (i.e., from the event payload).
 
