@@ -43,7 +43,7 @@ Thus, instead of the strategy of avoiding duplicate events or discarding duplica
 
 ## Considerations
 A solution that necessitates strong EOS guarantees should enable EOS at all stages of the pipeline, not just on the reader.
-An Idempotent Reader is therefore typically combined with an Idempotent Writer, as well as transactions.
+An Idempotent Reader is therefore typically combined with an Idempotent Writer and transactional processing.
 
 ## References
 * This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
