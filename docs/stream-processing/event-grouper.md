@@ -40,5 +40,5 @@ When grouping events into time windows, there are various types of groupings pos
 See the [ksqlDB supported window types](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#window-types) and the [Kafka Streams supported window types](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-windowing) for details and diagrams explaining window types.
 
 ## References
-* See the full tutorials on using [Session Windows](https://kafka-tutorials.confluent.io/create-session-windows/ksql.html) and [Hopping Windows](https://kafka-tutorials.confluent.io/create-hopping-windows/ksql.html) with [ksqlDB](https://ksqldb.io/).
+* The [Tumbling Windows in ksqlDB](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) and the [Tumbling Windows in Kafka Streams](https://kafka-tutorials.confluent.io/create-tumbling-windows/kstreams.html) tutorials provide an end-to-end example for calculating an aggregate calculation over a window of events.
 * The [Tumbling Windows](https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html) tutorial provides an end-to-end example for calculating an aggregate calculation over a window of events.
