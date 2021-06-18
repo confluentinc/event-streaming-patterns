@@ -6,7 +6,7 @@ seo:
 
 # Schema-on-Read
 Schema-on-Read leaves the validation of a schema for an [Event](../event/event.md) to the reader.
-There are several use cases for this pattern, all of which provide a lot of flexibility to [Event Processors](../event-processing/event-processor.md):
+There are several use cases for this pattern, all of which provide a lot of flexibility to [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md):
 
 1. When there are different versions of the same schema type, and the reader wants to choose which version to apply to a given event.
 
