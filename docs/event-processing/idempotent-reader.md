@@ -5,7 +5,7 @@ seo:
 ---
 
 # Idempotent Reader
-Generally speaking, we want to believe that [Events](../event/event.md) get written into an [Event Streaming Platform](../event-stream/event-streaming-platform.md) once and read from it once, and that we don't need to handle multiple occurrences of published events.
+Generally speaking, we want to believe that [Events](../event/event.md) get written into an [Event Stream](../event-stream/event-stream.md) once and read from it once, and that we don't need to handle multiple occurrences of published events.
 However, depending on the behavior and technical limits of the [Event Source](../event-source/event-source.md), how it is configured, and what failures may happen, we do need to think about whether there is the risk of duplicate events and, if there are, how we can deal with them.
 
 There are two causes of duplicate events that the Idempotent Reader should take into consideration:
