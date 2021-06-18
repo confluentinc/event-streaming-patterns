@@ -6,7 +6,7 @@ seo:
 
 # Data Contract 
 
-An [Event Processing Application](../event-processing/event-processing-application.md) can send an [Event](../event/event.md) to another [Event Processing Application](../event-processing/event-processing-application.md).  It's essential that the communicating [Event Processing Applications](..event-processing/event-processing-application.md) can understand how to process these shared [Events](../event/event.md).
+An [Event Processing Application](../event-processing/event-processing-application.md) can send an [Event](../event/event.md) to another Event Processing Application.  It's essential that the communicating applications can understand how to process these shared [Events](../event/event.md).
 
 
 ## Problem
