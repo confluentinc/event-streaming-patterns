@@ -67,6 +67,6 @@ The difference of event-time to ingestion-time is typically less pronounced than
 One reason not to use event-time is when we cannot trust the [Event Source](../event-source/event-source.md) to provide us with reliable data, which includes the embedded timestamps of events. In this case, ingestion-time can become the preferred option, if fixing the root cause (unreliable event sources) is not a feasible option.
 
 ## References
-
+* [Wallclock-Time Processing](../stream-processing/wallclock-time.md) provides further details on using current time (wallclock time) as the event time.
 * [Timestamp assignment in ksqlDB](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#timestamp-assignment)
 * See the tutorial [Event-time semantics in ksqlDB]( https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for further details on time concepts
