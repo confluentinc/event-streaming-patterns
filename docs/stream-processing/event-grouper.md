@@ -22,7 +22,7 @@ For _field-based_ grouping, we use an Event Processor that groups events by one 
 The two grouping approaches are orthogonal and can be composed. For example, to compute 7-day averages for every customer in a stream of payments, we first group the events in the stream by customer ID _and_ by 7-day windows, and then compute the respective averages for each customer+window grouping.
 
 ## Implementation
-The event streaming database, [ksqlDB](https://ksqldb.io/), provides the capability to group related events by a column and group them into ["windows"](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/) where all the related events have a timestamp within the defined time-window.
+As an example, the streaming database [ksqlDB](https://ksqldb.io/) provides the capability to group related events by a column and group them into ["windows"](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/) where all the related events have a timestamp within the defined time-window.
 
 ```
 SELECT product-name, COUNT(*), SUM(price) FROM purchases
