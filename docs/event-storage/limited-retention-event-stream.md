@@ -11,7 +11,7 @@ Many use cases allow for [Events](../event/event.md) to be removed from an [Even
 How can we remove events from an Event Stream based on a criteria, such as event age or Event Stream size?
 
 ## Solution
-![limited-retention-event-stream](../img/limited-retention-event-stream.png)
+![limited-retention-event-stream](../img/limited-retention-event-stream.svg)
 
 The solution for limited retention will depend on the [Event Streaming Platform](../event-stream/event-streaming-platform.md). Most platforms will allow for deletion of events using an API or with an automated process configured within the platform itself. Because Event Streams are modeled as immutable event logs in the [Event Store](../event-storage/event-store.md), events will be removed from the beginning of an Event Stream moving forward. [Event Processing Applications](../event-processing/event-processing-application.md) which are reading events will not be given the deleted events, instead the stream will logically start with the more recent events that have not been removed.
 
