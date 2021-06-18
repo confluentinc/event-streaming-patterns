@@ -32,12 +32,19 @@ Separate out the function call into a service that writes an event to
 an [Event Stream](../event-stream/event-stream.md), detailing the
 action we need to take and its arguments. Then write a separate
 service that watches for that event before invoking the
-procedure<sup>1</sup>. Optionally the downstream service can write a
-result event back to a second stream to stream a return value.
+procedure.
 
-If the initial service needs to invoke many different functions, it
-can write events to many different streams.
+Typically a Command Event is dispatched in a fire-and-forget
+manner. The writer assumes the event will be handled correctly, and
+responsibility for monitoring and error-handling lies elsewhere in the
+system.  This is very similar to the Actor model. Actors have an
+inbox; we write messages to that inbox and trust they'll be handled in
+due course.
 
+If a return value is explicitly required, the downstream service can
+write a result event back to a second stream. Correlating Command
+Events with their return value is typically handled with a
+[Correlation Identifier](../event/correlation-identifier.md) .
 
 ## Implementation
 
@@ -75,7 +82,7 @@ And a second process that watches the stream of events and invokes the
 
     KStream<Long, GenericRecord> dispatchStream = builder.stream(
       "dispatch_products",
-      Consumed.with(Serdes.Long(),valueGenericAvroSerde)
+      Consumed.with(Serdes.Long(), valueGenericAvroSerde)
     );
 
     dispatchStream.foreach((key, value) -> warehouse.dispatchProduct(key, value));
@@ -103,7 +110,7 @@ The root problem here is that in moving from a function call within a
 monolith to a system that posts a specific command to a specific
 recipient, we've decoupled the function call _without_ decoupling the
 underlying concepts. When we do that, the architecture hits back with
-growing pains<sup>2</sup>.
+growing pains<sup>1</sup>.
 
 The real solution is to realize our "Command Event" is actually two
 concepts woven together: "What happened?" and "Who cares?" 
@@ -129,23 +136,20 @@ individual responsibility.
 
 ## References
 
-* This can approach become complex
-if there is a chain of functions, where the result of one is fed into
-the arguments of the next. In that situation, consider using [Event
-Collaboration](../compositional-patterns/event-collaboration.md).
-* If the producer returns a value, keeping track of which return value
-belongs to which invocation can also be a challenge. Typically we
-solve this with a [Correlation
-Identifier](../event/correlation-identifier.md) .
-* See [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 5: Events: A Basis for Collaboration" for further discussion
-* This pattern is derived from [Command Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* This can approach become complex if there is a chain of functions,
+  where the result of one is fed into the arguments of the next. In
+  that situation, consider using [Event
+  Collaboration](../compositional-patterns/event-collaboration.md).
+* See [Designing Event Driven
+  Systems](https://www.confluent.io/designing-event-driven-systems/) -
+  "Chapter 5: Events: A Basis for Collaboration" for further
+  discussion
+* This pattern is derived from [Command
+  Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html)
+  in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 
 ## Footnotes
 
-_<sup>1</sup> This is very similar to the Actor model. Actors have an
-inbox; we write messages to that inbox and trust they'll be handled in
-due course._
-
-<sup>2</sup> _It's at that point that someone in the team will say, "We were
+<sup>1</sup> _It's at that point that someone in the team will say, "We were
 better off just calling the function directly."  And if we stopped
 there, they'd have a fair point._
