@@ -38,7 +38,7 @@ Additionally, using a central repository like [Schema Registry](https://docs.con
 
 ## Considerations
 
-Rather than implementing custom support for a data-contract or schemas, you should consider using in industry accepted framework for schema support such as the following:
+Rather than implementing custom support for a data contract or schemas, you should consider using an industry-accepted framework for schema support, such as the following:
 
 * [Avro](https://avro.apache.org/docs/current/spec.html) 
 * [Protobuf](https://developers.google.com/protocol-buffers)
