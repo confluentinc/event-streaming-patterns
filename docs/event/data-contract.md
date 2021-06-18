@@ -13,7 +13,7 @@ An [Event Processing Application](../event-processing/event-processing-applicati
 How can an application send an [Event](../event/event.md) such that a receiving application will know how to process it?
 
 ## Solution
-![data-contract](../img/data-contract.png)
+![data-contract](../img/data-contract.svg)
 
 Using a Data Contract or Schema, different [Event Processing Applications](../event-processing/event-processing-application.md) can share [Events](../event/event.md) and understand how to process them without either the sender or receiver to know any details of the other.  The Data Contract pattern allows these different applications to cooperate while remaining loosely coupled, and thus insulated from any internal changes they may implement.  By implementing a data contract or schema, you can provide the same record consistency guarantees as a RDMS which integrate a schema by default.
 
