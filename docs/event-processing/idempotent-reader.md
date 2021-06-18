@@ -31,7 +31,7 @@ The ID could be the event key or a field embedded in the event message, and it i
 If it comes across another event with the same ID, it discards it.
 
 ## Implementation
-To handle an operational failure, you can enable EOS in your Kafka Streams application so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
+To handle an operational failure, you can [enable EOS in your Kafka Streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/) so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
 For Kafka consumers, automatic commits of consumer offsets are convenient for developers, but they don’t give enough control to avoid duplicate messages.
 So disable auto commit to maintain full control over when the application commits offsets to minimize duplicates.
 
