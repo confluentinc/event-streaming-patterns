@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Source Connector - Event Streaming Patterns</title>
+  <title>Command Event - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Source Connector";
-    var mkdocs_page_input_path = "event-source/event-source-connector.md";
+    var mkdocs_page_name = "Command Event";
+    var mkdocs_page_input_path = "event/command-event.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -63,20 +63,34 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/command-event/">Command Event</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Command Event</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#footnotes">Footnotes</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../correlation-identifier/">Correlation Identifier</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-deserializer/">Event Deserializer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-deserializer/">Event Deserializer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-envelope/">Event Envelope</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-serializer/">Event Serializer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-serializer/">Event Serializer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-standardizer/">Event Standardizer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-standardizer/">Event Standardizer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -112,30 +126,18 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-gateway/">Event Gateway</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-gateway/">Event Gateway</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Source Connector</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -203,11 +205,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Event Source Connector</li>
+    <li>Command Event</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -218,35 +220,127 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-source-connector">Event Source Connector</h1>
-<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems, which are not themselves <a href="../event-source/">Event Sources</a>.</p>
+                <h1 id="command-event">Command Event</h1>
+<p>The <a href="../event/">Events</a> in our systems often seem to fall into
+two categories: messages and commands.</p>
+<p>Message-like events resemble simple facts - a user sends us
+their new address, a product leaves the warehouse - and we record
+those facts first, without immediately considering what happens next.</p>
+<p>Other events seem more like commands to invoke a specific action - a
+user clicks a <code>[BUY]</code> button - and it's time to trigger order
+processing.</p>
+<p>How do we model command-like events?</p>
 <h2 id="problem">Problem</h2>
-<p>How can we connect cloud services and traditional systems, like relational databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, converting their data at rest to data in motion with <a href="../../event/event/">Events</a>.</p>
+<p>How can an <a href="../event-stream/event-streaming-platform.md">Event Streaming
+Platform</a> be used to
+invoke a procedure in another application?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
-<p>Generally speaking, we need to find a way to extract data as <a href="../../event/event/">Events</a> from the origin system. For relational databases, for example, a common technique is to use <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>, where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as <a href="../../event/event/">Events</a>, which can then be ingested into another system. The components that perform this extraction and ingestion of <a href="../../event/event/">Events</a> are typically called "connectors". The connectors turn the origin system into an <a href="../event-source/">Event Source</a>, then generate <a href="../../event/event/">Events</a> from that data, and finally sends these <a href="../../event/event/">Events</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
+<p><img alt="Command Event" src="../../img/command-event1.svg" /></p>
+<p>Separate out the function call into a service that writes an event to
+an <a href="../../event-stream/event-stream/">Event Stream</a>, detailing the
+action we need to take and its arguments. Then write a separate
+service that watches for that event before invoking the
+procedure.</p>
+<p>Typically a Command Event is dispatched in a fire-and-forget
+manner. The writer assumes the event will be handled correctly, and
+responsibility for monitoring and error-handling lies elsewhere in the
+system.  This is very similar to the Actor model. Actors have an
+inbox; we write messages to that inbox and trust they'll be handled in
+due course.</p>
+<p>If a return value is explicitly required, the downstream service can
+write a result event back to a second stream. Correlating Command
+Events with their return value is typically handled with a
+<a href="../correlation-identifier/">Correlation Identifier</a> .</p>
 <h2 id="implementation">Implementation</h2>
-<p>When connecting a cloud services and traditional systems to <a href="https://kafka.apache.org/">Apache Kafka®</a>, the most common solution is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. There are hundreds of ready-to-use connectors available on <a href="https://www.confluent.io/hub/">Confluent Hub</a>, including blob stores like AWS S3, cloud services like Salesforce and Snowflake, relational databases, data warehouses, traditional message queues, flat files, and more. Confluent also provides many <a href="https://docs.confluent.io/cloud/current/connectors/index.html">fully managed Kafka connectors</a> in the cloud.</p>
-<p>There are several options to deploy such connectors. For example, the streaming database <a href="https://ksqldb.io/">ksqlDB</a> provides an ability to manage Kafka connectors with SQL statements.</p>
-<pre><code>CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
-    &quot;connector.class&quot;='io.confluent.connect.jdbc.JdbcSourceConnector',
-    &quot;connection.url&quot;='jdbc:postgresql://localhost:5432/my.db',
-    &quot;mode&quot;='bulk',
-    &quot;topic.prefix&quot;='jdbc-',
-    &quot;table.whitelist&quot;='users',
-    &quot;key&quot;='username');
+<p>Suppose we have a <code>[BUY]</code> button that should trigger a
+<code>dispatchProduct(12005)</code> function call in our warehousing
+system. Rather than calling the function directly, we can split the
+call up as a command stream:</p>
+<pre><code class="sql">CREATE STREAM dispatch_products (
+  order_id BIGINT KEY,
+  address VARCHAR
+) WITH (
+  KAFKA_TOPIC = ' dispatch_products',
+  VALUE_FORMAT = 'AVRO',
+  PARTITIONS = 2
+);
+</code></pre>
+
+<p>Some process that inserts into that stream:</p>
+<pre><code class="sql">INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12004, '1 Streetford Road' );
+INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12005, '2 Roadford Avenue' );
+INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12006, '3 Avenue Fordstreet' );
+</code></pre>
+
+<p>And a second process that watches the stream of events and invokes the
+<code>dispatchProduct</code> procedure <code>foreach</code>:</p>
+<pre><code class="java">    ...
+    Serde&lt;GenericRecord&gt; valueGenericAvroSerde = ...
+    StreamsBuilder builder = new StreamsBuilder();
+
+    KStream&lt;Long, GenericRecord&gt; dispatchStream = builder.stream(
+      &quot;dispatch_products&quot;,
+      Consumed.with(Serdes.Long(), valueGenericAvroSerde)
+    );
+
+    dispatchStream.foreach((key, value) -&gt; warehouse.dispatchProduct(key, value));
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<ul>
-<li>End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery, cf. the <a href="../event-stream/guaranteed-delivery.md">Guaranteed Delivery</a> pattern) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.</li>
-<li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication, and authorization, etc. between Event Source, Event Source Connector, and the destination Event Streaming Platform.</li>
-</ul>
+<p>This approach is fine and it works, but it may be a missed opportunity
+to improved the overall architecture.</p>
+<p>Consider what happens when we need more actions. Suppose that <code>[BUY]</code>
+should also trigger an email and a text notification to the customer.
+Should the warehouse software finish its work and then write
+<code>SendEmail</code> and <code>SendText</code> commands to two new topics? Or should
+these two new events be written by the same process that wrote <code>DispatchProduct</code>?<br />
+Then a month later, when we need our sales figures, should we count
+the number of products dispatched or the number of emails sent?
+Perhaps both, to check they agree?<br />
+The system grows a little more and we have to ask, how much code is
+behind that <code>[BUY]</code> button?  What's the release cycle?  Is changing it
+becoming a blocker?  <code>[BUY]</code> is important to the whole company, and
+rightly so, but its maintenance shouldn't hold the company to ransom.</p>
+<p>The root problem here is that in moving from a function call within a
+monolith to a system that posts a specific command to a specific
+recipient, we've decoupled the function call <em>without</em> decoupling the
+underlying concepts. When we do that, the architecture hits back with
+growing pains<sup>1</sup>.</p>
+<p>The real solution is to realize our "Command Event" is actually two
+concepts woven together: "What happened?" and "Who cares?" </p>
+<p>By teasing those concepts apart, we can clean up our architecture. We
+allow one process to focus on recording the facts of what happened,
+while other processes decide for themselves if they care.<br />
+When the <code>[BUY]</code> click happens, we should just write an <code>Order</code>
+event. Then warehousing, notifications and sales can choose to react,
+without any need to coordinate.</p>
+<p><img alt="Command Event" src="../../img/command-event2.svg" /></p>
+<p>In short, commands are tightly coupled to an audience of one, whereas
+an event should just be a decoupled fact, available for anyone who's
+interested.  Commands aren't bad <em>per se</em>, but they are a flag that
+signals an opportunity for further decoupling.</p>
+<p>Seeing systems this way requires a slight shift of perspective - a new
+way of modeling our processes - and opens up the opportunity for
+systems that collaborate more easily while actually taking on less
+individual responsibility.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html">Channel Adapter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
-<li>See this <a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorial</a> for a full Kafka Connect example</li>
+<li>This can approach become complex if there is a chain of functions,
+  where the result of one is fed into the arguments of the next. In
+  that situation, consider using <a href="../../compositional-patterns/event-collaboration/">Event
+  Collaboration</a>.</li>
+<li>See <a href="https://www.confluent.io/designing-event-driven-systems/">Designing Event Driven
+  Systems</a> -
+  "Chapter 5: Events: A Basis for Collaboration" for further
+  discussion</li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html">Command
+  Message</a>
+  in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
 </ul>
+<h2 id="footnotes">Footnotes</h2>
+<p><sup>1</sup> <em>It's at that point that someone in the team will say, "We were
+better off just calling the function directly."  And if we stopped
+there, they'd have a fair point.</em></p>
               
             </div>
           </div>
@@ -254,10 +348,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-source/" class="btn btn-neutral float-right" title="Event Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../correlation-identifier/" class="btn btn-neutral float-right" title="Correlation Identifier">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-gateway/" class="btn btn-neutral" title="Event Gateway"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../compositional-patterns/pipeline/" class="btn btn-neutral" title="Pipeline"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -283,10 +377,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-gateway/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../compositional-patterns/pipeline/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-source/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../correlation-identifier/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

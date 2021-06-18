@@ -64,9 +64,15 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/command-event/">Command Event</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-deserializer/">Event Deserializer</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-serializer/">Event Serializer</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-standardizer/">Event Standardizer</a>
                     </li>
@@ -218,7 +224,7 @@
 <p>How can systems using different data formats communicate with each other using <a href="../../event/event/">Events</a>?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="event-translator" src="../../img/event-translator.png" /></p>
-<p>An Event Translator converts a data format into a standard format familiar to downstream <a href="../event-processor/">Event Processors</a>. This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to Json or Protobuf to Avro.</p>
+<p>An Event Translator converts a data format into a standard format familiar to downstream <a href="../event-processor/">Event Processors</a>. This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to JSON or Protobuf to Avro.</p>
 <h2 id="implementation">Implementation</h2>
 <p>The streaming database <a href="https://ksqldb.io">ksqlDB</a> provides the ability to create <a href="../../event-stream/event-stream/">Event Streams</a> with SQL statements.</p>
 <pre><code>CREATE STREAM translated_stream AS
@@ -231,7 +237,7 @@
 
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>In some cases translations will be unidirectional if data is lost, for example translating XML to json will often lose information meaning the original form cannot be recreated. </li>
+<li>In some cases translations will be unidirectional if data is lost, for example translating XML to JSON will often lose information meaning the original form cannot be recreated. </li>
 </ul>
 <h2 id="references">References</h2>
 <ul>

@@ -64,9 +64,15 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/command-event/">Command Event</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-deserializer/">Event Deserializer</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-serializer/">Event Serializer</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event-standardizer/">Event Standardizer</a>
                     </li>
@@ -259,7 +265,7 @@ MovieRatingJoiner joiner = new MovieRatingJoiner();
 KStream &lt;Integer, EnrichedRating&gt; enrichedRatings = ratings.join(movies, joiner);
 </code></pre>
 
-<p>See the tutorial <a href="https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html">How ot join a stream and lookup table</a> for a full example using Kafka Streams.</p>
+<p>See the tutorial <a href="https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html">How to join a stream and lookup table</a> for a full example using Kafka Streams.</p>
 <h2 id="considerations">Considerations</h2>
 <ul>
 <li>When building an Event Processing Application, it's recommended to confine the application to one problem domain.  While it's possible to use any number of event processors in the application, they should be closely related in most cases (similar to how one would design a microservice).</li>

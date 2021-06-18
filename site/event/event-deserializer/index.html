@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Partitioned Parallelism - Event Streaming Patterns</title>
+  <title>Event Deserializer - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Partitioned Parallelism";
-    var mkdocs_page_input_path = "event-stream/partitioned-parallelism.md";
+    var mkdocs_page_name = "Event Deserializer";
+    var mkdocs_page_input_path = "event/event-deserializer.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -63,20 +63,32 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/command-event/">Command Event</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../command-event/">Command Event</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../correlation-identifier/">Correlation Identifier</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-deserializer/">Event Deserializer</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Deserializer</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-envelope/">Event Envelope</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-serializer/">Event Serializer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-serializer/">Event Serializer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-standardizer/">Event Standardizer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-standardizer/">Event Standardizer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -136,24 +148,12 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../event-broker/">Event Broker</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-broker/">Event Broker</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/">Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/event-stream/">Event Stream</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Partitioned Parallelism</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-stream/partitioned-parallelism/">Partitioned Parallelism</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Stream processing</span></p>
@@ -203,11 +203,11 @@
     
       
         
-          <li>Event stream &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Partitioned Parallelism</li>
+    <li>Event Deserializer</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -218,52 +218,164 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="partitioned-parallelism">Partitioned Parallelism</h1>
-<p>If service goals mandate high throughput, it is useful to have the ability to distribute event storage as well as event production and consumption for parallel processing.
-Being able to distribute events and process them concurrently enables an application to scale.</p>
+                <h1 id="event-deserializer">Event Deserializer</h1>
+<p>Data has a long lifecycle, often outliving the programs that
+originally gathered and stored it. And data originates from a wide
+variety of systems and programming languages. The more easily we can
+access that ocean of data, the richer the analysis we can perform.</p>
+<p>In an online shopping business, data recorded by the order-processing
+system and from data user behavior may prove invaluable to the website
+design department, <em>provided they can actually access it</em>. It's
+vital to be able to read data from an <a href="../../event-storage/event-store/">Event
+Store</a> regardless of which process
+and which department put it there originally.</p>
+<p>To a large degree, the accessibility of data is determined at write
+time, by our choice of <a href="../event-serializer/">Event
+Serializer</a>. Still, the story is certainly not
+complete until we've read the data back out.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we allocate events across <a href="../event-stream/event-streams.md">Event Streams</a> and <a href="../table/table.md">Tables</a> so that they can be processed concurrently by distributed <a href="../../event-processing/event-processor/">Event Processors</a>?</p>
+<p>How can I reconstruct the original event from its representation in the event streaming platform?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="partitioned-parallelism" src="../../img/partitioned-parallelism.png" /></p>
-<p>We should use a partitioned event stream, and then assign the events to different partitions of the stream. Essentially, a partition is a unit of parallelism for storage as well as reading, writing, and processing events. Partitioning helps concurrency and scalability in these main ways:</p>
-<ul>
-<li>Platform scalability: enables different <a href="../event-broker/">Event Brokers</a> to store and serve <a href="../../event/event/">Events</a> to <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> concurrently</li>
-<li>Application scalability: enable different <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> to process <a href="../../event/event/">Events</a> concurrently</li>
-</ul>
-<p>Partitioning events also impacts application semantics: placing events into a given partition guarantees that the <em>ordering</em> of events is preserved, per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases as, very often, the sequencing of events matters, e.g., when processing retail orders (an order must be paid before it can be shipped).</p>
+<p><img alt="event deserializer" src="../../img/event-deserializer.svg" /></p>
+<p>Use an <a href="../event-stream/event-streaming-platform.md">Event Streaming
+Platform</a> that integrates
+well with a schema registry. This makes it easy to encourage (or
+require) writers to record the event's data description for later
+use. Having both the event data and its schema readily available makes
+deserialization easy.</p>
+<p>While some data formats are reasonably
+<a href="https://en.wikipedia.org/wiki/Discoverability">discoverable</a>, in
+practice it becomes invaluable to have a precise, permanent record of
+how the data was encoded at the time it was written. This is
+particularly true if the data format has evolved over time and the
+<a href="../../event-stream/event-stream/">Event Stream</a> may contain more than
+one encoding of semantically-equivalent data.</p>
 <h2 id="implementation">Implementation</h2>
-<p>With Apache Kafka®, streams (called <em>topics</em>) are created either by an administrator or by a streaming application like <a href="https://ksqldb.io">ksqlDB</a>. The number of partitions is specified at the time the topic is created.  For example:</p>
-<pre><code>ccloud kafka topic create myTopic --partitions 30
+<p>Confluent’s <a href="https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html">Schema
+Registry</a>
+stores a versioned history of the data's schema in Apache Kafka&reg;
+itself. The client libraries can then use this metadata to seamlessly
+reconstruct the original event data, while we can use the registry API
+to manually inspect the schemas, or to build libraries for other
+languages.</p>
+<p>For example, in the <a href="../event-serializer/">Event Serializer</a> pattern
+we wrote a stream of <code>fx_trade</code> events. If we want to recall the
+structure of those events we can ask ksqlDB:</p>
+<pre><code class="sh">DESCRIBE fx_trade;
 </code></pre>
 
-<p><a href="../../event/event/">Events</a> are placed into a specific partition according to the partitioning algorithm of the <a href="../../event-source/event-source/">Event Source</a>, such as an <a href="../../event-processing/event-processing-application/">Event Processing Application</a>.
-All events assigned into the same partition have strong ordering guarantees.</p>
-<p>The common partitioning schemes are:</p>
-<ol>
-<li>Partitioning based on the event key (e.g., the customer ID for a stream of customer payments), where events with the same key are stored in the same partition</li>
-<li>Partitioning events round-robin across all partitions to achieve an even distribution of events per partition</li>
-<li>A custom partitioning algorithm, tailored to a specific use case.</li>
-</ol>
-<p>If we are using a Kafka-based technology such as a <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams application</a> or the streaming database <a href="https://ksqldb.io/">ksqlDB</a>, the processors can scale by working on a set of partitions concurrently and in distributed manner.
-If an event stream's key content changes because of how the query wants to process the rows, for example to execute a <code>JOIN</code> operation in ksqlDB between two streams of events, the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation (this internal operation is often called <em>distributed data shuffling</em>).</p>
-<pre><code>CREATE STREAM stream_name
-  WITH ([...,]
-        PARTITIONS=number_of_partitions)
-  AS SELECT select_expr [, ...]
-  FROM from_stream
-  PARTITION BY new_key_expr [, ...]
-  EMIT CHANGES;
+<pre><code class="text">Name                 : FX_TRADE
+ Field         | Type
+----------------------------------------
+ TRADE_ID      | BIGINT           (key)
+ FROM_CURRENCY | VARCHAR(STRING)
+ TO_CURRENCY   | VARCHAR(STRING)
+ PRICE         | DECIMAL(10, 5)
+----------------------------------------
 </code></pre>
 
+<p>Or we can query the Schema Registry directly to see the structure in a
+machine-readable format:</p>
+<pre><code class="sh">curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq .
+</code></pre>
+
+<pre><code class="json">{
+  &quot;subject&quot;: &quot;fx_trade-value&quot;,
+  &quot;version&quot;: 1,
+  &quot;id&quot;: 44,
+  &quot;schema&quot;: &quot;{\&quot;type\&quot;:\&quot;record\&quot;,\&quot;name\&quot;:\&quot;KsqlDataSourceSchema\&quot;,\&quot;namespace\&quot;:\&quot;io.confluent.ksql.avro_schemas\&quot;,\&quot;fields\&quot;:[{\&quot;name\&quot;:\&quot;FROM_CURRENCY\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,\&quot;string\&quot;],\&quot;default\&quot;:null},{\&quot;name\&quot;:\&quot;TO_CURRENCY\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,\&quot;string\&quot;],\&quot;default\&quot;:null},{\&quot;name\&quot;:\&quot;PRICE\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,{\&quot;type\&quot;:\&quot;bytes\&quot;,\&quot;scale\&quot;:5,\&quot;precision\&quot;:10,\&quot;connect.version\&quot;:1,\&quot;connect.parameters\&quot;:{\&quot;scale\&quot;:\&quot;5\&quot;,\&quot;connect.decimal.precision\&quot;:\&quot;10\&quot;},\&quot;connect.name\&quot;:\&quot;org.apache.kafka.connect.data.Decimal\&quot;,\&quot;logicalType\&quot;:\&quot;decimal\&quot;}],\&quot;default\&quot;:null}],\&quot;connect.name\&quot;:\&quot;io.confluent.ksql.avro_schemas.KsqlDataSourceSchema\&quot;}&quot;
+}
+</code></pre>
+
+<p>Unpacking that <code>schema</code> field reveals the <a href="https://avro.apache.org/docs/current/">Avro</a> specification:</p>
+<pre><code class="sh">curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .schema | jq .
+</code></pre>
+
+<pre><code class="json">{
+  &quot;type&quot;: &quot;record&quot;,
+  &quot;name&quot;: &quot;KsqlDataSourceSchema&quot;,
+  &quot;namespace&quot;: &quot;io.confluent.ksql.avro_schemas&quot;,
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;FROM_CURRENCY&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        &quot;string&quot;
+      ],
+      &quot;default&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;TO_CURRENCY&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        &quot;string&quot;
+      ],
+      &quot;default&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;PRICE&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        {
+          &quot;type&quot;: &quot;bytes&quot;,
+          &quot;scale&quot;: 5,
+          &quot;precision&quot;: 10,
+          &quot;connect.version&quot;: 1,
+          &quot;connect.parameters&quot;: {
+            &quot;scale&quot;: &quot;5&quot;,
+            &quot;connect.decimal.precision&quot;: &quot;10&quot;
+          },
+          &quot;connect.name&quot;: &quot;org.apache.kafka.connect.data.Decimal&quot;,
+          &quot;logicalType&quot;: &quot;decimal&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    }
+  ],
+  &quot;connect.name&quot;: &quot;io.confluent.ksql.avro_schemas.KsqlDataSourceSchema&quot;
+}
+</code></pre>
+
+<p>An Avro library can use this schema to deserialize the events
+seamlessly. And any client libraries that are Schema Registry-aware
+can automate this lookup, allowing us to forget about encodings
+entirely and focus on the data.</p>
 <h2 id="considerations">Considerations</h2>
-<p>In general, a higher number of stream partitions results in higher throughput, and to maximize throughput, we want enough partitions to utilize all distributed instances of an <a href="../../event-processing/event-processor/">Event Processor</a> (e.g., servers in a ksqlDB cluster).
-Be sure to choose the partition count carefully based on the throughput of <a href="../../event-source/event-source/">Event Sources</a> (e.g., producers in Kafka, including connectors), <a href="../../event-processing/event-processor/">Event Processors</a> (e.g., ksqlDB, Kafka Streams applications), and <a href="../../event-sink/event-sink/">Event Sinks</a> (e.g., consumers in Kafka, including connectors), and to benchmark performance in the environment.
-Also take into consideration the design of data patterns and key assignments so that events are distributed as evenly as possible across the stream partitions.
-This will prevent certain stream partitions from getting overloaded relative to other stream partitions. See <a href="https://www.confluent.io/blog/kafka-streams-tables-part-4-elasticity-fault-tolerance-advanced-concepts/">Streams and Tables in Apache Kafka: Elasticity, Fault Tolerance, and Other Advanced Concepts</a> for further details on understanding and dealing with partition skew.</p>
+<p>In addition to Avro, Schema Registry supports Protobuf and JSON
+Schema. See <a href="../event-serializer/">Event Serializer</a> for a discussion
+of these formats.</p>
+<p>While the choice of serialization format is important, it doesn't have
+to be set in stone. For example, it's straightforward to <a href="https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html">translate between
+supported formats with
+ksqlDB</a>. For
+more complex scenarios, we have several strategies for managing schema
+migration:</p>
+<ul>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Compatibility</a>
+  discusses the kinds of "safe" schema changes that Avro is designed
+  to handle transparently.</li>
+<li><a href="../../event-processing/event-translator/">Event Translators</a> can
+  convert between different encodings to aid consumption by different
+  systems.</li>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Evolution</a>
+  discusses splitting and joining streams to simplify serving
+  consumers that can only handle certain versions of the event's
+  schema.</li>
+<li>An <a href="../event-standardizer/">Event Standardizer</a> can reformat
+  disparate data encodings into a single unified format.</li>
+<li>And we always have the option of handling encoding problems directly
+  in code with a <a href="./schema-on-read.md">Schema-on-Read</a> strategy.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li>The blog post <a href="https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster">How to choose the number of topics/partitions in a Kafka cluster</a> provides helpful guidance for selecting partition counts for your topics.</li>
-<li>For another approach to processing parallelism that subdivides the unit of work from a partition down to an event or an event key, see the <a href="https://github.com/confluentinc/parallel-consumer">Confluent Parallel Consumer for Kafka</a>.</li>
+<li>The counterpart of an event deserializer (for reading) is an <a href="../event-serializer/">Event Serializer</a> (for writing).</li>
+<li>Serializers and deserializers are closely related to <a href="./data-contract.md">Data
+  Contracts</a>, in which we want to adhere to a
+  specific serialization format, <em>and</em> constrain the individual events
+  to a certain schema within that format.</li>
+<li>See also: <a href="../../event-processing/event-mapper/">Event Mapper</a>.</li>
 </ul>
               
             </div>
@@ -272,10 +384,10 @@ This will prevent certain stream partitions from getting overloaded relative to 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../stream-processing/event-grouper/" class="btn btn-neutral float-right" title="Event Grouper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-envelope/" class="btn btn-neutral float-right" title="Event Envelope">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-stream/" class="btn btn-neutral" title="Event Stream"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../correlation-identifier/" class="btn btn-neutral" title="Correlation Identifier"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -301,10 +413,10 @@ This will prevent certain stream partitions from getting overloaded relative to 
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-stream/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../correlation-identifier/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../stream-processing/event-grouper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-envelope/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

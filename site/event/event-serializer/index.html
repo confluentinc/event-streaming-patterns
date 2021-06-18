@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Event Source Connector - Event Streaming Patterns</title>
+  <title>Event Serializer - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Source Connector";
-    var mkdocs_page_input_path = "event-source/event-source-connector.md";
+    var mkdocs_page_name = "Event Serializer";
+    var mkdocs_page_input_path = "event/event-serializer.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -63,20 +63,34 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/command-event/">Command Event</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../command-event/">Command Event</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/correlation-identifier/">Correlation Identifier</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../correlation-identifier/">Correlation Identifier</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-deserializer/">Event Deserializer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-deserializer/">Event Deserializer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-envelope/">Event Envelope</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-envelope/">Event Envelope</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-serializer/">Event Serializer</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Serializer</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#footnotes">Footnotes</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event-standardizer/">Event Standardizer</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-standardizer/">Event Standardizer</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -112,30 +126,18 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event source</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-aside/">Database Write Aside</a>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-aside/">Database Write Aside</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../database-write-through/">Database Write Through</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/database-write-through/">Database Write Through</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-gateway/">Event Gateway</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-gateway/">Event Gateway</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Source Connector</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source-connector/">Event Source Connector</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-source/">Event Source</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/event-source/">Event Source</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-validator/">Schema Validator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-source/schema-validator/">Schema Validator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
@@ -203,11 +205,11 @@
     
       
         
-          <li>Event source &raquo;</li>
+          <li>Event &raquo;</li>
         
       
     
-    <li>Event Source Connector</li>
+    <li>Event Serializer</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -218,35 +220,149 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-source-connector">Event Source Connector</h1>
-<p><a href="../../event-processing/event-processing-application/">Event Processing Applications</a> may want to consume data from existing data systems, which are not themselves <a href="../event-source/">Event Sources</a>.</p>
+                <h1 id="event-serializer">Event Serializer</h1>
+<p>Data has a long lifecycle, often outliving the programs that
+originally gathered and stored it. And data demands a broad
+audience - the more accessible our data is, the more departments in
+our organization can find use for it. </p>
+<p>In a successful system, data gathered by the sales department in one
+year may prove invaluable to the marketing department a few years
+later, <em>provided they can actually access it</em>.</p>
+<p>For maximum utility and longevity, data should be written in a way
+that doesn't obscure it from future readers and writers. The data is
+more important than today's technology choices.</p>
+<p>How does this affect an event-based system? Are there any special
+concerns for this kind of architecture, or will the programming
+language's serialization tools suffice?</p>
 <h2 id="problem">Problem</h2>
-<p>How can we connect cloud services and traditional systems, like relational databases, to an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, converting their data at rest to data in motion with <a href="../../event/event/">Events</a>.</p>
+<p>How can I convert an event into a format understood by the event
+streaming platform and applications that use it?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-source-connector" src="../../img/event-source-connector.png" /></p>
-<p>Generally speaking, we need to find a way to extract data as <a href="../../event/event/">Events</a> from the origin system. For relational databases, for example, a common technique is to use <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>, where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as <a href="../../event/event/">Events</a>, which can then be ingested into another system. The components that perform this extraction and ingestion of <a href="../../event/event/">Events</a> are typically called "connectors". The connectors turn the origin system into an <a href="../event-source/">Event Source</a>, then generate <a href="../../event/event/">Events</a> from that data, and finally sends these <a href="../../event/event/">Events</a> to the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
+<p><img alt="event serializer" src="../../img/event-serializer.svg" /></p>
+<p>Use a language-agnostic serialization format. The ideal format would
+be self-documenting, space-efficient, and designed to support some
+degree of backwards and forwards -compatibility. We recommend
+<a href="https://avro.apache.org/docs/current/">Avro</a>. (See "Considerations".)</p>
+<p>An optional, recommended step is to register the serialization details
+with a schema registry. A registry provides a reliable,
+machine-readable reference point for <a href="../event-deserializer/">Event
+Deserializers</a> and <a href="../../event-source/schema-validator/">Schema
+Validators</a>, making event
+consumption vastly simpler.</p>
 <h2 id="implementation">Implementation</h2>
-<p>When connecting a cloud services and traditional systems to <a href="https://kafka.apache.org/">Apache Kafka®</a>, the most common solution is to use <a href="https://docs.confluent.io/platform/current/connect/index.html">Kafka Connect</a>. There are hundreds of ready-to-use connectors available on <a href="https://www.confluent.io/hub/">Confluent Hub</a>, including blob stores like AWS S3, cloud services like Salesforce and Snowflake, relational databases, data warehouses, traditional message queues, flat files, and more. Confluent also provides many <a href="https://docs.confluent.io/cloud/current/connectors/index.html">fully managed Kafka connectors</a> in the cloud.</p>
-<p>There are several options to deploy such connectors. For example, the streaming database <a href="https://ksqldb.io/">ksqlDB</a> provides an ability to manage Kafka connectors with SQL statements.</p>
-<pre><code>CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
-    &quot;connector.class&quot;='io.confluent.connect.jdbc.JdbcSourceConnector',
-    &quot;connection.url&quot;='jdbc:postgresql://localhost:5432/my.db',
-    &quot;mode&quot;='bulk',
-    &quot;topic.prefix&quot;='jdbc-',
-    &quot;table.whitelist&quot;='users',
-    &quot;key&quot;='username');
+<p>For example, we can use Avro to define a structure for Foreign Exchange
+trade deals as:</p>
+<pre><code class="json">{&quot;namespace&quot;: &quot;io.confluent.developer&quot;,
+ &quot;type&quot;: &quot;record&quot;,
+ &quot;name&quot;: &quot;FxTrade&quot;,
+ &quot;fields&quot;: [
+     {&quot;name&quot;: &quot;trade_id&quot;, &quot;type&quot;: &quot;long&quot;},
+     {&quot;name&quot;: &quot;from_currency&quot;, &quot;type&quot;: &quot;string&quot;},
+     {&quot;name&quot;: &quot;to_currency&quot;, &quot;type&quot;: &quot;string&quot;},
+     {&quot;name&quot;: &quot;price&quot;, &quot;type&quot;: &quot;bytes&quot;, &quot;logicalType&quot;: &quot;decimal&quot;, &quot;precision&quot;: 10, &quot;scale&quot;: 5}
+ ]
+}
 </code></pre>
 
+<p>...and then use our language's Avro libraries to take care of serialization for us:</p>
+<pre><code class="java">  FxTrade fxTrade = new FxTrade( ... );
+
+  ProducerRecord&lt;long, FxTrade&gt; producerRecord =
+    new ProducerRecord&lt;&gt;(&quot;fx_trade&quot;, fxTrade.getTradeId(), fxTrade);
+
+  producer.send(producerRecord);
+</code></pre>
+
+<p>Alternatively, with the streaming database
+<a href="https://ksqldb.io/">ksqlDB</a>, we can define an <a href="../../event-stream/event-stream/">Event
+Stream</a> in a way that enforces that
+format and records the Avro definition using Confluent’s <a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Schema
+Registry</a>:</p>
+<pre><code class="sql">CREATE OR REPLACE STREAM fx_trade (
+  trade_id BIGINT KEY,
+  from_currency VARCHAR(3),
+  to_currency VARCHAR(3),
+  price DECIMAL(10,5)
+) WITH (
+  KAFKA_TOPIC = 'fx_trade',
+  KEY_FORMAT = 'avro',
+  VALUE_FORMAT = 'avro',
+  PARTITIONS = 3
+);
+</code></pre>
+
+<p>With this setup, both serialization and deserialization of data is
+performed automatically by ksqlDB behind the scenes.</p>
 <h2 id="considerations">Considerations</h2>
+<p><a href="../event-stream/event-streaming-platform.md">Event Streaming
+Platforms</a> are typically
+serialization-agnostic, accepting any serialized data from
+human-readable text to raw bytes. However, by constraining ourselves
+to more widely-accepted, structured data formats, we can open the door
+to easier collaboration with other projects and programming languages.</p>
+<p>Finding a "universal" serialization format isn't a new problem, or
+one unique to event streaming. As such we have a number of
+technology-agnostic solutions readily available. To briefly cover a
+few:</p>
 <ul>
-<li>End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery, cf. the <a href="../event-stream/guaranteed-delivery.md">Guaranteed Delivery</a> pattern) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.</li>
-<li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication, and authorization, etc. between Event Source, Event Source Connector, and the destination Event Streaming Platform.</li>
+<li><a href="https://www.json.org/">JSON</a>. Arguably the most successful
+  serialization format in the history of computing. JSON is a
+  text-based format that's easy to read, write and
+  <a href="https://en.wikipedia.org/wiki/Discoverability">discover</a><sup>1</sup>,
+  as evidenced by the number of languages and projects that produce
+  and consume JSON data across the world with minimal collaboration.</li>
+<li><a href="https://developers.google.com/protocol-buffers">Protocol
+  buffers</a>. Backed by
+  Google and supported by a wide variety of languages, Protobuf is a
+  binary format that sacrifices the discoverability of JSON for a much
+  more compact representation that uses less disk space and network
+  bandwidth. Protobuf is also a strongly-typed format, allowing
+  enforcement of a particular data schema from writers, and describing
+  the structure of that data to readers.</li>
+<li><a href="https://avro.apache.org/docs/current/">Avro</a>. A binary format similar to
+  Protocol Buffers, Avro's design has focuses on supporting the
+  evolution of schemas, allowing the data format to change over time
+  while minimizing the impact to future readers and writer.</li>
+</ul>
+<p>While the choice of serialization format is important, it doesn't have
+to be set in stone. It's straightforward to <a href="https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html">translate between
+supported formats with
+ksqlDB</a>. For
+more complex scenarios, we have several strategies for managing schema
+migration:</p>
+<ul>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Compatibility</a>
+  discusses the kinds of "safe" schema changes that Avro is designed
+  to handle transparently.</li>
+<li><a href="../../event-processing/event-translator/">Event Translators</a> can
+  convert between different encodings to aid consumption by different
+  systems.</li>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Evolution</a>
+  discusses splitting and joining streams to simplify serving
+  consumers that can only handle certain versions of the event's
+  schema.</li>
+<li>An <a href="../event-standardizer/">Event Standardizer</a> can reformat
+  disparate data encodings into a single unified format.</li>
+<li>And as a fallback we can push the problem to the consumer's code
+  with a <a href="./schema-on-read.md">Schema-on-Read</a> strategy.</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html">Channel Adapter</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
-<li>See this <a href="https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html">Kafka Tutorial</a> for a full Kafka Connect example</li>
+<li>The counterpart of an event serializer (for writing) is an <a href="../event-deserializer/">Event Deserializer</a> (for reading).</li>
+<li>Serializers and deserializers are closely related to <a href="./data-contract.md">Data
+  Contracts</a>, in which we want to adhere to a
+  specific serialization format <em>and</em> constrain the individual events
+  to a certain schema within that format.</li>
+<li>See also: <a href="../../event-processing/event-mapper/">Event Mapper</a>.</li>
 </ul>
+<h2 id="footnotes">Footnotes</h2>
+<p><em><sup>1</sup> Older programmers will tell tales of the
+less-discoverable serialization formats used by banks in the 80s, in
+which deciphering the meaning of a message meant wading through a
+thick, ring-bound printout of the data specification which explained the
+meaning of "Field 78" by cross-referencing "Encoding Subformat 22".</em></p>
               
             </div>
           </div>
@@ -254,10 +370,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-source/" class="btn btn-neutral float-right" title="Event Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event-standardizer/" class="btn btn-neutral float-right" title="Event Standardizer">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-gateway/" class="btn btn-neutral" title="Event Gateway"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event-envelope/" class="btn btn-neutral" title="Event Envelope"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -283,10 +399,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../event-gateway/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event-envelope/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-source/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event-standardizer/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
