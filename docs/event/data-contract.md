@@ -1,7 +1,7 @@
 ---
 seo:
   title: Data Contract
-  description: The Data Contract pattern allows for a an Event Processing Application to send an event to another application and the receiver will know how to process it.
+  description: The Data Contract pattern allows for an Event Processing Application to send an event to another application, and the receiving application will know how to process it.
 ---
 
 # Data Contract 
