@@ -35,7 +35,7 @@ To handle an operational failure, you can enable EOS in your Kafka Streams appli
 For Kafka consumers, automatic commits of consumer offsets are convenient for developers, but they don’t give enough control to avoid duplicate messages.
 So disable auto commit to maintain full control over when the application commits offsets to minimize duplicates.
 
-To handle incorrect application logic, which could result in the same event being written multiple times to the Kafka commit log (they actually are distinct events according to the [Event Store](../event-store/event-store.md)), the consumer application needs to maintain a local store for tracking these IDs.
+To handle incorrect application logic, which could result in the same event being written multiple times to the Kafka commit log (they actually are distinct events according to the [Event Store](../event-store/event-store.md)), the consumer application needs to maintain a local store for tracking the events' unique IDs.
 Then all event reading will entail checking the ID against the already-processed IDs before proceeding.
 
 Although it may apply to a subset of use cases, it may also be possible to design the consumer processing logic to be idempotent.
