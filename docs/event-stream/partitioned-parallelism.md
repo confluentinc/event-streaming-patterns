@@ -9,7 +9,7 @@ If service goals mandate high throughput, it is useful to have the ability to di
 Being able to distribute events and process them concurrently enables an application to scale.
 
 ## Problem
-How can we allocate events across [Event Streams](../event-stream/event-streams.md) and [Tables](../table/table.md) so that they can be processed concurrently by distributed [Event Processors](../event-processing/event-processor.md)?
+How can we allocate events across [Event Streams](../event-stream/event-stream.md) and [Tables](../table/table.md) so that they can be processed concurrently by distributed [Event Processors](../event-processing/event-processor.md)?
 
 ## Solution
 ![partitioned-parallelism](../img/partitioned-parallelism.png)
