@@ -7,7 +7,7 @@ How can systems using different data formats communicate with each other using [
 ## Solution
 ![event-translator](../img/event-translator.png)
 
-An Event Translator converts a data format into a standard format familiar to downstream [Event Processors](../event-processing/event-processor.md). This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to Json or Protobuf to Avro.
+An Event Translator converts a data format into a standard format familiar to downstream [Event Processors](../event-processing/event-processor.md). This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to JSON or Protobuf to Avro.
 
 ## Implementation
 The streaming database [ksqlDB](https://ksqldb.io) provides the ability to create [Event Streams](../event-stream/event-stream.md) with SQL statements.
@@ -22,7 +22,7 @@ CREATE STREAM translated_stream AS
 ```
 
 ## Considerations
-- In some cases translations will be unidirectional if data is lost, for example translating XML to json will often lose information meaning the original form cannot be recreated. 
+- In some cases translations will be unidirectional if data is lost, for example translating XML to JSON will often lose information meaning the original form cannot be recreated. 
 
 ## References
 * This pattern is derived from [Event Translator](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageTranslator.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf

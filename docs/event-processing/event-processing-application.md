@@ -59,7 +59,7 @@ MovieRatingJoiner joiner = new MovieRatingJoiner();
 KStream <Integer, EnrichedRating> enrichedRatings = ratings.join(movies, joiner);
 ```
 
-See the tutorial [How ot join a stream and lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html) for a full example using Kafka Streams.
+See the tutorial [How to join a stream and lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html) for a full example using Kafka Streams.
 
 ## Considerations
 * When building an Event Processing Application, it's recommended to confine the application to one problem domain.  While it's possible to use any number of event processors in the application, they should be closely related in most cases (similar to how one would design a microservice).
