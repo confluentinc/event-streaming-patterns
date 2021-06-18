@@ -19,6 +19,7 @@ Use the diagrams in [this google slidedeck](https://docs.google.com/presentation
 - Preamble before Problem
 - Problem is a 1-line question with a question mark at the end
 - Diagram shown first in Solution, before text
+- Update all diagrams to use the on-brand reworked versions
 - All words pattern names are capitalized, e.g. Event Filter
 - Hyperlink at least the first mention of another pattern (hyperlink additional mentions judiciously)
 - Use double quotes (“) (instead of single quotes (‘) in text; e.g. write “event” instead of ‘event’)
