@@ -78,6 +78,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/schema-on-read/">Schema-on-Read</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul class="current">
@@ -231,7 +233,7 @@
 <h2 id="solution">Solution</h2>
 <p><img alt="event-processing-application" src="../../img/event-processing-application.png" /></p>
 <p>We build an Event Processing Application by composing one or more <a href="../event-processor/">Event Processors</a> into an interconnected processing topology for <a href="../../event-stream/event-stream/">Event Streams</a> and <a href="../../table/state-table/">Tables</a>. Here, the continuous output streams of one processor are the continuous input streams to one or more downstream processors. The combined functionality of the application then covers our use case end-to-end, or at least as much of the use case as we are striving for (as the question of how few or many applications should implement a use case is an important design decision, which we are not covering here). The event processors—and thus the application at large—are typically distributed (running across multiple instances) to allow for elastic, parallel, fault-tolerant processing of data in motion at scale.</p>
-<p>For example, an application can read a stream of customer payments from an <a href="../../event-storage/event-store/">Event Store</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, then filter payments for certain customers, and then aggregate those payments per country and per week. The processing mode is stream processing, i.e., data is continuously processed 24x7. As soon as new <a href="../../event/event/">Events</a> are available, they are processed and propagated through the topology of <a href="./event-processing/event-processor.md">Event Processors</a>.</p>
+<p>For example, an application can read a stream of customer payments from an <a href="../../event-storage/event-store/">Event Store</a> in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>, then filter payments for certain customers, and then aggregate those payments per country and per week. The processing mode is stream processing, i.e., data is continuously processed 24x7. As soon as new <a href="../../event/event/">Events</a> are available, they are processed and propagated through the topology of <a href="../event-processor/">Event Processors</a>.</p>
 <h2 id="implementation">Implementation</h2>
 <p>Apache Kafka® is the most popular <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. There are several options for building Event Processing Applications when using Kafka, and we'll show two here.</p>
 <h3 id="ksqldb">ksqlDB</h3>

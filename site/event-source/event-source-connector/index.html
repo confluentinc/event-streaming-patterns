@@ -78,6 +78,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/schema-on-read/">Schema-on-Read</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -239,7 +241,7 @@
 
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery, cf. the <a href="../event-stream/guaranteed-delivery.md">Guaranteed Delivery</a> pattern) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.</li>
+<li>End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery) depend primarily on three factors: (1) the capabilities of the origin Event Source, such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination Event Streaming Platform, such as Apache Kafka or Confluent.</li>
 <li>Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication, and authorization, etc. between Event Source, Event Source Connector, and the destination Event Streaming Platform.</li>
 </ul>
 <h2 id="references">References</h2>

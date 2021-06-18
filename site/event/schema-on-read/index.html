@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Command Event - Event Streaming Patterns</title>
+  <title>Schema-on-Read - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Command Event";
-    var mkdocs_page_input_path = "event/command-event.md";
+    var mkdocs_page_name = "Schema-on-Read";
+    var mkdocs_page_input_path = "event/schema-on-read.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -64,21 +64,7 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Command Event</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#footnotes">Footnotes</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../command-event/">Command Event</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../correlation-identifier/">Correlation Identifier</a>
                     </li>
@@ -92,7 +78,19 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../event/">Event</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../schema-on-read/">Schema-on-Read</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Schema-on-Read</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
@@ -211,7 +209,7 @@
         
       
     
-    <li>Command Event</li>
+    <li>Schema-on-Read</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -222,127 +220,68 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="command-event">Command Event</h1>
-<p>The <a href="../event/">Events</a> in our systems often seem to fall into
-two categories: messages and commands.</p>
-<p>Message-like events resemble simple facts - a user sends us
-their new address, a product leaves the warehouse - and we record
-those facts first, without immediately considering what happens next.</p>
-<p>Other events seem more like commands to invoke a specific action - a
-user clicks a <code>[BUY]</code> button - and it's time to trigger order
-processing.</p>
-<p>How do we model command-like events?</p>
+                <h1 id="schema-on-read">Schema-on-Read</h1>
+<p>Schema-on-Read leaves the validation of a schema for an <a href="../event/">Event</a> to the reader.
+There are several use cases for this pattern, all of which provide a lot of flexibility to <a href="../../event-processing/event-processor/">Event Processors</a> and <a href="../../event-sink/event-sink/">Event Sinks</a>:</p>
+<ol>
+<li>
+<p>When there are different versions of the same schema type, and the reader wants to choose which version to apply to a given event.</p>
+</li>
+<li>
+<p>When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Put these heterogeneous <a href="../events/event.md">Event</a> types into the same stream, allowing the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> maintain event ordering and allowing any consuming <a href="../../event-processing/event-processor/">Event Processor</a> and <a href="../../event-sink/event-sink/">Event Sinks</a> <a href="../event-deserializer/">deserialize the events</a> as needed.</p>
+</li>
+<li>
+<p>When unstructured data is written into an <a href="../../event-stream/event-stream/">Event Stream</a>, and the reader then applies whichever schema it wants.</p>
+</li>
+</ol>
 <h2 id="problem">Problem</h2>
-<p>How can an <a href="../event-stream/event-streaming-platform.md">Event Streaming
-Platform</a> be used to
-invoke a procedure in another application?</p>
+<p>How can an <a href="../../event-processing/event-processor/">Event Processor</a> apply a schema on the data it is reading from an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="Command Event" src="../../img/command-event1.svg" /></p>
-<p>Separate out the function call into a service that writes an event to
-an <a href="../../event-stream/event-stream/">Event Stream</a>, detailing the
-action we need to take and its arguments. Then write a separate
-service that watches for that event before invoking the
-procedure.</p>
-<p>Typically a Command Event is dispatched in a fire-and-forget
-manner. The writer assumes the event will be handled correctly, and
-responsibility for monitoring and error-handling lies elsewhere in the
-system.  This is very similar to the Actor model. Actors have an
-inbox; we write messages to that inbox and trust they'll be handled in
-due course.</p>
-<p>If a return value is explicitly required, the downstream service can
-write a result event back to a second stream. Correlating Command
-Events with their return value is typically handled with a
-<a href="../correlation-identifier/">Correlation Identifier</a> .</p>
+<p><img alt="schema-on-read" src="../../img/schema-on-read.png" /></p>
+<p>The Schema-on-Read approach approach enables each reader to decide on how to read data, and which version of which schema to apply to every <a href="../events/event.md">Event</a> that it reads.
+To make schema management easier, the design can use a centralized repository that can store multiple versions of different schemas, and then the client applications then choose which schema to apply to events at runtime.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Suppose we have a <code>[BUY]</code> button that should trigger a
-<code>dispatchProduct(12005)</code> function call in our warehousing
-system. Rather than calling the function directly, we can split the
-call up as a command stream:</p>
-<pre><code class="sql">CREATE STREAM dispatch_products (
-  order_id BIGINT KEY,
-  address VARCHAR
-) WITH (
-  KAFKA_TOPIC = ' dispatch_products',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 2
-);
+<p>With <a href="https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html">Confluent Schema Registry</a>, all the schemas are managed in a centralized repository.
+In addition to just storing the schema information, Schema Registry can also be configured to check and/or enforce that schema changes are compatible with previous versions.</p>
+<p>For example, if a business started with a schema definition for an event that has 2 fields, but then the business needs evolved to now warrant an optional 3rd field, then that schema evolves with it.
+Schema Registry will ensure that the new schema is compatible with the old schema.
+In this particular case, for backward compatibility, the 3rd field <code>status</code> can be defined with a default value which will be used for the missing field when deserializing the data encoded with the old schema.
+This ensures that all events in a given stream follow <a href="../event-stream/schema-compatibility.md">Schema Compatibility</a> rules, and the applications can continue to process those events.</p>
+<pre><code>{
+ &quot;namespace&quot;: &quot;example.avro&quot;,
+ &quot;type&quot;: &quot;record&quot;,
+ &quot;name&quot;: &quot;user&quot;,
+ &quot;fields&quot;: [
+     {&quot;name&quot;: &quot;name&quot;, &quot;type&quot;: &quot;string&quot;},
+     {&quot;name&quot;: &quot;address&quot;,  &quot;type&quot;: &quot;string&quot;},
+     {&quot;name&quot;: &quot;status&quot;, &quot;type&quot;: &quot;string&quot;, &quot;default&quot;: &quot;waiting&quot;}
+ ]
+}
 </code></pre>
 
-<p>Some process that inserts into that stream:</p>
-<pre><code class="sql">INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12004, '1 Streetford Road' );
-INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12005, '2 Roadford Avenue' );
-INSERT INTO dispatch_products ( order_id, address ) VALUES ( 12006, '3 Avenue Fordstreet' );
-</code></pre>
-
-<p>And a second process that watches the stream of events and invokes the
-<code>dispatchProduct</code> procedure <code>foreach</code>:</p>
-<pre><code class="java">    ...
-    Serde&lt;GenericRecord&gt; valueGenericAvroSerde = ...
-    StreamsBuilder builder = new StreamsBuilder();
-
-    KStream&lt;Long, GenericRecord&gt; dispatchStream = builder.stream(
-      &quot;dispatch_products&quot;,
-      Consumed.with(Serdes.Long(), valueGenericAvroSerde)
-    );
-
-    dispatchStream.foreach((key, value) -&gt; warehouse.dispatchProduct(key, value));
+<p>In another example, if the use case warrants writing different event types into a single stream, with Apache Kafka you could set the "subject naming strategy" to register schemas against the record type, instead of the Kafka topic.
+Schema Registry will then let <a href="../event-stream/schema-evolution.md">Schema Evolution</a> and <a href="../event-stream/schema-compatibility.md">Schema Compatibility</a> checking to happen within the scope of each event type instead of the topic.</p>
+<p>The consumer application can read schema versions assigned to the data type, and in the case where there are different data types in any given stream, the application can cast each event to the appropriate type at processing time and follow the appropriate code path:</p>
+<pre><code class="java">if (Account.equals(record.getClass()) {
+  ...
+} else if (Approval.equals(record.getClass())) {
+  ...
+} else if (Transaction.equals(record.getClass())) {
+  ...
+} else {
+  ...
+}
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>This approach is fine and it works, but it may be a missed opportunity
-to improved the overall architecture.</p>
-<p>Consider what happens when we need more actions. Suppose that <code>[BUY]</code>
-should also trigger an email and a text notification to the customer.
-Should the warehouse software finish its work and then write
-<code>SendEmail</code> and <code>SendText</code> commands to two new topics? Or should
-these two new events be written by the same process that wrote <code>DispatchProduct</code>?<br />
-Then a month later, when we need our sales figures, should we count
-the number of products dispatched or the number of emails sent?
-Perhaps both, to check they agree?<br />
-The system grows a little more and we have to ask, how much code is
-behind that <code>[BUY]</code> button?  What's the release cycle?  Is changing it
-becoming a blocker?  <code>[BUY]</code> is important to the whole company, and
-rightly so, but its maintenance shouldn't hold the company to ransom.</p>
-<p>The root problem here is that in moving from a function call within a
-monolith to a system that posts a specific command to a specific
-recipient, we've decoupled the function call <em>without</em> decoupling the
-underlying concepts. When we do that, the architecture hits back with
-growing pains<sup>1</sup>.</p>
-<p>The real solution is to realize our "Command Event" is actually two
-concepts woven together: "What happened?" and "Who cares?" </p>
-<p>By teasing those concepts apart, we can clean up our architecture. We
-allow one process to focus on recording the facts of what happened,
-while other processes decide for themselves if they care.<br />
-When the <code>[BUY]</code> click happens, we should just write an <code>Order</code>
-event. Then warehousing, notifications and sales can choose to react,
-without any need to coordinate.</p>
-<p><img alt="Command Event" src="../../img/command-event2.svg" /></p>
-<p>In short, commands are tightly coupled to an audience of one, whereas
-an event should just be a decoupled fact, available for anyone who's
-interested.  Commands aren't bad <em>per se</em>, but they are a flag that
-signals an opportunity for further decoupling.</p>
-<p>Seeing systems this way requires a slight shift of perspective - a new
-way of modeling our processes - and opens up the opportunity for
-systems that collaborate more easily while actually taking on less
-individual responsibility.</p>
+<p>The schema's subject naming strategy can be set to record type (instead of Kafka topic) in one of two ways.
+The less restrictive is <code>RecordNameStrategy</code>, which sets the namespace to the record, regardless of which topic the event is written to.
+The more restrictive is <code>TopicRecordNameStrategy</code>, which sets the namespace to both, the record and the topic the event is  written to.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>This can approach become complex if there is a chain of functions,
-  where the result of one is fed into the arguments of the next. In
-  that situation, consider using <a href="../../compositional-patterns/event-collaboration/">Event
-  Collaboration</a>.</li>
-<li>See <a href="https://www.confluent.io/designing-event-driven-systems/">Designing Event Driven
-  Systems</a> -
-  "Chapter 5: Events: A Basis for Collaboration" for further
-  discussion</li>
-<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html">Command
-  Message</a>
-  in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>Confluent blog <a href="https://www.confluent.io/blog/put-several-event-types-kafka-topic/">Should You Put Several Event Types in the Same Kafka Topic?</a></li>
+<li><a href="https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html">Confluent Schema Registry</a></li>
 </ul>
-<h2 id="footnotes">Footnotes</h2>
-<p><sup>1</sup> <em>It's at that point that someone in the team will say, "We were
-better off just calling the function directly."  And if we stopped
-there, they'd have a fair point.</em></p>
               
             </div>
           </div>
@@ -350,10 +289,10 @@ there, they'd have a fair point.</em></p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../correlation-identifier/" class="btn btn-neutral float-right" title="Correlation Identifier">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../event-processing/claim-check/" class="btn btn-neutral float-right" title="Claim Check">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../compositional-patterns/pipeline/" class="btn btn-neutral" title="Pipeline"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../event/" class="btn btn-neutral" title="Event"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -379,10 +318,10 @@ there, they'd have a fair point.</em></p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../compositional-patterns/pipeline/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../event/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../correlation-identifier/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../event-processing/claim-check/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

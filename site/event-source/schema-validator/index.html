@@ -78,6 +78,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event/event/">Event</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event/schema-on-read/">Schema-on-Read</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
                 <ul>
@@ -236,7 +238,7 @@ Validate whether an <a href="../../event/event/">Event</a> conforms to the defin
 
 <h2 id="considerations">Considerations</h2>
 <ul>
-<li>Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is <a href="../event/schema-on-read.md">Schema On Read</a>, where data formats are not enforced on write. Instead, consuming Event Processing Applications are required to validate data formats as they read each event. </li>
+<li>Schema Validator is a data governance implementation of "Schema on Write", which enforces data conformance prior to event publication. An alternative strategy is <a href="../../event/schema-on-read/">Schema On Read</a>, where data formats are not enforced on write. Instead, consuming Event Processing Applications are required to validate data formats as they read each event. </li>
 <li>Server-side schema validation is preferable when you want to enforce this pattern centrally inside an organization.  In contrast, client-side validation assumes the cooperation of client applications and their developers, which may or may not be acceptable (e.g., in regulated industries).</li>
 <li>Schema validation results in a load increase because it impacts the write path of every event.  Client-side validation impacts primarily the load of the client applications.  Server-side schema validation increases the load on the event streaming platform, whereas client applications are less affected (here, the main impact is dealing with rejected events; see <a href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>).</li>
 </ul>
