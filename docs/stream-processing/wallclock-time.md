@@ -33,4 +33,5 @@ CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
 ```
 
 ## References
+* The [Event-Time Processing](../stream-processing/event-time-processing.md) pattern provides the base information related to time semantics in stream processing.
 * See the tutorial [Event-time semantics](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for a full example
