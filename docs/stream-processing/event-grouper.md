@@ -13,7 +13,7 @@ How can we group individual but related events from the same [Event Stream](../e
 
 
 ## Solution
-![event-grouper](../img/event-grouper.png)
+![event-grouper](../img/event-grouper.svg)
 
 For _time-based grouping_ a.k.a. _time-based windowing_, we use an [Event Processor](../event-processing/event-processor.md) that groups the related events into windows based on their event timestamps. Most window types have a pre-defined window size, such as 10 minutes or 24 hours. An exception is session windows, where the size of each window varies depending on the time characteristics of the grouped events.
 
