@@ -13,7 +13,7 @@ Conceptually, an event source is the opposite of an [Event Sink](../event-sink/e
 How can we create [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
-![event-source](../img/event-source.png)
+![event-source](../img/event-source.svg)
 
 Use an Event Source, which typically acts as a client in an [Event Streaming Platform](../event-stream/event-streaming-platform.md). Examples are an [Event Source Connector](../event-source/event-source-connector.md) (which continuously imports data as [Event Streams](../event-stream/event-stream.md) into the [Event Streaming Platform](../event-stream/event-streaming-platform.md) from an external system such as a cloud services or a relational database) or an [Event Processing Application](../event-processing/event-processing-application.md) such as a [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) application and the streaming database [ksqlDB](https://ksqldb.io/).
 
