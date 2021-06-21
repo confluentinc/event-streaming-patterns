@@ -45,7 +45,8 @@ For either method of configuring retention, Kafka _does not immediately_ remove 
 
 
 ## Considerations
-* When Event Streams have limited retention, consideration for failure scenarios should be taken. If there is a need for event Processing Applications to observe all events at least once, the configured retention must cover time frames of potential outages experienced by applications. For example, if an Operations team has an SLA of 2 business days (Mon to Fri) for a non-mission-critical Kafka use case, then retention should be set to at least 4 days to cover for incidents that happen right before or during the weekends.
+* We should account for failure scenarios when configuring event streams with limited retention. Our applications should have enough time to read and process events before they are being removed, which means the configured retention must cover the time frames of potential outages experienced by our applications. For example, if an Operations team has an SLA of 2 business days (Mon to Fri) for a non-mission-critical Kafka use case, then retention should be set to at least 4 days to cover for incidents that happen right before or during the weekends.
+* Similarly, if we want to allow applications to reprocess the same events multiple times (often called the ability to _reprocess historical data_) for use cases such as A/B testing or machine learning, then we must increase the retention settings accordingly. That's why it is common in practice to configure Kafka topics with long retention periods (months or years).
 
 ## References
 * This pattern is similar to [Message Expiration](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageExpiration.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
