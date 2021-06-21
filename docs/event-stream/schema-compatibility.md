@@ -82,5 +82,5 @@ In some cases you should upgrade producers first, in other cases you should upgr
 See [Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
 
 ## References
-* [Schema compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
+* [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
 * [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html): creating, editing, comparing versions
