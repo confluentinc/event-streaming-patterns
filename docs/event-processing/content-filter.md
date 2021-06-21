@@ -70,7 +70,7 @@ CREATE OR REPLACE STREAM product_summaries AS
   FROM products;
 ```
 
-Or we can do the equivalent transformation using Kafka Streams,
+Or we can do the equivalent transformation using the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka®,
 perhaps as part of a larger processing pipeline:
 
 ```java
@@ -95,7 +95,7 @@ Since filtering the content creates a new stream, it's worth
 considering how the new stream will be partitioned with [Partitioned
 Placement](../event-stream/partitioned-placement.md). By default the
 new stream will inherit the same partitioning key as its source, but
-by specifying a `PARTITION BY` clause, we can repartition the data to
+by e.g. specifying a `PARTITION BY` clause in ksqlDB, we can repartition the data to
 suit the new use case.
 
 In the example above, our 3rd party product feed might be partitioned
