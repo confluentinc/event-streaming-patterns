@@ -27,7 +27,7 @@ Another approach is "dual schema upgrades" a.k.a. "versioned streams" (shown abo
 Once all consumers are upgraded to the new schema, the old stream can be retired.
 
 ## Implementation
-For "in-place" schema evolution, an [Event Stream](../event-stream/event-stream.md) has multiple versions of the same schema that are compatible with eachother.
+For "in-place" schema evolution, an [Event Stream](../event-stream/event-stream.md) has multiple versions of the same schema that are compatible with each other.
 For example, if a field is removed: a consumer that was developed to process events without this field will be able to process events written with the old schema and contain the field – the consumer will just ignore that field.
 In this case, if the original schema were:
 
