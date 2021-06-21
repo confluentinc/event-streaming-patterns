@@ -59,7 +59,7 @@ For "dual schema upgrades", there are breaking changes so the processing flow ne
 For example, your Event Processing Application would read from two different streams:
 
 ```
-CREATE STREAM orders-v1 (ORDER_ID BIGINT, USERNAME VARCHAR)
+CREATE STREAM orders-v1 (order_id BIGINT, username VARCHAR)
     WITH (kafka_topic='orders-v1');
 
 CREATE STREAM orders-v2 (ORDER_ID BIGINT, STORE_ID VARCHAR)
