@@ -11,7 +11,7 @@ Traditional applications (operating with data at rest) and [Event Processing App
 How do I move data between an application’s internal data model (with domain objects) and an event streaming platform (with events) while keeping the two independent of each other?
 
 ## Solution
-![event-mapper](../img/event-mapper.png)
+![event-mapper](../img/event-mapper.svg)
 
 Event Mappers provide independence between the application and the event streaming platform so that neither is aware of the other, and ideally not even of the event mapper itself.
 
