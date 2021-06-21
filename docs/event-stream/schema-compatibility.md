@@ -29,7 +29,7 @@ The types of forwards compatible changes include:
 * deletion of optional fields with a default value: new writers do not write this field, old readers use the default value
 
 ## Implementation
-Using Avro as the serialization format, if the original schema is
+Using Avro as the [serialization format](../event/event-serializer.md), if the original schema is
 
 ```
 {"namespace": "io.confluent.examples.client",
