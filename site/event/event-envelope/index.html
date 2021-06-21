@@ -229,7 +229,7 @@
 <h2 id="problem">Problem</h2>
 <p>How to convey information to all participants in an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> independently of the event payload, e.g. how to decrypt an  <a href="../event/">Event</a>, what schema is used, or what ID defines the uniqueness of the event?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-envelope" src="../../img/event-envelope.png" /></p>
+<p><img alt="event-envelope" src="../../img/event-envelope.svg" /></p>
 <p>Use an Event Envelope to wrap the event data using a standard format agreed by all participants of the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> or more broadly. <a href="https://cloudevents.io/">Cloud Events</a>–which standardize access to ID, Schema, Key, and other common event attributes–are an industry-standard example of the Event Envelope pattern.</p>
 <h2 id="example-implementation">Example Implementation</h2>
 <p>Using the basic Java consumers and producers, a helper function could be used to wrap an application's immutable payload into an envelope which conforms to the expected format of the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>.</p>
