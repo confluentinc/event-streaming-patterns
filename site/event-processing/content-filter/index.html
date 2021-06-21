@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Compacted Event Stream - Event Streaming Patterns</title>
+  <title>Content Filter - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Compacted Event Stream";
-    var mkdocs_page_input_path = "event-storage/compacted-event-stream.md";
+    var mkdocs_page_name = "Content Filter";
+    var mkdocs_page_input_path = "event-processing/content-filter.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -84,30 +84,42 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event processing</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/claim-check/">Claim Check</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../claim-check/">Claim Check</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/content-filter/">Content Filter</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Content Filter</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../dead-letter-stream/">Dead Letter Stream</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-chunking/">Event Chunking</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-chunking/">Event Chunking</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-filter/">Event Filter</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-filter/">Event Filter</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-mapper/">Event Mapper</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-mapper/">Event Mapper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processing-application/">Event Processing Application</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing-application/">Event Processing Application</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-processor/">Event Processor</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processor/">Event Processor</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-router/">Event Router</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-router/">Event Router</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-splitter/">Event Splitter</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-splitter/">Event Splitter</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-streaming-api/">Event Streaming API</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-streaming-api/">Event Streaming API</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-translator/">Event Translator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-translator/">Event Translator</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event sink</span></p>
@@ -133,26 +145,14 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event storage</span></p>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Compacted Event Stream</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/compacted-event-stream/">Compacted Event Stream</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-store/">Event Store</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/event-store/">Event Store</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infinite-retention-event-stream/">Infinite Retention Event Stream</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../limited-retention-event-stream/">Limited Retention Event Stream</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/limited-retention-event-stream/">Limited Retention Event Stream</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
@@ -211,11 +211,11 @@
     
       
         
-          <li>Event storage &raquo;</li>
+          <li>Event processing &raquo;</li>
         
       
     
-    <li>Compacted Event Stream</li>
+    <li>Content Filter</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -226,48 +226,93 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="compacted-event-stream">Compacted Event Stream</h1>
-<p><a href="../../event-stream/event-stream/">Event Streams</a> often represent keyed snapshots of state, similar to a table in a relational database. That is, the <a href="../../event/event/">Events</a> contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. <a href="../../event-processing/event-processing-application/">Event Processing Applications</a> will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.</p>
+                <h1 id="content-filter">Content Filter</h1>
+<p><a href="../../event/event/">Events</a> in an <a href="../event-processing-application/">Event Processing
+Applications</a> can often be very
+large. We tend to capture data exactly as it arrives, and then work on
+it, rather than processing it first and only storing the results. So
+it can often be the case that the event we want to consume has much
+more information in it than we actually need for the task in hand.</p>
+<p>For example, we might pull in a product feed from a 3rd party API and
+store that data exactly as it was received. Later, we might ask the
+question, "How many products are in each product category?"  and find
+that every event contains 100 fields, when we're really only
+interested in counting one. At the very least this is inefficient -
+the network, memory and serialization costs are 100x higher than they
+need to be.  But if we need to manually inspect the data, this
+actually becomes painful; hunting through 100 fields to find and check
+the one we care about.</p>
+<p>Equally we may have security and data privacy concerns to
+address. Imagine we have a stream of data representing users' personal
+details and site preferences. If the marketing department wants to get
+more information about our global customer base, we might be able to
+share the users' timezone and currency settings, but <em>only those
+fields</em>.</p>
+<p>We need a method of storing complete events while only giving
+consumers a subset of their fields.</p>
 <h2 id="problem">Problem</h2>
-<p>How can a (keyed) table be stored in an <a href="../../event-stream/event-stream/">Event Stream</a> forever, using the minimum amount of space?</p>
+<p>How do I simplify dealing with a large event when I am interested only
+in a few data items?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="compacted-event-stream" src="../../img/compacted-event-stream.png" /></p>
-<p>Remove events from the <a href="../../event-stream/event-stream/">Event Stream</a> that represent outdated information and have been superseded by new <a href="../../event/event/">Events</a>. The table's current data (i.e., its latest state) is represented by the remaining <a href="../../event/event/">Events</a> in the stream.</p>
-<p>This approach bounds the storage space of the table's <a href="../../event-stream/event-stream/">Event Stream</a> to Θ(number of unique keys currently in table), rather than Θ(total number of change events for table). In practice, the number of unique keys (e.g., unique customer IDs) is typically much smaller than the number of table changes (e.g., total number of changes across all customer profiles). A Compacted Event Stream thus reduces the storage space significantly in most cases.</p>
+<p><img alt="content filter" src="../../img/content-filter.svg" /></p>
+<p>Create an <a href="../event-processor/">Event Processor</a> that inspects each
+event, pulls out the fields of interest, and passes new, smaller
+events downstream for further processing.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Apache Kafka® provides this functionality natively through its <a href="https://kafka.apache.org/documentation/#compaction">Topic Compaction</a> feature. An <a href="../../event-stream/event-stream/">Event Stream</a> (topic in Kafka) is scanned periodically to remove any old Events that have been superseded by newer Events that have the same key, such as as the same customer ID. Note that compaction is an asynchronous process in Kafka, so a compacted stream may contain some superseded events, which are waiting to be compacted away.</p>
-<p>To create a compacted <a href="../../event-stream/event-stream/">Event Stream</a> called <code>customer-profiles</code> with Kafka:</p>
-<pre><code class="bash">➜ kafka-topics --create \
-    --bootstrap-server &lt;bootstrap-url&gt; \
-    --replication-factor 3 \
-    --partitions 3 \
-    --topic customer-profiles \
-    --config cleanup.policy=compact
-
-Created topic customer-profiles.
+<p>As an example, in the streaming database <a href="https://ksqldb.io/">ksqlDB</a>
+we can easily transform a rich event stream into a stream of simpler
+event with a <code>SELECT</code> statement.</p>
+<p>For instance, assume we have an event stream called <code>products</code> where
+each event contains a huge number of fields. We can prune this down
+with:</p>
+<p>But we are only interested in 4 fields <code>producer_id</code>, <code>category</code>,
+<code>sku</code>, and <code>price</code>. We can prune down the events to just those fields
+with:</p>
+<pre><code class="sql">CREATE OR REPLACE STREAM product_summaries AS
+  SELECT
+    product_id,
+    category,
+    sku,
+    price
+  FROM products;
 </code></pre>
 
-<p>The <code>kafka-topics</code> command can also verify the current topic's configuration:</p>
-<pre><code class="bash">➜ kafka-topics --bootstrap-server localhost:9092 --topic customer-profiles --describe
+<p>Or we can do the equivalent transformation using the <a href="https://docs.confluent.io/platform/current/streams/index.html">Kafka Streams client library</a> of Apache Kafka®,
+perhaps as part of a larger processing pipeline:</p>
+<pre><code class="java">builder.stream(&quot;products&quot;, Consumed.with(Serdes.Long(), productSerde))
+    .mapValues(
+        (product) -&gt; {
+          ProductSummary summary = new ProductSummary();
 
-Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    Configs: cleanup.policy=compact,segment.bytes=1073741824
-        Topic: customer-profiles       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Offline:
-        Topic: customer-profiles       Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Offline:
+          summary.setCategory(product.getCategory());
+          summary.setSku(product.getSku());
+          summary.setPrice(product.getPrice());
+
+          return summary;
+        })
+    .to(&quot;product_summaries&quot;, Produced.with(Serdes.Long(), productSummarySerde));
 </code></pre>
 
 <h2 id="considerations">Considerations</h2>
-<p>Compacted <a href="../../event-stream/event-stream/">Event Streams</a> allow for some optimizations:</p>
-<ul>
-<li>First, they allow the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> to limit the storage growth of the <a href="../../event-stream/event-stream/">Event Stream</a> in a data-specific way, rather than removing <a href="../../event/event/">Events</a> universally after a pre-configured period of time.</li>
-<li>Second, having smaller <a href="../../event-stream/event-stream/">Event Streams</a> allows for faster recovery and system migration strategies.</li>
-</ul>
-<p>It is important to understand that compaction, on purpose, removes historical data from an <a href="../../event-stream/event-stream/">Event Stream</a> by removing superseded Events as defined above. In many use cases, however, historical data should not be removed, such as for a stream of financial transactions, where every single transaction needs to be recorded and stored. Here, if the storage of the <a href="../../event-stream/event-stream/">Event Stream</a> is the primary concern, use an <a href="../infinite-retention-event-stream/">Infinite Retention Event Stream</a> instead of a compacted stream.</p>
+<p>Since filtering the content creates a new stream, it's worth
+considering how the new stream will be partitioned with <a href="../event-stream/partitioned-placement.md">Partitioned
+Placement</a>. By default the
+new stream will inherit the same partitioning key as its source, but
+by e.g. specifying a <code>PARTITION BY</code> clause in ksqlDB, we can repartition the data to
+suit the new use case.</p>
+<p>In the example above, our 3rd party product feed might be partitioned
+by the vendor's unique <code>product_id</code>, but for this use case it might
+make more sense to partition the filtered events by their <code>category</code>.</p>
+<p>See the <a href="https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/create-stream-as-select/">ksqlDB
+documentation</a>
+for details.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Compacted Event Streams are highly related to the <a href="../../table/state-table/">State Table</a> pattern.</li>
-<li>Compacted Event Streams work a bit like simple <a href="http://www.benstopford.com/2015/02/14/log-structured-merge-trees/">Log Structured Merge Trees</a>.</li>
-<li><a href="https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_cleanup.policy">Cleanup policy configuration</a> of Kafka topics.</li>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/ContentFilter.html">Content
+  Filter</a>
+  in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+<li>For filtering out entire events from a stream, consider an <a href="../event-filter/">Event
+  Filter</a>.</li>
 </ul>
               
             </div>
@@ -276,10 +321,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../event-store/" class="btn btn-neutral float-right" title="Event Store">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../dead-letter-stream/" class="btn btn-neutral float-right" title="Dead Letter Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../event-source/schema-validator/" class="btn btn-neutral" title="Schema Validator"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../claim-check/" class="btn btn-neutral" title="Claim Check"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -305,10 +350,10 @@ Topic: customer-profiles       PartitionCount: 3       ReplicationFactor: 1    C
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../event-source/schema-validator/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../claim-check/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../event-store/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../dead-letter-stream/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

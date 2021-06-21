@@ -87,6 +87,8 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-processing/claim-check/">Claim Check</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-processing/content-filter/">Content Filter</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-processing/dead-letter-stream/">Dead Letter Stream</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-processing/event-chunking/">Event Chunking</a>
@@ -137,6 +139,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/event-store/">Event Store</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../event-storage/infinite-retention-event-stream/">Infinite Retention Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../event-storage/limited-retention-event-stream/">Limited Retention Event Stream</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
@@ -271,6 +275,7 @@ public long extract(ConsumerRecord&lt;Object, Object&gt; record, long partitionT
 <p>One reason not to use event-time is when we cannot trust the <a href="../../event-source/event-source/">Event Source</a> to provide us with reliable data, which includes the embedded timestamps of events. In this case, ingestion-time can become the preferred option, if fixing the root cause (unreliable event sources) is not a feasible option.</p>
 <h2 id="references">References</h2>
 <ul>
+<li><a href="../wallclock-time/">Wallclock-Time Processing</a> provides further details on using current time (wallclock time) as the event time.</li>
 <li><a href="https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#timestamp-assignment">Timestamp assignment in ksqlDB</a></li>
 <li>See the tutorial <a href="https://kafka-tutorials.confluent.io/time-concepts/ksql.html">Event-time semantics in ksqlDB</a> for further details on time concepts</li>
 </ul>
