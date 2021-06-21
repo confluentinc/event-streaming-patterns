@@ -70,5 +70,5 @@ CREATE STREAM orders-v2 (ORDER_ID BIGINT, STORE_ID VARCHAR)
 Follow [Schema Compatibility](../event-stream/schema-compatibility.md) rules to determine which schema changes are compatible or breaking.
 
 ## References
-* [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html#)
+* [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
 * [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html): creating, editing, comparing versions
