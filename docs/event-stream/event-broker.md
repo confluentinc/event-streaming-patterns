@@ -11,7 +11,7 @@ Loosely coupled components in a software architecture allow services and applica
 How can we decouple [Event Sources](../event-source/event-source.md) from [Event Sinks](../event-sink/event-sink.md), both of which may include cloud services, systems like relational databases, as well as applications and microservices?
 
 ## Solution
-![event-broker](../img/event-broker.png)
+![event-broker](../img/event-broker.svg)
 
 We use the Event Broker of an [Event Streaming Platform](../event-stream/event-streaming-platform.md) for this decoupling. Typically, multiple such brokers are deployed as a distributed cluster to ensure elasticity, scalability, and fault-tolerance during operations.  Event brokers collaborate on receiving and durably storing (write operations) as well as serving (read operations) [Events](../event/event.md) into [Event Streams](../event-stream/event-stream.md) from one or many clients in parallel. Clients that produce events are called the [Event Sources](../event-source/event-source.md), which are decoupled and isolated through the brokers from the clients that consume events, called the [Event Sinks](../event-sink/event-sink.md). 
 
