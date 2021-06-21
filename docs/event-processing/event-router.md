@@ -11,7 +11,7 @@ seo:
 How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](../event-stream/event-stream.md) based on some attribute of the [Events](../event/event.md)?
 
 ## Solution
-![event-router](../img/event-router.png)
+![event-router](../img/event-router.svg)
 
 ## Implementation
 With [ksqlDB](https://ksqldb.io/), we can continuously route events to a different stream using the `CREATE STREAM` syntax with an appropriate `WHERE` filter.
