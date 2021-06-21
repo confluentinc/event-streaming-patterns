@@ -36,7 +36,7 @@ With size-based retention, events will begin to be removed from the topic once t
 log.retention.bytes=107374127424
 ```
 
-For more guidance and configuring retention, see the [Kafka Broker Configurations documentation](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html) for default settings, or the [Modifying Topics](https://docs.confluent.io/platform/current/kafka/post-deployment.html#modifying-topics) section for modifying existing topics.
+For more guidance and configuring size-based data retention, see the [Kafka Broker Configurations documentation](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html) for default settings, or the [Modifying Topics](https://docs.confluent.io/platform/current/kafka/post-deployment.html#modifying-topics) section for modifying existing topics.
 
 For either method of configuring retention, Kafka _does not immediately_ remove events one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Topics are further broken down into partitions (see [Partitioned Placement](../event-stream/partitioned-placement.md)). Partitions themselves are further divided into files on disk called segments. Segments represent a sequence of the events in a particular partition, and these files are what is removed once a violation of the retention policy has occurred. Additionally, the cleaning algorithm is subject to additional configuration such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. 
 
