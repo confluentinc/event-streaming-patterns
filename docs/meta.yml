@@ -5,6 +5,7 @@ toc:
       - index
   - title: Event Storage
     items:
+      - event-storage/limited-retention-event-stream
       - event-storage/infinite-retention-event-stream
       - event-storage/compacted-event-stream
       - event-storage/event-store
@@ -20,6 +21,7 @@ toc:
       - event-processing/event-processing-application
       - event-processing/event-translator
       - event-processing/claim-check
+      - event-processing/content-filter
       - event-processing/event-mapper
       - event-processing/event-splitter
       - event-processing/event-processor
@@ -47,13 +49,19 @@ toc:
       - stream-processing/event-time-processing
   - title: Event
     items:
+      - event/data-contract
       - event/correlation-identifier
+      - event/event-serializer
+      - event/event-deserializer
       - event/event
+      - event/command-event
       - event/event-envelope
       - event/event-standardizer
+      - event/schema-on-read
   - title: Event Stream
     items:
       - event-stream/event-stream
+      - event-stream/partitioned-parallelism
       - event-stream/event-broker
   - title: Event Source
     items:
@@ -63,3 +71,4 @@ toc:
       - event-source/database-write-aside
       - event-source/database-write-through
       - event-source/event-source-connector
+
