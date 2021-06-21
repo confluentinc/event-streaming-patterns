@@ -27,7 +27,7 @@ The following example sets the retention period of a topic to one year:
 log.retention.hours=168
 ```
 
-### Size Based Retention
+### Size-Based Retention
 With size based retention, events will begin to be removed from the topic once the total size of the topic violates the configured maximum size. Kafka supports a `log.retention.bytes` configure. For example, to configure the maximum size of a topic to 100GB you could set the configuration as follows: 
  
 ```bash
