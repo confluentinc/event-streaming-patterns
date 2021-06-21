@@ -5,7 +5,7 @@ seo:
 ---
 
 # Schema Compatibility
-Schemas are like [Data Contracts](../event/data-contract.md) in that they set the terms that guarantee applications can process the data it receives.
+Schemas are like [Data Contracts](../event/data-contract.md) in that they set the terms that guarantee applications can process the data they receive.
 A natural behavior of applications and data schemas is that they evolve over time, so it's important to have a policy about how they are allowed to evolve and what compatibility rules are between old and new versions.
 
 ## Problem
