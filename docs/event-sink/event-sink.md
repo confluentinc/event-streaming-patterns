@@ -8,7 +8,7 @@ How can we read (or consume / subscribe to) [Events](../event/event.md) in an [E
 
 ## Solution
 
-![event-sink](../img/event-sink.png)
+![event-sink](../img/event-sink.svg)
 
 Use an Event Sink, which typically acts as a client in an [Event Streaming Platform](../event-stream/event-streaming-platform.md). Examples are an [Event Sink Connector](event-sink-connector.md) (which continuously exports [Event Streams](../event-stream/event-stream.md) from the [Event Streaming Platform](../event-stream/event-streaming-platform.md) into an external system such as a cloud service or a relational database) or an [Event Processing Application](../event-processing/event-processing-application.md) such as a [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) application and the streaming database [ksqlDB](https://ksqldb.io/).
 
