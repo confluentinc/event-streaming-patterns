@@ -70,6 +70,8 @@ CREATE STREAM orders-v2 (order_id BIGINT, store_id VARCHAR)
 Follow [Schema Compatibility](../event-stream/schema-compatibility.md) rules to determine which schema changes are compatible or breaking.
 
 ## References
+* [Event Serializer](../event/event-serializer.md): encode events so that they can be written to disk, transferred across the network, and generally preserved for future readers
+* [Schema-on-Read](../event/schema-on-read.md): enable the reader of events to determine which schema to apply to the Event that is processed
 * [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
 * [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html): creating, editing, comparing versions
-*  [Maven plugin](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility) to test for schema compatibility during the development cycle
+* [Maven plugin](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility) to test for schema compatibility during the development cycle
