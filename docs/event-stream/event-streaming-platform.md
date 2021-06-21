@@ -13,7 +13,7 @@ Furthermore, companies can no longer survive without reacting to [Events](../eve
 What architecture can we use that allows us to model everything within our business as streams of [Events](../event/event.md), creating a modern, fault tolerant, and scalable platform for building modern applications?
 
 ## Solution
-![event streaming platform](../img/event-streaming-platform.png)
+![event streaming platform](../img/event-streaming-platform.svg)
 
 We can design business processes and applications around [Event Streams](../event-stream/event-stream.md). Everything from sales, orders, trades, customer experiences, sensor readings and database updates are modeled as an [Event](../event/event.md). [Events](../event/event.md) are written to the Event Streaming Platform once, allowing distributed functions within the business to react in real-time. Systems external to the Event Streaming Platform are integrated using [Event Sources](../event-source/event-source.md) and [Event Sinks](../event-sink/event-sink.md). Business logic is built within [Event Processing Applications](../event-processing/event-processing-application.md), which are composed of [Event Processors](../event-processing/event-processor.md) that read and write [Events](../event/even.md) from [Event Streams](../event-stream/event-stream.md).
 
