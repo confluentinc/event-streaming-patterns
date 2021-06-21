@@ -13,7 +13,7 @@ seo:
 How can an event processing application handle processing failures without terminating, or becoming stuck, when a message cannot be read?
 
 ## Solution
-![dead-letter-stream](../img/dead-letter-stream.png)
+![dead-letter-stream](../img/dead-letter-stream.svg)
 
 When the event processing application cannot process an event for an unrecoverable reason, the problematic event is published to a “dead letter stream”. This stream stores the event allowing it to be logged, reprocessed later, or otherwise acted upon. Additional contextual information can be provided in the "dead letter event" to ease fault resolution later, such as details on why its processing failed.
 
