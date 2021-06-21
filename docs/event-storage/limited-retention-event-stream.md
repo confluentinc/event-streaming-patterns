@@ -24,7 +24,7 @@ With time-based retention, events will be removed from the topic after the event
 The following example sets the retention period of a topic to one year: 
 
 ```bash
-log.retention.hours=168
+log.retention.hours=8760
 ```
 
 For more guidance and configuring time-based data retention, see the [Kafka Broker Configurations documentation](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html) for default settings, or the [Modifying Topics](https://docs.confluent.io/platform/current/kafka/post-deployment.html#modifying-topics) section for modifying existing topics.
