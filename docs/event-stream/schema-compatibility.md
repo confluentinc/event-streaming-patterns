@@ -79,7 +79,7 @@ curl -X POST --data @filename.avsc https://<schema-registry>/<subject>/versions
 
 After updated schemas that pass the schema compatibility check, be thoughtful about the order of upgrading applications.
 In some cases you should upgrade producers first, in other cases you should upgrade consumers first.
-See [Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
+See [Schema Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
 
 ## References
 * [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html): backward, forward, full
