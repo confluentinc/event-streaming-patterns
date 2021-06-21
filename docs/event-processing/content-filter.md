@@ -43,10 +43,10 @@ events downstream for further processing.
 
 ## Implementation
 
-In ksqlDB we can easily transform a rich event stream into a stream of
+As an example, in the streaming database [ksqlDB](https://ksqldb.io/) we can easily transform a rich event stream into a stream of
 simpler event with a `SELECT` statement.
 
-For example, assume we have an event stream called `products` where
+For instance, assume we have an event stream called `products` where
 each event contains a huge number of fields. We can prune this down
 with:
 
