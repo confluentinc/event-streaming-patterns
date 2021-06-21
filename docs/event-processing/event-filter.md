@@ -11,7 +11,7 @@ seo:
 How can an application discard uninteresting events?
 
 ## Solution
-![event-filter](../img/event-filter.png)
+![event-filter](../img/event-filter.svg)
 
 
 ## Implementation
