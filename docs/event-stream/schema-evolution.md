@@ -62,7 +62,7 @@ For example, your Event Processing Application would read from two different str
 CREATE STREAM orders-v1 (order_id BIGINT, username VARCHAR)
     WITH (kafka_topic='orders-v1');
 
-CREATE STREAM orders-v2 (ORDER_ID BIGINT, STORE_ID VARCHAR)
+CREATE STREAM orders-v2 (order_id BIGINT, store_id VARCHAR)
     WITH (kafka_topic='orders-v2');
 ```
 
