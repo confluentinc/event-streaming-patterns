@@ -27,6 +27,8 @@ The following example sets the retention period of a topic to one year:
 log.retention.hours=168
 ```
 
+For more guidance and configuring time-based data retention, see the [Kafka Broker Configurations documentation](https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html) for default settings, or the [Modifying Topics](https://docs.confluent.io/platform/current/kafka/post-deployment.html#modifying-topics) section for modifying existing topics.
+
 ### Size-Based Retention
 With size-based retention, events will begin to be removed from the topic once the total size of the topic violates the configured maximum size. Kafka supports a `log.retention.bytes` configure. For example, to configure the maximum size of a topic to 100GB you could set the configuration as follows: 
  
