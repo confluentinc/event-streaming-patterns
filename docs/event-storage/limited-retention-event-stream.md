@@ -19,7 +19,9 @@ The solution for limited retention will depend on the [Event Streaming Platform]
 Apache Kafka® implements a Limited Retention Event Stream by default. With Kafka, Event Streams are modeled as [Topics](https://docs.confluent.io/platform/current/kafka/introduction.html#main-concepts-and-terminology). Kafka provides two types of retention policy, which can be configured on a per-topic basis or as a default for new topics.
 
 ### Time Based Retention
-With time based retention, events will be removed from the topic after the event timestamp indicates an event is older than the configured log retention time. On Kafka this is configured with the `log.retention.ms` setting which can be set by default or on a per topic basis. Additionally, Kafka respects a `log.retention.minutes` and `log.retention.hours` setting which eases the configuration burden for long retention periods. For example, to configure retention for 7 days you could set the value to 168 hours.
+With time-based retention, events will be removed from the topic after the event timestamp indicates an event is older than the configured log retention time. On Kafka this is configured with the `log.retention.hours` setting, which can be set as a default to apply to all topics or on a per-topic basis. Additionally, Kafka respects a `log.retention.minutes` and `log.retention.ms` settings to define shorter retention periods.
+
+The following example sets the retention period of a topic to one year: 
 
 ```bash
 log.retention.hours=168
