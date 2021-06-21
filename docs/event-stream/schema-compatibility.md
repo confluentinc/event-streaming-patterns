@@ -71,7 +71,7 @@ Examples of compatible changes would be:
 ```
 
 ## Considerations
-You could use an interface of a fully-managed Schema Registry service, with built-in compatibility checking, to centralize your schemas and check compatibility of new schema versions against previous versions (or a [plugin](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility)).
+We can use a [fully-managed Schema Registry](https://docs.confluent.io/cloud/current/get-started/schema-registry.html) service with built-in compatibility checking, so that we can centralize our schemas and check compatibility of new schema versions against previous versions.
 
 ```
 curl -X POST --data @filename.avsc https://<schema-registry>/<subject>/versions
