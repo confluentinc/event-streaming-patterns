@@ -42,7 +42,7 @@ In this case, if the original schema were:
 }
 ```
 
-Then you could change it to be without `field2` as show below, and the Event Stream would have a mix of both schema types.
+Then we could change it to be without `field2` as show below, and the Event Stream would have a mix of both schema types.
 If new consumers process events written with the old schema, they would just ignore `field2`.
 
 ```
