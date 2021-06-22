@@ -5,7 +5,7 @@ Events represent facts and can help facilitate decoupled applications, services,
 How do I represent a fact about something that has happened?
 
 ## Solution
-![event](../img/event.png)
+![event](../img/event.svg)
 An event represents an immutable fact about something that happened. Examples of Events might be: orders, payments, activities, or measurements. Events are produced to, stored in, and consumed from an [Event Stream](../event-stream/event-stream.md). An Event typically contains at least one or more data fields that describe the fact, as well as a timestamp that denotes when this Event was created by its [Event Source](../event-source/event-source.md). The Event may also contain various metadata about itself, such as its source of origin (e.g., the application or cloud services that created the event) and storage-level information (e.g., its position in the event stream).
 
 ## Implementation
