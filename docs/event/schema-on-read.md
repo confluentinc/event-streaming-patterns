@@ -10,7 +10,7 @@ There are several use cases for this pattern, all of which provide a lot of flex
 
 1. When there are different versions of the same schema type, and the reader wants to choose which version to apply to a given event.
 
-2. When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Put these heterogeneous [Event](../events/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain event ordering and allowing any consuming [Event Processor](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) [deserialize the events](../event/event-deserializer.md) as needed.
+2. When the sequencing matters between events of different types and all those different event types are put into a single stream.  For example, consider a banking use case where first a customer opens an account, then gets approval, then makes a deposit, etc. Put these heterogeneous [Event](../event/event.md) types into the same stream, allowing the [Event Streaming Platform](../event-stream/event-streaming-platform.md) maintain event ordering and allowing any consuming [Event Processor](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) [deserialize the events](../event/event-deserializer.md) as needed.
 
 3. When unstructured data is written into an [Event Stream](../event-stream/event-stream.md), and the reader then applies whichever schema it wants.
 
@@ -20,7 +20,7 @@ How can an [Event Processor](../event-processing/event-processor.md) apply a sch
 ## Solution
 ![schema-on-read](../img/schema-on-read.png)
 
-The Schema-on-Read approach approach enables each reader to decide on how to read data, and which version of which schema to apply to every [Event](../events/event.md) that it reads.
+The Schema-on-Read approach approach enables each reader to decide on how to read data, and which version of which schema to apply to every [Event](../event/event.md) that it reads.
 To make schema management easier, the design can use a centralized repository that can store multiple versions of different schemas, and then the client applications then choose which schema to apply to events at runtime.
 
 ## Implementation
