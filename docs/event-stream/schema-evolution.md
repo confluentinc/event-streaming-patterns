@@ -27,7 +27,7 @@ Event Processing Applications and Event Sinks then consume from the respective s
 Once all consumers are upgraded to the new schema, the old stream can be retired.
 
 ## Implementation
-For "in-place" schema evolution, an [Event Stream](../event-stream/event-stream.md) has multiple versions of the same schema that are compatible with each other.
+For "in-place" schema evolution, an [Event Stream](../event-stream/event-stream.md) has multiple versions of the same schema that are [compatible with each other](schema-compatibility.md).
 For example, if a field is removed: a consumer that was developed to process events without this field will be able to process events written with the old schema and contain the field – the consumer will just ignore that field.
 In this case, if the original schema were:
 
