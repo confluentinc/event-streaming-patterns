@@ -16,24 +16,23 @@ How can an application select only the relevant events (or discard uninteresting
 
 ## Implementation
 
-[ksqlDB](https://ksqldb.io) provides the ability to create a filtered Event Stream using familiar SQL syntax:
+As an example, the streaming database [ksqlDB](https://ksqldb.io) provides the ability to create a filtered Event Stream using familiar SQL syntax:
 ```sql
-CREATE STREAM allisons_races WITH (kafka_topic = 'allisons-races-topic') AS
+CREATE STREAM payments_only WITH (kafka_topic = 'transactions-topic') AS
     SELECT *
-      FROM all_races
-      WHERE racer = 'Allison';
+      FROM all_transactions
+      WHERE type = 'purchase';
 ```
 
-The Kafka Streams DSL provides a `filter` operator which filters out events that do not match a given predicate.
+The [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka® provides a `filter` operator in its DSL, which filters out events that do not match a given predicate.
 
 ```java
 builder
-  .stream("all-races-topic")
-  .filter((key, race) -> race.racer == "Allison")
-  .to("allisons-races-topic");
+  .stream("transactions-topic")
+  .filter((key, transaction) -> transaction.type == "purchase")
+  .to("payments-topic");
 ```
 
 ## References
 * This pattern is derived from [Message Filter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
 * See the Kafka Tutorial [How to filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html) for detailed examples of filtering event streams.
-
