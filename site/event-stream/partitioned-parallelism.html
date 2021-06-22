@@ -236,7 +236,7 @@
 <p>If service goals mandate high throughput, it is useful to have the ability to distribute event storage as well as event production and consumption for parallel processing.
 Being able to distribute events and process them concurrently enables an application to scale.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we allocate events across <a href="event-stream.html">Event Streams</a> and <a href="../table/table.md">Tables</a> so that they can be processed concurrently by distributed <a href="../event-processing/event-processor.html">Event Processors</a>?</p>
+<p>How can we allocate events across <a href="event-stream.html">Event Streams</a> and <a href="../table/state-table.html">Tables</a> so that they can be processed concurrently by distributed <a href="../event-processing/event-processor.html">Event Processors</a>?</p>
 <h2 id="solution">Solution</h2>
 <p><img alt="partitioned-parallelism" src="../img/partitioned-parallelism.png" /></p>
 <p>We should use a partitioned event stream, and then assign the events to different partitions of the stream. Essentially, a partition is a unit of parallelism for storage as well as reading, writing, and processing events. Partitioning helps concurrency and scalability in these main ways:</p>
