@@ -11,7 +11,7 @@ Many use cases demand that [Events](../event/event.md) in an [Event Stream](../e
 How can we ensure that events in a stream are retained forever?
 
 ## Solution
-![infinite-retention-event-stream](../img/infinite-stream-strorage.png)
+![infinite-retention-event-stream](../img/infinite-stream-strorage.svg)
 
 The solution for infinite retention depends on the specific [Event Streaming Platform](../event-stream/event-streaming-platform.md). Some platforms support infinite retention "out of the box", requiring no action on behalf of the end users. If an [Event Streaming Platform](../event-stream/event-streaming-platform.md) does not support infinite storage, infinite retention can be partially achieved with an [Event Sink Connector](../event-sink/event-sink-connector.md) pattern which offloads [Events](../event/event.md) into permanent external storage.
 
