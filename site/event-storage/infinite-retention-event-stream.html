@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Infinite Retention Event Stream - Event Streaming Patterns</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Infinite Retention Event Stream";
+    var mkdocs_page_input_path = "event-storage/infinite-retention-event-stream.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> Event Streaming Patterns</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../index.html">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/command-query-responsibility-segregation.html">Command Query Responsibility Segregation (CQRS)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/event-collaboration.html">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/geo-replication.html">Geo Replication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/pipeline.html">Pipeline</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/command-event.html">Command Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/correlation-identifier.html">Correlation Identifier</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/data-contract.html">Data Contract</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-deserializer.html">Event Deserializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-envelope.html">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-serializer.html">Event Serializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-standardizer.html">Event Standardizer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event.html">Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/schema-on-read.html">Schema-on-Read</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/claim-check.html">Claim Check</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/content-filter.html">Content Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/dead-letter-stream.html">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-chunking.html">Event Chunking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-filter.html">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-mapper.html">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processing-application.html">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processor.html">Event Processor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-router.html">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-splitter.html">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-streaming-api.html">Event Streaming API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-translator.html">Event Translator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink-connector.html">Event Sink Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink.html">Event Sink</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event source</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-aside.html">Database Write Aside</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-through.html">Database Write Through</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-gateway.html">Event Gateway</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source-connector.html">Event Source Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source.html">Event Source</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/schema-validator.html">Schema Validator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event storage</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="compacted-event-stream.html">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-store.html">Event Store</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="infinite-retention-event-stream.html">Infinite Retention Event Stream</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="limited-retention-event-stream.html">Limited Retention Event Stream</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-broker.html">Event Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-stream.html">Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/partitioned-parallelism.html">Partitioned Parallelism</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-grouper.html">Event Grouper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-joiner.html">Event Joiner</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-stream-merger.html">Event Stream Merger</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-time-processing.html">Event-Time Processing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/logical-and.html">Logical AND</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wait-for-n-events.html">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wallclock-time.html">Wallclock-Time Processing</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Table</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/projection-table.html">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/state-table.html">State Table</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Event Streaming Patterns</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Event storage &raquo;</li>
+        
+      
+    
+    <li>Infinite Retention Event Stream</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="infinite-retention-event-stream">Infinite Retention Event Stream</h1>
+<p>Many use cases demand that <a href="../event/event.html">Events</a> in an <a href="../event-stream/event-stream.html">Event Stream</a> will be stored for forever so that the dataset is available in its entirety.</p>
+<h2 id="problem">Problem</h2>
+<p>How can we ensure that events in a stream are retained forever?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="infinite-retention-event-stream" src="../img/infinite-stream-strorage.svg" /></p>
+<p>The solution for infinite retention depends on the specific <a href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>. Some platforms support infinite retention "out of the box", requiring no action on behalf of the end users. If an <a href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a> does not support infinite storage, infinite retention can be partially achieved with an <a href="../event-sink/event-sink-connector.html">Event Sink Connector</a> pattern which offloads <a href="../event/event.html">Events</a> into permanent external storage.</p>
+<h2 id="implementation">Implementation</h2>
+<p>When using <a href="https://www.confluent.io/confluent-cloud/">Confluent Cloud</a>, infinite retention is built into the <a href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a> (<em>availability may be limited based on cluster type and cloud provider</em>). Users of the platform can benefit from infinite storage without any changes to their client applications or operations.</p>
+<p>For on-premises <a href="../event-stream/event-streaming-platform.html">Event Streaming Platforms</a>, <a href="https://www.confluent.io/product/confluent-platform/">Confluent Platform</a> adds the ability for infinite retention by extending Apache Kafka with <a href="https://docs.confluent.io/platform/current/kafka/tiered-storage.html">Tiered Storage</a>. Tiered storage separates the compute and storage layers, allowing the operator to scale either of those independently as needed. Newly arrived <a href="../event/event.html">Events</a> are considered "hot", but as time moves on, they become "colder" and migrate to more cost-effective external storage like an AWS S3 bucket. As cloud-native object stores can effectively scale to infinite size, the Kafka cluster can act as the system of record for infinite <a href="../event-stream/event-stream.html">Event Streams</a>.</p>
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>
+<p>Infinite Retention Streams are typically used to store entire datasets which will be used by many subscribers. For example, storing the canonical customer dataset in an Infinite Retention Event Stream makes it available to any other system, regardless of their database technology. The customer's dataset can be easily imported or reimported as a whole.</p>
+</li>
+<li>
+<p><a href="compacted-event-stream.html">Compacted Event Streams</a> are often used as a form of Infinite Retention Event Stream. However compacted streams are not infinite. Instead, they retain only the most recent <a href="../event/event.html">Events</a> for each key, meaning their contents matches the dataset held in an equivalent CRUD database table. </p>
+</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>The blog post <a href="https://www.confluent.io/blog/infinite-kafka-storage-in-confluent-platform/">Infinite Storage in Confluent</a> goes describes the tiered storage approach in more detail.</li>
+<li>An <a href="../event-sink/event-sink-connector.html">Event Sink Connector</a> can be used to implement an infinite retention event stream by loading <a href="../event/event.html">Event</a> into permanent external storage.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="limited-retention-event-stream.html" class="btn btn-neutral float-right" title="Limited Retention Event Stream">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="event-store.html" class="btn btn-neutral" title="Event Store"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="event-store.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="limited-retention-event-stream.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

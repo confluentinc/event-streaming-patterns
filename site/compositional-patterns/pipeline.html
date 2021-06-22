@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Pipeline - Event Streaming Patterns</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Pipeline";
+    var mkdocs_page_input_path = "compositional-patterns/pipeline.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> Event Streaming Patterns</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../index.html">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="command-query-responsibility-segregation.html">Command Query Responsibility Segregation (CQRS)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-collaboration.html">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="geo-replication.html">Geo Replication</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="pipeline.html">Pipeline</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/command-event.html">Command Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/correlation-identifier.html">Correlation Identifier</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/data-contract.html">Data Contract</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-deserializer.html">Event Deserializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-envelope.html">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-serializer.html">Event Serializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-standardizer.html">Event Standardizer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event.html">Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/schema-on-read.html">Schema-on-Read</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/claim-check.html">Claim Check</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/content-filter.html">Content Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/dead-letter-stream.html">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-chunking.html">Event Chunking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-filter.html">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-mapper.html">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processing-application.html">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processor.html">Event Processor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-router.html">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-splitter.html">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-streaming-api.html">Event Streaming API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-translator.html">Event Translator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink-connector.html">Event Sink Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink.html">Event Sink</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event source</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-aside.html">Database Write Aside</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-through.html">Database Write Through</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-gateway.html">Event Gateway</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source-connector.html">Event Source Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source.html">Event Source</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/schema-validator.html">Schema Validator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event storage</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/compacted-event-stream.html">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/event-store.html">Event Store</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/infinite-retention-event-stream.html">Infinite Retention Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/limited-retention-event-stream.html">Limited Retention Event Stream</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-broker.html">Event Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-stream.html">Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/partitioned-parallelism.html">Partitioned Parallelism</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-grouper.html">Event Grouper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-joiner.html">Event Joiner</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-stream-merger.html">Event Stream Merger</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-time-processing.html">Event-Time Processing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/logical-and.html">Logical AND</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wait-for-n-events.html">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wallclock-time.html">Wallclock-Time Processing</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Table</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/projection-table.html">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/state-table.html">State Table</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Event Streaming Patterns</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Compositional patterns &raquo;</li>
+        
+      
+    
+    <li>Pipeline</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="pipeline">Pipeline</h1>
+<p>A single <a href="../event-stream/event-stream.html">Event Stream</a> or <a href="../table/state-table.html">Table</a> can be used by multiple <a href="../event-processing/event-processing-application.html">Event Processing Applications</a>, and its <a href="../event/event.html">Events</a> may go through multiple processing stages along the way (e.g., filters, transformations, joins, aggregations) to implement more complex use cases.</p>
+<h2 id="problem">Problem</h2>
+<p>How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="pipeline" src="../img/pipeline.png" /></p>
+<p>We can compose <a href="../event-stream/event-stream.html">Event Streams</a> and <a href="../table/state-table.html">Tables</a> in an <a href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a> via an <a href="../event-processing/event-processing-application.html">Event Processing Application</a> to a create a pipeline—also called a topology—of <a href="../event-processing/event-processor.html">Event Processors</a>, which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a>, may include <a href="../event-source/event-source-connector.html">Event Source Connectors</a> and <a href="../event-sink/event-sink-connector.html">Event Sink Connectors</a>, which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.</p>
+<p>Taking a step back, we can see that pipelines in an Event Streaming Platform help companies build a "central nervous system" for data in motion.</p>
+<h2 id="implementation">Implementation</h2>
+<p>As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.</p>
+<pre><code class="language-sql">CREATE STREAM orders ( 
+  customer_id INTEGER, items ARRAY&lt;STRUCT&lt;name VARCHAR, price DOUBLE&gt;&gt;
+) WITH (
+  KAFKA_TOPIC = 'orders', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+);
+</code></pre>
+<p>We'll also create a (continuously updated) customers table that will contain the latest profile information about each customer, such as their current home address.</p>
+<pre><code class="language-sql">CREATE TABLE customers (
+  customer_id INTEGER PRIMARY KEY, name VARCHAR, ADDRESS VARCHAR
+) WITH (
+  KAFKA_TOPIC = 'customers', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+);
+</code></pre>
+<p>Next, we create a new stream by joining the orders stream with our customer table:</p>
+<pre><code class="language-sql">CREATE STREAM orders_enriched WITH 
+(KAFKA_TOPIC='orders_enriched', PARTITIONS=1, VALUE_FORMAT='AVRO')
+AS SELECT o.customer_id AS cust_id, o.items, c.name, c.address
+FROM orders o LEFT JOIN customers c 
+ON o.customer_id = c.customer_id
+EMIT CHANGES;
+</code></pre>
+<p>Next, we create a stream, where we add the order total to each order by aggregating the price of the individual items in the order:</p>
+<pre><code class="language-sql">CREATE STREAM orders_with_totals
+WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
+AS SELECT cust_id, items, name, address,  
+  REDUCE(TRANSFORM(items, i=&gt; i-&gt;price ), 0e0, (i,x) =&gt; (i + x)) AS total 
+FROM orders_enriched
+EMIT CHANGES;
+</code></pre>
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>The same event stream or table can participate in multiple pipelines. Because streams and tables are stored durably, applications have a lot of flexibility how and when they process the respective data, and they can do so independently from each other.</li>
+<li>The various processing stages in a pipeline create their own derived streams/tables (such as the <code>orders_enriched</code> stream in the ksqlDB example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.</li>
+</ul>
+<h2 id="references">References</h2>
+<p>This pattern was influenced by <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html">Pipes and Filters</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf. However, it is much more powerful and flexible because it is using <a href="../event-stream/event-stream.html">Event Streams</a> as the pipes.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../event/command-event.html" class="btn btn-neutral float-right" title="Command Event">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="geo-replication.html" class="btn btn-neutral" title="Geo Replication"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="geo-replication.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../event/command-event.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -11,8 +11,7 @@ seo:
 How can an application select only the relevant events (or discard uninteresting events) from an Event Stream?
 
 ## Solution
-![event-filter](../img/event-filter.png)
-
+![event-filter](../img/event-filter.svg)
 
 ## Implementation
 

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Geo Replication - Event Streaming Patterns</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Geo Replication";
+    var mkdocs_page_input_path = "compositional-patterns/geo-replication.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> Event Streaming Patterns</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../index.html">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="command-query-responsibility-segregation.html">Command Query Responsibility Segregation (CQRS)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-collaboration.html">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="geo-replication.html">Geo Replication</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#option-1-cluster-linking">Option 1: Cluster Linking</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#option-2-connect-based-replication">Option 2: Connect-based Replication</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipeline</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/command-event.html">Command Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/correlation-identifier.html">Correlation Identifier</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/data-contract.html">Data Contract</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-deserializer.html">Event Deserializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-envelope.html">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-serializer.html">Event Serializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event-standardizer.html">Event Standardizer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/event.html">Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/schema-on-read.html">Schema-on-Read</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/claim-check.html">Claim Check</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/content-filter.html">Content Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/dead-letter-stream.html">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-chunking.html">Event Chunking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-filter.html">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-mapper.html">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processing-application.html">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processor.html">Event Processor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-router.html">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-splitter.html">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-streaming-api.html">Event Streaming API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-translator.html">Event Translator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink-connector.html">Event Sink Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink.html">Event Sink</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event source</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-aside.html">Database Write Aside</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-through.html">Database Write Through</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-gateway.html">Event Gateway</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source-connector.html">Event Source Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source.html">Event Source</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/schema-validator.html">Schema Validator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event storage</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/compacted-event-stream.html">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/event-store.html">Event Store</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/infinite-retention-event-stream.html">Infinite Retention Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/limited-retention-event-stream.html">Limited Retention Event Stream</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-broker.html">Event Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-stream.html">Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/partitioned-parallelism.html">Partitioned Parallelism</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-grouper.html">Event Grouper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-joiner.html">Event Joiner</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-stream-merger.html">Event Stream Merger</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-time-processing.html">Event-Time Processing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/logical-and.html">Logical AND</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wait-for-n-events.html">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wallclock-time.html">Wallclock-Time Processing</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Table</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/projection-table.html">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/state-table.html">State Table</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Event Streaming Patterns</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Compositional patterns &raquo;</li>
+        
+      
+    
+    <li>Geo Replication</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="geo-replication">Geo Replication</h1>
+<p>Many architectures have streams of events deployed across multiple datacenters spanning boundaries of <a href="../event-stream/event-streaming-platform.html">Event Streaming Platforms</a>, datacenters, or geographical regions.
+In these situations, it may be useful for client applications in one event streaming platform to have access to <a href="../event/event.html">Events</a> produced in another one.
+All clients shouldn't be forced to read from the source event streaming platform, which can incur high latency and data egress costs.
+Instead, with a move-once-read-many approach, the data can be replicated to a local datacenter where clients can do all their processing quickly and cheaply.</p>
+<h2 id="problem">Problem</h2>
+<p>How can multiple <a href="../event-stream/event-streaming-platform.html">Event Streaming Platforms</a> be connected so that events available in one site are also available on the others?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="geo-replication" src="../img/geo-replication.png" />
+Create a connection between the two <a href="../event-stream/event-streaming-platform.html">Event Streaming Platforms</a>, enabling the destination platform to read from the source one.
+Ideally this is done in realtime such that as new events are published in the source event streaming platform, they can be immediately copied, byte for byte, to the destination event streaming platform.
+This allows the client applications in the destination to leverage the same set of data.</p>
+<h2 id="implementation">Implementation</h2>
+<p>Practically, replication is not enabled completely on all data streams, as there are always exceptions, organizational limitations, technical constraints, or other reasons why we wouldn't want to copy absolutely everything.
+Instead, we can do this on a per topic basis, where we can map a source topic to a destination topic.</p>
+<p>With Apache Kafka®, we can do this in one of several ways.</p>
+<h3 id="option-1-cluster-linking">Option 1: Cluster Linking</h3>
+<p><a href="https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html">Cluster Linking</a> enables easy data sharing between event streaming platforms, mirroring topics across them.
+Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.</p>
+<pre><code class="language-sh">ccloud kafka link create east-west ...
+ccloud kafka topic create &lt;destination topic&gt; --link east-west --mirror-topic &lt;source topic&gt; ...
+</code></pre>
+<p>Other messaging systems like RabbitMQ, Active MQ, etc., provide similar functionality but without the same levels of parallelism.</p>
+<h3 id="option-2-connect-based-replication">Option 2: Connect-based Replication</h3>
+<p>Operators can set up such inter-cluster data flows with Confluent's <a href="https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html">Replicator</a> or Kafka's <a href="https://kafka.apache.org/documentation/#georeplication">MirrorMaker</a> (version 2), tools that replicate data between different Kafka environments.
+Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.</p>
+<h2 id="considerations">Considerations</h2>
+<p>Note that this type of replication between event streaming platforms is asynchronous, which means an event that is recorded in the source may not be immediately available at the destination.
+There is also synchronous replication across event streaming platforms (e.g. <a href="https://docs.confluent.io/platform/current/multi-dc-deployments/index.html">Multi Region Clusters</a>) but this is often limited to when the event streaming platforms are in the same operational domain.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>This pattern is derived from <a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingBridge.html">Messaging Bridge</a> in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pipeline.html" class="btn btn-neutral float-right" title="Pipeline">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="event-collaboration.html" class="btn btn-neutral" title="Event Collaboration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="event-collaboration.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="pipeline.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
