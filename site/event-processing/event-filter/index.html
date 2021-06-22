@@ -229,7 +229,7 @@
 <h2 id="problem">Problem</h2>
 <p>How can an application discard uninteresting events?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-filter" src="../../img/event-filter.png" /></p>
+<p><img alt="event-filter" src="../../img/event-filter.svg" /></p>
 <h2 id="implementation">Implementation</h2>
 <p>The Kafka Streams DSL provides a <code>filter</code> operator which filters out events that do not match a given predicate.</p>
 <pre><code class="java">KStream&lt;String, Event&gt; eventStream = builder.stream(.....);
