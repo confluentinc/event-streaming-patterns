@@ -231,7 +231,7 @@
 <h2 id="problem">Problem</h2>
 <p>How can we ensure that events in a stream are retained forever?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="infinite-retention-event-stream" src="../../img/infinite-stream-strorage.png" /></p>
+<p><img alt="infinite-retention-event-stream" src="../../img/infinite-stream-strorage.svg" /></p>
 <p>The solution for infinite retention depends on the specific <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a>. Some platforms support infinite retention "out of the box", requiring no action on behalf of the end users. If an <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> does not support infinite storage, infinite retention can be partially achieved with an <a href="../../event-sink/event-sink-connector/">Event Sink Connector</a> pattern which offloads <a href="../../event/event/">Events</a> into permanent external storage.</p>
 <h2 id="implementation">Implementation</h2>
 <p>When using <a href="https://www.confluent.io/confluent-cloud/">Confluent Cloud</a>, infinite retention is built into the <a href="../event-stream/event-streaming-platform.md">Event Streaming Platform</a> (<em>availability may be limited based on cluster type and cloud provider</em>). Users of the platform can benefit from infinite storage without any changes to their client applications or operations.</p>
