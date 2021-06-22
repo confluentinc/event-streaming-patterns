@@ -56,14 +56,18 @@ If new consumers process events written with the old schema, they would just ign
 ```
 
 For _dual schema upgrades_, there are breaking changes. So the processing flow needs to be more explicit such that clients are only writing to and reading from the version of the Event Stream that corresponds to the schema that they are able to process.
-For example, an application would read from two different streams:
+For example, an application that can process v1 schema would read from one stream:
 
 ```
-CREATE STREAM orders-v1 (order_id BIGINT, username VARCHAR)
-    WITH (kafka_topic='orders-v1');
+CREATE STREAM payments-v1 (transaction_id BIGINT, username VARCHAR)
+    WITH (kafka_topic='payments-v1');
+```
 
-CREATE STREAM orders-v2 (order_id BIGINT, store_id VARCHAR)
-    WITH (kafka_topic='orders-v2');
+And an application that can process v2 schema would read from another stream:
+
+```
+CREATE STREAM payments-v2 (transaction_id BIGINT, store_id VARCHAR)
+    WITH (kafka_topic='payments-v2');
 ```
 
 ## Considerations
