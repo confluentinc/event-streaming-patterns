@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Event Deserializer - Event Streaming Patterns</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Event Deserializer";
+    var mkdocs_page_input_path = "event/event-deserializer.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> Event Streaming Patterns</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../index.html">Event Streaming Patterns</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Compositional patterns</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/command-query-responsibility-segregation.html">Command Query Responsibility Segregation (CQRS)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/event-collaboration.html">Event Collaboration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/geo-replication.html">Geo Replication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/pipeline.html">Pipeline</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="command-event.html">Command Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="correlation-identifier.html">Correlation Identifier</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="data-contract.html">Data Contract</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="event-deserializer.html">Event Deserializer</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-envelope.html">Event Envelope</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-serializer.html">Event Serializer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-standardizer.html">Event Standardizer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event.html">Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="schema-on-read.html">Schema-on-Read</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/claim-check.html">Claim Check</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/content-filter.html">Content Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/dead-letter-stream.html">Dead Letter Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-chunking.html">Event Chunking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-filter.html">Event Filter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-mapper.html">Event Mapper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processing-application.html">Event Processing Application</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-processor.html">Event Processor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-router.html">Event Router</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-splitter.html">Event Splitter</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-streaming-api.html">Event Streaming API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-processing/event-translator.html">Event Translator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event sink</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink-connector.html">Event Sink Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-sink/event-sink.html">Event Sink</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event source</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-aside.html">Database Write Aside</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/database-write-through.html">Database Write Through</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-gateway.html">Event Gateway</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source-connector.html">Event Source Connector</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/event-source.html">Event Source</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-source/schema-validator.html">Schema Validator</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event storage</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/compacted-event-stream.html">Compacted Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/event-store.html">Event Store</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/infinite-retention-event-stream.html">Infinite Retention Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-storage/limited-retention-event-stream.html">Limited Retention Event Stream</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Event stream</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-broker.html">Event Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-stream.html">Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/partitioned-parallelism.html">Partitioned Parallelism</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-grouper.html">Event Grouper</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-joiner.html">Event Joiner</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-stream-merger.html">Event Stream Merger</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-time-processing.html">Event-Time Processing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/logical-and.html">Logical AND</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wait-for-n-events.html">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wallclock-time.html">Wallclock-Time Processing</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Table</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/projection-table.html">Projection Table</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../table/state-table.html">State Table</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Event Streaming Patterns</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Event &raquo;</li>
+        
+      
+    
+    <li>Event Deserializer</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="event-deserializer">Event Deserializer</h1>
+<p>Data has a long lifecycle, often outliving the programs that
+originally gathered and stored it. And data originates from a wide
+variety of systems and programming languages. The more easily we can
+access that ocean of data, the richer the analysis we can perform.</p>
+<p>In an online shopping business, data recorded by the order-processing
+system and from data user behavior may prove invaluable to the website
+design department, <em>provided they can actually access it</em>. It's
+vital to be able to read data from an <a href="../event-storage/event-store.html">Event
+Store</a> regardless of which process
+and which department put it there originally.</p>
+<p>To a large degree, the accessibility of data is determined at write
+time, by our choice of <a href="event-serializer.html">Event
+Serializer</a>. Still, the story is certainly not
+complete until we've read the data back out.</p>
+<h2 id="problem">Problem</h2>
+<p>How can I reconstruct the original event from its representation in the event streaming platform?</p>
+<h2 id="solution">Solution</h2>
+<p><img alt="event deserializer" src="../img/event-deserializer.svg" /></p>
+<p>Use an <a href="../event-stream/event-streaming-platform.html">Event Streaming
+Platform</a> that integrates
+well with a schema registry. This makes it easy to encourage (or
+require) writers to record the event's data description for later
+use. Having both the event data and its schema readily available makes
+deserialization easy.</p>
+<p>While some data formats are reasonably
+<a href="https://en.wikipedia.org/wiki/Discoverability">discoverable</a>, in
+practice it becomes invaluable to have a precise, permanent record of
+how the data was encoded at the time it was written. This is
+particularly true if the data format has evolved over time and the
+<a href="../event-stream/event-stream.html">Event Stream</a> may contain more than
+one encoding of semantically-equivalent data.</p>
+<h2 id="implementation">Implementation</h2>
+<p>Confluent’s <a href="https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html">Schema
+Registry</a>
+stores a versioned history of the data's schema in Apache Kafka&reg;
+itself. The client libraries can then use this metadata to seamlessly
+reconstruct the original event data, while we can use the registry API
+to manually inspect the schemas, or to build libraries for other
+languages.</p>
+<p>For example, in the <a href="event-serializer.html">Event Serializer</a> pattern
+we wrote a stream of <code>fx_trade</code> events. If we want to recall the
+structure of those events we can ask ksqlDB:</p>
+<pre><code class="language-sh">DESCRIBE fx_trade;
+</code></pre>
+<pre><code class="language-text">Name                 : FX_TRADE
+ Field         | Type
+----------------------------------------
+ TRADE_ID      | BIGINT           (key)
+ FROM_CURRENCY | VARCHAR(STRING)
+ TO_CURRENCY   | VARCHAR(STRING)
+ PRICE         | DECIMAL(10, 5)
+----------------------------------------
+</code></pre>
+<p>Or we can query the Schema Registry directly to see the structure in a
+machine-readable format:</p>
+<pre><code class="language-sh">curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq .
+</code></pre>
+<pre><code class="language-json">{
+  &quot;subject&quot;: &quot;fx_trade-value&quot;,
+  &quot;version&quot;: 1,
+  &quot;id&quot;: 44,
+  &quot;schema&quot;: &quot;{\&quot;type\&quot;:\&quot;record\&quot;,\&quot;name\&quot;:\&quot;KsqlDataSourceSchema\&quot;,\&quot;namespace\&quot;:\&quot;io.confluent.ksql.avro_schemas\&quot;,\&quot;fields\&quot;:[{\&quot;name\&quot;:\&quot;FROM_CURRENCY\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,\&quot;string\&quot;],\&quot;default\&quot;:null},{\&quot;name\&quot;:\&quot;TO_CURRENCY\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,\&quot;string\&quot;],\&quot;default\&quot;:null},{\&quot;name\&quot;:\&quot;PRICE\&quot;,\&quot;type\&quot;:[\&quot;null\&quot;,{\&quot;type\&quot;:\&quot;bytes\&quot;,\&quot;scale\&quot;:5,\&quot;precision\&quot;:10,\&quot;connect.version\&quot;:1,\&quot;connect.parameters\&quot;:{\&quot;scale\&quot;:\&quot;5\&quot;,\&quot;connect.decimal.precision\&quot;:\&quot;10\&quot;},\&quot;connect.name\&quot;:\&quot;org.apache.kafka.connect.data.Decimal\&quot;,\&quot;logicalType\&quot;:\&quot;decimal\&quot;}],\&quot;default\&quot;:null}],\&quot;connect.name\&quot;:\&quot;io.confluent.ksql.avro_schemas.KsqlDataSourceSchema\&quot;}&quot;
+}
+</code></pre>
+<p>Unpacking that <code>schema</code> field reveals the <a href="https://avro.apache.org/docs/current/">Avro</a> specification:</p>
+<pre><code class="language-sh">curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .schema | jq .
+</code></pre>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;record&quot;,
+  &quot;name&quot;: &quot;KsqlDataSourceSchema&quot;,
+  &quot;namespace&quot;: &quot;io.confluent.ksql.avro_schemas&quot;,
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;FROM_CURRENCY&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        &quot;string&quot;
+      ],
+      &quot;default&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;TO_CURRENCY&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        &quot;string&quot;
+      ],
+      &quot;default&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;PRICE&quot;,
+      &quot;type&quot;: [
+        &quot;null&quot;,
+        {
+          &quot;type&quot;: &quot;bytes&quot;,
+          &quot;scale&quot;: 5,
+          &quot;precision&quot;: 10,
+          &quot;connect.version&quot;: 1,
+          &quot;connect.parameters&quot;: {
+            &quot;scale&quot;: &quot;5&quot;,
+            &quot;connect.decimal.precision&quot;: &quot;10&quot;
+          },
+          &quot;connect.name&quot;: &quot;org.apache.kafka.connect.data.Decimal&quot;,
+          &quot;logicalType&quot;: &quot;decimal&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    }
+  ],
+  &quot;connect.name&quot;: &quot;io.confluent.ksql.avro_schemas.KsqlDataSourceSchema&quot;
+}
+</code></pre>
+<p>An Avro library can use this schema to deserialize the events
+seamlessly. And any client libraries that are Schema Registry-aware
+can automate this lookup, allowing us to forget about encodings
+entirely and focus on the data.</p>
+<h2 id="considerations">Considerations</h2>
+<p>In addition to Avro, Schema Registry supports Protobuf and JSON
+Schema. See <a href="event-serializer.html">Event Serializer</a> for a discussion
+of these formats.</p>
+<p>While the choice of serialization format is important, it doesn't have
+to be set in stone. For example, it's straightforward to <a href="https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html">translate between
+supported formats with
+ksqlDB</a>. For
+more complex scenarios, we have several strategies for managing schema
+migration:</p>
+<ul>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Compatibility</a>
+  discusses the kinds of "safe" schema changes that Avro is designed
+  to handle transparently.</li>
+<li><a href="../event-processing/event-translator.html">Event Translators</a> can
+  convert between different encodings to aid consumption by different
+  systems.</li>
+<li><a href="http://localhost:8000/event-stream/schema-evolution/">Schema
+  Evolution</a>
+  discusses splitting and joining streams to simplify serving
+  consumers that can only handle certain versions of the event's
+  schema.</li>
+<li>An <a href="event-standardizer.html">Event Standardizer</a> can reformat
+  disparate data encodings into a single unified format.</li>
+<li>And we always have the option of handling encoding problems directly
+  in code with a <a href="schema-on-read.html">Schema-on-Read</a> strategy.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>The counterpart of an event deserializer (for reading) is an <a href="event-serializer.html">Event Serializer</a> (for writing).</li>
+<li>Serializers and deserializers are closely related to <a href="data-contract.html">Data
+  Contracts</a>, in which we want to adhere to a
+  specific serialization format, <em>and</em> constrain the individual events
+  to a certain schema within that format.</li>
+<li>See also: <a href="../event-processing/event-mapper.html">Event Mapper</a>.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="event-envelope.html" class="btn btn-neutral float-right" title="Event Envelope">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="data-contract.html" class="btn btn-neutral" title="Data Contract"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="data-contract.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="event-envelope.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
