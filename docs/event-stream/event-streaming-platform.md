@@ -15,7 +15,7 @@ What architecture can we use to model everything within our business as streams 
 ## Solution
 ![event streaming platform](../img/event-streaming-platform.svg)
 
-We can design business processes and applications around [Event Streams](../event-stream/event-stream.md). Everything from sales, orders, trades, customer experiences, sensor readings and database updates are modeled as an [../event/event.md). Events are written to the Event Streaming Platform once, allowing distributed functions within the business to react in real-time. Systems external to the Event Streaming Platform are integrated using [Event Sources](../event-source/event-source.md) and [Event Sinks](../event-sink/event-sink.md). Business logic is built within [Event Processing Applications](../event-processing/event-processing-application.md), which are composed of [Event Processors](../event-processing/event-processor.md) that read and write Events from Event Streams.
+We can design business processes and applications around [Event Streams](../event-stream/event-stream.md). Everything from sales, orders, trades, customer experiences, sensor readings and database updates are modeled as an [../event/event.md). Events are written to the Event Streaming Platform once, allowing distributed functions within the business to react in real-time. Systems external to the Event Streaming Platform are integrated using [Event Sources](../event-source/event-source.md) and [Event Sinks](../event-sink/event-sink.md). Business logic is built within [Event Processing Applications](../event-processing/event-processing-application.md), which are composed of [Event Processors](../event-processing/event-processor.md) that read and write events from Event Streams.
 
 ## Implementation
 
