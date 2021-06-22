@@ -18,7 +18,7 @@ One approach for evolving a schema is "in-place" (shown above), in which a strea
 
 ![schema-evolution](../img/schema-evolution-2.png)
 
-Another approach is "dual schema upgrades" a.k.a. "versioned streams" (shown above). This approach is useful especially when breaking changes in a stream's schema(s) need to be introduced; i.e., in a situation where the new schema is incompatible to the previous schema. Here, the [Event Sources](../event-source/event-source.md) write to two streams:
+Another approach is _dual schema upgrades_ a.k.a. _versioned streams_ (shown above). This approach is useful especially when breaking changes in a stream's schema(s) need to be introduced; i.e., in a situation where the new schema is incompatible to the previous schema. Here, the [Event Sources](../event-source/event-source.md) write to two streams:
 
 1. One stream with the previous schema version, e.g. `payments-v1`.
 2. One stream with the new schema version, e.g. `payments-v2`.
