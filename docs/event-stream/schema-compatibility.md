@@ -77,7 +77,7 @@ We can use a [fully-managed Schema Registry](https://docs.confluent.io/cloud/cur
 curl -X POST --data @filename.avsc https://<schema-registry>/<subject>/versions
 ```
 
-After updated schemas that pass the schema compatibility check, be thoughtful about the order of upgrading applications.
+Once we updated our schemas and asserted the desired compatibility level, we must be thoughtful about the order of upgrading the applications that use them.
 In some cases you should upgrade producers first, in other cases you should upgrade consumers first.
 See [Schema Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
 
