@@ -12,5 +12,4 @@ Event Streaming Platforms provide an architecture that enables software to react
 
 This catalog contains simple and reusable architectural patterns that can be applied over event streaming systems. When composed together, these patterns can help meet the design demands of modern real-time distributed systems. The following patterns are categorized by their function in the event streaming system, including sourcing data, processing events as streams, to integrations with external systems.
 
-![main](img/main.png)
-TODO: Brand main image
+![main](img/event-streaming-platform.svg)
