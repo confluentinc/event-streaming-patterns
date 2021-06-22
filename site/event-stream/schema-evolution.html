@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Event Grouper - Event Streaming Patterns</title>
+  <title>Schema Evolution - Event Streaming Patterns</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Event Grouper";
-    var mkdocs_page_input_path = "stream-processing/event-grouper.md";
+    var mkdocs_page_name = "Schema Evolution";
+    var mkdocs_page_input_path = "event-stream/schema-evolution.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -143,23 +143,18 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event stream</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-broker.html">Event Broker</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-stream.html">Event Stream</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/event-streaming-platform.html">Event Streaming Platform</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/partitioned-parallelism.html">Partitioned Parallelism</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/schema-compatibility.html">Schema Compatibility</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event-stream/schema-evolution.html">Schema Evolution</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Stream processing</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="event-grouper.html">Event Grouper</a>
+                    <li class="toctree-l1"><a class="reference internal" href="event-broker.html">Event Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-stream.html">Event Stream</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="event-streaming-platform.html">Event Streaming Platform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="partitioned-parallelism.html">Partitioned Parallelism</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="schema-compatibility.html">Schema Compatibility</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="schema-evolution.html">Schema Evolution</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a>
     </li>
@@ -173,19 +168,24 @@
     </li>
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="event-joiner.html">Event Joiner</a>
+                </ul>
+                <p class="caption"><span class="caption-text">Stream processing</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-grouper.html">Event Grouper</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="event-stream-merger.html">Event Stream Merger</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-joiner.html">Event Joiner</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="event-time-processing.html">Event-Time Processing</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-stream-merger.html">Event Stream Merger</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="logical-and.html">Logical AND</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/event-time-processing.html">Event-Time Processing</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/logical-and.html">Logical AND</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="wait-for-n-events.html">Wait for N Events</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/suppressed-event-aggregator.html">Suppressed Event Aggregator</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="wallclock-time.html">Wallclock-Time Processing</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wait-for-n-events.html">Wait for N Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-processing/wallclock-time.html">Wallclock-Time Processing</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Table</span></p>
@@ -216,11 +216,11 @@
     
       
         
-          <li>Stream processing &raquo;</li>
+          <li>Event stream &raquo;</li>
         
       
     
-    <li>Event Grouper</li>
+    <li>Schema Evolution</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -232,34 +232,63 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="event-grouper">Event Grouper</h1>
-<p>An event grouper is a specialized form of an <a href="../event-processing/event-processor.html">Event Processor</a> that groups events together by a common field, such as a customer ID, and/or by event timestamps (often called <em>windowing</em> or <em>time-based windowing</em>).</p>
+                <h1 id="schema-evolution">Schema Evolution</h1>
+<p>An important aspect of data management is schema evolution.
+Similar to how APIs evolve and need to be compatible for all applications that rely on old and new versions of the API, schemas also evolve and likewise need to be compatible for all applications that rely on old and new versions of a schema.</p>
 <h2 id="problem">Problem</h2>
-<p>How can we group individual but related events from the same <a href="../event-stream/event-stream.html">Event Stream</a> or <a href="../table/state-table.html">Table</a>, so that they can subsequently be processed as a whole?</p>
+<p>How do I restructure or add new information to an event, ideally in a way that ensures <a href="schema-compatibility.html">Schema Compatibility</a>?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="event-grouper" src="../img/event-grouper.svg" /></p>
-<p>For <em>time-based grouping</em> a.k.a. <em>time-based windowing</em>, we use an <a href="../event-processing/event-processor.html">Event Processor</a> that groups the related events into windows based on their event timestamps. Most window types have a pre-defined window size, such as 10 minutes or 24 hours. An exception is session windows, where the size of each window varies depending on the time characteristics of the grouped events.</p>
-<p>For <em>field-based</em> grouping, we use an Event Processor that groups events by one or more data fields, irrespective of the event timestamps.</p>
-<p>The two grouping approaches are orthogonal and can be composed. For example, to compute 7-day averages for every customer in a stream of payments, we first group the events in the stream by customer ID <em>and</em> by 7-day windows, and then compute the respective averages for each customer+window grouping.</p>
+<p><img alt="schema-evolution" src="../img/schema-evolution-1.png" /></p>
+<p>One approach for evolving a schema is "in-place" (shown above), in which a stream can have events with both new and previous schema versions in it. The schema compatibility checks then ensure that <a href="../event-processing/event-processing-application.html">Event Processing Applications</a> and <a href="../event-sink/event-sink.html">Event Sinks</a> can read schemas in both formats.</p>
+<p><img alt="schema-evolution" src="../img/schema-evolution-2.png" /></p>
+<p>Another approach is <em>dual schema upgrades</em> a.k.a. <em>versioned streams</em> (shown above). This approach is useful especially when breaking changes in a stream's schema(s) need to be introduced; i.e., in a situation where the new schema is incompatible to the previous schema. Here, the <a href="../event-source/event-source.html">Event Sources</a> write to two streams:</p>
+<ol>
+<li>One stream with the previous schema version, e.g. <code>payments-v1</code>.</li>
+<li>One stream with the new schema version, e.g. <code>payments-v2</code>.</li>
+</ol>
+<p>Event Processing Applications and Event Sinks then consume from the respective stream that they are compatible with.
+Once all consumers are upgraded to the new schema, the old stream can be retired.</p>
 <h2 id="implementation">Implementation</h2>
-<p>As an example, the streaming database <a href="https://ksqldb.io/">ksqlDB</a> provides the capability to group related events by a column and group them into <a href="https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/">"windows"</a> where all the related events have a timestamp within the defined time-window.</p>
-<pre><code>SELECT product-name, COUNT(*), SUM(price) FROM purchases
-  WINDOW TUMBLING (SIZE 1 MINUTE)
-  GROUP BY product-name EMIT CHANGES;
+<p>For "in-place" schema evolution, an <a href="event-stream.html">Event Stream</a> has multiple versions of the same schema that are <a href="schema-compatibility.html">compatible with each other</a>.
+For example, if a field is removed: a consumer that was developed to process events without this field will be able to process events written with the old schema and contain the field – the consumer will just ignore that field.
+In this case, if the original schema were:</p>
+<pre><code>{&quot;namespace&quot;: &quot;io.confluent.examples.client&quot;,
+ &quot;type&quot;: &quot;record&quot;,
+ &quot;name&quot;: &quot;Event&quot;,
+ &quot;fields&quot;: [
+     {&quot;name&quot;: &quot;field1&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;default&quot;: true},
+     {&quot;name&quot;: &quot;field2&quot;, &quot;type&quot;: &quot;string&quot;}
+ ]
+}
+</code></pre>
+<p>Then we could change it to be without <code>field2</code> as show below, and the Event Stream would have a mix of both schema types.
+If new consumers process events written with the old schema, they would just ignore <code>field2</code>.</p>
+<pre><code>{&quot;namespace&quot;: &quot;io.confluent.examples.client&quot;,
+ &quot;type&quot;: &quot;record&quot;,
+ &quot;name&quot;: &quot;Event&quot;,
+ &quot;fields&quot;: [
+     {&quot;name&quot;: &quot;field1&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;default&quot;: true}
+ ]
+}
+</code></pre>
+<p>For <em>dual schema upgrades</em>, there are breaking changes. So the processing flow needs to be more explicit such that clients are only writing to and reading from the version of the Event Stream that corresponds to the schema that they are able to process.
+For example, an application that can process v1 schema would read from one stream:</p>
+<pre><code>CREATE STREAM payments-v1 (transaction_id BIGINT, username VARCHAR)
+    WITH (kafka_topic='payments-v1');
+</code></pre>
+<p>And an application that can process v2 schema would read from another stream:</p>
+<pre><code>CREATE STREAM payments-v2 (transaction_id BIGINT, store_id VARCHAR)
+    WITH (kafka_topic='payments-v2');
 </code></pre>
 <h2 id="considerations">Considerations</h2>
-<p>When grouping events into time windows, there are various types of groupings possible. </p>
-<ul>
-<li>Hopping Windows are based on time intervals. They model fixed-sized, possibly overlapping windows. A hopping window is defined by two properties: the window's duration and its advance or "hop", interval.</li>
-<li>Tumbling Windows are a special case of hopping windows. Like hopping windows, tumbling windows are based on time intervals. They model fixed-size, non-overlapping, gap-less windows. A tumbling window is defined by a single property: the window's duration.</li>
-<li>Session Windows aggregate events into a session, which represents a period of activity separated by a specified gap of inactivity, or "idleness". Any records with timestamps that occur within the inactivity gap of existing sessions are merged into the existing session. If a record's timestamp occurs outside of the session gap, a new session is created.</li>
-</ul>
-<p>See the <a href="https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#window-types">ksqlDB supported window types</a> and the <a href="https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-windowing">Kafka Streams supported window types</a> for details and diagrams explaining window types.</p>
+<p>Follow <a href="schema-compatibility.html">Schema Compatibility</a> rules to determine which schema changes are compatible or breaking.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>The <a href="https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html">Tumbling Windows in ksqlDB</a> and the <a href="https://kafka-tutorials.confluent.io/create-tumbling-windows/kstreams.html">Tumbling Windows in Kafka Streams</a> tutorials provide an end-to-end example for calculating an aggregate calculation over a window of events.</li>
-<li>The <a href="https://kafka-tutorials.confluent.io/create-tumbling-windows/ksql.html">Tumbling Windows in ksqlDB</a> and the <a href="https://kafka-tutorials.confluent.io/create-tumbling-windows/kstreams.html">Tumbling Windows in Kafka Streams</a> tutorials provide an end-to-end example for calculating an aggregate calculation over a window of events.</li>
-<li>Related full tutorials are <a href="https://kafka-tutorials.confluent.io/create-session-windows/ksql.html">Session Windows in ksqlDB</a> and <a href="https://kafka-tutorials.confluent.io/create-session-windows/kstreams.html">Session Windows in Kafka Streams</a>, as well as <a href="https://kafka-tutorials.confluent.io/create-hopping-windows/ksql.html">Hopping Windows in ksqlDB</a>.</li>
+<li><a href="../event/event-serializer.html">Event Serializer</a>: encode events so that they can be written to disk, transferred across the network, and generally preserved for future readers</li>
+<li><a href="../event/schema-on-read.html">Schema-on-Read</a>: enable the reader of events to determine which schema to apply to the Event that is processed</li>
+<li><a href="https://docs.confluent.io/platform/current/schema-registry/avro.html">Schema evolution and compatibility</a>: backward, forward, full</li>
+<li><a href="https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html">Working with schemas</a>: creating, editing, comparing versions</li>
+<li><a href="https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility">Maven plugin</a> to test for schema compatibility during the development cycle</li>
 </ul>
               
             </div>
@@ -268,10 +297,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="event-joiner.html" class="btn btn-neutral float-right" title="Event Joiner">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../stream-processing/event-grouper.html" class="btn btn-neutral float-right" title="Event Grouper">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../event-stream/schema-evolution.html" class="btn btn-neutral" title="Schema Evolution"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="schema-compatibility.html" class="btn btn-neutral" title="Schema Compatibility"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -297,10 +326,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../event-stream/schema-evolution.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="schema-compatibility.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="event-joiner.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../stream-processing/event-grouper.html" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
