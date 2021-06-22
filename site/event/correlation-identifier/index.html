@@ -229,7 +229,7 @@
 <h2 id="problem">Problem</h2>
 <p>How does an application, that has requested information and received a response, know for which request a particular response is for?</p>
 <h2 id="solution">Solution</h2>
-<p><img alt="correlation-identifier" src="../../img/correlation-identifier.png" /></p>
+<p><img alt="correlation-identifier" src="../../img/correlation-identifier.svg" /></p>
 <p>An Event Processor generates an Event which acts as the request. A globally unique identifier is added to the request Event prior to sending. This allows the responding Event Processor to include the identifier in the response Event, allowing the requesting processor to correlate the request and response.</p>
 <h2 id="implementation">Implementation</h2>
 <p>In Kafka, we can add a globally unique identifier to the Kafka record headers when producing the request event. The following code example uses Kafka's Java producer client.</p>
