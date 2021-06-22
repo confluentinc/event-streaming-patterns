@@ -5,7 +5,7 @@ Connecting external systems to the [Event Streaming Platform](../event-stream/ev
 How can we connect applications or external systems, like databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md) so that it can receive [Events](../event/event.md)?
 
 ## Solution
-![event-sink-connector](../img/event-sink-connector.png)
+![event-sink-connector](../img/event-sink-connector.svg)
 
 Event Sink Connector is a specific implementation of an [Event Sink](event-sink.md). Use an Event Sink Connector to transfer [Events](../event/event.md) from the [Event Stream](../event-stream/event-stream.md) into the specific external system. 
 
