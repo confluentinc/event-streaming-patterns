@@ -23,7 +23,7 @@ Another approach is _dual schema upgrades_ a.k.a. _versioned streams_ (shown abo
 1. One stream with the previous schema version, e.g. `payments-v1`.
 2. One stream with the new schema version, e.g. `payments-v2`.
 
-[Event Processing Applications](../event-processing/event-processing-application.md) and [Event Sinks](../event-sink/event-sink.md) then consume from the respective stream that they are compatible with.
+Event Processing Applications and Event Sinks then consume from the respective stream that they are compatible with.
 Once all consumers are upgraded to the new schema, the old stream can be retired.
 
 ## Implementation
