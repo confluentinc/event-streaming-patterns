@@ -10,7 +10,7 @@ seo:
 How does an application, that has requested information and received a response, know for which request a particular response is for?
 
 ## Solution
-![correlation-identifier](../img/correlation-identifier.png)
+![correlation-identifier](../img/correlation-identifier.svg)
 
 An Event Processor generates an Event which acts as the request. A globally unique identifier is added to the request Event prior to sending. This allows the responding Event Processor to include the identifier in the response Event, allowing the requesting processor to correlate the request and response.
 
