@@ -78,7 +78,7 @@ curl -X POST --data @filename.avsc https://<schema-registry>/<subject>/versions
 ```
 
 Once we updated our schemas and asserted the desired compatibility level, we must be thoughtful about the order of upgrading the applications that use them.
-In some cases you should upgrade producers first, in other cases you should upgrade consumers first.
+In some cases we should upgrade writer applications first (Event Sources, i.e., consumers), in other cases we should upgrade reader applications first (Event Sinks and Event Processors, i.e., producers).
 See [Schema Compatibility Types](https://docs.confluent.io/platform/current/schema-registry/avro.html#compatibility-types) for more details.
 
 ## References
