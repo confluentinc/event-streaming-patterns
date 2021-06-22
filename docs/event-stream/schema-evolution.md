@@ -55,7 +55,7 @@ If new consumers process events written with the old schema, they would just ign
 }
 ```
 
-For "dual schema upgrades", there are breaking changes so the processing flow needs to be more explicit such that clients are only writing to and reading from the Event Stream that corresponds to the schema that they are able to process.
+For _dual schema upgrades_, there are breaking changes. So the processing flow needs to be more explicit such that clients are only writing to and reading from the version of the Event Stream that corresponds to the schema that they are able to process.
 For example, your Event Processing Application would read from two different streams:
 
 ```
