@@ -251,18 +251,18 @@ Create a connection between the two <a href="../event-stream/event-streaming-pla
 Ideally this is done in realtime such that as new events are published in the source event streaming platform, they can be immediately copied, byte for byte, to the destination event streaming platform.
 This allows the client applications in the destination to leverage the same set of data.</p>
 <h2 id="implementation">Implementation</h2>
-<p>Practically, replication is not enabled completely on all data streams, as there are always exceptions, organizational limitations, technical constraints, or other reasons why we wouldn't want to copy absolutely everything.
-Instead, we can do this on a per topic basis, where we can map a source topic to a destination topic.</p>
+<p>Typically, replication is not enabled on all event streams in practice. There are always exceptions, organizational limitations, technical constraints, or other reasons why we wouldn't want to copy absolutely everything.
+Instead, we can do this on a per-stream basis, where we can map a source stream to a destination stream.</p>
 <p>With Apache Kafka®, we can do this in one of several ways.</p>
 <h3 id="option-1-cluster-linking">Option 1: Cluster Linking</h3>
-<p><a href="https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html">Cluster Linking</a> enables easy data sharing between event streaming platforms, mirroring topics across them.
+<p><a href="https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking.html">Cluster Linking</a> enables easy data sharing between event streaming platforms, mirroring Kafka topics (i.e., streams) across them.
 Because Cluster Linking uses native replication protocols, client applications can easily failover in the case of a disaster recovery scenario.</p>
 <pre><code class="language-sh">ccloud kafka link create east-west ...
 ccloud kafka topic create &lt;destination topic&gt; --link east-west --mirror-topic &lt;source topic&gt; ...
 </code></pre>
-<p>Other messaging systems like RabbitMQ, Active MQ, etc., provide similar functionality but without the same levels of parallelism.</p>
+<p>Other messaging systems like RabbitMQ and ActiveMQ provide similar functionality, but without the same levels of parallelism.</p>
 <h3 id="option-2-connect-based-replication">Option 2: Connect-based Replication</h3>
-<p>Operators can set up such inter-cluster data flows with Confluent's <a href="https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html">Replicator</a> or Kafka's <a href="https://kafka.apache.org/documentation/#georeplication">MirrorMaker</a> (version 2), tools that replicate data between different Kafka environments.
+<p>Operators can set up inter-cluster data flows with Confluent's <a href="https://docs.confluent.io/cloud/current/clusters/migrate-topics-on-cloud-clusters.html">Replicator</a> or Kafka's <a href="https://kafka.apache.org/documentation/#georeplication">MirrorMaker</a> (version 2), tools that replicate data between different Kafka environments.
 Unlike Cluster Linking, these are separate services built upon Kafka Connect, with built-in producers and consumers.</p>
 <h2 id="considerations">Considerations</h2>
 <p>Note that this type of replication between event streaming platforms is asynchronous, which means an event that is recorded in the source may not be immediately available at the destination.
