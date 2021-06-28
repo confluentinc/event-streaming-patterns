@@ -60,6 +60,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/pipeline.html">Pipeline</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compositional-patterns/strangler-fig.html">Strangler Fig</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Event</span></p>
                 <ul class="current">
@@ -255,8 +257,10 @@ an <a href="../event-stream/event-stream.html">Event Stream</a>, detailing the
 action we need to take and its arguments. Then write a separate
 service that watches for that event before invoking the
 procedure.</p>
-<p>Typically a Command Event is dispatched in a fire-and-forget
-manner. The writer assumes the event will be handled correctly, and
+<p>Typically, a Command Event is dispatched in a fire-and-forget
+manner in terms of application logic (events themselves are delivered
+and stored with strong guarantees, such as exactly-once semantics).
+The writer assumes the event will be handled correctly, and
 responsibility for monitoring and error-handling lies elsewhere in the
 system.  This is very similar to the Actor model. Actors have an
 inbox; we write messages to that inbox and trust they'll be handled in
@@ -362,7 +366,7 @@ there, they'd have a fair point.</em></p>
         <a href="correlation-identifier.html" class="btn btn-neutral float-right" title="Correlation Identifier">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../compositional-patterns/pipeline.html" class="btn btn-neutral" title="Pipeline"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../compositional-patterns/strangler-fig.html" class="btn btn-neutral" title="Strangler Fig"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -388,7 +392,7 @@ there, they'd have a fair point.</em></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../compositional-patterns/pipeline.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../compositional-patterns/strangler-fig.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="correlation-identifier.html" style="color: #fcfcfc">Next &raquo;</a></span>
