@@ -10,7 +10,7 @@ seo:
 How can [Event Processors](../event-processing/event-processor.md) and applications communicate with each other, using event streaming?
 
 ## Solution
-![event-stream](../img/event-stream.png)
+![event-stream](../img/event-stream.svg)
 
 Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream, and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named, allowing communication over a specific stream of [Events](../event/event.md). Note how Event Streams decouple the source and sink applications, which communicate indirectly and asynchronously with each other through events. Additionally, Event data formats are often validated in order to govern the communication between applications.
 
@@ -19,6 +19,9 @@ Generally speaking, an Event Stream records the history of what has happened in 
 Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and we can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
 
 ## Implementation
+[comment]: <> (TODO: Reference the DCI Kafka 101 course instead of the docs page)
+With [Apache Kafka®](https://docs.confluent.io/platform/current/kafka/introduction.html), Event Streams are modeled as _Topics_. A topic is an appened only, durable, and distributed [Event Store](../event-store/event-store.md). Unlike traditional message queueing systems, events stored in topics can be read as often as needed and are not deleted after consumption. Kafka allows you to define policies which dictate how events are retained, using either time or size limitations. Kafka consumers are able to decide where in an event stream to begin reading. Consumers can choose to begin reading from the earliest or latest event, or may choose to seek to a specific location in the topic using the events timestamp or offset position.
+
 The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is `JSON`.
 ```sql
 CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
