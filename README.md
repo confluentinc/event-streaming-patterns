@@ -6,12 +6,18 @@ You can see the live version of these patterns on the Confluent Developer site:
 <!-- TODO: Update with proper DCI / patterns link -->
 https://confluent.developer.io/patterns
 
+## Questions?
+
+Please head over to the [Confluent Community Forum](https://forum.confluent.io/) if you have questions or suggestions.
+
 ## How to contribute
 
-### Request new pattern 
+### Request a new pattern 
+
 If you'd like to request the creation of a new Pattern, please search the existing Patterns and issue list to prevent adding a duplicate. If you do not see an existing pattern, submit a new [GitHub issue](https://github.com/confluentinc/event-streaming-patterns/issues) using the "Pattern Request" issues template. Please provide as many details about the pattern as possible.
 
-### Author new pattern
+### Submit a new pattern
+
 If you'd like to contribute a pattern, first follow the same procedure above for requesting a pattern by filing a new "Pattern request" GitHub issue. Assign the GitHub issue to yourself before proceeding.
 
 Patterns are authored in [Markdown](https://www.mkdocs.org/user-guide/writing-your-docs/#writing-with-markdown) following the [MkDocs file layout](https://www.mkdocs.org/user-guide/writing-your-docs/). Patterns are organized into categories under the [docs](./docs/) folder and follow a naming convention of `pattern-category/pattern-name.md`.
@@ -53,6 +59,6 @@ If you are a Confluent employee, you can stage the site using the `mkdocs` Git H
 - After a few minutes, the updated site will be available at https://fluffy-spork-82bccf67.pages.github.io/
 
 ### References
-- If you are a Confluent employee, you can view the origin Event Streaming Patterns POC on the [Confluent wiki](https://confluentinc.atlassian.net/wiki/spaces/PM/pages/940376652/Event+Streaming+Patterns+POC)
+
 - [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com)
 
