@@ -34,8 +34,10 @@ action we need to take and its arguments. Then write a separate
 service that watches for that event before invoking the
 procedure.
 
-Typically a Command Event is dispatched in a fire-and-forget
-manner. The writer assumes the event will be handled correctly, and
+Typically, a Command Event is dispatched in a fire-and-forget
+manner in terms of application logic (events themselves are delivered
+and stored with strong guarantees, such as exactly-once semantics).
+The writer assumes the event will be handled correctly, and
 responsibility for monitoring and error-handling lies elsewhere in the
 system.  This is very similar to the Actor model. Actors have an
 inbox; we write messages to that inbox and trust they'll be handled in
