@@ -10,15 +10,18 @@ seo:
 How can [Event Processors](../event-processing/event-processor.md) and applications communicate with each other, using event streaming?
 
 ## Solution
-![event-stream](../img/event-stream.png)
+![event-stream](../img/event-stream.svg)
 
 Connect the [Event Processing Applications](../event-processing/event-processing-application.md) with an Event Stream. [Event Sources](../event-source/event-source.md) produce [Events](../event/event.md) to the Event Stream, and [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md) consume them. Event Streams are named, allowing communication over a specific stream of [Events](../event/event.md). Note how Event Streams decouple the source and sink applications, which communicate indirectly and asynchronously with each other through events. Additionally, Event data formats are often validated in order to govern the communication between applications.
 
 Generally speaking, an Event Stream records the history of what has happened in the world as a sequence of events (think: a sequence of facts). An example stream is a sales ledger or the sequence of moves in a chess match. This history is an ordered sequence or chain of events, so we know which event happened before another event to infer causality (e.g., “White moved the e2 pawn to e4, then Black moved the e7 pawn to e5”). A stream thus represents both the past and the present: as we go from today to tomorrow—or from one millisecond to the next—new events are constantly being appended to the history.
 
-Technically, a stream provides immutable data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Events in a stream can be keyed, and we can have many events for one key, such as the customer ID as the key for a stream of payments of all customers.
+Conceptually, a stream provides _immutable_ data. It supports only inserting (appending) new events, whereas existing events cannot be changed. Streams are persistent, durable, and fault tolerant. Unlike traditional message queues, events stored in streams can be read as often as needed by [Event Sinks](../event-sink/event.sink) and [Event Processing Applications](../event-processing/event-processing-application.md), and they are not deleted after consumption. Instead, retention policies control how events are being retained. Events in a stream can be _keyed_, and we can have many events for one key, such as the customer ID as the key for a stream of payments of all customers (cf. related patterns such as [Partitioned Parallelism](../event-stream/partitioned-parallelism.md)).
 
 ## Implementation
+[comment]: <> (TODO: Reference the DCI Kafka 101 course instead of the docs page)
+In [Apache Kafka®](https://docs.confluent.io/platform/current/kafka/introduction.html), Event Streams are called _Topics_. Kafka allows you to define policies which dictate how events are retained, using [time or size limitations](../event-storage/limited-retention-event-stream.md) as well as [retaining events forever](../event-storage/infinite-retention-event-stream.md). Kafka consumers (i.e., [Event Sinks](../event-sink/event.sink) and [Event Processing Applications](../event-processing/event-processing-application.md)) are able to decide where in an event stream to begin reading. They can choose to begin reading from the oldest or newest event, or seek to a specific location in the topic, using the event's timestamp or position (the so-called _offset_).
+
 The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is `JSON`.
 ```sql
 CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
