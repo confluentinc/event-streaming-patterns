@@ -12,7 +12,7 @@ Being able to distribute events and process them concurrently enables an applica
 How can we allocate events across [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) so that they can be processed concurrently by distributed [Event Processors](../event-processing/event-processor.md)?
 
 ## Solution
-![partitioned-parallelism](../img/partitioned-parallelism.png)
+![partitioned-parallelism](../img/partitioned-parallelism.svg)
 
 We should use a partitioned event stream, and then assign the events to different partitions of the stream. Essentially, a partition is a unit of parallelism for storage as well as reading, writing, and processing events. Partitioning helps concurrency and scalability in these main ways:
 
