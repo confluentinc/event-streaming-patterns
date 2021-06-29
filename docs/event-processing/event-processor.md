@@ -11,7 +11,7 @@ Once data such as financial transactions, tracking information for shipments, Io
 How do we process [Events](../event/event.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
-![event-processor](../img/event-processor.png)
+![event-processor](../img/event-processor.svg)
 We build an Event Processor, which is a component that reads [Events](../event/event.md) and processes them, and possibly writes new [Events](../event/event.md) as the result of its processing. As such, it may act as an [Event Source](../event-source/event-source) and/or [Event Sink](../event-sink/event-sink.md), and in practice often acts as both. An event processor can be distributed, which means it has multiple instances that run across different machines. In this case the processing of [Events](../event/event.md) happens concurrently across these instances.
 
 An important characteristic of an event processor is that it should allow for composition with other event processors. That's because, in practice, we rarely use a single event processor in isolation. Instead, we compose and connect (via [Event Streams](../event-stream/event-stream.md)) one or more event processors inside an [Event Processing Application](event-processing-application.md) that fully implements one particular use case end-to-end, or (e.g., in the case of microservices) that implements a subset of the overall business logic limited to the bounded context of a particular domain. 
