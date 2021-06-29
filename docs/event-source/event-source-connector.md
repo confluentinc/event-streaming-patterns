@@ -10,7 +10,7 @@ seo:
 How can we connect cloud services and traditional systems, like relational databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md), converting their data at rest to data in motion with [Events](../event/event.md).
 
 ## Solution
-![event-source-connector](../img/event-source-connector.png)
+![event-source-connector](../img/event-source-connector.svg)
 
 Generally speaking, we need to find a way to extract data as [Events](../event/event.md) from the origin system. For relational databases, for example, a common technique is to use [Change Data Capture](https://en.wikipedia.org/wiki/Change_data_capture), where changes to database tables—such as INSERTs, UPDATES, DELETEs—are captured as [Events](../event/event.md), which can then be ingested into another system. The components that perform this extraction and ingestion of [Events](../event/event.md) are typically called "connectors". The connectors turn the origin system into an [Event Source](../event-source/event-source.md), then generate [Events](../event/event.md) from that data, and finally sends these [Events](../event/event.md) to the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
