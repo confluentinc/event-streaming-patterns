@@ -55,7 +55,7 @@ To test your new pattern locally, you can build a local version of the patterns 
 
 #### Staging on GitHub
 
-If you are a Confluent employee, you can stage the site using the `mkdocs` Git Hub integration. From the `main` branch (in the desired state): 
+If you are a Confluent employee, you can stage the site using the `mkdocs` GitHub integration. From the `main` branch (in the desired state):
 - Run the provided script, `./release.sh`
 - After a few minutes, the updated site will be available at https://fluffy-spork-82bccf67.pages.github.io/
 
