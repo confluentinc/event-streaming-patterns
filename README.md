@@ -33,7 +33,7 @@ Once your pattern is complete, use standard [GitHub workflow](https://docs.githu
 
 #### Pattern Diagram
 
-Your new pattern must include a diagram. The diagram should be located in the `Solution` section and should be a technology agnostic visual representation of the pattern's implementation. The diagrams are stylized using Confluent colors and iconography. If you are a Confluent employee, you can use the diagrams in the [Google slidedeck](https://docs.google.com/presentation/d/1Zf256Z6fBvre3uclIbmxXsDpnTIxiBX66b13pHbGIYc/edit?usp=sharing) to build a new diagram. If you are not a Confluent Employee, you can provide an image in non-Confluent branding and provide it as part of the PR, and we can help you stylize it.
+Your new pattern must include a diagram in the `Solution` section, and it should be a technology agnostic visual representation of the pattern's implementation. The diagrams are stylized using Confluent colors and iconography. If you are a Confluent employee, you can use the diagrams in the [Google slidedeck](https://docs.google.com/presentation/d/1Zf256Z6fBvre3uclIbmxXsDpnTIxiBX66b13pHbGIYc/edit?usp=sharing) to build a new diagram. If you are not a Confluent Employee, you can provide an image in non-Confluent branding and provide it as part of the PR, and we can help you stylize it.
 
 #### Build locally
 
