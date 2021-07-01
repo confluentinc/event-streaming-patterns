@@ -24,9 +24,11 @@ To make an Apache Kafka® producer idempotent, configure your producer with
 enable.idempotence=true
 ```
 
-What this does is, each batch of messages sent to the Kafka cluster contains a sequence number that the broker uses to dedupe any duplicate send. This sequence number is persisted to the replicated log, so even if the leader broker fails, any broker that takes over will also know if a resend is a duplicate.
+What this does is, each batch of messages that the producer sends to the Kafka cluster contains a sequence number that the broker uses to dedupe any duplicate events sent from this producer. This sequence number is persisted to the replicated log, so even if the leader broker fails, any broker that takes over will also know if a resend is a duplicate.
 
 ## Considerations
+Enabling a Kafka producer for idempotency not only ensures that there are no duplicate messages are written into the log, it also ensures the messages are written in order. This is because the brokers accept events only if its sequence number is exactly one greater than the last committed message, otherwise it results in an out-of-sequence error.
+
 A solution that necessitates strong EOS guarantees should enable EOS at all stages of the pipeline, not just on the writer.
 An Idempotent Writer is therefore typically combined with an [Idempotent Reader](../event-processing/idempotent-reader.md) and transactional processing.
 
