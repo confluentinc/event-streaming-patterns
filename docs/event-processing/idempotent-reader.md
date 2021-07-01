@@ -15,7 +15,7 @@ There are two causes of duplicate events that the Idempotent Reader should take 
 2. Incorrect application logic: an [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md). For example, imagine a bug in the event source that results in always writing a customer payment three times instead of once into an event stream. The event streaming platform rightly considers these as three distinct payments, and it cannot guard against these types of duplicates automatically.
 
 ## Problem
-How can an application that is reading from a distributed event streaming platform deal with duplicate events?
+How can an application that is reading from an event stream deal with duplicate events?
 
 ## Solution
 ![idempotent-reader](../img/idempotent-reader.png)
