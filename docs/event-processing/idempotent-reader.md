@@ -30,9 +30,15 @@ This can be done by tracking unique IDs within each event, whereby the ID could 
 As a consumer application reads events, it tracks in a local store which IDs have been processed, and if it comes across another event with an existing ID in the database, it discards the event.
 
 ## Implementation
-To handle an operational failure, you can [enable EOS in your Kafka Streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/) so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
+To handle an operational failure, you can [enable EOS in your streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/) so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
 For Kafka consumers, automatic commits of consumer offsets are convenient for developers, but they don’t give enough control to avoid duplicate messages.
 So disable auto commit to maintain full control over when the application commits offsets to minimize duplicates.
+
+With ksqlDB where you can have exactly-once stream processing to execute a read-process-write operation exactly one time, you can enable exactly-once semantics with:
+
+```
+processing.guarantee="exactly_once"
+``` 
 
 To handle incorrect application logic, which could result in the same event being written multiple times to the Kafka commit log (they actually are distinct events according to the [Event Store](../event-store/event-store.md)), the consumer application needs to maintain a local store for tracking the events' unique IDs.
 Then all event reading will entail checking the ID against the already-processed IDs before proceeding.
