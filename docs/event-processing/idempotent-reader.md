@@ -26,24 +26,23 @@ EOS allows [Event Streaming Applications](../event-processing/event-processing-a
 To prevent duplicates caused by operational failures when writing events into the [Event Streaming Platform](../event-stream/event-streaming-platform.md), the platform should support strong delivery guarantees and, in particular, EOS.  For [Event Sources](../event-source/event-source.md), i.e., on the writing side, a common choice to achieve EOS is the use of an Idempotent Writer. For [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), i.e., the reading side, an idempotent reader can be configured to read just committed transactions.
 
 Meanwhile, if the Event Source is still capable of duplicating the same logical event, then the consumer application logic will need to handle those duplicates.
-It can do this by tracking unique IDs within each event.
-The ID could be the event key or a field embedded in the event message, and it is up to the consumer application to track when IDs have been processed.
-If it comes across another event with the same ID, it discards it.
+This can be done by tracking unique IDs within each event, whereby the ID could be the event key or a field embedded in the event message.
+As a consumer application reads events, it tracks in a database which IDs have been processed, and if it comes across another event with an existing ID in the database, it discards the event.
 
 ## Implementation
 To handle an operational failure, you can [enable EOS in your Kafka Streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/) so that the application atomically updates its own local consumer offsets (which track how far the consumer application has read from the commit log) along with its local state stores and related topics.
 For Kafka consumers, automatic commits of consumer offsets are convenient for developers, but they don’t give enough control to avoid duplicate messages.
 So disable auto commit to maintain full control over when the application commits offsets to minimize duplicates.
 
-To handle incorrect application logic, which could result in the same event being written multiple times to the Kafka commit log (they actually are distinct events according to the [Event Store](../event-store/event-store.md)), the consumer application needs to maintain a local store for tracking the events' unique IDs.
+To handle incorrect application logic, which could result in the same event being written multiple times to the Kafka commit log (they actually are distinct events according to the [Event Store](../event-store/event-store.md)), the consumer application needs to maintain a local store or database for tracking the events' unique IDs.
 Then all event reading will entail checking the ID against the already-processed IDs before proceeding.
 
-Although it may apply to a subset of use cases, it may also be possible to design the consumer processing logic to be idempotent.
+Although it may apply to a subset of use cases, it may also be possible to design the consumer processing logic to be [idempotent](https://en.wikipedia.org/wiki/Idempotence).
 Thus, instead of the strategy of avoiding duplicate events or discarding duplicate events, you could design the application such that the same event could be processed more than once and have the same net effect as if it had been processed just once.
 
 ## Considerations
 A solution that necessitates strong EOS guarantees should enable EOS at all stages of the pipeline, not just on the reader.
-An Idempotent Reader is therefore typically combined with an Idempotent Writer and transactional processing.
+An Idempotent Reader is therefore typically combined with an [Idempotent Writer](../event-processing/idempotent-writer.md) and transactional processing.
 
 ## References
 * This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
