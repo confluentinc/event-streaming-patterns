@@ -29,8 +29,8 @@ CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
 ```
 
 ## Considerations
-* End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery) depend primarily on three factors: (1) the capabilities of the origin event source, such as a cloud service or relational database; (2) the capabilities of the event source connector, and (3) the capabilities of the destination event streaming platform, such as Apache Kafka or Confluent.
-* Security policies, as well as regulatory compliance, may require appropriate settings for encrypted communication, authentication, authorization, etc. between the event source, the event source connector, and the destination event streaming platform.
+* End-to-end data delivery guarantees (such as exactly-once delivery or at-least-once delivery) depend primarily on three factors: (1) the capabilities of the origin [Event Source](./event-source.md), such as a cloud service or relational database; (2) the capabilities of the Event Source Connector, and (3) the capabilities of the destination [Event Streaming Platform](../event-stream/event-streaming-platform.md), such as Apache Kafka or Confluent.
+* Security policies, as well as regulatory compliance, may require appropriate settings for encrypted communication, authentication, authorization, etc. between the [Event Source](./event-source.md), the Event Source Connector, and the destination [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## References
 * This pattern is derived from the [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) pattern in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf
