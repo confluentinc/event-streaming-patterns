@@ -33,5 +33,5 @@ CREATE SOURCE CONNECTOR `jdbc-connector` WITH(
 * Security policies, as well as regulatory compliance, may require appropriate settings for encrypted communication, authentication, authorization, etc. between the [Event Source](./event-source.md), the Event Source Connector, and the destination [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## References
-* This pattern is derived from the [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) pattern in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf
-* See the [Add key to data ingested through Kafka Connect](https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html) tutorial for a full Kafka Connect example
+* This pattern is derived from the [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) pattern in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
+* See the [Add key to data ingested through Kafka Connect](https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html) tutorial for a full Kafka Connect example.
