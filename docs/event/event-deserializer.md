@@ -13,10 +13,10 @@ access that ocean of data, the richer the analysis we can perform.
 
 In an online shopping business, data recorded by the order-processing
 system and from data user behavior may prove invaluable to the website
-design department, _provided they can actually access it_. It's
+design department, _provided that they can actually access it_. It's
 vital to be able to read data from an [Event
-Store](../event-storage/event-store.md) regardless of which process
-and which department put it there originally.
+Store](../event-storage/event-store.md), regardless of which process
+and which department wrote the data there originally.
 
 To a large degree, the accessibility of data is determined at write
 time, by our choice of [Event
@@ -25,7 +25,7 @@ complete until we've read the data back out.
 
 ## Problem
 
-How can I reconstruct the original event from its representation in the event streaming platform?
+How can I reconstruct an original event from its representation in the [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
 
@@ -40,7 +40,7 @@ deserialization easy.
 
 While some data formats are reasonably
 [discoverable](https://en.wikipedia.org/wiki/Discoverability), in
-practice it becomes invaluable to have a precise, permanent record of
+practice it is invaluable to have a precise, permanent record of
 how the data was encoded at the time it was written. This is
 particularly true if the data format has evolved over time and the
 [Event Stream](../event-stream/event-stream.md) may contain more than
@@ -51,14 +51,14 @@ one encoding of semantically-equivalent data.
 Confluent’s [Schema
 Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
 stores a versioned history of the data's schema in Apache Kafka&reg;
-itself. The client libraries can then use this metadata to seamlessly
+itself. Client libraries can then use this metadata to seamlessly
 reconstruct the original event data, while we can use the registry API
 to manually inspect the schemas, or to build libraries for other
 languages.
 
-For example, in the [Event Serializer](./event-serializer.md) pattern
+For example, in the [Event Serializer](./event-serializer.md) pattern,
 we wrote a stream of `fx_trade` events. If we want to recall the
-structure of those events we can ask ksqlDB:
+structure of those events, we can ask ksqlDB:
 
 ```sh
 DESCRIBE fx_trade;
@@ -91,7 +91,7 @@ curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq .
 }
 ```
 
-Unpacking that `schema` field reveals the [Avro][avro] specification:
+Unpacking the `schema` field reveals the [Apache Avro][avro] specification:
 
 ```sh
 curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .schema | jq .
@@ -142,34 +142,33 @@ curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .sch
 }
 ```
 
-An Avro library can use this schema to deserialize the events
-seamlessly. And any client libraries that are Schema Registry-aware
+An Avro library can use this schema to seamlessly deserialize the events.
+And any client libraries that are aware of Schema Registry
 can automate this lookup, allowing us to forget about encodings
 entirely and focus on the data.
 
 ## Considerations
 
-In addition to Avro, Schema Registry supports Protobuf and JSON
-Schema. See [Event Serializer](./event-serializer.md) for a discussion
+In addition to Avro, Schema Registry supports Protocol Buffers (Protobuf) and JSON
+Schema. See the [Event Serializer](./event-serializer.md) pattern for a discussion
 of these formats.
 
 While the choice of serialization format is important, it doesn't have
-to be set in stone. For example, it's straightforward to [translate between
-supported formats with
-ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). For
-more complex scenarios, we have several strategies for managing schema
+to be set in stone. For example, ksqlDB makes it straightforward to [translate between
+supported formats](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). For
+more complex scenarios, there are several strategies for managing schema
 migration:
 
 * [Schema
-  Compatibility](http://localhost:8000/event-stream/schema-evolution/)
+  Compatibility](../event-stream/schema-evolution/)
   discusses the kinds of "safe" schema changes that Avro is designed
   to handle transparently.
-* [Event Translators](../event-processing/event-translator.md ) can
+* [Event Translators](../event-processing/event-translator.md) can
   convert between different encodings to aid consumption by different
   systems.
 * [Schema
   Evolution](http://localhost:8000/event-stream/schema-evolution/)
-  discusses splitting and joining streams to simplify serving
+  discusses splitting and joining streams to make it simpler to serve
   consumers that can only handle certain versions of the event's
   schema.
 * An [Event Standardizer](./event-standardizer.md) can reformat
@@ -179,11 +178,11 @@ migration:
 
 ## References
 
-* The counterpart of an event deserializer (for reading) is an [Event Serializer](./event-serializer.md) (for writing).
+* The counterpart of an event deserializer (used for reading) is an [Event Serializer](./event-serializer.md) (used for writing).
 * Serializers and deserializers are closely related to [Data
-  Contracts](./data-contract.md), in which we want to adhere to a
-  specific serialization format, _and_ constrain the individual events
+  Contracts](./data-contract.md), where we want to adhere to a
+  specific serialization format, _and_ constrain individual events
   to a certain schema within that format.
-* See also: [Event Mapper](../event-processing/event-mapper.md).
+* See also the [Event Mapper](../event-processing/event-mapper.md) pattern.
 
 [Avro]: https://avro.apache.org/docs/current/
