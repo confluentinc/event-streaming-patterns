@@ -6,7 +6,7 @@ seo:
 
 # Idempotent Writer
 A writer produces [Events](../event/event.md) that get written into an [Event Stream](../event-stream/event-stream.md), and under stable conditions, each event gets recorded once.
-However, in the case of an operational failure or a brief network outage, an [Event Source](../event-source/event-source.md) could try to write the same event twice. This type of duplicate is one of the perils of distributed systems.
+However, in the case of an operational failure or a brief network outage, an [Event Source](../event-source/event-source.md) may try rewriting an event, resulting in two or more copies of the same event in the stream. This type of duplication is one of the perils of distributed systems.
 
 ## Problem
 How can an [Event Streaming Platform](../event-stream/event-streaming-platform.md) ensure that an Event Source does not write the same event more than once?
