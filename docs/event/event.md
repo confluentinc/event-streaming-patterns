@@ -1,5 +1,11 @@
+---
+seo:
+  title: Event
+  description: Events represent facts and are used by decoupled applications, services, and systems to exchange data across an Event Streaming Platform.
+---
+
 # Event
-Events represent facts and can facilitate data exchange between decoupled applications, services, and systems across an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
+Events represent facts and are used by decoupled applications, services, and systems to exchange data across an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 
 ## Problem
 How do I represent a fact about something that has happened?
