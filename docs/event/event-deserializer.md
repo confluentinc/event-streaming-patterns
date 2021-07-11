@@ -91,7 +91,7 @@ curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq .
 }
 ```
 
-Unpacking the `schema` field reveals the [Apache Avro][avro] specification:
+Unpacking the `schema` field reveals the [Apache Avro&trade;][avro] specification:
 
 ```sh
 curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .schema | jq .

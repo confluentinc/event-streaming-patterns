@@ -7,7 +7,7 @@ seo:
 # Event Serializer
 
 Data has a long lifecycle, often outliving the programs that
-originally gathered and stored it. And data commands a broad
+originally gathered and stored it. And data has a broad
 audience: the more accessible our data is, the more departments in
 our organization can find a use for it. 
 
@@ -34,7 +34,7 @@ streaming platform and its client applications?
 
 Use a language-agnostic serialization format. The ideal format would
 be self-documenting, space-efficient, and designed to support a
-degree of backwards-compatibility and forwards-compatibility. We recommend
+degree of backwards compatibility and forwards compatibility. We recommend
 [Apache Avro][avro] (see "Considerations").
 
 An optional (but recommended) step is to register the serialization details
