@@ -25,7 +25,7 @@ To make schema management easier, the design can use a centralized repository th
 
 ## Implementation
 With [Confluent Schema Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html), all of the schemas are managed in a centralized repository.
-In addition to storing the schema information itself, Schema Registry can be configured to check and optionally to enforce that schema changes are compatible with previous versions.
+In addition to storing the schema information, Schema Registry can be configured to check and enforce that schema changes are compatible with previous versions.
 
 For example, if a business started with a schema definition for an event that has two fields, but the business needs later evolve to warrant an optional third field, then the schema evolves with the needs of the business.
 Schema Registry ensures that the new schema is compatible with the old schema.
