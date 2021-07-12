@@ -44,7 +44,7 @@ Using Avro as the [serialization format](../event/event-serializer.md), if the o
 
 Examples of compatible changes would be:
 
-1. _Removal of a field that had a field_: notice `field1` is removed
+1. _Removal of a field that had a default_: notice `field1` is removed
 
 ```
 {"namespace": "io.confluent.examples.client",
