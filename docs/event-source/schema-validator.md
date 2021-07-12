@@ -12,7 +12,7 @@ Validate whether an [Event](../event/event.md) conforms to the defined schema(s)
 2. On the client side by the [Event Source](../event-source/event-source.md) that creates the [Event](../event/event.md). For example, an [Event Source Connector](../event-source/event-source-connector.md) can validate [Events](../event/event.md) prior to ingestion into the [Event Streaming Platform](../event-stream/event-streaming-platform.md). Or, an [Event Processing Application](../event-processing/event-processing-application.md) can use the schema validation functionality provided by a serialization library that supports schemas (e.g., Confluent's serializer/deserializers for Kafka).
 
 ## Implementation
-With Confluent, schema validation is fully supported with a per-environment hosted [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html). Use the cloud UI to enable schema registry in your cloud provider of choice. Schemas can be managed per topic using the cloud UI or the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html). An example command to create a schema using the CLI:
+With Confluent, schema validation is fully supported with a per-environment managed [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) service. Use the Confluent UI to enable schema registry in your cloud provider of choice. Schemas can be managed per topic using the Confluent UI or the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html). An example command to create a schema using the CLI:
 
 ```
 ccloud schema-registry schema create --subject employees-value --schema employees.json --type AVRO
