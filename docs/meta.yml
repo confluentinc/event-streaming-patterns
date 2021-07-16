@@ -3,76 +3,76 @@ layout: pattern
 toc:
   - items:
       - index
+  - title: Event
+    items:
+      - event/event
+      - event/event-envelope
+      - event/event-deserializer
+      - event/event-serializer
+      - event/event-standardizer
+      - event/command-event
+      - event/correlation-identifier
+      - event/data-contract
+      - event/schema-on-read
+  - title: Event Stream
+    items:
+      - event-stream/event-stream
+      - event-stream/event-streaming-platform
+      - event-stream/event-broker
+      - event-stream/partitioned-parallelism
+      - event-stream/schema-compatibility
+      - event-stream/schema-evolution
+  - title: Event Source
+    items:
+      - event-source/event-source
+      - event-source/event-source-connector
+      - event-source/event-gateway
+      - event-source/database-write-aside
+      - event-source/database-write-through
+      - event-source/schema-validator
+  - title: Event Sink
+    items:
+      - event-sink/event-sink
+      - event-sink/event-sink-connector
   - title: Event Storage
     items:
+      - event-storage/event-store
+      - event-storage/compacted-event-stream
       - event-storage/limited-retention-event-stream
       - event-storage/infinite-retention-event-stream
-      - event-storage/compacted-event-stream
-      - event-storage/event-store
-  - title: Compositional Patterns
-    items:
-      - compositional-patterns/pipeline
-      - compositional-patterns/geo-replication
-      - compositional-patterns/event-collaboration
-      - compositional-patterns/command-query-responsibility-segregation
-      - compositional-patterns/strangler-fig
   - title: Event Processing
     items:
-      - event-processing/event-chunking
+      - event-processing/event-processor
       - event-processing/event-processing-application
+      - event-processing/event-chunking
+      - event-processing/event-filter
+      - event-processing/event-mapper
+      - event-processing/event-router
+      - event-processing/event-splitter
+      - event-processing/event-streaming-api
       - event-processing/event-translator
       - event-processing/claim-check
       - event-processing/content-filter
-      - event-processing/event-mapper
-      - event-processing/event-splitter
-      - event-processing/event-processor
       - event-processing/dead-letter-stream
-      - event-processing/event-router
-      - event-processing/event-streaming-api
-      - event-processing/event-filter
-  - title: Event Sink
+  - title: Stream Processing
     items:
-      - event-sink/event-sink-connector
-      - event-sink/event-sink
+      - stream-processing/event-aggregator
+      - stream-processing/event-grouper
+      - stream-processing/event-joiner
+      - stream-processing/event-stream-merger
+      - stream-processing/event-time-processing
+      - stream-processing/logical-and
+      - stream-processing/suppressed-event-aggregator
+      - stream-processing/wait-for-n-events
+      - stream-processing/wallclock-time
   - title: Table
     items:
       - table/projection-table
       - table/state-table
-  - title: Stream Processing
+  - title: Compositional Patterns
     items:
-      - stream-processing/wallclock-time
-      - stream-processing/event-grouper
-      - stream-processing/suppressed-event-aggregator
-      - stream-processing/logical-and
-      - stream-processing/event-aggregator
-      - stream-processing/event-stream-merger
-      - stream-processing/wait-for-n-events
-      - stream-processing/event-joiner
-      - stream-processing/event-time-processing
-  - title: Event
-    items:
-      - event/data-contract
-      - event/correlation-identifier
-      - event/event-serializer
-      - event/event-deserializer
-      - event/event
-      - event/command-event
-      - event/event-envelope
-      - event/event-standardizer
-      - event/schema-on-read
-  - title: Event Stream
-    items:
-      - event-stream/schema-evolution
-      - event-stream/schema-compatibility
-      - event-stream/event-stream
-      - event-stream/partitioned-parallelism
-      - event-stream/event-broker
-      - event-stream/event-streaming-platform
-  - title: Event Source
-    items:
-      - event-source/schema-validator
-      - event-source/event-source
-      - event-source/event-gateway
-      - event-source/database-write-aside
-      - event-source/database-write-through
-      - event-source/event-source-connector
+      - compositional-patterns/command-query-responsibility-segregation
+      - compositional-patterns/event-collaboration
+      - compositional-patterns/geo-replication
+      - compositional-patterns/pipeline
+      - compositional-patterns/strangler-fig
