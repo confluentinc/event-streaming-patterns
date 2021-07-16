@@ -15,6 +15,7 @@ toc:
       - compositional-patterns/geo-replication
       - compositional-patterns/event-collaboration
       - compositional-patterns/command-query-responsibility-segregation
+      - compositional-patterns/strangler-fig
   - title: Event Processing
     items:
       - event-processing/event-chunking
@@ -43,6 +44,7 @@ toc:
       - stream-processing/event-grouper
       - stream-processing/suppressed-event-aggregator
       - stream-processing/logical-and
+      - stream-processing/event-aggregator
       - stream-processing/event-stream-merger
       - stream-processing/wait-for-n-events
       - stream-processing/event-joiner
@@ -60,9 +62,12 @@ toc:
       - event/schema-on-read
   - title: Event Stream
     items:
+      - event-stream/schema-evolution
+      - event-stream/schema-compatibility
       - event-stream/event-stream
       - event-stream/partitioned-parallelism
       - event-stream/event-broker
+      - event-stream/event-streaming-platform
   - title: Event Source
     items:
       - event-source/schema-validator
@@ -71,4 +76,3 @@ toc:
       - event-source/database-write-aside
       - event-source/database-write-through
       - event-source/event-source-connector
-
