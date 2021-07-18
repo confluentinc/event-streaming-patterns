@@ -14,7 +14,7 @@ How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](.
 ![event-router](../img/event-router.svg)
 
 ## Implementation
-With [ksqlDB](https://ksqldb.io/), we can continuously route Events to a different Event Stream. We use the `CREATE STREAM` syntax with an appropriate `WHERE` filter:
+With the streaming database [ksqlDB](https://ksqldb.io/), we can continuously route Events to a different Event Stream. We use the `CREATE STREAM` syntax with an appropriate `WHERE` filter:
 
 ```
 CREATE STREAM payments ...;
