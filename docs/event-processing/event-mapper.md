@@ -44,5 +44,5 @@ public void updatePublication(PublicationEvent pubEvent) {
 The Event Mapper may optionally validate the schema of the converted objects. For details, see the [Schema Validator](../event-source/schema-validator.md) pattern.
 
 ## References
-* See also the [Event Serializer](../event/event-serializer.md) and [Event Deserializer](../event/event-deserializer.md) patterns.
 * This pattern is derived from [Messaging Mapper](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingMapper.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
+* See also the [Event Serializer](../event/event-serializer.md) and [Event Deserializer](../event/event-deserializer.md) patterns.
