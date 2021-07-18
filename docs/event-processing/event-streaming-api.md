@@ -17,5 +17,5 @@ The Event Streaming Platform provides an Application Programming Interface (API)
 
 ## References
 * This pattern is derived from [Message Endpoint](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageEndpoint.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-* The Apache Kafka&reg; [Kafka Protocol Guide](https://kafka.apache.org/protocol.html) provides details about the wire protocol implemented in Kafka.
+* The [Kafka Protocol Guide](https://kafka.apache.org/protocol.html) provides details about the wire protocol implemented in Kafka.
 * The [Kafka API documentation](https://kafka.apache.org/documentation/#api) contains information about the variety of APIs available for reading from, writing to, and administering Kafka.
