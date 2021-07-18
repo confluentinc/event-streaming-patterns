@@ -75,7 +75,7 @@ Follow [Schema Compatibility](../event-stream/schema-compatibility.md) rules to 
 
 ## References
 * See also the [Event Serializer](../event/event-serializer.md) pattern, in which we encode events so that they can be written to disk, transferred across the network, and generally preserved for future readers
-* Also see the [Schema-on-Read](../event/schema-on-read.md) pattern, which enables the reader of events to determine which schema to apply to the Event that the reader is processing.
+* See also the [Schema-on-Read](../event/schema-on-read.md) pattern, which enables the reader of events to determine which schema to apply to the Event that the reader is processing.
 * [Schema evolution and compatibility](https://docs.confluent.io/platform/current/schema-registry/avro.html) covers backward compatibility, forward compatibility, and full compatibility.
 * [Working with schemas](https://docs.confluent.io/cloud/current/client-apps/schemas-manage.html) covers how to create schemas, edit them, and compare versions.
 * The [Schema Registry Maven Plugin](https://docs.confluent.io/platform/current/schema-registry/develop/maven-plugin.html#schema-registry-test-compatibility) allows you to test for schema compatibility during the development cycle.
