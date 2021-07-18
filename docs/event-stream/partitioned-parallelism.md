@@ -19,7 +19,7 @@ Use a partitioned event stream, and then assign the events to different partitio
 * Platform scalability: different [Event Brokers](../event-stream/event-broker.md) can concurrently store and serve [Events](../event/event.md) to [Event Processing Applications](../event-processing/event-processing-application.md)
 * Application scalability: different [Event Processing Applications](../event-processing/event-processing-application.md) can process [Events](../event/event.md) concurrently
 
-Event partitioning also impacts application semantics: placing events into a given partition guarantees that the _ordering_ of events is preserved per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases; very often, the sequencing of events is important (for example, when processing retail orders, as an order must be paid before it can be shipped).
+Event partitioning also impacts application semantics: placing events into a given partition guarantees that the _ordering_ of events is preserved per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases; very often, the sequencing of events is important (for example, when processing retail orders, an order must be paid before it can be shipped).
 
 ## Implementation
 With Apache Kafka®, streams (called _topics_) are created either by an administrator or by a streaming application such as the streaming database [ksqlDB](https://ksqldb.io). The number of partitions is specified at the time the topic is created. For example:
