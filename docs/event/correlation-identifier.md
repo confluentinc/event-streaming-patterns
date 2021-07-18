@@ -17,7 +17,7 @@ An [Event Processor](../event-processing/event-processor.md) generates an event,
 
 ## Implementation
 In Kafka, we can add a globally unique identifier to Kafka record headers when producing a request event. The following example uses the Kafka Java producer client.
-```Java
+```java
 ProducerRecord<String, String> requestEvent = new ProducerRecord<>("request-event-key", "request-event-value"); 
 requestEvent.headers().add("requestID", UUID.randomUUID().toString());
 requestEvent.send(producerRecord);
