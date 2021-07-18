@@ -7,7 +7,7 @@ seo:
 [Event Processing Applications](../event-processing/event-processing-application.md) may want to consume data from existing data systems, which are not themselves [Event Sources](event-source.md).
 
 ## Problem
-How can we connect cloud services and traditional systems, like relational databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md), converting their data at rest to data in motion with [Events](../event/event.md).
+How can we connect cloud services and traditional systems, like relational databases, to an [Event Streaming Platform](../event-stream/event-streaming-platform.md), converting their data at rest to data in motion with [Events](../event/event.md)?
 
 ## Solution
 ![event-source-connector](../img/event-source-connector.svg)

@@ -1,9 +1,11 @@
 # Database Write Through
 
+This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an event source, including changes to tables in an event streaming platform, are captured in an event streaming platform.
+
+
 ## Problem
 How do I update a value in a database and create an associated event with at-least-once guarantees?
 
-This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an event source, including changes to tables in an event streaming platform, are captured in an event streaming platform.
 
 ## Solution Pattern
 

@@ -15,7 +15,7 @@ Depending on the use case, developers need to pick one variant over the others.
 
 ## Problem
 
-How do we implement event-time based processing of events?
+How do we implement event-time based processing of events, i.e., based on their original timeline?
 
 ## Solution
 
