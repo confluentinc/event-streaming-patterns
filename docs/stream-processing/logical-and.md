@@ -114,7 +114,7 @@ INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (3, 'be'
 INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'fr', 20.00, true);
 ```
 
-We see the following results, in a stream of possible fraud cases that need further investigation:
+This produces a stream of possible fraud cases that need further investigation:
 
 ```
 +-----------+----------------+----------------+--------+---------+
