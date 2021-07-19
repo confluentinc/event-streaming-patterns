@@ -1,21 +1,21 @@
 ---
 seo:
   title: Event Stream Merger
-  description: An Event Stream Merger combines events from multiple streams into a single stream, without changing the underlying data.
+  description: An Event Stream Merger combines Events from multiple Event Streams into a single Event Stream, without changing the underlying data.
 ---
 
 # Event Stream Merger
-An [Event Streaming Application](../event-processing/event-processing-application.md) may contain multiple [Event Stream](../event-stream/event-stream.md) instances.  But in some cases it may make sense for the application to merge the different event streams into a single event stream, without changing the individual events.  While this may seem logically related to a join, the merge is a completely different operation.  A join produces results by combining events with the same key to produce a new event, possibly of a different type.  Whereas the merge combines the events from multiple streams into a single stream, but the individual events are unchanged and remain independent of each other.  
+An [Event Streaming Application](../event-processing/event-processing-application.md) may contain multiple [Event Stream](../event-stream/event-stream.md) instances. But in some cases, it may make sense for the application to merge the separate Event Streams into a single Event Stream, without changing the individual Events. While this may seem logically related to a join, this merge is a completely different operation. A join produces results by combining Events with the same key to produce a new Event, possibly of a different type. A merge of Event Streams combines the Events from multiple Event Streams into a single Event Stream, but the individual Events are unchanged and remain independent of each other.  
 
 ## Problem
-How can an application merge different event streams?
+How can an application merge separate Event Streams?
 
 ## Solution
 ![event-stream-merger](../img/event-stream-merger.png)
 
 
 ## Implementation
-The Kafka Streams DSL provides a `merge` operator which merges two streams into a single stream. We can then take the merged stream and use any number of operations on it.
+For Apache Kafka®, the Kafka Streams client library provides a `merge` operator in its DSL. This operator merges two Event Streams into a single Event Stream. We can then take the merged stream and perform any number of operations on it.
 
 ```java
 KStream<String, Event> eventStream = builder.stream(...);
@@ -27,11 +27,11 @@ allEventsStream.groupByKey()...
 
 ## Considerations
 
-* Kafka Streams provides no guarantees on the processing order of records from the underlying streams.
-* When merging streams the key and value types must be the same.
+* Kafka Streams provides no guarantees on the processing order of records from the underlying Event Streams.
+* In order for multiple Event Streams to be merged, they must use the same key and value types.
 
 ## References
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/kstreams.html): Merging with Kafka Streams.
-* [Kafka Tutorial](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/ksql.html): Merging streams with ksqlDB.
+* [How to merge many streams into one stream with Kafka Streams](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/kstreams.html)
+* [How to merge many streams into one stream with ksqlDB](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/ksql.html)
 
 
