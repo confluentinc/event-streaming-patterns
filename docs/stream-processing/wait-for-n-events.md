@@ -1,42 +1,41 @@
 ---
 seo:
-  title: Wait for N Events
-  description: Waiting for N events in a stream.
+  title: Wait For N Events
+  description: An application can wait to trigger processing until an Event Stream has received a set number of Events.
 ---
 
-# Wait for N Events
+# Wait For N Events
 
 Sometimes [Events](../event/event.md) become significant after they've
 happened several times.
 
-A user can try to log in 5 times, but after that we'll lock their
-account.  A parcel delivery will be attempted 3 times before asking
+A user can try to log in five times, but after that we'll lock their
+account. A parcel delivery will be attempted three times before we ask
 the customer to collect it from the depot. A gamer gets a trophy after
-they've killed their 100th Blarg.
+they've killed their hundredth Blarg.
 
-How do we efficiently watch for logically similar events?
+How can we efficiently watch for logically similar Events?
 
 ## Problem
 
-How can an application wait for a certain number of events to occur
+How can an application wait for a certain number of Events to occur
 before performing processing?
 
 ## Solution
 ![wait for N events](../img/wait-for-n-events.svg)
 
-To consider related events as a group, we need to group them by a given key,
+To consider related Events as a group, we need to group them by a given key,
 and then count the occurrences of that key.
 
 ## Implementation
 
-In ksqlDB we can easily create a [Projection Table](../table/projection-table.md) that groups and counts events by
-a particular key.
+In the streaming database [ksqlDB](https://ksqldb.io/), we can easily create a [Projection Table](../table/projection-table.md) that groups and counts Events by a particular key.
 
-As an example, imagine we are handling very large financial
-transactions. We only want to process them once they've been reviewed
-and approved by 2 managers.
+As an example, imagine that we are handling very large financial
+transactions. We only want to process these transactions after they've been reviewed
+and approved by two managers.
 
-We'll start with a stream of signed events from managers:
+We'll start with a stream of signed Events from managers:
 
 ```sql
 CREATE OR REPLACE STREAM trade_reviews (
@@ -51,7 +50,7 @@ CREATE OR REPLACE STREAM trade_reviews (
 );
 ```
 
-We'll group reviews by their `trade_id`, and `COUNT()` how many
+We'll group reviews by their `trade_id`, and then `COUNT()` how many
  approvals (`approved = TRUE`) we see for each:
 
 ```sql
@@ -62,7 +61,8 @@ CREATE OR REPLACE TABLE trade_approval AS
   GROUP BY trade_id;
 ```
 
-Querying that stream in one terminal:
+Query that stream in one terminal:
+
 ```
 SELECT *
 FROM trade_approval
@@ -70,7 +70,7 @@ WHERE approvals = 2
 EMIT CHANGES;
 ```
 
-...and inserting some data in another:
+Insert some data in another terminal:
 
 ```sql
 INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
@@ -93,7 +93,7 @@ INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
   VALUES (3, 'carol', '4adb7c', TRUE);
 ```
 
-Results in a stream of trades that are ready to process:
+This produces a stream of trades that are ready to process:
 
 ```
 +----------+-----------+
@@ -106,14 +106,14 @@ Results in a stream of trades that are ready to process:
 ## Considerations
 
 Note that in the example above, we queried for an exact number of
-approvals `WHERE approvals = 2`. We could have used a
-greater-than-or-equal check (`WHERE approvals >= 2`) but that would
-have emitted a new event for a 3rd approval, and a 4th, and so on.
-That would be the wrong behavior here, but it might be useful feature
-in a system where we wanted to reward loyal customers, and send out a
+approvals (`WHERE approvals = 2`). We could have used a
+greater-than-or-equal check (`WHERE approvals >= 2`), but that would
+have emitted a new Event for a third approval, and then a fourth, and so on.
+In this case, that would be the wrong behavior, but it might be a useful feature
+in a system where we wanted to reward loyal customers and send out a
 discount email for every order _after_ their first 10.
 
 ## References
 
-* The [Event Grouping](../stream-processing/event-grouper.md) pattern, for a more general consideration of `GROUP BY` operations.
-* [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) - "Chapter 15: Building Streaming Services" for further discussion.
+* See also the [Event Grouping](../stream-processing/event-grouper.md) pattern, for a more general discussion of `GROUP BY` operations.
+* See chapter 15, "Building Streaming Services", of [Designing Event Driven Systems](https://www.confluent.io/designing-event-driven-systems/) for further discussion.
