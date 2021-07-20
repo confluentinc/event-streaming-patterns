@@ -2,7 +2,7 @@
 # Suppressed Event Aggregator
 An [Event Streaming Application](../event-processing/event-processing-application.md) can perform continuous aggregation operations like an [Event Aggregator](event-aggregator.md).  Normally, however, the aggregator will emit "intermediate" processing results. That's because an event stream is potentially infinite, so generally we do not know when the input is considered "complete". So, with few exceptions, there's not really a point where we can have a "final" result. Also, this emit strategy has the benefit of resulting in low latency between the time when a new input event is received and the time when updated processing results are available.
 
-In certain situations, however, a single, "final" result is what we prefer to receive, rather than multiple intermediate results. For example, when we have to feed aggregation results into a system that is natively not compatible with a streaming approach. Here, we need an aggregator that is able to "suppress" intermediate results so that only a single, final result is being produced.
+In certain situations, however, a single, final result is what we prefer to receive, rather than multiple intermediate results. For example, when we have to feed aggregation results into a system that is natively not compatible with a streaming approach. Here, we need an aggregator that is able to "suppress" intermediate results so that only a single, final result is being produced.
 
 
 ## Problem
