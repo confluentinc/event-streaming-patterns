@@ -6,29 +6,29 @@ toc:
   - title: Event
     items:
       - event/event
-      - event/event-envelope
-      - event/event-deserializer
-      - event/event-serializer
-      - event/event-standardizer
       - event/command-event
       - event/correlation-identifier
       - event/data-contract
+      - event/event-deserializer
+      - event/event-envelope
+      - event/event-serializer
+      - event/event-standardizer
       - event/schema-on-read
   - title: Event Stream
     items:
       - event-stream/event-stream
-      - event-stream/event-streaming-platform
       - event-stream/event-broker
+      - event-stream/event-streaming-platform
       - event-stream/partitioned-parallelism
       - event-stream/schema-compatibility
       - event-stream/schema-evolution
   - title: Event Source
     items:
       - event-source/event-source
-      - event-source/event-source-connector
-      - event-source/event-gateway
       - event-source/database-write-aside
       - event-source/database-write-through
+      - event-source/event-gateway
+      - event-source/event-source-connector
       - event-source/schema-validator
   - title: Event Sink
     items:
@@ -38,22 +38,22 @@ toc:
     items:
       - event-storage/event-store
       - event-storage/compacted-event-stream
-      - event-storage/limited-retention-event-stream
       - event-storage/infinite-retention-event-stream
+      - event-storage/limited-retention-event-stream
   - title: Event Processing
     items:
       - event-processing/event-processor
-      - event-processing/event-processing-application
+      - event-processing/claim-check
+      - event-processing/content-filter
+      - event-processing/dead-letter-stream
       - event-processing/event-chunking
       - event-processing/event-filter
       - event-processing/event-mapper
+      - event-processing/event-processing-application
       - event-processing/event-router
       - event-processing/event-splitter
       - event-processing/event-streaming-api
       - event-processing/event-translator
-      - event-processing/claim-check
-      - event-processing/content-filter
-      - event-processing/dead-letter-stream
   - title: Stream Processing
     items:
       - stream-processing/event-aggregator
