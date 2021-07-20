@@ -54,3 +54,5 @@ ccloud connector create --config <connector-config-file.json>
 * See [Oracle CDC Source Connector](https://www.confluent.io/blog/introducing-confluent-oracle-cdc-connector/) for details of a premium CDC connector for Oracle DB.
 * See [Integrate External Systems to Kafka](https://docs.confluent.io/cloud/current/connectors/index.html) on Confluent documentation for information on source connectors.
 * [Kafka Connect Deep Dive - JDBC Source Connector](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/) blog post
+* See [Database Write Aside](database-write-aside.md) for an alternative example of writing database changes to an Event Stream
+
