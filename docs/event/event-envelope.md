@@ -13,7 +13,7 @@ How can I convey information to all participants in an [Event Streaming Platform
 ## Solution
 ![event-envelope](../img/event-envelope.svg)
 
-Use an Event Envelope to wrap the event data using a standard format agreed on by all participants of the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or more broadly. [Cloud Events](https://cloudevents.io/) -- which standardize access to ID, Schema, Key, and other common event attributes -- are an industry-standard example of the Event Envelope pattern.
+Use an Event Envelope to wrap the event data using a standard format agreed on by all participants of the [Event Streaming Platform](../event-stream/event-streaming-platform.md), or more broadly. [Cloud Events](https://cloudevents.io/)—which standardize access to ID, Schema, Key, and other common event attributes—are an industry-standard example of the Event Envelope pattern.
 
 ## Example Implementation
 Using basic Java consumers and producers, you can use a helper function to wrap an application's immutable payload into an envelope which conforms to the expected format of the [Event Streaming Platform](../event-stream/event-streaming-platform.md):
