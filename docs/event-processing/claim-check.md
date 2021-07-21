@@ -15,7 +15,7 @@ How can we handle use cases where the [Event](../event/event.md) payload is too 
 
 ## Solution
 
-![claim-check](../img/claim-check.png)
+![claim-check](../img/claim-check.svg)
 
 Instead of storing the entire event in the event streaming platform, store the event payload in a persistent external store that can be shared between producers and consumers.
 The producer can write the reference address into the event streaming platform, and downstream clients use the address to retrieve the event from the external store and then process it as needed.

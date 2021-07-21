@@ -14,7 +14,7 @@ How do I update a value in a database and create an associated event with the le
 
 ## Solution
 
-![database-write-aside](../img/database-write-aside.png)
+![database-write-aside](../img/database-write-aside.svg)
 
 Write to a database, then write to Kafka. Perform the write to Kafka as the last step in a database transaction to ensure an atomic dual commit (aborting the transaction if the write to Kafka fails). 
 
