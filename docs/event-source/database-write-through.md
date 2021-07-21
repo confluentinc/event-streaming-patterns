@@ -30,7 +30,7 @@ Some applications write directly to a database table, therefore the database tab
     "database.password": "**********",
     "database.server.name": "mysql",
     "database.whitelist": "employee",
-    "table.includelist":"employees.departments,
+    "table.includelist":"employees.departments",
     "snapshot.mode": "initial",
     "output.data.format": "AVRO",
     "tasks.max": "1"
