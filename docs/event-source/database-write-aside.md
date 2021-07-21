@@ -22,7 +22,7 @@ db.setAutoCommit(false);
 
 try{
    //insert into the DB
-   sql = db.prepareStatement("insert mydb.events values (?)");
+   sql = db.prepareStatement("insert into mydb.events values (?)");
    sql.setString(event.toString());
    sql.executeUpdate();
 
