@@ -29,6 +29,7 @@ What this does is, each batch of messages that the producer sends to the Kafka c
 ## Considerations
 Enabling a Kafka producer for idempotency not only ensures that there are no duplicate messages are written into the log, it also ensures the messages are written in order. This is because the brokers accept events only if its sequence number is exactly one greater than the last committed message, otherwise it results in an out-of-sequence error.
 
+Exactly-once semantics (EOS) allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, which ensures that computed results are always accurate.
 A solution that necessitates strong EOS guarantees should enable EOS at all stages of the pipeline, not just on the writer.
 An Idempotent Writer is therefore typically combined with an [Idempotent Reader](../event-processing/idempotent-reader.md) and transactional processing.
 
