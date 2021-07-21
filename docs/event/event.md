@@ -41,5 +41,4 @@ producer.send(producerRecord);
 
 ## References
 * This pattern is derived in part from [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html), [Event Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html), and [Document Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-<!-- TODO: the following link needs to be to the new DCI 101 course-->
-* [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?", including information about core concepts such as Events.
+* [Apache Kafka 101: Introduction](/learn-kafka/apache-kafka/intro/) provides a primer on "What is Kafka, and how does it work?" including information on core concepts like Events

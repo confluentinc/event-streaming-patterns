@@ -50,6 +50,5 @@ For either method of configuring retention, Kafka _does not immediately_ remove 
 
 ## References
 * This pattern is similar to [Message Expiration](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageExpiration.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-<!-- TODO: the following link needs to be to the new DCI 101 course-->
-* [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?"
+* [Apache Kafka 101: Introduction](/learn-kafka/apache-kafka/intro/) provides a primer on "What is Kafka, and how does it work?"
 * A related pattern is the [Infinite Retention Event Stream](infinite-retention-event-stream.md) pattern which details Event Streams that stores events indefinitely.

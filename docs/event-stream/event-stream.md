@@ -19,8 +19,7 @@ Generally speaking, an Event Stream records the history of what has happened in 
 Conceptually, a stream provides _immutable_ data. It supports only inserting (appending) new events, and existing events cannot be changed. Streams are persistent, durable, and fault-tolerant. Unlike traditional message queues, events stored in streams can be read as often as needed by Event Sinks and Event Processing Applications, and they are not deleted after consumption. Instead, retention policies control how events are retained. Events in a stream can be _keyed_, and we can have many events for one key. For a stream of payments of all customers, the customer ID might be the key (cf. related patterns such as [Partitioned Parallelism](../event-stream/partitioned-parallelism.md)).
 
 ## Implementation
-[comment]: <> (TODO: Reference the DCI Kafka 101 course instead of the docs page)
-In [Apache Kafka®](https://docs.confluent.io/platform/current/kafka/introduction.html), Event Streams are called _topics_. Kafka allows you to define policies which dictate how events are retained, using [time or size limitations](../event-storage/limited-retention-event-stream.md) or [retaining events forever](../event-storage/infinite-retention-event-stream.md). Kafka consumers (Event Sinks and Event Processing Applications) are able to decide where in an event stream to begin reading. They can choose to begin reading from the oldest or newest event, or seek to a specific location in the topic, using the event's timestamp or position (called the _offset_).
+In [Apache Kafka®](/learn-kafka/apache-kafka/intro/), Event Streams are called _topics_. Kafka allows you to define policies which dictate how events are retained, using [time or size limitations](../event-storage/limited-retention-event-stream.md) or [retaining events forever](../event-storage/infinite-retention-event-stream.md). Kafka consumers (Event Sinks and Event Processing Applications) are able to decide where in an event stream to begin reading. They can choose to begin reading from the oldest or newest event, or seek to a specific location in the topic, using the event's timestamp or position (called the _offset_).
 
 The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is JSON.
 ```sql
@@ -48,5 +47,4 @@ SELECT * FROM riderLocations
 
 ## References
 * This pattern is derived from [Message Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-[comment]: <> (TODO: reference Kafka Storage & Processing Fundamentals page instead of the following blog series directly)
-* The blog post series [Streams and Tables in Apache Kafka: A Primer](https://www.confluent.io/blog/kafka-streams-tables-part-1-event-streaming/) goes into detail on streams, tables, and other Kafka fundamentals.
+* See the [Kafka Storage & Processing Fundamentals page](/learn/kafka-storage-and-processing/) for essential details on Kafka 
