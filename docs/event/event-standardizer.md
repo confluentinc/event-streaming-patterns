@@ -11,7 +11,7 @@ In most businesses, a variety of traditional and [Event Processing Applications]
 How can I process events that are semantically equivalent but arrive in different formats?
 
 ## Solution
-![event-standardizer](../img/event-standardizer.png)
+![event-standardizer](../img/event-standardizer.svg)
 Source all of the input Event Streams into an Event Standardizer that passes events to a specialized [Event Translator](../event-processing/event-translator.md), which in turn converts the events into a common format understood by the downstream [Event Processors](../event-processing/event-processor.md).
 
 ## Implementation

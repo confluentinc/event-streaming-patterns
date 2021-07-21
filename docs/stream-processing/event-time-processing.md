@@ -20,7 +20,7 @@ How can we implement event-time based processing of Events (i.e., processing bas
 
 ## Solution
 
-![event-time-processing](../img/event-time-processing.png)
+![event-time-processing](../img/event-time-processing.svg)
 
 For event-time processing, the [Event Source](../event-source/event-source.md) must include a timestamp in each Event (for example, in a data field or in header metadata) that denotes the time at which the Event was created by the Event Source. Then, on the consuming side, the [Event Processing Application](../event-processing/event-processing-application.md) needs to extract this timestamp from the Event. This allows the application to process Events based on their original timeline.
 
