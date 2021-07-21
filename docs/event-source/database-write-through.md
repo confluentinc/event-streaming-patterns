@@ -48,11 +48,10 @@ ccloud connector create --config <connector-config-file.json>
 - This pattern is a specialization of the [Event Source Connector](event-source-connector.md) that guarantees that all state changes represented in an [Event Source](../event-source/event-source.md) are captured in an [Event Streaming Platform](../event-stream/event-streaming-platform.md).
 - The processing guarantees (cf. "Guaranteed Delivery") to choose from—e.g., at-least-once, exactly-once—for the CDC data flow depend on the CDC and Database technology utilized.
 - There is a certain delay until changes in the source database table are available in the CDC-ingested event stream. The amount of the delay depends on a variety of factors, including the features and configuration of the Event Source Connector. In many typical scenarios the delay is less than a few seconds.
-- In terms of their data model, [Events](../event/event.md) typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all [Events](../event/event.md) for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.
+- [Events](../event/event.md) typically require the row key to be used as the Kafka event key (aka record/message key), which is the only way to ensure all [Events](../event/event.md) for the same DB table row go to the same Kafka topic-partition and are thus totally ordered. They also typically model deletes as tombstone events, i.e. an event with a non-null key and a null value. By ensuring totally ordered events for each row, consumers see an eventually-consistent representation of these events for each row.
 
 ## References
 * See [Oracle CDC Source Connector](https://www.confluent.io/blog/introducing-confluent-oracle-cdc-connector/) for details of a premium CDC connector for Oracle DB.
 * See [Integrate External Systems to Kafka](https://docs.confluent.io/cloud/current/connectors/index.html) on Confluent documentation for information on source connectors.
 * [Kafka Connect Deep Dive - JDBC Source Connector](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/) blog post
 * See [Database Write Aside](database-write-aside.md) for an alternative example of writing database changes to an Event Stream
-
