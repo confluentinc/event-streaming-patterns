@@ -9,7 +9,7 @@ Schemas are like [Data Contracts](../event/data-contract.md) in that they set th
 A natural behavior of applications and data schemas is that they evolve over time, so it's important to have a policy about how they are allowed to evolve and what compatibility rules are between old and new versions.
 
 ## Problem
-How do we ensure that schemas can evolve without breaking existing [Event Sinks](../event-sink/event-sink.md) (readers) and [Event Sources](../event-source/event-source.md) (writers), including [Event Processing Applications](../event-processing/event-processing-application)?
+How do we ensure that schemas can evolve without breaking existing [Event Sinks](../event-sink/event-sink.md) (readers) and [Event Sources](../event-source/event-source.md) (writers), including [Event Processing Applications](../event-processing/event-processing-application.md)?
 
 ## Solution
 ![schema-compatibility](../img/schema-compatibility.svg)
