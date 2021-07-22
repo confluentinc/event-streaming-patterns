@@ -23,7 +23,8 @@ CREATE STREAM clicks (ip_address VARCHAR, url VARCHAR, timestamp VARCHAR)
           TIMESTAMP_FORMAT = 'yyyy-MM-dd''T''HH:mm:ssXXX');
 ```
 
-Generic Kafka Consumer application: See [Getting Started with Apache Kafka and Java](link.tbd) for a full example: 
+Generic Kafka Consumer application: See [Getting Started with Apache Kafka and Java](https://developer.confluent.io/getting-started/java) for a full example: 
+
 ```
 consumer.subscribe(Collections.singletonList("stream"));
       while (keepConsuming) { 
