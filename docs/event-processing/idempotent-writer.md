@@ -12,7 +12,7 @@ However, in the case of an operational failure or a brief network outage, an [Ev
 How can an [Event Streaming Platform](../event-stream/event-streaming-platform.md) ensure that an Event Source does not write the same event more than once?
 
 ## Solution
-![idempotent-writer](../img/idempotent-writer.png)
+![idempotent-writer](../img/idempotent-writer.svg)
 
 Generally speaking, this can be addressed by native support for idempotent clients.
 This means that a writer may try to produce an event more than once, but the Event Streaming Platform tracks and detects duplicate attempts for the same event, and prevents the duplicate event from being written again, which ensures that computed results are always accurate. 
