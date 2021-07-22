@@ -11,7 +11,7 @@ One [Event](../event/event.md) may actually contain multiple child Events, each 
 How can an [Event](../event/event.md) be split into multiple Events for distinct processing?
 
 ## Solution
-![event-splitter](../img/event-splitter.png)
+![event-splitter](../img/event-splitter.svg)
 Split the original Event into multiple child Events.
 Then publish one Event for each of the child Events.
 

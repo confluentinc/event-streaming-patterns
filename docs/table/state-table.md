@@ -13,7 +13,7 @@ How can an Event Processor manage (mutable) state, similar to a table in a relat
 
 ## Solution
 
-![state-table](../img/state-table.png)
+![state-table](../img/state-table.svg)
 
 We need to implement a mutable state table that allows the Event Processor to record and update state. For example, to count the number of payments per customer, the state table provides a mapping between the customer (e.g., a customer ID) and the current count of payments.
 

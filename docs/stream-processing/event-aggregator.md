@@ -19,7 +19,7 @@ We use an [Event Grouper](../stream-processing/event-grouper.md) followed by an 
 
 
 ## Implementation
-![event-aggregator](../img/event-aggregator_a.png)
+![event-aggregator](../img/event-aggregator.svg)
 
 For example, we can use the streaming database [ksqlDB](https://ksqldb.io/) and Apache Kafka® to perform an aggregation.
 
