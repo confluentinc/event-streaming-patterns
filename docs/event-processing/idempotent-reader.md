@@ -18,7 +18,7 @@ There are two causes of duplicate events that the Idempotent Reader should take 
 How can an application that is reading from an event stream deal with duplicate events?
 
 ## Solution
-![idempotent-reader](../img/idempotent-reader.png)
+![idempotent-reader](../img/idempotent-reader.svg)
 
 This can be addressed with exactly-once semantics (EOS), including native support for transactions and idempotent clients.
 EOS allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, which ensures that computed results are always accurate. 
