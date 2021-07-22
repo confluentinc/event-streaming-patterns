@@ -41,7 +41,7 @@ For more guidance and configuring size-based data retention, see the [Kafka Brok
 
 ### How Events Are Being Removed From an Event Stream
 
-For either method of configuring retention, Kafka _does not immediately_ remove events one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Kafka topics are further broken down into _topic partitions_ (see [Partitioned Placement](../event-stream/partitioned-placement.md)). Partitions themselves are further divided into files called _segments_. Segments represent a sequence of the events in a particular partition, and these segments are what is being removed once a violation of the retention policy has occurred. We can further fine-tune the removal algorithm with additional settings such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. 
+For either method of configuring retention, Kafka _does not immediately_ remove events one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Kafka topics are further broken down into _topic partitions_ (see [Partitioned Placement](../event-stream/partitioned-parallelism.md)). Partitions themselves are further divided into files called _segments_. Segments represent a sequence of the events in a particular partition, and these segments are what is being removed once a violation of the retention policy has occurred. We can further fine-tune the removal algorithm with additional settings such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. 
 
 
 ## Considerations

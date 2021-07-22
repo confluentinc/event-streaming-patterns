@@ -89,7 +89,7 @@ builder.stream("products", Consumed.with(Serdes.Long(), productSerde))
 
 Since filtering the content creates a new stream, it's worth
 considering how the new stream will be partitioned, as discussed in the
-[Partitioned Placement](../event-stream/partitioned-placement.md) pattern. By default, the
+[Partitioned Placement](../event-stream/partitioned-parallelism.md) pattern. By default, the
 new stream will inherit the same partitioning key as its source, but
 we can repartition the data to suit our new use case (for example, by
 specifying a `PARTITION BY` clause in ksqlDB).
