@@ -39,9 +39,8 @@ degree of backwards and forwards -compatibility. We recommend
 
 An optional, recommended step is to register the serialization details
 with a schema registry. A registry provides a reliable,
-machine-readable reference point for [Event
-Deserializers](./event-deserializer.md) and [Schema
-Validators](../event-source/schema-validator.md), making event
+machine-readable reference point for [Event Deserializers](./event-deserializer.md) 
+and [Schema Validators](../event-source/schema-validator.md), making event
 consumption vastly simpler.
 
 ## Implementation
@@ -74,10 +73,9 @@ trade deals as:
 ```
 
 Alternatively, with the streaming database
-[ksqlDB](https://ksqldb.io/), we can define an [Event
-Stream](../event-stream/event-stream.md) in a way that enforces that
-format and records the Avro definition using Confluent’s [Schema
-Registry](https://docs.confluent.io/platform/current/schema-registry/index.html):
+[ksqlDB](https://ksqldb.io/), we can define an [Event Stream](../event-stream/event-stream.md) in a way that enforces that
+format and records the Avro definition using Confluent’s 
+[Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html):
 
 ```sql
 CREATE OR REPLACE STREAM fx_trade (
@@ -98,8 +96,7 @@ performed automatically by ksqlDB behind the scenes.
 
 ## Considerations
 
-[Event Streaming
-Platforms](../event-stream/event-streaming-platform.md) are typically
+[Event Streaming Platforms](../event-stream/event-streaming-platform.md) are typically
 serialization-agnostic, accepting any serialized data from
 human-readable text to raw bytes. However, by constraining ourselves
 to more widely-accepted, structured data formats, we can open the door
@@ -116,8 +113,7 @@ few:
   [discover](https://en.wikipedia.org/wiki/Discoverability)<sup>1</sup>,
   as evidenced by the number of languages and projects that produce
   and consume JSON data across the world with minimal collaboration.
-* [Protocol
-  buffers](https://developers.google.com/protocol-buffers). Backed by
+* [Protocol buffers](https://developers.google.com/protocol-buffers). Backed by
   Google and supported by a wide variety of languages, Protobuf is a
   binary format that sacrifices the discoverability of JSON for a much
   more compact representation that uses less disk space and network
@@ -130,21 +126,17 @@ few:
   while minimizing the impact to future readers and writer.
 
 While the choice of serialization format is important, it doesn't have
-to be set in stone. It's straightforward to [translate between
-supported formats with
-ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). For
-more complex scenarios, we have several strategies for managing schema
-migration:
+to be set in stone. It's straightforward to 
+[translate between supported formats with ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). 
+For more complex scenarios, we have several strategies for managing schema migration:
 
-* [Schema
-  Compatibility](http://localhost:8000/event-stream/schema-evolution/)
+* [Schema Compatibility](../event-stream/schema-evolution/)
   discusses the kinds of "safe" schema changes that Avro is designed
   to handle transparently.
 * [Event Translators](../event-processing/event-translator.md ) can
   convert between different encodings to aid consumption by different
   systems.
-* [Schema
-  Evolution](http://localhost:8000/event-stream/schema-evolution/)
+* [Schema Evolution](../event-stream/schema-evolution/)
   discusses splitting and joining streams to simplify serving
   consumers that can only handle certain versions of the event's
   schema.
@@ -156,8 +148,8 @@ migration:
 ## References
 
 * The counterpart of an event serializer (for writing) is an [Event Deserializer](./event-deserializer.md) (for reading).
-* Serializers and deserializers are closely related to [Data
-  Contracts](./data-contract.md), in which we want to adhere to a
+* Serializers and deserializers are closely related to 
+  [Data Contracts](./data-contract.md), in which we want to adhere to a
   specific serialization format _and_ constrain the individual events
   to a certain schema within that format.
 * See also: [Event Mapper](../event-processing/event-mapper.md).
