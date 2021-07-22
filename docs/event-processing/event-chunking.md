@@ -15,7 +15,7 @@ How do I handle use cases where the event payload is too large to move through t
 
 ## Solution
 
-![chunking](../img/event-chunking.png)
+![chunking](../img/event-chunking.svg)
 
 Instead of storing the entire event as a single event in the event streaming platform, break it into chunks (an approach called "chunking") so that the large event is sent across as multiple smaller events.
 The producer can do the chunking when writing events into the event streaming platform.

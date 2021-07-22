@@ -5,7 +5,7 @@ In an [Event Streaming Platform](../event-stream/event-streaming-platform.md), [
 How can I enforce a defined schema for all [Events](../event/event.md) sent to an [Event Stream](../event-stream/event-stream.md)?
 
 ## Solution
-![schema-validator](../img/schema-validator.png)
+![schema-validator](../img/schema-validator.svg)
 Validate that an [Event](../event/event.md) conforms to the defined schema(s) of an [Event Stream](../event-stream/event-stream.md) prior to writing the event to the stream. You can perform this schema validation in two ways:
 
 1. On the server side, the [Event Streaming Platform](../event-stream/event-streaming-platform.md) that receives the [Event](../event/event.md) can validate the event. The Event Streaming Platform can reject the event if it fails schema validation and thus violates the [Data Contract](../event/data-contract.md).

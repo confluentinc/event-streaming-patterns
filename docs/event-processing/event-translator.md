@@ -5,7 +5,7 @@
 How can systems using different data formats communicate with each other using [Events](../event/event.md)?
 
 ## Solution
-![event-translator](../img/event-translator.png)
+![event-translator](../img/event-translator.svg)
 
 An Event Translator converts a data format into a standard format familiar to downstream [Event Processors](../event-processing/event-processor.md). This can take the form of field manipulation, for example mapping one event schema (ref) to another event schema. Another common form is different serialization types, for example, translating Avro to JSON or Protobuf to Avro.
 

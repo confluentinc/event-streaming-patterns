@@ -14,7 +14,7 @@ How can I enrich an event stream or table with additional context?
 
 ## Solution
 
-![event joiner](../img/event-joiner.png)
+![event joiner](../img/event-joiner.svg)
 
 We can combine events in a stream with another stream or table by performing a join between the two.  The join is based on a key the stream and the "other" stream or table have in common.  Also we can provide a window buffering mechanism based on timestamps so we can produce join results when events from both streams aren't immediately available.  Another approach is to join a stream and a table where the table contains more static data resulting in an enriched event stream. 
 

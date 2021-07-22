@@ -12,7 +12,7 @@ A natural behavior of applications and data schemas is that they evolve over tim
 How do we ensure that schemas can evolve without breaking existing [Event Sinks](../event-sink/event-sink.md) (readers) and [Event Sources](../event-source/event-source.md) (writers), including [Event Processing Applications](../event-processing/event-processing-application)?
 
 ## Solution
-![schema-compatibility](../img/schema-compatibility.png)
+![schema-compatibility](../img/schema-compatibility.svg)
 
 There are two types of compatibility to consider: backwards compatibility and forwards compatibility.
 

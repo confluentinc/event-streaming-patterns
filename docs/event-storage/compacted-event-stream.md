@@ -5,7 +5,7 @@
 How can a (keyed) [Table](../table/state-table.md) be stored in an [Event Stream](../event-stream/event-stream.md) forever, using the minimum amount of space?
 
 ## Solution
-![compacted-event-stream](../img/compacted-event-stream.png)
+![compacted-event-stream](../img/compacted-event-stream.svg)
 
 Remove events from the [Event Stream](../event-stream/event-stream.md) that represent outdated information and have been superseded by new [Events](../event/event.md). The table's current data (i.e., its latest state) is represented by the remaining [Events](../event/event.md) in the stream.
 

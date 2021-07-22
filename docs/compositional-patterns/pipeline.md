@@ -13,7 +13,7 @@ A single [Event Stream](../event-stream/event-stream.md) or [Table](../table/sta
 How can a single processing objective for a set of Event Streams and/or Tables be achieved through a series of independent processing stages?
 
 ## Solution
-![pipeline](../img/pipeline.png)
+![pipeline](../img/pipeline.svg)
 
 We can compose [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md) in an [Event Streaming Platform](../event-stream/event-streaming-platform.md) via an [Event Processing Application](../event-processing/event-processing-application.md) to a create a pipeline—also called a topology—of [Event Processors](../event-processing/event-processor.md), which continuously process the events flowing through them. Here, the output of one processor is the input for one or more downstream processors. Pipelines, notably when created for use cases such as Streaming [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load), may include [Event Source Connectors](../event-source/event-source-connector.md) and [Event Sink Connectors](../event-sink/event-sink-connector.md), which continuously import and export data as streams from/to external services and systems, respectively. Connectors are particularly useful for turning data at rest in such systems into data in motion.
 

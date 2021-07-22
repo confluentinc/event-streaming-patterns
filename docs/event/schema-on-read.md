@@ -18,7 +18,7 @@ There are several use cases for this pattern, and all of them provide a lot of f
 How can an [Event Processor](../event-processing/event-processor.md) apply a schema to data while reading the data from an [Event Streaming Platform](../event-stream/event-streaming-platform.md)?
 
 ## Solution
-![schema-on-read](../img/schema-on-read.png)
+![schema-on-read](../img/schema-on-read.svg)
 
 The Schema-on-Read approach enables each reader to decide how to read data, and which version of which schema to apply to each [Event](../event/event.md) that it reads.
 To make schema management easier, the design can use a centralized repository that stores multiple versions of different schemas, and then client applications can choose which schema to apply to events at runtime.

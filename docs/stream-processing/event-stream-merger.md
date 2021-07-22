@@ -11,7 +11,7 @@ An [Event Streaming Application](../event-processing/event-processing-applicatio
 How can an application merge separate Event Streams?
 
 ## Solution
-![event-stream-merger](../img/event-stream-merger.png)
+![event-stream-merger](../img/event-stream-merger.svg)
 
 
 ## Implementation

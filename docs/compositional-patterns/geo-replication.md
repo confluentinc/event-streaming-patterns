@@ -19,7 +19,7 @@ How can multiple [Event Streaming Platforms](../event-stream/event-streaming-pla
 
 ## Solution
 
-![geo-replication](../img/geo-replication.png)
+![geo-replication](../img/geo-replication.svg)
 Create a connection between the two [Event Streaming Platforms](../event-stream/event-streaming-platform.md), enabling the destination platform to read from the source one.
 Ideally this is done in realtime such that as new events are published in the source event streaming platform, they can be immediately copied, byte for byte, to the destination event streaming platform.
 This allows the client applications in the destination to leverage the same set of data.

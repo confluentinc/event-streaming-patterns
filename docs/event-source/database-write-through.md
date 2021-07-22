@@ -10,7 +10,7 @@ How do I update a value in a database and create an associated event with at-lea
 
 ## Solution
 
-![db-write-through](../img/db-write-through.png)
+![db-write-through](../img/db-write-through.svg)
 
 Write to a database table, which is the Event Source. Then set up streaming Change Data Capture (CDC) on that table to continuously ingest any changes—inserts, updates, deletes—into an Event Stream in Kafka. Typically, Kafka Connect is used for this step in combination with an appropriate Event Source Connector for the database. See Confluent Hub for a list of available connectors.
 
