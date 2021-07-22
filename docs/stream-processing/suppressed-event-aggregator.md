@@ -9,7 +9,7 @@ In certain situations, however, a single, final result is what we prefer to rece
 How can an event aggregator provide a final aggregation result, rather than "intermediate" results that keep being updated?
 
 ## Solution
-![suppressed-event-aggregator](../img/suppressed-event-aggregator.png)
+![suppressed-event-aggregator](../img/suppressed-event-aggregator.svg)
 
 Generally speaking, this is possible only for windowed aggregations. That's because, in this case, the aggregator does know when the input for a given window (e.g., a 5-minute window in order to compute 5-minute averages) is considered complete, and thus it can be configured to suppress "intermediate" results until the window time passes. How do we do this?
 
