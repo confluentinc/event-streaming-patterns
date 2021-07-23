@@ -55,3 +55,5 @@ ccloud connector create --config <connector-config-file.json>
 * See [Integrate External Systems to Kafka](https://docs.confluent.io/cloud/current/connectors/index.html) on Confluent documentation for information on source connectors.
 * [Kafka Connect Deep Dive - JDBC Source Connector](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/) blog post
 * See [Database Write Aside](database-write-aside.md) for an alternative example of writing database changes to an Event Stream
+* [No More Silos: Integrating Databases and Apache Kafka](https://rmoff.dev/no-more-silos) blog post by [Robin Moffatt](https://talks.rmoff.net/)
+
