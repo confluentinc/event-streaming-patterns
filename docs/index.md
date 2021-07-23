@@ -2,12 +2,29 @@
 title: Event Streaming Patterns
 seo:
   title: Welcome to Event Streaming Patterns
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus aliquet consequat. Morbi nec lorem eget mauris posuere consequat in vel sem. Nunc ut malesuada est, fermentum tristique velit. In in odio dui. Nunc sed iaculis mauris. Donec purus tellus, fringilla nec tempor et, tristique sit amet nulla. In pharetra ligula orci, eget mattis odio luctus eu. Praesent porttitor pretium dolor, ut facilisis tortor dignissim vitae.
+  description: Reusable architectural patterns for building successful event streaming systems.
 usePatternsDiagram: true
 ---
 
 # Welcome to Event Streaming Patterns
 
-Event Streaming Platforms provide an architecture that enables software to react and operate as events occur. These platforms allow for software components to work together in a real-time, decoupled, and scalable fashion. When software is modeled as streams of events, new capabilities surface along with new unique technical challenges.
+Every programming domain comes with its own set of common problems,
+and its own catalog of tried and true solutions. Event streaming is no
+different. In this catalog, you'll find a toolbox full of approaches
+to building a sane, scalable event system.
 
-This catalog contains simple and reusable architectural patterns that can be applied over event streaming systems. When composed together, these patterns can help meet the design demands of modern real-time distributed systems. The following patterns are categorized by their function in the event streaming system, including sourcing data, processing events as streams, to integrations with external systems.
+Every pattern in this collection explains the problem it addresses,
+outlines a general solution that applies to all event-streaming
+technologies, and walks you through a concrete implementation.
+
+If you're new to event streaming, you'll find a wealth of practical
+architectural advice to help you build your first event system. If
+you're a veteran, a browse around will lead you to an interesting idea
+you can file away, that might be just the answer you need 6 months
+from now. And if you're in the trenches today, you might find
+someone's already walked the path you're treading and left you a map
+to the right solution.
+
+For more help, or if you have any questions or suggestions, please
+head over to the [Confluent Community
+Forum](https://forum.confluent.io/).
