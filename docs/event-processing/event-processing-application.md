@@ -62,7 +62,7 @@ KStream <Integer, EnrichedRating> enrichedRatings = ratings.join(movies, joiner)
 See the tutorial [How to join a stream and a lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html) for a full example of using Kafka Streams to build an Event Processing Application.
 
 ## Considerations
-* When building an Event Processing Application, it's best to confine the application to one problem domain. While it's possible to use any number of Event Processors in the application, the Event Processors should be closely related in most cases (similar to how one would design a microservice).
+* When building an Event Processing Application, it's recommended to confine the application to one problem domain. While it's possible to use any number of Event Processors in the application, the Event Processors should be closely related in most cases (similar to how one would design a microservice).
 * Event Processing Applications themselves can also be composed. This is a common design pattern for implementing event-driven architectures, which are powered by a fleet of applications and microservices. In this design, the output of one application forms the input to one or more downstream applications. This is conceptually similar to the topology of [Event Processors](../event-processing/event-processor.md), as described above. A key difference in practice, however, is that different applications are often built by different teams inside an organization. For example, a customer-facing application built by the Payments team is continuously feeding data via [Event Streams](../event-stream/event-stream.md) to an application built by the Anti-Fraud team, and to another application built by the Data Science team. 
 
 ## References
