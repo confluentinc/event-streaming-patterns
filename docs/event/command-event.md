@@ -93,7 +93,7 @@ underlying concepts. When we do that, the architecture responds with
 growing pains<sup>1</sup>.
 
 A better solution is to realize that our "Command Event" is actually two
-concepts woven together: "What happened?" and "Who cares?" 
+concepts woven together: "What happened?" and "Who needs to know?" 
 
 By teasing those concepts apart, we can clean up our architecture. We
 allow one process to focus on recording the facts of what happened,
