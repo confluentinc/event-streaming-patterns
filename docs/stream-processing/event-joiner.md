@@ -6,7 +6,7 @@ seo:
 
 # Event Joiner
 
-[Event Streams](../event-stream/event-stream.md) may need to be joined (or enriched) with a [Table](../table/state-table.md) or another Event Stream in order to provide more comprehensive details about their [Events](../event/event.md).
+[Event Streams](../event-stream/event-stream.md) may need to be joined (i.e. enriched) with a [Table](../table/state-table.md) or another Event Stream in order to provide more comprehensive details about their [Events](../event/event.md).
 
 ## Problem
 
