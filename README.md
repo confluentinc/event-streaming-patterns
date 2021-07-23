@@ -3,8 +3,7 @@
 This repository contains a collection of Event Streaming Patterns loosely based on [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com/patterns/messaging/index.html) from Gregor Hohpe and Bobby Woolf. Patterns are divided up into functional categories and provide descriptions, solutions, example code, and references. 
 
 You can see the live version of these patterns on the Confluent Developer site:
-<!-- TODO: Update with proper DCI / patterns link -->
-https://confluent.developer.io/patterns
+https://developer.confluent.io/patterns
 
 ## Questions?
 
