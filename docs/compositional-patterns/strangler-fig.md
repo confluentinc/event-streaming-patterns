@@ -16,12 +16,12 @@ We can use the Strangler Fig pattern to migrate from a monolith to microservices
 
 ## Implementation
 
-First we identify a module of the monolith, or a set of existing APIs that will be replaced by our first microservice. We'll call this moduleA. Then we can use change data capture (CDC) to convert any changes to moduleA data to an [Event Stream](../event-stream/event-stream.md) that will feed our microservice. 
+First we identify a module of the monolith, or a set of existing APIs that will be replaced by our first microservice. We'll call this module A. Then we can use change data capture (CDC) to convert any changes to module A's data to an [Event Stream](../event-stream/event-stream.md) that will feed our microservice. 
 
-Then we will place a proxy between the monolith and any clients, with all read calls to moduleA being routed to our microservice. 
+Then we will place a proxy between the monolith and any clients, with all read calls to module A being routed to our microservice. 
 ![strangler-fig](../img/strangler-fig-a.png)
 
-When our microservice is ready to handle writes, we can change the proxy to route all moduleA writes as well.  At this point, we can, again, use CDC to stream changes back to our monolith so it doesn't know what it's missing. 
+When our microservice is ready to handle writes, we can change the proxy to route all module A's writes as well.  At this point, we can, again, use CDC to stream changes back to our monolith so it doesn't know what it's missing. 
 ![strangler-fig](../img/strangler-fig-b.png)
 
 As we continue this process with more modules, we gradually replace the functionality of the monolith until it can be shut down safely. 
