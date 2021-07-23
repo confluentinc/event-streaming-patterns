@@ -1,18 +1,20 @@
 
 # Suppressed Event Aggregator
-An [Event Streaming Application](../event-processing/event-processing-application.md) can perform continuous aggregation operations like an [Event Aggregator](event-aggregator.md).  If the input data is not windowed (cf. [Event Grouper](../stream-processing/event-grouper.md)), the aggregator will emit "intermediate" processing results. That's because an event stream is potentially infinite, so generally we do not know when the input is considered "complete". So, with few exceptions, there's not really a point where we can have a "final" result.  
+An [Event Streaming Application](../event-processing/event-processing-application.md) can perform continuous aggregation operations like an [Event Aggregator](event-aggregator.md).  Normally, however, the aggregator will emit "intermediate" processing results. That's because an event stream is potentially infinite, so generally we do not know when the input is considered "complete". So, with few exceptions, there's not really a point where we can have a "final" result. Also, this emit strategy has the benefit of resulting in low latency between the time when a new input event is received and the time when updated processing results are available.
 
-However, if the input data is windowed (e.g., the input is grouped into 5-minute windows in order to compute 5-minute averages), then emitting a "final" result per window is possible, because the aggregator knows when the input for a given window is considered complete, and thus it can be configured to suppress "intermediate" results until the window time passes.
+In certain situations, however, a single, final result is what we prefer to receive, rather than multiple intermediate results. For example, when we have to feed aggregation results into a system that is natively not compatible with a streaming approach. Here, we need an aggregator that is able to "suppress" intermediate results so that only a single, final result is being produced.
 
 
 ## Problem
 How can an event aggregator provide a final aggregation result, rather than "intermediate" results that keep being updated?
 
 ## Solution
-![suppressed-event-aggregator](../img/suppressed-event-aggregator.png)
+![suppressed-event-aggregator](../img/suppressed-event-aggregator.svg)
+
+Generally speaking, this is possible only for windowed aggregations. That's because, in this case, the aggregator does know when the input for a given window (e.g., a 5-minute window in order to compute 5-minute averages) is considered complete, and thus it can be configured to suppress "intermediate" results until the window time passes. How do we do this?
 
 First, the input events of the aggregator must be windowed via an [Event Grouper](../stream-processing/event-grouper.md), i.e., the events are being grouped into "windows" based on their timestamps. Depending on the configured grouping, an event is placed exclusively into a single window, or it can be placed into multiple windows.
-Then, the event aggregator performs its operation on each window. 
+Then, the event aggregator performs its operation on each window.
 
 Only once the window is considered to have "passed" (e.g., a 5-minute window starting at 09:00am and ending at 09:05am) will the aggregator output a single, final result for this window. For example, consider an aggregation for an event stream of customer payments, where we want to compute the number of payments per hour.  By using a window size of 1 hour, we can emit a final count for the hourly number of payments once the respective 1-hour window closes.
 
@@ -22,6 +24,7 @@ Note that the use of a grace period increases the processing latency, because th
 
 
 ## Implementation
+
 For Apache Kafka®, the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) provides a `suppress` operator in its DSL, which we can apply to windowed aggregations.
 
 In the following example we compute hourly aggregations on a stream of orders, using a grace period of five minutes to wait for any orders arriving with a slight delay. The `suppress` operator ensures that there's only a single result event for each hourly window.
@@ -40,10 +43,13 @@ KStream<String, OrderEvent> orderStream = builder.stream(...);
             .to(outputTopic, Produced.with(Serdes.String(), Serdes.Double()));
 ```
 
+
 ## Considerations
 
 * To honor the contract of outputting only a single result per window, the suppressed aggregator typically buffers events in some way until the window closes.  If its implementation uses an in-memory buffer, then, depending on the number of events per window and their payload sizes, there's the risk to run into out-of-memory errors.
 
+
 ## References
+
 * The tutorial [Emit a final result from a time window with Kafka Streams](https://kafka-tutorials.confluent.io/window-final-result/kstreams.html) provides more details about the `suppress` operator.
 

@@ -41,7 +41,7 @@ For more guidance and configuring size-based data retention, see the [Kafka Brok
 
 ### How Events Are Being Removed From an Event Stream
 
-For either method of configuring retention, Kafka _does not immediately_ remove events one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Kafka topics are further broken down into _topic partitions_ (see [Partitioned Placement](../event-stream/partitioned-placement.md)). Partitions themselves are further divided into files called _segments_. Segments represent a sequence of the events in a particular partition, and these segments are what is being removed once a violation of the retention policy has occurred. We can further fine-tune the removal algorithm with additional settings such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. 
+For either method of configuring retention, Kafka _does not immediately_ remove events one by one when they violate the configured retention settings. To understand how they are removed, we first need to explain that Kafka topics are further broken down into _topic partitions_ (see [Partitioned Placement](../event-stream/partitioned-parallelism.md)). Partitions themselves are further divided into files called _segments_. Segments represent a sequence of the events in a particular partition, and these segments are what is being removed once a violation of the retention policy has occurred. We can further fine-tune the removal algorithm with additional settings such as `log.retention.check.interval.ms` and segment configuration, such as `log.segment.bytes`. 
 
 
 ## Considerations
@@ -50,6 +50,5 @@ For either method of configuring retention, Kafka _does not immediately_ remove 
 
 ## References
 * This pattern is similar to [Message Expiration](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageExpiration.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-<!-- TODO: the following link needs to be to the new DCI 101 course-->
-* [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on "What is Kafka, and how does it work?"
+* [Apache Kafka 101: Introduction](/learn-kafka/apache-kafka/events/) provides a primer on "What is Kafka, and how does it work?"
 * A related pattern is the [Infinite Retention Event Stream](infinite-retention-event-stream.md) pattern which details Event Streams that stores events indefinitely.

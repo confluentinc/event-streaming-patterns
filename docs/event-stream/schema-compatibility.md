@@ -9,10 +9,10 @@ Schemas are like [Data Contracts](../event/data-contract.md) in that they set th
 A natural behavior of applications and data schemas is that they evolve over time, so it's important to have a policy about how they are allowed to evolve and what compatibility rules are between old and new versions.
 
 ## Problem
-How do we ensure that schemas can evolve without breaking existing [Event Sinks](../event-sink/event-sink.md) (readers) and [Event Sources](../event-source/event-source.md) (writers), including [Event Processing Applications](../event-processing/event-processing-application)?
+How do we ensure that schemas can evolve without breaking existing [Event Sinks](../event-sink/event-sink.md) (readers) and [Event Sources](../event-source/event-source.md) (writers), including [Event Processing Applications](../event-processing/event-processing-application.md)?
 
 ## Solution
-![schema-compatibility](../img/schema-compatibility.png)
+![schema-compatibility](../img/schema-compatibility.svg)
 
 There are two types of compatibility to consider: backwards compatibility and forwards compatibility.
 
@@ -44,7 +44,7 @@ Using Avro as the [serialization format](../event/event-serializer.md), if the o
 
 Examples of compatible changes would be:
 
-1. _Removal of a field that had a field_: notice `field1` is removed
+1. _Removal of a field that had a default_: notice `field1` is removed
 
 ```
 {"namespace": "io.confluent.examples.client",

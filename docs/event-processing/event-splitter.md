@@ -1,24 +1,24 @@
 ---
 seo:
   title: Event Splitter
-  description: Split an event into multiple events so that they can be processed in a different ways
+  description: An Event Splitter splits an Event into multiple Events that can each be processed in different ways.
 ---
 
 # Event Splitter
-One [Event](../event/event.md) may actually contain multiple child events within it, each of which may need to be processed in different ways.
+One [Event](../event/event.md) may actually contain multiple child Events, each of which may need to be processed in a different way.
 
 ## Problem
-How can an [Event](../event/event.md) be split into multiple events?
+How can an [Event](../event/event.md) be split into multiple Events for distinct processing?
 
 ## Solution
-![event-splitter](../img/event-splitter.png)
-First, split the original event into multiple child events.
-Then, publish one event per child.
+![event-splitter](../img/event-splitter.svg)
+Split the original Event into multiple child Events.
+Then publish one Event for each of the child Events.
 
 ## Implementation
 Many event processing technologies support this operation.
-ksqlDB has the `EXPLODE()` table function which takes an array and outputs one value for each of the elements of the array.
-The example below processes each input event, un-nesting the array and generating new events for each element with new column names.
+The streaming database ksqlDB provides an `EXPLODE()` table function, which takes an array and outputs one value for each of the elements of the array.
+The example below processes each input Event, un-nesting the array and generating new Events for each element, with new column names.
 
 ```
 SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
@@ -27,8 +27,8 @@ SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
         FROM my_stream EMIT CHANGES;
 ```
 
-Kafka Streams has an analogous method called `flatMap()`.
-The example below processes each input event, generating new events with new keys and values.
+The Apache Kafka&reg; client library [Kafka Streams](https://kafka.apache.org/documentation/streams/) has an analogous method, called `flatMap()`.
+The example below processes each input Event and generates new Events, with new keys and values.
 
 ```java
 KStream<Long, String> myStream = ...;
@@ -42,18 +42,18 @@ KStream<String, Integer> splitStream = myStream.flatMap(
   );
 ```
 
-Or as my grandmother used to say:
+Or, as my grandmother used to say:
 
 > _There once was a man from Manhattan,_  
-> _With Events that he needed to flatten,_  
-> _He cooked up a scheme,_  
-> _To call `flapMap` on `stream`,_  
+> _With Events that he needed to flatten._
+> _He cooked up a scheme_  
+> _To call `flatMap` on `stream`,_  
 > _Then he wrote it all down as a pattern._
 
 ## Considerations
-* If child events need to be routed to different streams, see [Event Router](../event-processing/event-router.md) for routing events to different locations.
-* Capacity planning and sizing: splitting the original event into N child events leads to write amplification, thereby increasing the volume of events that must be managed by the event streaming platform.
-* Event Lineage: a use case may require tracking the lineage of parent and child events. If so, ensure that the child events include a data field containing a reference to the original parent event, e.g. a unique identifier.
+* If you have child Events that must be routed to different Event Streams, see the [Event Router](../event-processing/event-router.md) pattern, used to route Events to different locations.
+* For capacity planning and sizing, consider that splitting the original Event into N child Events leads to write amplification, increasing the volume of Events that must be managed by the [Event Streaming Platform](../event-stream/event-streaming-platform.md).
+* A use case may require that you track the lineage of parent and child Events. If so, ensure that the child Events include a data field containing a reference to the original parent Event (for example, a unique identifier).
 
 ## References
-* This pattern is derived from [Splitter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
+* This pattern is derived from [Splitter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.

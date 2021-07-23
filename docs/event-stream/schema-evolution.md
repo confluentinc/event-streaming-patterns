@@ -12,11 +12,11 @@ Similar to how APIs evolve and need to be compatible for all applications that r
 How do I restructure or add new information to an event, ideally in a way that ensures [Schema Compatibility](schema-compatibility.md)?
 
 ## Solution
-![schema-evolution](../img/schema-evolution-1.png)
+![schema-evolution](../img/schema-evolution-1.svg)
 
 One approach for evolving a schema is "in-place" (shown above), in which a stream can have events with both new and previous schema versions in it. The schema compatibility checks then ensure that [Event Processing Applications](../event-processing/event-processing-application.md) and [Event Sinks](../event-sink/event-sink.md) can read schemas in both formats.
 
-![schema-evolution](../img/schema-evolution-2.png)
+![schema-evolution](../img/schema-evolution-2.svg)
 
 Another approach is _dual schema upgrades_ a.k.a. _versioned streams_ (shown above). This approach is useful especially when breaking changes in a stream's schema(s) need to be introduced; i.e., in a situation where the new schema is incompatible to the previous schema. Here, the [Event Sources](../event-source/event-source.md) write to two streams:
 

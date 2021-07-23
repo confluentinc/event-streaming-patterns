@@ -1,7 +1,7 @@
 ---
 seo:
   title: Event Filter
-  description: Event Filter allows event processing applications to operate over a subset of Events in an Event Stream
+  description: Event Filter allows Event Processing Applications to operate over a subset of the Events in an Event Stream.
 ---
 
 # Event Filter
@@ -15,7 +15,7 @@ How can an application select only the relevant events (or discard uninteresting
 
 ## Implementation
 
-As an example, the streaming database [ksqlDB](https://ksqldb.io) provides the ability to create a filtered Event Stream using familiar SQL syntax:
+As an example, the streaming database [ksqlDB](https://ksqldb.io) lets us create a filtered Event Stream using familiar SQL syntax:
 ```sql
 CREATE STREAM payments_only WITH (kafka_topic = 'transactions-topic') AS
     SELECT *
@@ -23,7 +23,7 @@ CREATE STREAM payments_only WITH (kafka_topic = 'transactions-topic') AS
       WHERE type = 'purchase';
 ```
 
-The [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka® provides a `filter` operator in its DSL, which filters out events that do not match a given predicate.
+The [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) client library of Apache Kafka® provides a `filter` operator in its DSL. This operator filters out events that do not match a given predicate:
 
 ```java
 builder
@@ -33,5 +33,5 @@ builder
 ```
 
 ## References
-* This pattern is derived from [Message Filter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-* See the Kafka Tutorial [How to filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html) for detailed examples of filtering event streams.
+* This pattern is derived from [Message Filter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
+* See the tutorial [How to filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html) for detailed examples of filtering event streams.

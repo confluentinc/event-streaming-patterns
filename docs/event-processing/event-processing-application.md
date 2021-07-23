@@ -11,7 +11,7 @@ Once data such as financial transactions, tracking information for shipments, Io
 How can we build a full-fledged application for data in motion that creates, reads, processes, and/or queries [Event Streams](../event-stream/event-stream.md) to solve a use case end-to-end?
 
 ## Solution
-![event-processing-application](../img/event-processing-application.png)
+![event-processing-application](../img/event-processing-application.svg)
 
 We build an Event Processing Application by composing one or more [Event Processors](../event-processing/event-processor.md) into an interconnected processing topology for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md). Here, the continuous output streams of one processor are the continuous input streams to one or more downstream processors. The combined functionality of the application then covers our use case end-to-end, or at least as much of the use case as we are striving for (as the question of how few or many applications should implement a use case is an important design decision, which we are not covering here). The event processors—and thus the application at large—are typically distributed (running across multiple instances) to allow for elastic, parallel, fault-tolerant processing of data in motion at scale.
 
