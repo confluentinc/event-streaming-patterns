@@ -39,7 +39,7 @@ degree of backwards and forwards -compatibility. We recommend
 
 An optional, recommended step is to register the serialization details
 with a schema registry. A registry provides a reliable,
-machine-readable reference point for [Event Deserializers](./event-deserializer.md) 
+machine-readable reference point for [Event Deserializers](event-deserializer.md) 
 and [Schema Validators](../event-source/schema-validator.md), making event
 consumption vastly simpler.
 
@@ -140,16 +140,16 @@ For more complex scenarios, we have several strategies for managing schema migra
   discusses splitting and joining streams to simplify serving
   consumers that can only handle certain versions of the event's
   schema.
-* An [Event Standardizer](./event-standardizer.md) can reformat
+* An [Event Standardizer](event-standardizer.md) can reformat
   disparate data encodings into a single unified format.
 * And as a fallback we can push the problem to the consumer's code
-  with a [Schema-on-Read](./schema-on-read.md) strategy.
+  with a [Schema-on-Read](schema-on-read.md) strategy.
 
 ## References
 
-* The counterpart of an event serializer (for writing) is an [Event Deserializer](./event-deserializer.md) (for reading).
+* The counterpart of an event serializer (for writing) is an [Event Deserializer](event-deserializer.md) (for reading).
 * Serializers and deserializers are closely related to 
-  [Data Contracts](./data-contract.md), in which we want to adhere to a
+  [Data Contracts](data-contract.md), in which we want to adhere to a
   specific serialization format _and_ constrain the individual events
   to a certain schema within that format.
 * See also: [Event Mapper](../event-processing/event-mapper.md).

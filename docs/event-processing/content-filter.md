@@ -41,7 +41,7 @@ How can I simply consume only a few data items from a large event?
 
 ![content filter](../img/content-filter.svg)
 
-Create an [Event Processor](./event-processor.md) that inspects each
+Create an [Event Processor](event-processor.md) that inspects each
 event, pulls out the fields of interest, and passes new, smaller
 events downstream for further processing.
 
