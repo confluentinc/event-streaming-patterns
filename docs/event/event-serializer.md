@@ -130,13 +130,13 @@ to be set in stone. It's straightforward to
 [translate between supported formats with ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). 
 For more complex scenarios, we have several strategies for managing schema migration:
 
-* [Schema Compatibility](../event-stream/schema-compatibility/)
+* [Schema Compatibility](../event-stream/schema-compatibility.md)
   discusses the kinds of "safe" schema changes that Avro is designed
   to handle transparently.
-* [Event Translators](../event-processing/event-translator.md ) can
+* [Event Translators](../event-processing/event-translator.md) can
   convert between different encodings to aid consumption by different
   systems.
-* [Schema Evolution](../event-stream/schema-evolution/)
+* [Schema Evolution](../event-stream/schema-evolution.md)
   discusses splitting and joining streams to simplify serving
   consumers that can only handle certain versions of the event's
   schema.
