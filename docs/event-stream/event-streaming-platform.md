@@ -28,8 +28,7 @@ Events are written to, stored in, and read from [Event Streams](../event-stream/
 
 Applications that write events to topics are called [Producers](https://docs.confluent.io/platform/current/clients/producer.html). Producers come in many forms and represent the [Event Source](../event-source/event-source.md) pattern. Reading events is performed by [Consumers](https://docs.confluent.io/platform/current/clients/consumer.html), which represent [Event Sinks](../event-sink/event-sink.md). Consumers typically operate in a distributed, coordinated fashion to increase scale and fault tolerance. [Event Processing Applications](../event-processing/event-processing-application.md) act as both event sources and event sinks. 
 
-Applications which produce and consume events as described above are referred to as "clients." These client applications can be authored in a variety of programming languages, including [Java](https://docs.confluent.io/clients-kafka-java/current/), [Go](https://docs.confluent.io/clients-confluent-kafka-go/current/), [C/C++](https://docs.confluent.io/clients-librdkafka/current/), [C# (.NET)](https://docs.confluent.io/clients-confluent-kafka-dotnet/current/), and [Python](https://docs.confluent.io/clients-confluent-kafka-python/current/).
-<!-- TODO: The links above need to be to the DCI getting started guides-->
+Applications which produce and consume events as described above are referred to as "clients." These client applications can be authored in a variety of programming languages, including [Java](/get-started/java), [Go](/get-started/go), [C/C++](/get-started/c), [C# (.NET)](/get-started/dotnet), [Python](/get-started/python), [Node.JS](/get-started/nodejs), [and more](/kafka-languages-and-tools).
 
 ### Stream Processing
 [Event Processing Applications](../event-processing/event-processing-application.md) can be built atop Kafka using a variety of techniques. 
@@ -54,5 +53,4 @@ Event Streaming Platforms are distributed computing systems made up of a diverse
 ## References
 * This pattern is derived from [Message Bus](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageBus.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
 * [Confluent Cloud](https://www.confluent.io/confluent-cloud/) is a cloud-native service for Apache Kafka®.
-<!-- TODO: the following link needs to be to the new DCI 101 course-->
-* The video [Apache Kafka 101: Introduction](https://www.youtube.com/watch?v=qu96DFXtbG4) provides a primer on what Kafka is and how it works.
+* The [Apache Kafka 101](/learn-kafka/apache-kafka/) course provides a primer on what Kafka is and how it works.
