@@ -20,7 +20,7 @@ and which department put it there originally.
 
 To a large degree, the accessibility of data is determined at write
 time, by our choice of [Event
-Serializer](./event-serializer.md). Still, the story is certainly not
+Serializer](event-serializer.md). Still, the story is certainly not
 complete until we've read the data back out.
 
 ## Problem
@@ -56,7 +56,7 @@ reconstruct the original event data, while we can use the registry API
 to manually inspect the schemas, or to build libraries for other
 languages.
 
-For example, in the [Event Serializer](./event-serializer.md) pattern
+For example, in the [Event Serializer](event-serializer.md) pattern
 we wrote a stream of `fx_trade` events. If we want to recall the
 structure of those events we can ask ksqlDB:
 
@@ -150,7 +150,7 @@ entirely and focus on the data.
 ## Considerations
 
 In addition to Avro, Schema Registry supports Protobuf and JSON
-Schema. See [Event Serializer](./event-serializer.md) for a discussion
+Schema. See [Event Serializer](event-serializer.md) for a discussion
 of these formats.
 
 While the choice of serialization format is important, it doesn't have
@@ -168,16 +168,16 @@ For more complex scenarios, we have several strategies for managing schema migra
   discusses splitting and joining streams to simplify serving
   consumers that can only handle certain versions of the event's
   schema.
-* An [Event Standardizer](./event-standardizer.md) can reformat
+* An [Event Standardizer](event-standardizer.md) can reformat
   disparate data encodings into a single unified format.
 * And we always have the option of handling encoding problems directly
-  in code with a [Schema-on-Read](./schema-on-read.md) strategy.
+  in code with a [Schema-on-Read](schema-on-read.md) strategy.
 
 ## References
 
-* The counterpart of an event deserializer (for reading) is an [Event Serializer](./event-serializer.md) (for writing).
+* The counterpart of an event deserializer (for reading) is an [Event Serializer](event-serializer.md) (for writing).
 * Serializers and deserializers are closely related to [Data
-  Contracts](./data-contract.md), in which we want to adhere to a
+  Contracts](data-contract.md), in which we want to adhere to a
   specific serialization format, _and_ constrain the individual events
   to a certain schema within that format.
 * See also: [Event Mapper](../event-processing/event-mapper.md).
