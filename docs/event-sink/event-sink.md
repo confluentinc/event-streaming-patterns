@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Sink
+  description: Event Sinks read events from an event streaming platform and are conceptually opposite of an event source
+---
+
 # Event Sink
 Various components in an [Event Streaming Platform](../event-stream/event-streaming-platform.md) will read or receive [Events](../event/event.md). An Event Sink is the generalization of these components, which can include [Event Processing Applications](../event-processing/event-processing-application.md), cloud services, databases, IoT sensors, mainframes, and more.
 

@@ -1,4 +1,8 @@
-
+---
+seo:
+  title: Suppressed Event Aggregator
+  description: Suppressed Event Aggregator is an aggregator which only provides a final aggregation result, rather than including "intermediate" results
+---
 # Suppressed Event Aggregator
 An [Event Streaming Application](../event-processing/event-processing-application.md) can perform continuous aggregation operations like an [Event Aggregator](event-aggregator.md).  Normally, however, the aggregator will emit "intermediate" processing results. That's because an event stream is potentially infinite, so generally we do not know when the input is considered "complete". So, with few exceptions, there's not really a point where we can have a "final" result. Also, this emit strategy has the benefit of resulting in low latency between the time when a new input event is received and the time when updated processing results are available.
 

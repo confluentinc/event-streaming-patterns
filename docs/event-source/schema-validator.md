@@ -1,3 +1,9 @@
+---
+seo:
+  title: Schema Validator
+  description: Schema Validators enforce defined schemas for all events sent to an event stream
+---
+
 # Schema Validator
 In an [Event Streaming Platform](../event-stream/event-streaming-platform.md), [Event Sources](../event-source/event-source.md), which create and write [Events](../event/event.md), are decoupled from [Event Sinks](../event-sink/event-sink.md) and [Event Processing Applications](../event-processing/event-processing-application.md), which read and process the events. Ensuring interoperability between the producers and the consumers of events requires that they agree on the data schemas for the events. This is an important aspect of putting [Data Contracts](../event/data-contract.md) in place for data governance.
 
