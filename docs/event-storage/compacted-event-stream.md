@@ -1,3 +1,9 @@
+---
+seo:
+  title: Compacted Event Stream
+  description: Compacted Event Streams remove events from the event stream that represent outdated information and have been superseded by new events
+---
+
 # Compacted Event Stream
 
 [Event Streams](../event-stream/event-stream.md) often represent keyed snapshots of state, similar to a [Table](../table/state-table.md) in a relational database. That is, the [Events](../event/event.md) contain a primary key (identifier) and data that represents the latest information of the business entity related to the Event, such as the latest balance per customer account. [Event Processing Applications](../event-processing/event-processing-application.md) will need to process these Events to determine the current state of the business entity. However, processing the entire Event Stream history is often not practical.

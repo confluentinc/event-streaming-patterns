@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Collaboration
+  description: Event Collaboration allows services and applications to collaborate around a single business workflow on top of an Event Streaming Platform
+---
+
 # Event Collaboration
 
 Building distributed business workflows requires coordinating multiple services and [Event Processing Applications](../event-processing/event-processing-application.md). Business actions and reactions must be coordinated asynchronously as complex workflows transition through various states.

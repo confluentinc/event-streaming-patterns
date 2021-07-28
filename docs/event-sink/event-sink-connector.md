@@ -1,3 +1,9 @@
+---
+seo:
+  title: Event Sink Connector
+  description: Event Sink Connectors transfer events from an event stream into a specific external system
+---
+
 # Event Sink Connector
 Connecting external systems to the [Event Streaming Platform](../event-stream/event-streaming-platform.md) allows for advanced and specialized integrations. 
 
