@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# You will need to install `yq` locally if you don't already have it. It's a
+# wrapper around `jq` that makes simple YAML-munging easy.
+
 echo "< Markdown exists, no TOC entry"
 echo "> TOC entry, markdown doesn't exist"
 
