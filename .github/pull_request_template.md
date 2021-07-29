@@ -9,3 +9,4 @@
 - [ ] Provide references
 - [ ] Validate hyperlinks
 - [ ] Spell check (e.g. using `aspell`)
+- [ ] Added to table of contents in `docs/meta.yml` (hint: run `./check_toc.sh` to confirm)
