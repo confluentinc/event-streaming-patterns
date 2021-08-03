@@ -29,6 +29,7 @@ toc:
       - event-processing/event-router
       - event-processing/event-streaming-api
       - event-processing/event-filter
+      - event-processing/idempotent-writer
   - title: Event Sink
     items:
       - event-sink/event-sink-connector
