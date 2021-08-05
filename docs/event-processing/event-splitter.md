@@ -45,7 +45,7 @@ KStream<String, Integer> splitStream = myStream.flatMap(
 Or, as my grandmother used to say:
 
 > _There once was a man from Manhattan,_  
-> _With Events that he needed to flatten._
+> _With Events that he needed to flatten._  
 > _He cooked up a scheme_  
 > _To call `flatMap` on `stream`,_  
 > _Then he wrote it all down as a pattern._
