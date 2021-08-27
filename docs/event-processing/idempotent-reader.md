@@ -1,52 +1,52 @@
 ---
 seo:
   title: Idempotent Reader
-  description: An idempotent reader can consume the same event once or multiple times, and it will have the same effect.
+  description: An Idempotent Reader consumes the same event once or multiple times, with the same effect.
 ---
 
 # Idempotent Reader
 
-In ideal circumstances, [Events](../event/event.md) are only written once into an [Event Stream](../event-stream/event-stream.md). Under normal operations, all consumers of the stream will also only read and process each event once. However, depending on the behavior and configuration of the [Event Source](../event-source/event-source.md), failures may occur that create duplicate events. When that happens we need strategies for dealing with them.
+In ideal circumstances, [Events](../event/event.md) are only written once into an [Event Stream](../event-stream/event-stream.md). Under normal operations, all consumers of the stream will also only read and process each Event once. However, depending on the behavior and configuration of the [Event Source](../event-source/event-source.md), there may be failures that create duplicate Events. When this happens, we need a strategy for dealing with the duplicates.
 
-There are two causes of duplicate events that an [Idempotent](https://en.wikipedia.org/wiki/Idempotence) Reader must take into consideration:
+An [Idempotent](https://en.wikipedia.org/wiki/Idempotence) Reader must take two causes of duplicate Events into consideration:
 
-1. *Operational Failures*: Intermittent network and system failures are unavoidable in distributed systems. In the case of a machine failure or a brief network outage, an [Event Source](../event-source/event-source.md) may produce the same event multiple times due to retries. Similarly, an [Event Sink](../event-sink/event-sink.md) may consume and process same event multiple times due to intermittent offset updating failures. The [Event Streaming Platform](../event-stream/event-streaming-platform.md) should automatically guard against these operational failures by providing strong delivery and processing guarantees, such as those found in Kafka's transactions.
+1. *Operational Failures*: Intermittent network and system failures are unavoidable in distributed systems. In the case of a machine failure or a brief network outage, an [Event Source](../event-source/event-source.md) may produce the same Event multiple times due to retries. Similarly, an [Event Sink](../event-sink/event-sink.md) may consume and process the same Event multiple times due to intermittent offset updating failures. The [Event Streaming Platform](../event-stream/event-streaming-platform.md) should automatically guard against these operational failures by providing strong delivery and processing guarantees, such as those found in Apache Kafka® transactions.
 
-2. *Incorrect Application Logic*: An [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, which become multiple distinct events in an [Event Stream](../event-stream/event-stream.md) from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md). For example, imagine a bug in the event source that writes a customer payment event twice, instead of just once. The event streaming platform cannot differentiate between the two as it knows nothing of the business logic, and so it considers these as two distinct payment events.
+2. *Incorrect Application Logic*: An [Event Source](../event-source/event-source.md) could mistakenly produce the same event multiple times, populating the [Event Stream](../event-stream/event-stream.md) with multiple distinct Events from the perspective of the [Event Streaming Platform](../event-stream/event-streaming-platform.md). For example, imagine a bug in the Event Source that writes a customer payment Event twice, instead of just once. The Event Streaming Platform knows nothing of the business logic, so it cannot differentiate between the two Events and instead considers them as two distinct payment Events.
 
 ## Problem
-How can an application that is reading from an event stream deal with duplicate events?
+How can an application deal with duplicate Events when reading from an Event Stream?
 
 ## Solution
 ![idempotent-reader](../img/idempotent-reader.svg)
 
-This can be addressed with exactly-once semantics (EOS), including native support for transactions and support for idempotent clients.
-EOS allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, which ensures that computed results are always accurate. 
+This can be addressed using exactly-once semantics (EOS), including native support for transactions and support for idempotent clients.
+EOS allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, ensuring that computed results are always accurate. 
 
-[Idempotent Writing](idempotent-writer.md) by the [Event Source](../event-source/event-source.md) is the first step in solving this problem. This provides strong, exactly-once delivery guarantees of the producer's events, and removes the cause of duplicate events due to operational failures.
+[Idempotent Writing](idempotent-writer.md) by the [Event Source](../event-source/event-source.md) is the first step in solving this problem. Idempotent Writing provides strong, exactly-once delivery guarantees of the producer's Events, and removes operational failures as a cause of duplicate Events.
 
-On the reading side, [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), an idempotent reader can be configured to read just committed transactions. This prevents events within incomplete transactions from being read, providing the reader isolation from operational writer failures. Keep in mind that idempotency means that the reader's business logic must be able to process the same consumed event multiple times, without generating side-effects or otherwise incorrectly updating its internal state. 
+On the reading side, in [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), an Idempotent Reader can be configured to read only committed transactions. This prevents Events within incomplete transactions from being read, providing the reader isolation from operational writer failures. Keep in mind that idempotency means that the reader's business logic must be able to process the same consumed Event multiple times, without generating side-effects or otherwise incorrectly updating its internal state. 
 
-Duplicates caused by incorrect application logic are best resolved by fixing the application's logic. In cases where this is not possible, such as if event generation is triggered by external processes, then the next best option is to tag duplicate events with tracking IDs. The best selection for a tracking ID is a field which is unique to the logical event, such as an event key or request ID. The consumer can then read the tracking ID, cross-reference it against an internal state store of IDs it has already processed, and discard the event if necessary.
+Duplicates caused by incorrect application logic are best resolved by fixing the application's logic. In cases where this is not possible, such as when event generation is triggered by external processes, the next best option is to tag duplicate events with tracking IDs. A tracking ID should be a field that is unique to the logical event, such as an event key or request ID. The consumer can then read the tracking ID, cross-reference it against an internal state store of IDs it has already processed, and discard the event if necessary.
 
 
 ## Implementation
-To handle operational failures, you can [enable EOS in your streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/). A Kafka Streams application using EOS will atomically update its consumer offsets, state store changelog topics, reparition topics, and output topics within a single transaction.
+To handle operational failures, you can [enable EOS in your Kafka Streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/). A Streams application using EOS will atomically update its consumer offsets, state store changelog topics, reparition topics, and output topics within a single transaction.
 
-In ksqlDB you can enable exactly-once stream processing to execute a read-process-write operation exactly one time. This can be done by setting the processing guarantee with:
+In the streaming database [ksqlDB](https://ksqldb.io), you can enable exactly-once stream processing to execute a read-process-write operation exactly one time. This can be done by configuring the processing guarantee with the following setting:
 
 ```
 processing.guarantee="exactly_once"
 ``` 
 
-To handle incorrect application logic, again, first try to eliminate the source of duplication from the code. If that is not an option, assigning a tracking ID to each event based off of the contents of the event will enable consumers to detect the duplicates for themselves. This will require that each consumer application maintain an internal state store for tracking the events' unique IDs, which will vary in size depending on the event count and the period for which the consumer must guard against duplicates. This option requires both additional disk usage and processing power for inserting and validating events.
+To handle incorrect application logic, again, first try to eliminate the source of duplication from the code. If that is not an option, you can assign a tracking ID to each Event based off of the contents of the Event, enabling consumers to detect duplicates for themselves. This requires that each consumer application maintain an internal state store for tracking the Events' unique IDs, and this store will vary in size depending on the Event count and the period for which the consumer must guard against duplicates. This option requires both additional disk usage and processing power for inserting and validating Events.
 
-For a subset of business cases, it may also be possible to design the consumer processing logic to be idempotent. For example, in a simple ETL where a database is the [Event Sink](../event-sink/event-sink.md), the duplicate events can be deduplicated by the database during an `upsert` on the event ID as primary key. Idempotent business logic also enables your application to read from [Event Streams](../event-stream/event-stream.md) that aren't strictly free of duplicates, or from historic streams that may not have had EOS available at time of creation.
+For a subset of business cases, it may also be possible to design the consumer processing logic to be idempotent. For example, in a simple ETL where a database is the [Event Sink](../event-sink/event-sink.md), the duplicate Events can be deduplicated by the database during an `upsert` on the Event ID as primary key. Idempotent business logic also enables your application to read from [Event Streams](../event-stream/event-stream.md) that aren't strictly free of duplicates, or from historic streams that may not have had EOS available when they were created.
 
 ## Considerations
 A solution that requires EOS guarantees must enable EOS at all stages of the pipeline, not just on the reader. An Idempotent Reader is therefore typically combined with an [Idempotent Writer](../event-processing/idempotent-writer.md) and transactional processing.
 
 ## References
-* This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf
-* Blog on [Exactly-once semantics in Apache Kafka](https://www.confluent.io/blog/simplified-robust-exactly-one-semantics-in-kafka-2-5/)
-* [Idempotent Producer Kafka Tutorial](https://kafka-tutorials.confluent.io/message-ordering/kafka.html)
+* This pattern is derived from [Idempotent Receiver](https://www.enterpriseintegrationpatterns.com/patterns/messaging/IdempotentReceiver.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
+* Blog post about [exactly-once semantics in Apache Kafka](https://www.confluent.io/blog/simplified-robust-exactly-one-semantics-in-kafka-2-5/)
+* Tutorial on [How to maintain message ordering and no message duplication](https://kafka-tutorials.confluent.io/message-ordering/kafka.html)
