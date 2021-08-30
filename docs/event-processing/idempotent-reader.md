@@ -23,7 +23,7 @@ How can an application deal with duplicate Events when reading from an Event Str
 This can be addressed using exactly-once semantics (EOS), including native support for transactions and support for idempotent clients.
 EOS allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, ensuring that computed results are always accurate. 
 
-[Idempotent Writing](idempotent-writer.md) by the [Event Source](../event-source/event-source.md) is the first step in solving this problem. Idempotent Writing provides strong, exactly-once delivery guarantees of the producer's Events, and removes operational failures as a cause of duplicate Events.
+[Idempotent Writing](idempotent-writer.md) by the [Event Source](../event-source/event-source.md) is the first step in solving this problem. Idempotent Writing provides strong, exactly-once delivery guarantees of the producer's Events, and removes operational failures as a cause of written duplicate Events.
 
 On the reading side, in [Event Processors](../event-processing/event-processor.md) and [Event Sinks](../event-sink/event-sink.md), an Idempotent Reader can be configured to read only committed transactions. This prevents Events within incomplete transactions from being read, providing the reader isolation from operational writer failures. Keep in mind that idempotency means that the reader's business logic must be able to process the same consumed Event multiple times, without generating side-effects or otherwise incorrectly updating its internal state. 
 
