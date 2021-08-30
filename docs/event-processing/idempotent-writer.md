@@ -29,7 +29,7 @@ The Kafka producer tags each batch of Events that it sends to the Kafka cluster 
 ## Considerations
 Enabling idempotency for a Kafka producer not only ensures that duplicate Events are fenced out from the log, it also ensures that they are written in order. This is because the brokers accept a batch of Events only if its sequence number is exactly one greater than that of the last committed batch; otherwise, it results in an out-of-sequence error.
 
-Exactly-once semantics (EOS) allows [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication, ensuring that computed results are always accurate. Any solution that requires strong EOS guarantees should also enable EOS at all stages of the pipeline, not just on the writer. An Idempotent Writer is therefore typically combined with an [Idempotent Reader](../event-processing/idempotent-reader.md) and transactional processing.
+Exactly-once semantics (EOS) allow [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication. This ensures that computed results are always consistent and accurate, even for stateful computations such as joins, [aggregations](../stream-processing/event-aggregator.md), and [windowing](../stream-processing/event-grouper.md). Any solution that requires EOS guarantees must enable EOS at all stages of the pipeline, not just on the writer. An Idempotent Writer is therefore typically combined with an [Idempotent Reader](../event-processing/idempotent-reader.md) and transactional processing.
 
 ## References
 * Blog post about [exactly-once semantics in Apache Kafka](https://www.confluent.io/blog/simplified-robust-exactly-one-semantics-in-kafka-2-5/)
