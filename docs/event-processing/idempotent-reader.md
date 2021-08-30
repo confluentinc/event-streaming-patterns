@@ -8,7 +8,7 @@ seo:
 
 In ideal circumstances, [Events](../event/event.md) are only written once into an [Event Stream](../event-stream/event-stream.md). Under normal operations, all consumers of the stream will also only read and process each event once. However, depending on the behavior and configuration of the [Event Source](../event-source/event-source.md), there may be failures that create duplicate events. When this happens, we need a strategy for dealing with the duplicates.
 
-An [Idempotent](https://en.wikipedia.org/wiki/Idempotence) Reader must take two causes of duplicate Events into consideration:
+An [idempotent](https://en.wikipedia.org/wiki/Idempotence) reader must take two causes of duplicate events into consideration:
 
 1. *Operational Failures*: Intermittent network and system failures are unavoidable in distributed systems. In the case of a machine failure or a brief network outage, an [Event Source](../event-source/event-source.md) may produce the same Event multiple times due to retries. Similarly, an [Event Sink](../event-sink/event-sink.md) may consume and process the same Event multiple times due to intermittent offset updating failures. The [Event Streaming Platform](../event-stream/event-streaming-platform.md) should automatically guard against these operational failures by providing strong delivery and processing guarantees, such as those found in Apache Kafka® transactions.
 
