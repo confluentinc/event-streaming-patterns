@@ -15,7 +15,7 @@ How can an [Event Streaming Platform](../event-stream/event-streaming-platform.m
 ![idempotent-writer](../img/idempotent-writer.svg)
 
 Generally speaking, this can be addressed by native support for idempotent clients.
-This means that a writer may try to produce an Event more than once, but the Event Streaming Platform detects and discards duplicate write attempts for the same Event. The resulting Events in the Event Stream are unique, ensuring that a consumer's computed results remain accurate.
+This means that a writer may try to produce an Event more than once, but the Event Streaming Platform detects and discards duplicate write attempts for the same Event.
 
 ## Implementation
 To make an Apache Kafka® producer idempotent, configure your producer with the following setting:
