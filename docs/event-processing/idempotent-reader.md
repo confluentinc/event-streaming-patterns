@@ -31,7 +31,13 @@ Duplicates caused by incorrect application logic from upstream sources are best 
 
 
 ## Implementation
-To handle operational failures, you can [enable EOS in your Kafka Streams application](https://docs.confluent.io/platform/current/streams/developer-guide/config-streams.html#processing-guarantee). Within a single transaction, a Kafka Streams application using EOS will atomically update its consumer offsets, its state stores including their changelog topics, its repartition topics, and its output topics .
+To configure an Idempotent Reader to read only committed transactions, set the following parameter:
+
+```
+isolation.level="read_committed"
+```
+
+In your Kafka Streams application, to handle operational failures, you can [enable EOS](https://docs.confluent.io/platform/current/streams/developer-guide/config-streams.html#processing-guarantee). Within a single transaction, a Kafka Streams application using EOS will atomically update its consumer offsets, its state stores including their changelog topics, its repartition topics, and its output topics.
 
 In the streaming database [ksqlDB](https://ksqldb.io), you can [enable EOS](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/#exactly-once-semantics) similarly, with the following setting:
 
