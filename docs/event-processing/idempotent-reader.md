@@ -6,7 +6,7 @@ seo:
 
 # Idempotent Reader
 
-In ideal circumstances, [Events](../event/event.md) are only written once into an [Event Stream](../event-stream/event-stream.md). Under normal operations, all consumers of the stream will also only read and process each Event once. However, depending on the behavior and configuration of the [Event Source](../event-source/event-source.md), there may be failures that create duplicate Events. When this happens, we need a strategy for dealing with the duplicates.
+In ideal circumstances, [Events](../event/event.md) are only written once into an [Event Stream](../event-stream/event-stream.md). Under normal operations, all consumers of the stream will also only read and process each event once. However, depending on the behavior and configuration of the [Event Source](../event-source/event-source.md), there may be failures that create duplicate events. When this happens, we need a strategy for dealing with the duplicates.
 
 An [Idempotent](https://en.wikipedia.org/wiki/Idempotence) Reader must take two causes of duplicate Events into consideration:
 
