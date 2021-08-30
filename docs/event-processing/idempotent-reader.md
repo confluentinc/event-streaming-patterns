@@ -33,7 +33,7 @@ Duplicates caused by incorrect application logic are best resolved by fixing the
 ## Implementation
 To handle operational failures, you can [enable EOS in your Kafka Streams application](https://www.confluent.io/blog/enabling-exactly-once-kafka-streams/). A Streams application using EOS will atomically update its consumer offsets, state store changelog topics, reparition topics, and output topics within a single transaction.
 
-In the streaming database [ksqlDB](https://ksqldb.io), you can enable exactly-once stream processing to execute a read-process-write operation exactly one time. This can be done by configuring the processing guarantee with the following setting:
+In the streaming database [ksqlDB](https://ksqldb.io), you can [enable EOS](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/#exactly-once-semantics) similarly, with the following setting:
 
 ```
 processing.guarantee="exactly_once"
