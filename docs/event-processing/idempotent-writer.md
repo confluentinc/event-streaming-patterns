@@ -24,7 +24,7 @@ To make an Apache Kafka® producer idempotent, configure your producer with the 
 enable.idempotence=true
 ```
 
-The Kafka producer tags each batch of Events that it sends to the Kafka cluster with a sequence number. The broker uses this sequence number to enforce deduplication of Events sent from this specific producer. Each batch's sequence number is persisted to the replicated log, so that even if the leader broker fails, any new leader will also know if a given batch is a duplicate.
+The Kafka producer tags each batch of Events that it sends to the Kafka cluster with a sequence number. The broker uses this sequence number to enforce deduplication of Events sent from this specific producer. Each batch's sequence number is persisted so that even if the [leader broker](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/#replication) fails, the new leader broker will also know if a given batch is a duplicate.
 
 ## Considerations
 Enabling idempotency for a Kafka producer not only ensures that duplicate Events are fenced out from the log, it also ensures that they are written in order. This is because the brokers accept a batch of Events only if its sequence number is exactly one greater than that of the last committed batch; otherwise, it results in an out-of-sequence error.
