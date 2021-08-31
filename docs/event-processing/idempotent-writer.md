@@ -26,6 +26,12 @@ enable.idempotence=true
 
 The Kafka producer tags each batch of Events that it sends to the Kafka cluster with a sequence number. Brokers in the cluster use this sequence number to enforce deduplication of Events sent from this specific producer. Each batch's sequence number is persisted so that even if the [leader broker](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/#replication) fails, the new leader broker will also know if a given batch is a duplicate.
 
+To enable [exactly-once processing guarantees](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/) in ksqlDB or Kafka Streams, configure the application with the following setting, which includes enabling idempotence in the embedded producer:
+
+```
+processing.guarantee=exactly_once
+```
+
 ## Considerations
 Enabling idempotency for a Kafka producer not only ensures that duplicate Events are fenced out from the topic, it also ensures that they are written in order. This is because the brokers accept a batch of Events only if its sequence number is exactly one greater than that of the last committed batch; otherwise, it results in an out-of-sequence error.
 
