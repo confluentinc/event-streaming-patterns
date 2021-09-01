@@ -38,12 +38,13 @@ isolation.level="read_committed"
 ```
 
 In your Kafka Streams application, to handle operational failures, you can [enable EOS](https://docs.confluent.io/platform/current/streams/developer-guide/config-streams.html#processing-guarantee). Within a single transaction, a Kafka Streams application using EOS will atomically update its consumer offsets, its state stores including their changelog topics, its repartition topics, and its output topics.
-
-In the streaming database [ksqlDB](https://ksqldb.io), you can [enable EOS](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/#exactly-once-semantics) similarly, with the following setting:
+To enable EOS, configure your application with the following parameter:
 
 ```
 processing.guarantee="exactly_once"
 ``` 
+
+In the streaming database [ksqlDB](https://ksqldb.io), you can also [enable EOS](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/#exactly-once-semantics) by configuring the same parameter as shown above.
 
 To handle incorrect application logic, again, first try to eliminate the source of duplication from the code. If that is not an option, you can assign a tracking ID to each event based off of the contents of the event, enabling consumers to detect duplicates for themselves. This requires that each consumer application maintain an internal state store for tracking the events' unique IDs, and this store will vary in size depending on the event count and the period for which the consumer must guard against duplicates. This option requires both additional disk usage and processing power for inserting and validating events.
 
