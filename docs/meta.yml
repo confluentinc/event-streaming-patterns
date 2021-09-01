@@ -54,6 +54,7 @@ toc:
       - event-processing/event-splitter
       - event-processing/event-streaming-api
       - event-processing/event-translator
+      - event-processing/idempotent-writer
       - event-processing/idempotent-reader
   - title: Stream Processing
     items:
