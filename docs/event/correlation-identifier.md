@@ -26,8 +26,8 @@ requestEvent.send(producerRecord);
 In the responding event processor, we first extract the correlation identifier from the request event (here, the identifier is called `requestID`) and then add that identifier to the response event.
 ```Java
 ProducerRecord<String, String> responseEvent = new ProducerRecord<>("response-event-key", "response-event-value"); 
-requestEvent.headers().add("requestID", requestEvent.headers().lastHeader("requestID").value());
-requestEvent.send(producerRecord);
+responseEvent.headers().add("requestID", requestEvent.headers().lastHeader("requestID").value());
+responseEvent.send(producerRecord);
 ```
 
 ## References
