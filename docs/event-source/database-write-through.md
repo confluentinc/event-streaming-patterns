@@ -39,9 +39,9 @@ Some applications write directly to a database table, therefore the database tab
 
 The above shows an example configuration to deploy a MySQL Source CDC Connector (Debezium) streaming data from a MySQL database to Kafka topics. The configuration determines the database to connect to (`database.hostname`) along with the database elements to source into Kafka (`table.includelist`). The `output.data.format` configuration instructs Kafka Connect which format to use when writing records (in this case the Apache Avro format).
 
-Confluent Cloud CLI can deploy a connector on the command line from a configuration, for example:
+[Confluent CLI](https://docs.confluent.io/confluent-cli/current/overview.html) can deploy a connector on the command line from a configuration, for example:
 ```bash
-ccloud connector create --config <connector-config-file.json>
+confluent connect create --config <connector-config-file.json>
 ```
 
 ## Considerations

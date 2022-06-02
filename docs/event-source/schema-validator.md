@@ -19,10 +19,10 @@ Validate that an [Event](../event/event.md) conforms to the defined schema(s) of
 
 ## Implementation
 
-With Confluent, schema validation is fully supported with a per-environment managed [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html). Use the Confluent Cloud UI to enable Schema Registry in your cloud provider of choice. Schemas can be managed per topic using either the Confluent Cloud UI or the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html). The following command creates a schema using the CLI:
+With Confluent, schema validation is fully supported with a per-environment managed [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html). Use the Confluent Cloud Console to enable Schema Registry in your cloud provider of choice. Schemas can be managed per topic using either the Confluent Cloud Console or the [Confluent CLI](https://docs.confluent.io/confluent-cli/current/overview.html). The following command creates a schema using the CLI:
 
 ```
-ccloud schema-registry schema create --subject employees-value --schema employees.json --type AVRO
+confluent schema-registry schema create --subject employees-value --schema employees.avsc --type AVRO
 ```
 
 ## Considerations
