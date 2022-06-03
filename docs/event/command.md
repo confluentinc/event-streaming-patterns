@@ -1,18 +1,18 @@
 ---
 seo:
-  title: Command Event
-  description: Command Events are a common pattern in evolving event streaming architectures, where events are used as triggers for further processing. They may indicate opportunities for further decoupling and separation of responsibilities.
+  title: Command
+  description: Command Messages are a common pattern in evolving event streaming architectures, where commands are used as triggers for further processing. They may indicate opportunities for further decoupling and separation of responsibilities.
 ---
 
-# Command Event
+# Command
 
-[Events](../event/event.md) often fall into one of two categories: messages and commands.
+Messages often fall into one of two categories: [Events](../event/event.md) and commands.
 
-Message-like events resemble simple facts--a user sends 
+Messages like events resemble simple facts--a user sends 
 their new address, a product leaves the warehouse--and we record
 these facts first, without immediately considering what happens next.
 
-Other events resemble commands to invoke a specific action--a user clicks a `[BUY]` button--and the system takes the action (for example, by triggering order processing).
+Others resemble commands to invoke a specific action--a user clicks a `[BUY]` button--and the system takes the action (for example, by triggering order processing).
 
 ## Problem
 
@@ -21,13 +21,13 @@ How can we use an [Event Streaming Platform](../event-stream/event-streaming-pla
 ## Solution
 ![Command Event](../img/command-event1.svg)
 
-Separate out the function call into a service that writes an event to
+Separate out the function call into a service that writes a command to
 an [Event Stream](../event-stream/event-stream.md), detailing the
 necessary action and its arguments. Then write a separate
-service that watches for that event before invoking the
+service that watches for that command before invoking the
 procedure.
 
-In terms of application logic, a Command Event is typically dispatched in a fire-and-forget manner (events themselves are delivered and stored with strong guarantees, such as exactly-once semantics).  The writer assumes that the event will be handled correctly, and the responsibility for monitoring and error-handling falls elsewhere in the system.  This is very similar to the Actor model: actors have an inbox, and we write messages to that inbox and trust that they will be handled in due course.
+In terms of application logic, a Command is typically dispatched in a fire-and-forget manner (commands themselves are delivered and stored with strong guarantees, such as exactly-once semantics).  The writer assumes that the command will be handled correctly, and the responsibility for monitoring and error-handling falls elsewhere in the system.  This is very similar to the Actor model: actors have an inbox, and we write messages to that inbox and trust that they will be handled in due course.
 
 If a return value is explicitly required, the downstream service can
 write a result event back to a second stream. Correlation of Command
@@ -92,14 +92,14 @@ recipient, we've decoupled the function call _without_ decoupling the
 underlying concepts. When we do that, the architecture responds with
 growing pains<sup>1</sup>.
 
-A better solution is to realize that our "Command Event" is actually two
+A better solution is to realize that our "Command" is actually two
 concepts woven together: "What happened?" and "Who needs to know?" 
 
 By teasing those concepts apart, we can clean up our architecture. We
 allow one process to focus on recording the facts of what happened,
 while other processes decide for themselves if they care about those facts.  
 When the `[BUY]` click happens, we should just write an `Order`
-event. Then warehousing, notifications, and sales can choose to react,
+command. Then warehousing, notifications, and sales can choose to react,
 without any need for coordination.
 
 ![Command Event](../img/command-event2.svg)

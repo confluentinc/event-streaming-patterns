@@ -37,7 +37,7 @@ producer.send(producerRecord);
 
 * For cloud-based architectures, evaluate the use of [CloudEvents](https://cloudevents.io/). CloudEvents provide a standardized [Event Envelope](../event/event-envelope.md) that wraps an event, making common event properties such as source, type, time, and ID universally accessible, regardless of how the event itself was serialized.
 
-* In certain scenarios, Events may represent commands (instructions, actions, and so on) that should be carried out by an Event Processor reading the events. See the [Command Event](../event/command-event.md) pattern for details.
+* In certain scenarios, Events may represent commands (instructions, actions, and so on) that should be carried out by an Event Processor reading the events. See the [Command](../event/command.md) pattern for details.
 
 ## References
 * This pattern is derived in part from [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html), [Event Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html), and [Document Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/DocumentMessage.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
