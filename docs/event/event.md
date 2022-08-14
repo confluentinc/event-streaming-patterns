@@ -22,7 +22,7 @@ Record keys, values, and headers are opaque data types, meaning that Kafka, by d
 When using the Java client library, events are created using the `ProducerRecord` type and are sent to Kafka using the `KafkaProducer`. In this example, we have set the key and value types as strings, and we have added a header:
 
 ```java
-ProducerRecord<String, String> newEvent = new ProducerRecord<>(
+ProducerRecord<String, String> producerRecord = new ProducerRecord<>(
   paymentEvent.getCustomerId().toString() /* key */, 
   paymentEvent.toString() /* value */);
 
