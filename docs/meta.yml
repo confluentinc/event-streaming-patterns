@@ -6,7 +6,7 @@ toc:
   - title: Event
     items:
       - event/event
-      - event/command-event
+      - event/command
       - event/correlation-identifier
       - event/data-contract
       - event/event-deserializer
