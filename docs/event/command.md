@@ -6,11 +6,11 @@ seo:
 
 # Command
 
-Events pertain to facts--a user sends 
+_Events_ pertain to facts--a user sends 
 their new address, a product leaves the warehouse--and we record
 these facts first, without immediately considering what happens next.
 
-In contrast, commands are for invoking a specific action--a user clicks a `[BUY]` button--and the system takes the action (for example, by triggering order processing).
+In contrast, _commands_ are for invoking a specific action--a user clicks a `[BUY]` button--and the system takes the action (for example, by triggering order processing).
 
 ## Problem
 
@@ -19,17 +19,17 @@ How can we use an [Event Streaming Platform](../event-stream/event-streaming-pla
 ## Solution
 ![Command](../img/command-event1.svg)
 
-Separate out the function call into a service that writes an event to
-an [Event Stream](../event-stream/event-stream.md), detailing the
-necessary action and its arguments. Then write a separate
-service that watches for that event before invoking the
-procedure.
+One service can invoke a function call in another service through the use of an [Event Stream](../event-stream/event-stream.md). The producer service (Application A) creates a command detailing the action for the consumer service (Application B) to take. The command also includes any necessary supporting information for the execution of the command.
 
-In terms of application logic, a Command is typically dispatched in a fire-and-forget manner (the actual record representing the command is delivered and stored with strong guarantees, such as exactly-once semantics).  The writer assumes that the command will be handled correctly, and the responsibility for monitoring and error-handling falls elsewhere in the system.  This is very similar to the Actor model: actors have an inbox, and we write messages to that inbox and trust that they will be handled in due course.
+Commands are often issued without expecting a response beyond a simple acknowledgment of receipt by the [Event Broker](../event-stream/event-broker.md). The actual record representing the command is produced to the [Event Stream](../event-stream/event-stream.md) and stored with strong durability guarantees. The writer assumes that the command will be handled correctly by the appropriate subscriber service, and the responsibility for monitoring and error-handling falls elsewhere in the system. This is very similar to the Actor model:
 
-If a return value is explicitly required, the downstream service can
-write a result event back to a second stream. Correlation of Command
-Events with their return value is typically performed using a
+1. Actors have an inbox.
+2. Clients write messages to the inbox. 
+3. Actors process the messages in due course.
+
+If the producer requires an explicit response value, the consuming service can
+write a result record back to a second event stream. Correlation of the issued command
+with its response record is typically performed using a
 [Correlation Identifier](../event/correlation-identifier.md) .
 
 ## Implementation
@@ -90,7 +90,7 @@ recipient, we've decoupled the function call _without_ decoupling the
 underlying concepts. When we do that, the architecture responds with
 growing pains<sup>1</sup>.
 
-A better solution is to realize that our "Command" is actually two
+A better solution is to realize that our command is actually two
 concepts woven together: "What happened?" and "Who needs to know?" 
 
 By teasing those concepts apart, we can clean up our architecture. We
@@ -103,9 +103,9 @@ without any need for coordination.
 ![Command](../img/command-event2.svg)
 
 In short, commands are tightly coupled to an audience of one, whereas
-an event should be simply a decoupled fact, available for anyone 
-interested. Commands aren't bad _per se_, but they are a red flag 
-signaling an opportunity for further decoupling.
+an event is simply a decoupled fact, available for anyone 
+interested. Commands are not a bad pattern _per se_, but they are an indicator of strong coupling,
+and may signal an opportunity for further decoupling.
 
 Seeing systems in this way requires a slight shift of perspective--a new
 way of modeling our processes--and opens up the opportunity for
