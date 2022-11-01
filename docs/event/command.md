@@ -21,9 +21,13 @@ How can we use an [Event Streaming Platform](../event-stream/event-streaming-pla
 
 One service can invoke a function call in another service through the use of an [Event Stream](../event-stream/event-stream.md). The producer service (Application A) creates a command detailing the action for the consumer service (Application B) to take. The command also includes any necessary supporting information for the execution of the command.
 
-In terms of application logic, a command is typically dispatched in a fire-and-forget manner. The actual record representing the command is produced to the [Event Stream](../event-stream/event-stream.md) and stored with strong durability guarantees. The writer assumes that the command will be handled correctly by the appropriate subscriber service, and the responsibility for monitoring and error-handling falls elsewhere in the system. This is very similar to the Actor model: actors have an inbox, messages are written to that inbox, and they are trusted to process the messages in due course.
+Commands are often issued without expecting a response beyond a simple acknowledgment of receipt by the [Event Broker](../event-stream/event-broker.md). The actual record representing the command is produced to the [Event Stream](../event-stream/event-stream.md) and stored with strong durability guarantees. The writer assumes that the command will be handled correctly by the appropriate subscriber service, and the responsibility for monitoring and error-handling falls elsewhere in the system. This is very similar to the Actor model:
 
-If an explicit return value is required by the producer, the consuming service can
+1. Actors have an inbox.
+2. Clients write messages to the inbox. 
+3. Actors process the messages in due course.
+
+If the producer requires an explicit response value, the consuming service can
 write a result record back to a second event stream. Correlation of the issued command
 with its response record is typically performed using a
 [Correlation Identifier](../event/correlation-identifier.md) .
