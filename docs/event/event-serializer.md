@@ -127,7 +127,7 @@ few:
 
 While the choice of serialization format is important, it doesn't have
 to be set in stone. It's straightforward to 
-[translate between supported formats with ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). 
+[translate between supported formats with Kafka Streams](https://developer.confluent.io/confluent-tutorials/serialization/kstreams/). 
 For more complex scenarios, we have several strategies for managing schema migration:
 
 * [Schema Compatibility](../event-stream/schema-compatibility.md)

@@ -50,7 +50,7 @@ one encoding of semantically-equivalent data.
 
 Confluent’s [Schema
 Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
-stores a versioned history of the data's schema in Apache Kafka&reg;
+stores a versioned history of the data's schema in Apache Kafka®
 itself. The client libraries can then use this metadata to seamlessly
 reconstruct the original event data, while we can use the registry API
 to manually inspect the schemas, or to build libraries for other
@@ -155,7 +155,7 @@ of these formats.
 
 While the choice of serialization format is important, it doesn't have
 to be set in stone. For example, it's straightforward to 
-[translate between supported formats with ksqlDB](https://kafka-tutorials.confluent.io/changing-serialization-format/ksql.html). 
+[translate between supported formats with Kafka Streams](https://developer.confluent.io/confluent-tutorials/serialization/kstreams/). 
 For more complex scenarios, we have several strategies for managing schema migration:
 
 * [Schema Compatibility](../event-stream/schema-evolution.md)

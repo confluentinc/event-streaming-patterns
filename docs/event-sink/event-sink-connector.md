@@ -35,5 +35,4 @@ When connecting a system like a relational database to Apache Kafka®, the most 
 * Security policies as well as regulatory compliance may require appropriate settings for encrypted communication, authentication and authorization, etc. between event sink, event sink connector, and the event streaming platform.
 
 ## References
-* For an example of using Kafka Connect as an Event Sink Connector, see [Timezone conversion and Kafka Connect JDBC sink](https://kafka-tutorials.confluent.io/connect-sink-timestamp/ksql.html) with [ksqlDB](https://ksqldb.io/).
 * This pattern is derived from [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf

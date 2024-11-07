@@ -21,13 +21,14 @@ Taking a step back, we can see that pipelines in an Event Streaming Platform hel
 
 ## Implementation
 
-As an example we can use the streaming database ksqlDB to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
+As an example we can use [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) to run a stream of events through a series of processing stages, thus creating a Pipeline that continuously processes data in motion.
 
 ```sql
-CREATE STREAM orders ( 
-  customer_id INTEGER, items ARRAY<STRUCT<name VARCHAR, price DOUBLE>>
-) WITH (
-  KAFKA_TOPIC = 'orders', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+CREATE TABLE orders ( 
+  customer_id INTEGER NOT NULL,
+  order_id STRING NOT NULL,
+  item_id STRING,
+  price DOUBLE
 );
 ```
 
@@ -35,37 +36,34 @@ We'll also create a (continuously updated) customers table that will contain the
 
 ```sql
 CREATE TABLE customers (
-  customer_id INTEGER PRIMARY KEY, name VARCHAR, ADDRESS VARCHAR
-) WITH (
-  KAFKA_TOPIC = 'customers', PARTITIONS = 1, VALUE_FORMAT = 'AVRO'
+  customer_id INTEGER NOT NULL,
+  customer_name STRING,
+  address STRING
 );
 ```
 
 Next, we create a new stream by joining the orders stream with our customer table:
 
 ```sql
-CREATE STREAM orders_enriched WITH 
-(KAFKA_TOPIC='orders_enriched', PARTITIONS=1, VALUE_FORMAT='AVRO')
-AS SELECT o.customer_id AS cust_id, o.items, c.name, c.address
-FROM orders o LEFT JOIN customers c 
-ON o.customer_id = c.customer_id
-EMIT CHANGES;
+CREATE TABLE orders_enriched AS
+  SELECT o.customer_id AS cust_id, o.order_id, o.price, c.customer_name, c.address
+  FROM orders o
+  LEFT JOIN customers c 
+  ON o.customer_id = c.customer_id;
 ```
 
 Next, we create a stream, where we add the order total to each order by aggregating the price of the individual items in the order:
 
 ```sql
-CREATE STREAM orders_with_totals
-WITH (KAFKA_TOPIC='orders_totaled', PARTITIONS=1, VALUE_FORMAT='AVRO')
-AS SELECT cust_id, items, name, address,  
-  REDUCE(TRANSFORM(items, i=> i->price ), 0e0, (i,x) => (i + x)) AS total 
-FROM orders_enriched
-EMIT CHANGES;
+CREATE TABLE orders_with_totals AS
+  SELECT cust_id, order_id, sum(price) AS total 
+  FROM orders_enriched
+  GROUP BY cust_id, order_id;
 ```
 
 ## Considerations
 * The same event stream or table can participate in multiple pipelines. Because streams and tables are stored durably, applications have a lot of flexibility how and when they process the respective data, and they can do so independently from each other.
-* The various processing stages in a pipeline create their own derived streams/tables (such as the `orders_enriched` stream in the ksqlDB example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.
+* The various processing stages in a pipeline create their own derived streams/tables (such as the `orders_enriched` table in the Flink SQL example above), which in turn can be used as input for other pipelines and applications. This allows for further and more complex composition and re-use of events throughout an organization.
 
 ## References
 This pattern was influenced by [Pipes and Filters](https://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html) in Enterprise Integration Patterns by Gregor Hohpe and Bobby Woolf. However, it is much more powerful and flexible because it is using [Event Streams](../event-stream/event-stream.md) as the pipes.

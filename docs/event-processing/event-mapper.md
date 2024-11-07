@@ -18,7 +18,7 @@ An Event Mapper provides independence between the traditional application and th
 Create an Event Mapper, or use an existing one, to map the [domain model](https://en.wikipedia.org/wiki/Domain_model) (or the application's internal data model) to the data formats accepted by the Event Streaming Platform, and vice versa. The Event Mapper reads the domain model and converts it into outgoing Events, which are sent to the Event Streaming Platform. Conversely, an Event Mapper can be used to create or update domain objects based on incoming Events.
 
 ## Implementation
-In this example, we use the Java producer client of Apache Kafka&reg; to implement an Event Mapper that constructs an [Event](../event/event.md) (`PublicationEvent`) from the domain model object (`Publication`) before the event is written to an [Event Stream](../event-stream/event-stream.md) (called a "topic" in Kafka).
+In this example, we use the Java producer client of Apache Kafka® to implement an Event Mapper that constructs an [Event](../event/event.md) (`PublicationEvent`) from the domain model object (`Publication`) before the event is written to an [Event Stream](../event-stream/event-stream.md) (called a "topic" in Kafka).
 
 ```java
 private final IMapper domainToEventMapper = mapperFactory.buildMapper(Publication.class);
