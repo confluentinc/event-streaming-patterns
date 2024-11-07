@@ -26,10 +26,12 @@ enable.idempotence=true
 
 The Kafka producer tags each batch of Events that it sends to the Kafka cluster with a sequence number. Brokers in the cluster use this sequence number to enforce deduplication of Events sent from this specific producer. Each batch's sequence number is persisted so that even if the [leader broker](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/#replication) fails, the new leader broker will also know if a given batch is a duplicate.
 
-To enable [exactly-once processing guarantees](https://docs.ksqldb.io/en/latest/operate-and-deploy/exactly-once-semantics/) in ksqlDB or Kafka Streams, configure the application with the following setting, which includes enabling idempotence in the embedded producer:
+To enable exactly-once processing within an Apache Flink® application that uses Kafka sources and sinks, configure the delivery guarantee to be exactly once, either via the [`DeliveryGuarantee.EXACTLY_ONCE`](https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/datastream/kafka/#fault-tolerance) `KafkaSink` configuration option if the application uses the DataStream Kafka connector, or by setting the [`sink.delivery-guarantee`](https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/kafka/#consistency-guarantees) configuration option to `exactly-once` if it uses one of the Table API connectors. [Confluent Cloud for Apache Flink](https://docs.confluent.io/cloud/current/flink/overview.html) provides built-in exactly-once semantics. Downstream of the Flink application, be sure to configure any Kafka consumer with an [`isolation.level`](https://docs.confluent.io/platform/current/installation/configuration/consumer-configs.html#isolation-level) of `read_committed` since Flink leverages Kafka transactions in the embedded producer to implement exactly-once processing.
+
+To enable [exactly-once processing guarantees](https://docs.confluent.io/platform/current/installation/configuration/streams-configs.html#processing-guarantee) in Kafka Streams or ksqlDB, configure the application with the following setting, which includes enabling idempotence in the embedded producer:
 
 ```
-processing.guarantee=exactly_once
+processing.guarantee=exactly_once_v2
 ```
 
 ## Considerations
@@ -38,5 +40,5 @@ Enabling idempotency for a Kafka producer not only ensures that duplicate Events
 Exactly-once semantics (EOS) allow [Event Streaming Applications](../event-processing/event-processing-application.md) to process data without loss or duplication. This ensures that computed results are always consistent and accurate, even for stateful computations such as joins, [aggregations](../stream-processing/event-aggregator.md), and [windowing](../stream-processing/event-grouper.md). Any solution that requires EOS guarantees must enable EOS at all stages of the pipeline, not just on the writer. An Idempotent Writer is therefore typically combined with an [Idempotent Reader](../event-processing/idempotent-reader.md) and transactional processing.
 
 ## References
-* Blog post about [exactly-once semantics in Apache Kafka](https://www.confluent.io/blog/simplified-robust-exactly-one-semantics-in-kafka-2-5/)
-* Tutorial on [How to maintain message ordering and no message duplication](https://kafka-tutorials.confluent.io/message-ordering/kafka.html)
+* [Blog post](https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/) about exactly-once semantics in Apache Kafka
+* [Blog post](https://flink.apache.org/2018/02/28/an-overview-of-end-to-end-exactly-once-processing-in-apache-flink-with-apache-kafka-too/) about end-to-end exactly-once processing in Apache Flink with Apache Kafka as source and sink
