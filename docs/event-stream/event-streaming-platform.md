@@ -31,10 +31,11 @@ Applications that write events to topics are called [Producers](https://docs.con
 Applications which produce and consume events as described above are referred to as "clients." These client applications can be authored in a variety of programming languages, including [Java](/get-started/java), [Go](/get-started/go), [C/C++](/get-started/c), [C# (.NET)](/get-started/dotnet), [Python](/get-started/python), [Node.JS](/get-started/nodejs), [and more](/kafka-languages-and-tools).
 
 ### Stream Processing
-[Event Processing Applications](../event-processing/event-processing-application.md) can be built atop Kafka using a variety of techniques. 
+[Event Processing Applications](../event-processing/event-processing-application.md) can be built atop Kafka using a variety of technologies. 
 
-#### ksqlDB
-The streaming database [ksqlDB](https://ksqldb.io) allows you to build [Event Processing Applications](../event-processing/event-processing-application.md) using SQL syntax. It ships with an API, command line interface (CLI), and GUI. ksqlDB's elastic architecture decouples its distributed compute layer from its distributed storage layer, which uses and tightly integrates with Kafka.
+#### Apache Flink®
+
+[Flink](https://nightlies.apache.org/flink/flink-docs-stable/) is a distributed stream processing framework with built-in support for Kafka topics as source and sink. It includes declarative Java and Python APIs as well as [Flink SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) that supports a familiar standard SQL syntax.
 
 #### Kafka Streams
 The Kafka client library [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html) allows you to build elastic applications and microservices on the JVM, using languages such as Java and Scala. An application can run in a distributed fashion across multiple instances for better scalability and fault-tolerance.

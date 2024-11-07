@@ -21,30 +21,12 @@ Conceptually, a stream provides _immutable_ data. It supports only inserting (ap
 ## Implementation
 In [Apache Kafka®](/learn-kafka/apache-kafka/events/), Event Streams are called _topics_. Kafka allows you to define policies which dictate how events are retained, using [time or size limitations](../event-storage/limited-retention-event-stream.md) or [retaining events forever](../event-storage/infinite-retention-event-stream.md). Kafka consumers (Event Sinks and Event Processing Applications) are able to decide where in an event stream to begin reading. They can choose to begin reading from the oldest or newest event, or seek to a specific location in the topic, using the event's timestamp or position (called the _offset_).
 
-The streaming database [ksqlDB](https://ksqldb.io/) supports Event Streams using a familiar SQL syntax. The following example creates a stream of events named `riderLocations`, representing locations of riders in a car-sharing service. The data format is JSON.
-```sql
-CREATE STREAM riderLocations (profileId VARCHAR, latitude DOUBLE, longitude DOUBLE)
-  WITH (kafka_topic='locations', value_format='json');
-```
+Streaming technologies support Kafka-based Event Streams as a core abstraction. For example:
 
-New events can be written to the `riderLocations` stream using the `INSERT` syntax:
-```sql
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('c2309eec', 37.7877, -122.4205);
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('18f4ea86', 37.3903, -122.0643);
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4ab5cbad', 37.3952, -122.0813);
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('8b6eae59', 37.3944, -122.0813);
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4a7c7b41', 37.4049, -122.0822);
-INSERT INTO riderLocations (profileId, latitude, longitude) VALUES ('4ddad000', 37.7857, -122.4011);
-```
-
-A [push query](https://docs.ksqldb.io/en/latest/concepts/queries/#push), also known as a streaming query, can be run continuously over the stream using a `SELECT` command with the `EMIT CHANGES` clause. As new events arrive, this query will emit new results that match the `WHERE` conditionals. The following query looks for riders in close proximity to Mountain View, California, in the United States.
-```sql
--- Mountain View lat, long: 37.4133, -122.1162
-SELECT * FROM riderLocations
-  WHERE GEO_DISTANCE(latitude, longitude, 37.4133, -122.1162) <= 5
-  EMIT CHANGES;
-```
+* The [Kafka Streams DSL API](https://kafka.apache.org/30/documentation/streams/developer-guide/dsl-api.html) provides abstractions for Event Streams, notably the [`KStream`](https://docs.confluent.io/platform/current/streams/javadocs/javadoc/org/apache/kafka/streams/kstream/KStream.html) interface for unbounded data streams and the [`KTable`](https://docs.confluent.io/platform/current/streams/javadocs/javadoc/org/apache/kafka/streams/kstream/KTable.html) interface for changelog data on keyed records (e.g., a `KTable` of product updates keyed on product ID).
+* The Apache Flink® [`Table`](https://nightlies.apache.org/flink/flink-docs-stable/api/java/org/apache/flink/table/api/Table.html) interface is the Flink (Java) Table API's core abstraction for Event Streams. PyFlink's Table API is also built around a [`Table`](https://pyflink.readthedocs.io/en/main/getting_started/quickstart/table_api.html#Table-Creation) object.
+* [Flink SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) supports Event Streams using a familiar standard SQL syntax.
 
 ## References
 * This pattern is derived from [Message Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-* See the [Kafka Storage & Processing Fundamentals page](/learn/kafka-storage-and-processing/) for essential details on Kafka 
+* Tutorials demonstrating how to build basic stream processing applications that manipulate Event Streams: with [Kafka Streams](https://developer.confluent.io/confluent-tutorials/creating-first-apache-kafka-streams-application/kstreams/), with [Flink SQL](https://developer.confluent.io/confluent-tutorials/filtering/flinksql/), with the [Flink Table API](https://developer.confluent.io/courses/flink-table-api-java/exercise-connecting-to-confluent-cloud/).

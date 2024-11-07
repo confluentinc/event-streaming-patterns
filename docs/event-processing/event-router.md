@@ -26,11 +26,11 @@ CREATE STREAM payments_spain AS
     SELECT * FROM payments WHERE country = 'spain';
 ```
 
-With the Apache Kafka&reg; client library [Kafka Streams](https://kafka.apache.org/documentation/streams/), use a [`TopicNameExtractor`](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html) to route Events to different Event Streams (called "topics" in Kafka).  The `TopicNameExtractor` has one method to implement, `extract()`, which accepts three parameters:
+With the Apache Kafka® client library [Kafka Streams](https://kafka.apache.org/documentation/streams/), use a [`TopicNameExtractor`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html) to route Events to different Event Streams (called "topics" in Kafka).  The `TopicNameExtractor` has one method to implement, `extract()`, which accepts three parameters:
 
 - The event key
 - The event value
-- The [`RecordContext`](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event
+- The [`RecordContext`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event
 
 We can use any of the given parameters to generate and return the desired destination topic name for the given Event. Kafka Streams will complete the routing. 
 

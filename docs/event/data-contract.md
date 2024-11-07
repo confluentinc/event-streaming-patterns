@@ -18,7 +18,7 @@ Using a Data Contract or Schema, different [Event Processing Applications](../ev
 
 ## Implementation
 
-By using a schema to model event objects, Apache Kafka&reg; clients (such as a Kafka producer, a Kafka Streams application, or the streaming database [ksqlDB](https://ksqldb.io/)) can understand how to handle events from different applications that use the same schema.
+By using a schema to model event objects, Apache Kafka® clients (such as a Kafka producer, a Kafka Streams application, or an [Apache Flink®](https://nightlies.apache.org/flink/flink-docs-stable/) application) can understand how to handle events from different applications that use the same schema.
 For example, we can use Apache Avro to describe a schema:
 ```json
 {

@@ -12,7 +12,6 @@ Combining multiple events into a single encompassing event—e.g., to compute to
 
 How can multiple related events be aggregated to produce a new event?
 
-
 ## Solution
 
 We use an [Event Grouper](../stream-processing/event-grouper.md) followed by an event aggregator. The grouper prepares the input events as needed for the subsequent aggregation step, e.g. by grouping the events based on the data field by which the aggregation is computed (such as a customer ID) and/or by grouping the events into time windows (such as 5-minute windows). The aggregator then computes the desired aggregation for each group of events, e.g., by computing the average or sum of each 5-minute window.
@@ -21,40 +20,46 @@ We use an [Event Grouper](../stream-processing/event-grouper.md) followed by an 
 ## Implementation
 ![event-aggregator](../img/event-aggregator.svg)
 
-For example, we can use the streaming database [ksqlDB](https://ksqldb.io/) and Apache Kafka® to perform an aggregation.
+For example, we can use [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) and Apache Kafka® to perform an aggregation.
 
-We'll start by creating a stream in ksqlDB called `orders`, based on an existing Kafka topic of the same name:
-
-```sql
-CREATE STREAM orders (order_id INT, item_id INT, total_units DOUBLE)
-  WITH (KAFKA_TOPIC='orders', VALUE_FORMAT='AVRO');
-```
-
-Then we'll create a table containing the aggregated events from that stream:
+Assuming that we have a Flink SQL table called `orders` based on an existing Kafka topic:
 
 ```sql
-CREATE TABLE item_stats AS 
-  SELECT item_id, COUNT(*) AS total_orders, AVG(total_units) AS avg_units
-  FROM orders
-  WINDOW TUMBLING (SIZE 1 HOUR)
-  GROUP BY item_id 
-  EMIT CHANGES;  
+CREATE TABLE orders (
+    order_id INT,
+    item_id INT,
+    total_units INT,
+    ts TIMESTAMP(3),
+    WATERMARK FOR ts AS ts
+);
 ```
 
-This table will be continuously updated whenever new events arrive in the `orders` stream.
+Then we'll create a derived table containing the aggregated events from that stream. In this case, we create a table called `item_stats` that represents per-item order statistics over 1-hour windows:
+
+```sql
+CREATE TABLE item_stats AS
+  SELECT item_id,
+      COUNT(*) AS total_orders,
+      AVG(total_units) AS avg_units,
+      window_start,
+      window_end
+  FROM TABLE(TUMBLE(TABLE orders, DESCRIPTOR(ts), INTERVAL '1' HOURS))
+  GROUP BY item_id, window_start, window_end;
+```
+
+This table will be continuously updated whenever new events arrive in the `orders` table.
 
 
 ## Considerations
 
-* In event streaming, a key technical challenge is that—with few exceptions—it is generally not possible to tell whether the input data is "complete" at a given point in time. For this reason, stream processing technologies such as the streaming database [ksqlDB](https://ksqldb.io/) and the Kafka Streams client library of Apache Kafka employ techniques such as _slack time_<sup>1</sup> and _grace periods_ (see [`GRACE PERIOD`](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/) clause in ksqlDB) or watermarks to define cutoff points after which an [Event Processor](../event-processing/event-processor.md) will discard any late-arriving input events from its processing. See the [Suppressed Event Aggregator](../stream-processing/suppressed-event-aggregator.md) pattern for additional information.
+* In event streaming, a key technical challenge is that—with few exceptions—it is generally not possible to tell whether the input data is "complete" at a given point in time. For this reason, stream processing technologies such as the Kafka Streams client library of Apache Kafka employ techniques such as _slack time_<sup>1</sup> and _grace periods_ (e.g., see the Kafka Streams [`ofSizeAndGrace`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/kstream/TimeWindows.html#ofSizeAndGrace(java.time.Duration,java.time.Duration)) method for specifying a grace period in windowing operations). Apache Flink® watermarks and associated watermark strategies define cutoff points after which an [Event Processor](../event-processing/event-processor.md) will discard any late-arriving input events from its processing, e.g, see the delayed watermark strategy Flink SQL examples [here](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/concepts/time_attributes/). See the [Suppressed Event Aggregator](../stream-processing/suppressed-event-aggregator.md) pattern for additional information.
 
 
 ## References
 
 * Related patterns: [Suppressed Event Aggregator](../stream-processing/suppressed-event-aggregator.md)
 * More detailed examples of event aggregation can be seen in the following tutorials:
-  [How to sum a stream of events](https://kafka-tutorials.confluent.io/create-stateful-aggregation-sum/ksql.html) and
-  [How to count a stream of events](https://kafka-tutorials.confluent.io/create-stateful-aggregation-count/ksql.html).
+  [How to count a stream of events with Kafka Streams](https://developer.confluent.io/confluent-tutorials/aggregating-count/kstreams/) and [How to count a stream of events with Flink SQL](https://developer.confluent.io/confluent-tutorials/aggregating-count/flinksql/).
 
 
 ## Footnotes

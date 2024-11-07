@@ -27,7 +27,7 @@ SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
         FROM my_stream EMIT CHANGES;
 ```
 
-The Apache Kafka&reg; client library [Kafka Streams](https://kafka.apache.org/documentation/streams/) has an analogous method, called `flatMap()`.
+The Apache Kafka® client library [Kafka Streams](https://kafka.apache.org/documentation/streams/) has an analogous method, called `flatMap()`.
 The example below processes each input Event and generates new Events, with new keys and values.
 
 ```java

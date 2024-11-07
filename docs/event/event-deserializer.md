@@ -50,7 +50,7 @@ one encoding of semantically-equivalent data.
 
 Confluent’s [Schema
 Registry](https://docs.confluent.io/cloud/current/cp-component/schema-reg-cloud-config.html)
-stores a versioned history of the data's schema in Apache Kafka&reg;
+stores a versioned history of the data's schema in Apache Kafka®
 itself. The client libraries can then use this metadata to seamlessly
 reconstruct the original event data, while we can use the registry API
 to manually inspect the schemas, or to build libraries for other
