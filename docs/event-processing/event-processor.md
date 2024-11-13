@@ -22,26 +22,27 @@ An Event Processor performs a specific task within the Event Processing Applicat
 
 There are multiple ways to create an [Event Processing Application](../event-processing/event-processing-application.md) using Event Processors. We will look at two.
 
-#### ksqlDB
-The streaming database [ksqlDB](https://ksqldb.io) provides a familiar SQL syntax, which we can use to create Event Processing Applications. ksqlDB parses SQL commands and constructs and manages the Event Processors that we define as part of an Event Processing Application.
 
-In the following example, we create a ksqlDB query that reads data from the `readings` Event Stream and "cleans" the Event values. The query publishes the clean readings to a new stream called `clean_readings`. Here, this query acts as an event processing application comprising multiple interconnected Event Processors.
+#### Apache Flink® SQL
+
+[Flink SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) provides a familiar standard SQL syntax for creating Event Processing Applications. Flink SQL parses SQL commands and constructs and manages the Event Processors that we define as part of an Event Processing Application.
+
+In the following example, we create a Flink SQL query that reads data from the `readings` Event Stream and "cleans" the Event values. The query publishes the clean readings to a new table called `clean_readings`. Here, this query acts as an Event Processing Application comprising multiple interconnected Event Processors.
 
 ```sql
-CREATE STREAM clean_readings AS
+CREATE TABLE clean_readings AS
     SELECT sensor,
            reading,
-           UCASE(location) AS location
-    FROM readings
-    EMIT CHANGES;
+           UPPER(location) AS location
+    FROM readings;
 ```
 
-With ksqlDB, we can view each section of the command as the construction of a different Event Processor:
+With Flink SQL, we can view each section of the command as the construction of a different Event Processor:
 
-* `CREATE STREAM` defines the new output [Event Stream](../event-stream/event-stream.md) to which this application will produce Events.
+* `CREATE TABLE` defines the new output [Event Stream](../event-stream/event-stream.md) to which this application will produce Events.
 * `SELECT ...` is a mapping function, taking each input Event and "cleaning" it as defined. In this example, cleaning simply means uppercasing the `location` field in each input reading.
 * `FROM ...` is a source Event Processor that defines the input Event Stream for the overall application.
-* `EMIT CHANGES` is ksqlDB syntax that defines our query as continuously running, and specifies that incremental changes will be produced as the query runs perpetually.
+
 
 #### Kafka Streams
 The [Kafka Streams DSL](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html) provides abstractions for [Event Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md), as well as stateful and stateless transformation functions (`map`, `filter`, and others). Each of these functions can act as an Event Processor in the larger [Event Processing Application](../event-processing/event-processing-application.md) that we build with the Kafka Streams library.
@@ -54,9 +55,9 @@ builder
   .to("clean");
 ```
 
-In the above example, we use the [Kafka Streams `StreamsBuilder`](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/StreamsBuilder.html) to construct the stream processing topology. 
+In the above example, we use the [Kafka Streams `StreamsBuilder`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/StreamsBuilder.html) to construct the stream processing topology. 
 
-* First, we create an input stream, using the `stream` function. This creates an Event Stream from the designated Apache Kafka&reg; topic.
+* First, we create an input stream, using the `stream` function. This creates an Event Stream from the designated Apache Kafka® topic.
 * Next, we transform the Events, using the `mapValues` function. This function accepts an Event and returns a new Event with any desired transformations to the original Event's values.
 * Finally, we write the transformed Events to a destination Kafka topic, using the `to` function. This function terminates our stream processing topology.
 
@@ -66,6 +67,5 @@ In the above example, we use the [Kafka Streams `StreamsBuilder`](https://kafka.
 
 ## References
 * See the [Event Processing Application](../event-processing/event-processor.md) pattern. Event Processing Applications are composed of Event Processors.
-* In [Kafka Streams](https://kafka.apache.org/28/documentation/streams/core-concepts#streams_topology), a processor is a node in the processor topology, representing a step to transform Events.
-* See the blog post [How Real-Time Stream Processing Works with ksqlDB, Animated](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
+* In [Kafka Streams](https://kafka.apache.org/38/documentation/streams/core-concepts#streams_topology), a processor is a node in the processor topology, representing a step to transform Events.
 * The blog post [Intro to Apache Kafka: How Kafka Works](https://www.confluent.io/blog/apache-kafka-intro-how-kafka-works/) provides details about the core Kafka concepts, such as Events and topics.

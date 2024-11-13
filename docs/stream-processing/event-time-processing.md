@@ -26,17 +26,19 @@ For event-time processing, the [Event Source](../event-source/event-source.md) m
 
 ## Implementation
 
-### ksqlDB
+### Apache Flink®
 
-In the streaming database [ksqlDB](https://ksqldb.io/), every Event (or record) has a system column named `ROWTIME`, which represents the timestamp for the Event. This defaults to the time at which the Event was originally created by its [Event Source](../event-source/event-source.md). For example, when we create a ksqlDB `STREAM` or `TABLE` from an existing Apache Kafka® topic, then the timestamp embedded in a Kafka message is extracted and assigned to the Event in ksqlDB. (See also the [CreateTime of a Kafka `ProducerRecord`](https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html), and the [Kafka message format](http://kafka.apache.org/protocol.html).)
+In Flink, streaming applications based on [event-time processing](https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/) require that event time watermarks be specified. Watermarks are used to signal and track the passage of time and can be used to implement grace periods for handling or dropping late events.
 
-Sometimes, this default behavior of ksqlDB is not what we want. Maybe the Events have a custom data field containing their actual timestamps (for example, some legacy data that has been around for a while was ingested into Kafka only recently, so we can't trust the `CreateTime` information in the Kafka messages because they are much newer than the original timestamps). To use a timestamp in the Event payload itself, we can add a `WITH(TIMESTAMP='some-field')` clause when creating a stream or table. This instructs ksqlDB to get the timestamp from the specified field in the record.
+For example, the following Flink SQL table definition defines a [watermark strategy](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/create/#watermark) so that the watermarks emitted are the maximum observed event timestamp minus 30 seconds. This delayed watermark strategy effectively allows events to be up to 30 seconds later than events seen so far.
 
 ```sql
-CREATE STREAM my_event_stream
-    WITH (kafka_topic='events',
-          timestamp='eventTime');
-
+CREATE TABLE orders (
+    order_id INT,
+    item_id INT,
+    ts TIMESTAMP(3),
+    WATERMARK FOR ts AS ts - INTERVAL '30' SECOND
+);
 ```
 
 ### Kafka Streams
@@ -55,9 +57,9 @@ public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
 
 ```
 
-Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using Kafka Streams or ksqlDB themselves.
+Generally speaking, this functionality of custom timestamp assignment makes it easy to integrate data from other applications that are not using Kafka Streams.
 
-Additionally, Kafka has the notion of event-time vs. processing-time (wall-clock-time) vs. ingestion time, similar to ksqlDB. Clients such as Kafka Streams make it possible to select which variant of time we want to work with in our application.
+Additionally, Kafka has the notion of event-time vs. processing-time (wall-clock-time) vs. ingestion time. Clients such as Kafka Streams make it possible to select which variant of time we want to work with in our application.
 
 ## Considerations
 
@@ -69,5 +71,3 @@ One reason not to use event-time is if we cannot trust the [Event Source](../eve
 
 ## References
 * See also the [Wall-Clock-Time Processing](../stream-processing/wallclock-time.md) pattern, which provides further details about using current time (wall-clock time) as the event time.
-* [Timestamp assignment in ksqlDB](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#timestamp-assignment)
-* See the tutorial [Event-time semantics in ksqlDB](https://kafka-tutorials.confluent.io/time-concepts/ksql.html) for further details about time concepts.

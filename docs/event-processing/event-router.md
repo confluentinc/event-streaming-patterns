@@ -14,23 +14,23 @@ How can we isolate [Events](../event/event.md) into a dedicated [Event Stream](.
 ![event-router](../img/event-router.svg)
 
 ## Implementation
-With the streaming database [ksqlDB](https://ksqldb.io/), we can continuously route Events to a different Event Stream. We use the `CREATE STREAM` syntax with an appropriate `WHERE` filter:
+As an example, with [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/), we can continuously route Events to a different Event Stream using `CREATE TABLE AS SELECT` (CTAS) syntax:
 
 ```
-CREATE STREAM payments ...;
+CREATE TABLE payments ...;
 
-CREATE STREAM payments_france AS
+CREATE TABLE payments_france AS
     SELECT * FROM payments WHERE country = 'france';
 
-CREATE STREAM payments_spain AS
+CREATE TABLE payments_spain AS
     SELECT * FROM payments WHERE country = 'spain';
 ```
 
-With the Apache Kafka&reg; client library [Kafka Streams](https://kafka.apache.org/documentation/streams/), use a [`TopicNameExtractor`](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html) to route Events to different Event Streams (called "topics" in Kafka).  The `TopicNameExtractor` has one method to implement, `extract()`, which accepts three parameters:
+With the Apache Kafka® client library [Kafka Streams](https://kafka.apache.org/documentation/streams/), use a [`TopicNameExtractor`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/processor/TopicNameExtractor.html) to route Events to different Event Streams (called "topics" in Kafka).  The `TopicNameExtractor` has one method to implement, `extract()`, which accepts three parameters:
 
 - The event key
 - The event value
-- The [`RecordContext`](https://kafka.apache.org/28/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event
+- The [`RecordContext`](https://kafka.apache.org/38/javadoc/org/apache/kafka/streams/processor/RecordContext.html), which provides access to headers, partitions, and other contextual information about the event
 
 We can use any of the given parameters to generate and return the desired destination topic name for the given Event. Kafka Streams will complete the routing. 
 
@@ -56,4 +56,4 @@ myStream.mapValues(..).to(new CountryTopicExtractor());
 
 ## References
 * This pattern is derived from [Message Router](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageRouter.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-* See the tutorial [How to dynamically choose the output topic at runtime](https://kafka-tutorials.confluent.io/dynamic-output-topic/kstreams.html) for a full example of dynamically routing Events at runtime.
+* See the tutorial [How to dynamically choose the output topic at runtime](https://developer.confluent.io/confluent-tutorials/dynamic-output-topic/kstreams/) for a full example of dynamically routing Events at runtime.

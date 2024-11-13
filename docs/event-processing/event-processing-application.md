@@ -59,7 +59,7 @@ MovieRatingJoiner joiner = new MovieRatingJoiner();
 KStream <Integer, EnrichedRating> enrichedRatings = ratings.join(movies, joiner);
 ```
 
-See the tutorial [How to join a stream and a lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/kstreams.html) for a full example of using Kafka Streams to build an Event Processing Application.
+See the tutorial [How to join a stream and a lookup table in Kafka Streams](https://developer.confluent.io/confluent-tutorials/joining-stream-table/kstreams/) for a full example of using Kafka Streams to build an Event Processing Application.
 
 ## Considerations
 * When building an Event Processing Application, it's recommended to confine the application to one problem domain. While it's possible to use any number of Event Processors in the application, the Event Processors should be closely related in most cases (similar to how one would design a microservice).
@@ -67,5 +67,5 @@ See the tutorial [How to join a stream and a lookup table](https://kafka-tutoria
 
 ## References
 * The [Event Streaming Platform](../event-stream/event-streaming-platform.md) pattern provides a higher-level overview of how Event Processing Applications are used across the Event Streaming Platform.
-* The tutorial [How to join a stream and a lookup table](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html) provides a step-by-step example of event processing using SQL.
-* The tutorial [How to sum a stream of events](https://kafka-tutorials.confluent.io/create-stateful-aggregation-sum/ksql.html) shows how to apply an aggregate function over an [Event Stream](../event-stream/event-stream.md). 
+* The tutorial [How to join two streams of data with Apache Flink® SQL](https://developer.confluent.io/confluent-tutorials/joining-stream-stream/flinksql/) provides a step-by-step example of event processing using SQL.
+* The tutorial [How to compute the sum of a field with Kafka Streams](https://developer.confluent.io/confluent-tutorials/aggregating-sum/kstreams/) shows how to apply an aggregate function over an [Event Stream](../event-stream/event-stream.md). 

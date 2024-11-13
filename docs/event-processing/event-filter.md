@@ -34,4 +34,4 @@ builder
 
 ## References
 * This pattern is derived from [Message Filter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html) in _Enterprise Integration Patterns_, by Gregor Hohpe and Bobby Woolf.
-* See the tutorial [How to filter a stream of events](https://kafka-tutorials.confluent.io/filter-a-stream-of-events/ksql.html) for detailed examples of filtering event streams.
+* See the tutorial [How to filter a stream of events with Apache Flink® SQL](https://developer.confluent.io/confluent-tutorials/filtering/flinksql/) for detailed examples of filtering event streams.

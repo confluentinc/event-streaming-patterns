@@ -52,8 +52,6 @@ SELECT ratings.movie_id AS ID, title, release_year, rating
 
 ## References
 
-* [How to join a stream and a lookup table in ksqlDB](https://kafka-tutorials.confluent.io/join-a-stream-to-a-table/ksql.html)
-* [Joining a stream and a stream in ksqlDB](https://kafka-tutorials.confluent.io/join-a-stream-to-a-stream/ksql.html)
-* [How to join a table and a table in ksqlDB](https://kafka-tutorials.confluent.io/join-a-table-to-a-table/ksql.html)
-* [Performing N-way joins in ksqlDB](https://kafka-tutorials.confluent.io/multi-joins/ksql.html)
-* [Joining collections](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/) in the ksqlDB documentation
+* [How to join a stream and a lookup table in Kafka Streams](https://developer.confluent.io/confluent-tutorials/joining-stream-table/kstreams/)
+* [Joining a stream and a stream in Apache Flink® SQL](https://developer.confluent.io/confluent-tutorials/joining-stream-stream/flinksql/)
+* [How to join a table and a table in Kafka Streams](https://developer.confluent.io/confluent-tutorials/joining-table-table/kstreams/)

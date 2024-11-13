@@ -51,9 +51,3 @@ KStream<String, OrderEvent> orderStream = builder.stream(...);
 ## Considerations
 
 * To honor the contract of outputting only a single result per window, the suppressed aggregator typically buffers events in some way until the window closes.  If its implementation uses an in-memory buffer, then, depending on the number of events per window and their payload sizes, there's the risk to run into out-of-memory errors.
-
-
-## References
-
-* The tutorial [Emit a final result from a time window with Kafka Streams](https://kafka-tutorials.confluent.io/window-final-result/kstreams.html) provides more details about the `suppress` operator.
-

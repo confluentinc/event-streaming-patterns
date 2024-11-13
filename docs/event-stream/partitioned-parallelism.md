@@ -22,7 +22,7 @@ Use a partitioned event stream, and then assign the events to different partitio
 Event partitioning also impacts application semantics: placing events into a given partition guarantees that the _ordering_ of events is preserved per partition (but typically not across different partitions of the same stream). This ordering guarantee is crucial for many use cases; very often, the sequencing of events is important (for example, when processing retail orders, an order must be paid before it can be shipped).
 
 ## Implementation
-With Apache Kafka®, streams (called _topics_) are created either by an administrator or by a streaming application such as the streaming database [ksqlDB](https://ksqldb.io). The number of partitions is specified at the time the topic is created. For example:
+With Apache Kafka®, streams (called _topics_) are created either by an administrator or by a streaming application. The number of partitions is specified at the time the topic is created. For example:
 
 ```
 confluent kafka topic create myTopic --partitions 30
@@ -37,22 +37,11 @@ The common partitioning schemes are:
 2. Round-robin partitioning, which provides an even distribution of events per partition
 3. Custom partitioning algorithms, tailored to specific use cases
 
-In a Kafka-based technology, such as a [Kafka Streams application](https://docs.confluent.io/platform/current/streams/index.html) or [ksqlDB](https://ksqldb.io/), the processors can scale by working on a set of partitions concurrently and in a distributed manner.
-If an event stream's key content changes because of how the query is processing the rows -- for example, to execute a `JOIN` operation in ksqlDB between two streams of events -- the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation. (This internal operation is often called _distributed data shuffling_.)
-
-```
-CREATE STREAM stream_name
-  WITH ([...,]
-        PARTITIONS=number_of_partitions)
-  AS SELECT select_expr [, ...]
-  FROM from_stream
-  PARTITION BY new_key_expr [, ...]
-  EMIT CHANGES;
-```
+In a Kafka-based technology, such as a [Kafka Streams application](https://docs.confluent.io/platform/current/streams/index.html) or [Apache Flink®](https://flink.apache.org/) using one of its Kafka connectors, the processors can scale by working on a set of partitions concurrently and in a distributed manner. If an event stream's key content changes because of how the query is processing the rows -- for example, to execute a join in Kafka Streams between two streams of events -- the underlying keys are recalculated, and the events are sent to a new partition in the new topic to perform the computation. (This internal operation is often called _distributed data shuffling_.)
 
 ## Considerations
-In general, a higher number of stream partitions results in higher throughput. To maximize throughput, you need enough partitions to utilize all distributed instances of an [Event Processor](../event-processing/event-processor.md) (for example, servers in a ksqlDB cluster).
-Be sure to choose the partition count carefully based on the throughput of [Event Sources](../event-source/event-source.md) (such as Kafka producers, including connectors), [Event Processors](../event-processing/event-processor.md) (such as ksqlDB or Kafka Streams applications), and [Event Sinks](../event-sink/event-sink.md) (such as Kafka consumers, including connectors). Also be sure to benchmark performance in the environment.
+In general, a higher number of stream partitions results in higher throughput. To maximize throughput, you need enough partitions to utilize all distributed instances of an [Event Processor](../event-processing/event-processor.md) (for example, Kafka Streams application instances).
+Be sure to choose the partition count carefully based on the throughput of [Event Sources](../event-source/event-source.md) (such as Kafka producers, including connectors), [Event Processors](../event-processing/event-processor.md) (such as Kafka Streams or Flink applications), and [Event Sinks](../event-sink/event-sink.md) (such as Kafka consumers, including connectors). Also be sure to benchmark performance in the environment.
 Plan the design of data patterns and key assignments so that events are distributed as evenly as possible across the stream partitions.
 This will prevent certain stream partitions from being overloaded relative to other stream partitions. See the blog post [Streams and Tables in Apache Kafka: Elasticity, Fault Tolerance, and Other Advanced Concepts](https://www.confluent.io/blog/kafka-streams-tables-part-4-elasticity-fault-tolerance-advanced-concepts/) to learn more about partitions and dealing with partition skew.
 

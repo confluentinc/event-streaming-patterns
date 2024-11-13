@@ -31,7 +31,7 @@ allEventsStream.groupByKey()...
 * In order for multiple Event Streams to be merged, they must use the same key and value types.
 
 ## References
-* [How to merge many streams into one stream with Kafka Streams](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/kstreams.html)
-* [How to merge many streams into one stream with ksqlDB](https://kafka-tutorials.confluent.io/merge-many-streams-into-one-stream/ksql.html)
+* [How to merge many streams into one stream with Kafka Streams](https://developer.confluent.io/confluent-tutorials/merging/kstreams/)
+* [How to merge many streams into one stream with Apache Flink® SQL](https://developer.confluent.io/confluent-tutorials/merging/flinksql/)
 
 

@@ -45,7 +45,7 @@ This ensures that all events in a given stream follow [Schema Compatibility](../
 }
 ```
 
-As another example, if a use case warrants different event types being written into a single stream, with Apache Kafka&reg; you can set the "subject naming strategy" to register schemas against the record type instead of the Kafka topic.
+As another example, if a use case warrants different event types being written into a single stream, with Apache Kafka® you can set the "subject naming strategy" to register schemas against the record type instead of the Kafka topic.
 Schema Registry will then allow for [Schema Evolution](../event-stream/schema-evolution.md) and [Schema Compatibility](../event-stream/schema-compatibility.md) validation to be performed within the scope of each event type rather than the topic.
 
 The consumer application can read schema versions assigned to the data type, and if there are different data types in any given stream, the application can cast each event to the appropriate type at processing time and then follow the appropriate code path:
