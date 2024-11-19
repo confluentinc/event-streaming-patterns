@@ -22,20 +22,16 @@ Regardless of backend choice, the state table should be fault-tolerant to ensure
 
 ## Implementation
 
-The streaming database ksqlDB provides state tables out of the box with its `TABLE` data collection. The implementation uses local, fault-tolerant state stores that are continuously backed up into ksqlDB's distributed storage layer -- Kafka -- so that the data is durable.
-
-For example, we can maintain a stateful count of all sales by aggregating the `movie_ticket_sales` stream into a `movie_tickets_sold` table:
+[Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) provides state tables out of the box. For example, we can maintain a stateful count of all movie ticket sales by aggregating a base `movie_ticket_sales` table into a `movie_tickets_sold` table:
 
 ```sql
 CREATE TABLE movie_tickets_sold AS
     SELECT title,
-           COUNT(ticket_total_value) AS tickets_sold
+           COUNT(total_ticket_value) AS tickets_sold
     FROM movie_ticket_sales
-    GROUP BY title
-    EMIT CHANGES;
+    GROUP BY title;
 ```
 
 ## References
 
-* The blog post [The Curious Incident of the State Store in Recovery in ksqlDB](https://www.confluent.io/blog/ksqldb-state-stores-in-recovery/) explains the fault tolerance of ksqlDB's state management in more detail.
 * See also the [Projection Table](../table/projection-table.md) pattern.

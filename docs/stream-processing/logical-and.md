@@ -49,80 +49,66 @@ hear if the same `user_id` logs in to the website in one country, and makes a
 withdrawal in a different country, within the same day. (This would
 not necessarily be fraud, but it's certainly suspicious!)
 
-To implement this example, we'll use the streaming database [ksqlDB](https://ksqldb.io/). We start with two Event Streams:
+To implement this example, we'll use [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/). We start with two Event Streams:
 
 ```sql
 -- For simplicity's sake, we'll assume that IP addresses 
 -- have already been converted into country codes.
 
-CREATE OR REPLACE STREAM logins (
-  user_id BIGINT,
-  country_code VARCHAR
-) WITH (
-  KAFKA_TOPIC = 'logins_topic',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 3
+CREATE TABLE logins (
+  user_id BIGINT NOT NULL,
+  country_code STRING
 );
 
-CREATE OR REPLACE STREAM withdrawals (
-  user_id BIGINT,
+CREATE TABLE withdrawals (
+  user_id BIGINT NOT NULL,
   country_code VARCHAR,
   amount DECIMAL(10,2),
   success BOOLEAN
-) WITH (
-  KAFKA_TOPIC = 'withdrawals_topic',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 3
 );
 ```
 
-We can now join these two Event Streams. Events with the same `user_id` are
-considered equal, and we will specifically look at Events that happen
-`WITHIN 1 DAY`:
+We can now join these two Event Streams. Events with the same `user_id` are considered logins by the same person:
 
 ```sql
-CREATE STREAM possible_frauds
-  AS
+CREATE STREAM possible_frauds AS
     SELECT l.user_id, l.country_code, w.country_code, w.amount, w.success
-    FROM logins l JOIN withdrawals w
-      WITHIN 1 DAY
-      ON l.user_id = w.user_id
-    WHERE l.country_code != w.country_code
-    EMIT CHANGES;
+    FROM logins l
+    JOIN withdrawals w
+    ON l.user_id = w.user_id
+    WHERE l.country_code <> w.country_code;
 ```
 
-Query that stream in one terminal:
+Query that table in one terminal:
 
 ```sql
-SELECT *
-FROM possible_frauds
-EMIT CHANGES;
+SELECT * FROM possible_frauds;
 ```
 
-Insert some data in another terminal:
+Insert some data into the `logins` and `withdrawals` tables in another terminal:
 
 ```sql
-INSERT INTO logins (user_id, country_code) VALUES (1, 'gb');
-INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
-INSERT INTO logins (user_id, country_code) VALUES (3, 'be');
-INSERT INTO logins (user_id, country_code) VALUES (2, 'us');
+INSERT INTO logins VALUES
+    (1, 'gb'),
+    (2, 'us'),
+    (3, 'be'),
+    (2, 'us');
 
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'gb', 10.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (1, 'au', 250.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'us', 50.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (3, 'be', 20.00, true);
-INSERT INTO withdrawals (user_id, country_code, amount, success) VALUES (2, 'fr', 20.00, true);
+INSERT INTO withdrawals VALUES
+    (1, 'gb', 10.00, true),
+    (1, 'au', 250.00, true),
+    (2, 'us', 50.00, true),
+    (3, 'be', 20.00, true),
+    (2, 'fr', 20.00, true);
 ```
 
 This produces a stream of possible fraud cases that need further investigation:
 
 ```
-+-----------+----------------+----------------+--------+---------+
-|L_USER_ID  |L_COUNTRY_CODE  |W_COUNTRY_CODE  |AMOUNT  |SUCCESS  |
-+-----------+----------------+----------------+--------+---------+
-|1          |gb              |au              |250.00  |true     |
-|2          |us              |fr              |20.00   |true     |
-|2          |us              |fr              |20.00   |true     |
+    user_id     country_code    country_code0       amount success
+          1               gb               au       250.00    TRUE
+          2               us               fr        20.00    TRUE
+          2               us               fr        20.00    TRUE
 ```
 
 ## Considerations
@@ -137,7 +123,6 @@ For long retention periods, consider joining an Event Stream to a
 
 ## References
 
-* [Joining Streams and Tables](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/) in the ksqlDB documentation.
 * See also the [Pipeline](../compositional-patterns/pipeline.md) pattern, used for considering Events in series (rather than in parallel).
 * See also the [Projection Table](../table/projection-table.md) pattern, a memory-efficient way of considering an Event Stream over a potentially-infinite time period.
-* See chapter 14, "Kafka Streams and KSQL", of [Designing Event-Driven Systems](https://www.confluent.io/designing-event-driven-systems/) for further discussion.
+* See chapter 14 of [Designing Event-Driven Systems](https://www.confluent.io/designing-event-driven-systems/) for further discussion.

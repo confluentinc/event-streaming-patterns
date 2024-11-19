@@ -29,89 +29,59 @@ and then count the occurrences of that key.
 
 ## Implementation
 
-In the streaming database [ksqlDB](https://ksqldb.io/), we can easily create a [Projection Table](../table/projection-table.md) that groups and counts Events by a particular key.
+With [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/), we can easily create a [Projection Table](../table/projection-table.md) that groups and counts Events by a particular key.
 
-As an example, imagine that we are handling very large financial
-transactions. We only want to process these transactions after they've been reviewed
-and approved by two managers.
+As an example, imagine that we are handling very large financial transactions. We only want to process these transactions after they've been reviewed and approved by two managers.
 
-We'll start with a stream of signed Events from managers:
+We'll start with a table of signed Events from managers:
 
 ```sql
-CREATE OR REPLACE STREAM trade_reviews (
+CREATE TABLE trade_reviews (
   trade_id BIGINT,
   manager_id VARCHAR,
   signature VARCHAR,
   approved BOOLEAN
-) WITH (
-  KAFKA_TOPIC = 'trade_reviews_topic',
-  VALUE_FORMAT = 'AVRO',
-  PARTITIONS = 2
 );
 ```
 
-We'll group reviews by their `trade_id`, and then `COUNT()` how many
- approvals (`approved = TRUE`) we see for each:
+We'll group reviews by their `trade_id`, and then `COUNT()` how many approvals (`approved = TRUE`) we see for each, and only keep those with at least two (`HAVING COUNT(*) >= 2`):
 
 ```sql
-CREATE OR REPLACE TABLE trade_approval AS
-  SELECT trade_id, COUNT(*) AS approvals
-  FROM trade_reviews
-  WHERE approved = TRUE
-  GROUP BY trade_id;
+CREATE TABLE approved_trades AS
+    SELECT trade_id, COUNT(*) AS approvals
+    FROM trade_reviews
+    WHERE approved = TRUE
+    GROUP BY trade_id
+    HAVING COUNT(*) >= 2;
 ```
 
-Query that stream in one terminal:
+Query that table in one terminal:
 
 ```
-SELECT *
-FROM trade_approval
-WHERE approvals = 2
-EMIT CHANGES;
+SELECT * FROM approved_trades;
 ```
 
 Insert some data in another terminal:
 
 ```sql
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (1, 'alice', '6f797a', TRUE);
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (2, 'alice', 'b523af', TRUE);
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (3, 'alice', 'fe1aaf', FALSE);
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (4, 'alice', 'f41bf3', TRUE);
-
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (2, 'bob', '0441ed', TRUE);
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (4, 'bob', '50f237', TRUE);
-
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (1, 'carol', 'ee52f5', FALSE);
-INSERT INTO trade_reviews ( trade_id, manager_id, signature, approved )
-  VALUES (3, 'carol', '4adb7c', TRUE);
+INSERT INTO trade_reviews VALUES
+    (1, 'alice', '6f797a', TRUE),
+    (2, 'alice', 'b523af', TRUE),
+    (3, 'alice', 'fe1aaf', FALSE),
+    (4, 'alice', 'f41bf3', TRUE),
+    (2, 'bob', '0441ed', TRUE),
+    (4, 'bob', '50f237', TRUE),
+    (1, 'carol', 'ee52f5', FALSE),
+    (3, 'carol', '4adb7c', TRUE);
 ```
 
-This produces a stream of trades that are ready to process:
+This produces a the trades that are ready to process:
 
+```noformat
+   trade_id            approvals
+          2                    2
+          4                    2
 ```
-+----------+-----------+
-|TRADE_ID  |APPROVALS  |
-+----------+-----------+
-|2         |2          |
-|4         |2          |
-```
-
-## Considerations
-
-Note that in the example above, we queried for an exact number of
-approvals (`WHERE approvals = 2`). We could have used a
-greater-than-or-equal check (`WHERE approvals >= 2`), but that would
-have emitted a new Event for a third approval, and then a fourth, and so on.
-In this case, that would be the wrong behavior, but it might be a useful feature
-in a system where we wanted to reward loyal customers and send out a
-discount email for every order _after_ their first 10.
 
 ## References
 

@@ -16,15 +16,20 @@ Split the original Event into multiple child Events.
 Then publish one Event for each of the child Events.
 
 ## Implementation
-Many event processing technologies support this operation.
-The streaming database ksqlDB provides an `EXPLODE()` table function, which takes an array and outputs one value for each of the elements of the array.
-The example below processes each input Event, un-nesting the array and generating new Events for each element, with new column names.
+Many event processing technologies support this operation. [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) supports expanding an array into multiple events via the `UNNEST` function. The example below processes each input Event, un-nesting the array and generating new Events for each element.
 
+```sql
+CREATE TABLE orders (
+    order_id INT NOT NULL,
+    tags ARRAY<STRING>
+);
 ```
-SELECT EXPLODE(TOTAL)->TOTALTYPE AS TOTAL_TYPE,
-             EXPLODE(TOTAL)->TOTALAMOUNT AS TOTAL_AMOUNT,
-             EXPLODE(TOTAL)->ID AS CUSTOMER_ID
-        FROM my_stream EMIT CHANGES;
+
+```sql
+CREATE TABLE exploded_orders AS
+  SELECT order_id, tag
+  FROM orders
+  CROSS JOIN UNNEST(tags) AS t (tag);
 ```
 
 The Apache Kafka® client library [Kafka Streams](https://kafka.apache.org/documentation/streams/) has an analogous method, called `flatMap()`.

@@ -20,33 +20,35 @@ We can combine Events in a stream with a Table or another Event Stream by perfor
 
 ## Implementation
 
-With the streaming database [ksqlDB](https://ksqldb.io/), we can create a stream of Events from an existing Kafka topic (in this example, note the similarity to [fact tables](https://en.wikipedia.org/wiki/Fact_table) in data warehouses):
+With [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/), we can create a continuously updating Stream of Events from an existing Kafka topic (in this example, note the similarity to [fact tables](https://en.wikipedia.org/wiki/Fact_table) in data warehouses):
 
 ```sql
-CREATE STREAM ratings (MOVIE_ID INT KEY, rating DOUBLE)
-    WITH (KAFKA_TOPIC='ratings');
+CREATE TABLE ratings (
+    movie_id INT NOT NULL,
+    rating FLOAT
+);
 ```
 
 We can then create a Table from another existing Kafka topic that changes less frequently. This Table serves as our reference data (similar to [dimension tables](https://en.wikipedia.org/wiki/Dimension_(data_warehouse)) in data warehouses).
 
 ```sql
-CREATE TABLE movies (ID INT PRIMARY KEY, title VARCHAR, release_year INT)
-    WITH (KAFKA_TOPIC='movies');
-
+CREATE TABLE movies (
+    movie_id INT NOT NULL,
+    title STRING,
+    release_year INT  
+);
 ```
 
-To create a stream of enriched Events, we perform a join between the Event Stream and the Table.
+To create a Stream of enriched Events, we perform a join between the Event Stream and the Table.
 
 ```sql
-SELECT ratings.movie_id AS ID, title, release_year, rating
-   FROM ratings
-   LEFT JOIN movies ON ratings.movie_id = movies.id
-   EMIT CHANGES;
+SELECT ratings.movie_id as id, title, rating
+FROM ratings
+LEFT JOIN movies ON ratings.movie_id = movies.movie_id;
 ```
 
 ## Considerations
 
-* In ksqlDB, joins between an Event Stream and a Table are driven by the Event Stream side of the join. Updates to the Table only update the state of the Table. Only a new Event in the Event Stream will cause a new join result. For example, if we're joining an Event Stream of orders to a Table of customers, a new order will be enriched if there is a customer record in the Table. But if a new customer is added to the Table, that will not trigger the join condition. The ksqlDB documentation contains more information about [stream-table join semantics](https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/#semantics-of-stream-table-joins). 
 * We can perform an inner or left-outer join between an Event Stream and a Table.
 * Joins are also useful for initiating subsequent processing when two or more corresponding Events arrive on different Event Streams or Tables.
 
