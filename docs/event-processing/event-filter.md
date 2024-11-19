@@ -15,9 +15,10 @@ How can an application select only the relevant events (or discard uninteresting
 
 ## Implementation
 
-As an example, the streaming database [ksqlDB](https://ksqldb.io) lets us create a filtered Event Stream using familiar SQL syntax:
+As an example, [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) lets us create a filtered Event Stream using familiar SQL syntax:
+
 ```sql
-CREATE STREAM payments_only WITH (kafka_topic = 'transactions-topic') AS
+CREATE TABLE payments_only AS
     SELECT *
       FROM all_transactions
       WHERE type = 'purchase';

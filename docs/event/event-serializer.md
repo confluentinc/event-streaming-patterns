@@ -45,8 +45,7 @@ consumption vastly simpler.
 
 ## Implementation
 
-For example, we can use Avro to define a structure for Foreign Exchange
-trade deals as:
+For example, we can use Avro to define a structure for Foreign Exchange trade deals as:
 
 ```json
 {"namespace": "io.confluent.developer",
@@ -72,27 +71,32 @@ trade deals as:
   producer.send(producerRecord);
 ```
 
-Alternatively, with the streaming database
-[ksqlDB](https://ksqldb.io/), we can define an [Event Stream](../event-stream/event-stream.md) in a way that enforces that
+Alternatively, with [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/),
+we can define an [Event Stream](../event-stream/event-stream.md) in a way that enforces that
 format and records the Avro definition using Confluent’s 
 [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html):
 
 ```sql
-CREATE OR REPLACE STREAM fx_trade (
-  trade_id BIGINT KEY,
-  from_currency VARCHAR(3),
-  to_currency VARCHAR(3),
-  price DECIMAL(10,5)
+CREATE TABLE fx_trades (
+    trade_id INT NOT NULL,
+    from_currency VARCHAR(3),
+    to_currency VARCHAR(3),
+    price DECIMAL(10,5)
 ) WITH (
-  KAFKA_TOPIC = 'fx_trade',
-  KEY_FORMAT = 'avro',
-  VALUE_FORMAT = 'avro',
-  PARTITIONS = 3
+    'connector' = 'kafka',
+    'topic' = 'fx_trades',
+    'properties.bootstrap.servers' = 'broker:9092',
+    'scan.startup.mode' = 'earliest-offset',
+    'key.format' = 'raw',
+    'key.fields' = 'trade_id',
+    'value.format' = 'avro-confluent',
+    'value.avro-confluent.url' = 'http://schema-registry:8081',
+    'value.fields-include' = 'EXCEPT_KEY'
 );
 ```
 
 With this setup, both serialization and deserialization of data is
-performed automatically by ksqlDB behind the scenes.
+performed automatically by Flink behind the scenes.
 
 ## Considerations
 

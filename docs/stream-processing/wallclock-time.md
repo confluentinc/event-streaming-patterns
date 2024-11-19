@@ -23,13 +23,21 @@ Depending on the use case, [Event Processors](../event-processing/event-processo
 
 ## Implementation
 
-As an example, the streaming database [ksqlDB](https://ksqldb.io) maintains a system column called `ROWTIME`, which tracks the timestamp of an [Event](../event/event.md). By default, `ROWTIME` is inherited from the timestamp in the underlying Apache Kafka® record metadata, but it can also be pulled from a field in the [Event](../event/event.md). See [Time semantics](https://docs.ksqldb.io/en/latest/concepts/time-and-windows-in-ksqldb-queries/#time-semantics) in the ksqlDB documentation for more information.
+As an example, [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/) exposes the wall-clock processing time as a computed column using the system `PROCTIME()` function.
 
-```
-CREATE STREAM TEMPERATURE_READINGS_EVENTTIME
-    WITH (KAFKA_TOPIC='deviceEvents',
-          VALUE_FORMAT='avro',
-          TIMESTAMP='eventTime');
+```sql
+CREATE TABLE device_readings (
+    device_id INT,
+    temperature DOUBLE,
+    wallclock_time AS PROCTIME()
+);
+
+SELECT device_id,
+    COUNT(*) AS reading_count,
+    window_start,
+    window_end
+FROM TABLE(TUMBLE(TABLE device_readings, DESCRIPTOR(wallclock_time), INTERVAL '5' MINUTES))
+GROUP BY device_id, window_start, window_end;
 ```
 
 ## References

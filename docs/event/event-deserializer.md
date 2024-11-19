@@ -57,53 +57,53 @@ to manually inspect the schemas, or to build libraries for other
 languages.
 
 For example, in the [Event Serializer](event-serializer.md) pattern
-we wrote a stream of `fx_trade` events. If we want to recall the
-structure of those events we can ask ksqlDB:
+we wrote a table of `fx_trades` events. If we want to recall the
+structure of those events we can ask for the Flink SQL table definition:
 
 ```sh
-DESCRIBE fx_trade;
+DESCRIBE fx_trades;
 ```
 
 ```text
-Name                 : FX_TRADE
- Field         | Type
-----------------------------------------
- TRADE_ID      | BIGINT           (key)
- FROM_CURRENCY | VARCHAR(STRING)
- TO_CURRENCY   | VARCHAR(STRING)
- PRICE         | DECIMAL(10, 5)
-----------------------------------------
++---------------+----------------+-------+-----+--------+-----------+
+|          name |           type |  null | key | extras | watermark |
++---------------+----------------+-------+-----+--------+-----------+
+|      trade_id |            INT | FALSE |     |        |           |
+| from_currency |     VARCHAR(3) |  TRUE |     |        |           |
+|   to_currency |     VARCHAR(3) |  TRUE |     |        |           |
+|         price | DECIMAL(10, 5) |  TRUE |     |        |           |
++---------------+----------------+-------+-----+--------+-----------+
 ```
 
 Or we can query the Schema Registry directly to see the structure in a
 machine-readable format:
 
 ```sh
-curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq .
-```
+curl http://localhost:8081/subjects/fx_trades-value/versions/latest | jq .```
 
 ```json
 {
-  "subject": "fx_trade-value",
+  "subject": "fx_trades-value",
   "version": 1,
-  "id": 44,
-  "schema": "{\"type\":\"record\",\"name\":\"KsqlDataSourceSchema\",\"namespace\":\"io.confluent.ksql.avro_schemas\",\"fields\":[{\"name\":\"FROM_CURRENCY\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"TO_CURRENCY\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"PRICE\",\"type\":[\"null\",{\"type\":\"bytes\",\"scale\":5,\"precision\":10,\"connect.version\":1,\"connect.parameters\":{\"scale\":\"5\",\"connect.decimal.precision\":\"10\"},\"connect.name\":\"org.apache.kafka.connect.data.Decimal\",\"logicalType\":\"decimal\"}],\"default\":null}],\"connect.name\":\"io.confluent.ksql.avro_schemas.KsqlDataSourceSchema\"}"
+  "id": 1,
+  "schema": "{\"type\":\"record\",\"name\":\"record\",\"namespace\":\"org.apache.flink.avro.generated\",\"fields\":[{\"name\":\"from_currency\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"to_currency\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"price\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":5}],\"default\":null}]}"
 }
 ```
 
 Unpacking that `schema` field reveals the [Avro][avro] specification:
 
 ```sh
-curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .schema | jq .
+curl http://localhost:8081/subjects/fx_trades-value/versions/latest | jq -rc .schema | jq .
 ```
+
 ```json
 {
   "type": "record",
-  "name": "KsqlDataSourceSchema",
-  "namespace": "io.confluent.ksql.avro_schemas",
+  "name": "record",
+  "namespace": "org.apache.flink.avro.generated",
   "fields": [
     {
-      "name": "FROM_CURRENCY",
+      "name": "from_currency",
       "type": [
         "null",
         "string"
@@ -111,7 +111,7 @@ curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .sch
       "default": null
     },
     {
-      "name": "TO_CURRENCY",
+      "name": "to_currency",
       "type": [
         "null",
         "string"
@@ -119,26 +119,19 @@ curl http://localhost:8081/subjects/fx_trade-value/versions/latest | jq -rc .sch
       "default": null
     },
     {
-      "name": "PRICE",
+      "name": "price",
       "type": [
         "null",
         {
           "type": "bytes",
-          "scale": 5,
+          "logicalType": "decimal",
           "precision": 10,
-          "connect.version": 1,
-          "connect.parameters": {
-            "scale": "5",
-            "connect.decimal.precision": "10"
-          },
-          "connect.name": "org.apache.kafka.connect.data.Decimal",
-          "logicalType": "decimal"
+          "scale": 5
         }
       ],
       "default": null
     }
-  ],
-  "connect.name": "io.confluent.ksql.avro_schemas.KsqlDataSourceSchema"
+  ]
 }
 ```
 

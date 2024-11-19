@@ -16,7 +16,7 @@ How can systems that use different data formats communicate with each other via 
 An Event Translator converts a data format into a standard format that is familiar to downstream [Event Processors](../event-processing/event-processor.md). This can take the form of field manipulation -- for example, mapping one Event schema to another Event schema. Another common form is different serialization types -- for example, translating Apache Avro&trade; to JSON or Protocol Buffers (Protobuf) to Avro.
 
 ## Implementation
-With the streaming database [ksqlDB](https://ksqldb.io), we can create [Event Streams](../event-stream/event-stream.md) using SQL statements:
+With [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/), we can create [Event Streams](../event-stream/event-stream.md) using SQL statements:
 
 ```
 CREATE STREAM translated_stream AS
@@ -24,7 +24,7 @@ CREATE STREAM translated_stream AS
       fieldX AS fieldC,
       field.Y AS fieldA,
       field.Z AS fieldB
-   FROM untranslated_stream
+   FROM untranslated_stream;
 ```
 
 ## Considerations

@@ -47,17 +47,15 @@ events downstream for further processing.
 
 ## Implementation
 
-As an example, in the streaming database [ksqlDB](https://ksqldb.io/),
-we can use a `SELECT` statement to easily transform a rich event
-stream into a stream of simpler events.
+As an example, in [Apache Flink® SQL](https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/gettingstarted/),
+we can use a `SELECT` statement to easily transform a rich event stream into a stream of simpler events.
 
-Assume that we have an event stream called `products`, where
-each event contains a huge number of fields. We are only interested
-in four fields: `producer_id`, `category`, `sku`, and `price`. We can
-prune down the events to just those fields with the following query:
+Assume that we have a table called `products`, where each event contains a huge number of fields. We are only interested 
+in four fields: `producer_id`, `category`, `sku`, and `price`. We can prune down the events to just those fields with 
+the following query:
 
 ```sql
-CREATE OR REPLACE STREAM product_summaries AS
+CREATE TABLE product_summaries AS
   SELECT
     product_id,
     category,
@@ -66,7 +64,7 @@ CREATE OR REPLACE STREAM product_summaries AS
   FROM products;
 ```
 
-Or we can perform an equivalent transformation using the Apache Kafka®
+We can perform an equivalent transformation using the Apache Kafka®
 client library [Kafka Streams](https://docs.confluent.io/platform/current/streams/index.html),
 perhaps as part of a larger processing pipeline:
 
@@ -92,15 +90,13 @@ considering how the new stream will be partitioned, as discussed in the
 [Partitioned Placement](../event-stream/partitioned-parallelism.md) pattern. By default, the
 new stream will inherit the same partitioning key as its source, but
 we can repartition the data to suit our new use case (for example, by
-specifying a `PARTITION BY` clause in ksqlDB).
+specifying a `DISTRIBUTED BY` clause in Flink SQL).
 
 In the example above, our third-party product feed might be partitioned
 by the vendor's unique `product_id`, but for this use case, it might
 make more sense to partition the filtered events by their `category`.
 
-See the [ksqlDB
-documentation](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/create-stream-as-select/)
-for details.
+See Flink's Kafka connector sink partitioning [documentation](https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/kafka/#sink-partitioning) for details.
 
 ## References
 * This pattern is derived from [Content

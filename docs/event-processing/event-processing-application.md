@@ -21,36 +21,40 @@ For example, an application can read a stream of customer payments from an [Even
 ## Implementation
 Apache Kafka® is the most popular [Event Streaming Platform](../event-stream/event-streaming-platform.md). There are several options for building Event Processing Applications when using Kafka. We'll cover two here.
 
-### ksqlDB
-[ksqlDB](https://ksqldb.io) is a streaming database with which we can build Event Processing Applications using SQL syntax. It has first-class support for [Streams](../event-stream/event-stream.md) and [Tables](../table/state-table.md).
+### Apache Flink®
+Flink enables developers to build Event Processing Applications using SQL syntax.
 
-When we create [Tables](../table/state-table.md) and [Streams](../event-stream/event-stream.md) in ksqlDB, Kafka topics are used as the storage layer behind the scenes. In the example below, the ksqlDB table `movies` is backed by a Kafka topic of the same name.
+In the example below, the `movies` and `ratings` tables are backed by Kafka topics.
 ```sql
-CREATE TABLE movies (ID INT PRIMARY KEY, title VARCHAR, release_year INT)
-    WITH (kafka_topic='movies', partitions=1, value_format='avro');
-CREATE STREAM ratings (MOVIE_ID INT KEY, rating DOUBLE)
-    WITH (kafka_topic='ratings', partitions=1, value_format='avro');
+CREATE TABLE movies (
+    movie_id INT NOT NULL,
+    title STRING,
+    release_year INT  
+);
+
+CREATE TABLE ratings (
+    movie_id INT NOT NULL,
+    rating FLOAT
+);
 ```
 
 As we would expect, we can add new [Events](../event/event.md) using `INSERT`:
 ```sql
-INSERT INTO movies (id, title, release_year) VALUES (294, 'Die Hard', 1998);
-INSERT INTO ratings (movie_id, rating) VALUES (294, 8.2);
+INSERT INTO movies  VALUES (928, 'Dune: Part Two', 2024);
+INSERT INTO ratings VALUES (928, 9.6);
 ```
 
-We can also perform stream processing using ksqlDB's SQL syntax. In the following example, the command `CREATE STREAM .. AS SELECT ..` continuously joins the `ratings` stream and the `movies` table to create a new stream of enriched ratings.
+We can also perform stream processing using SQL syntax. In the following example, the command `CREATE TABLE .. AS SELECT ..` continuously joins the `ratings` and `movies` tables to populate a new table of ratings enriched with metadata about the rated movie.
 ```sql
-CREATE STREAM rated_movies
-    WITH (kafka_topic='rated_movies',
-          value_format='avro') AS
+CREATE TABLE rated_movies AS
     SELECT ratings.movie_id as id, title, rating
     FROM ratings
-    LEFT JOIN movies ON ratings.movie_id = movies.id;
+    LEFT JOIN movies ON ratings.movie_id = movies.movie_id;
 ```
 
 ### Kafka Streams
 
-With the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka, we can implement an event processing application in Java, Scala, or other JVM languages. Here is a Kafka Streams example similar to the ksqlDB example above:
+With the [Kafka Streams client library](https://docs.confluent.io/platform/current/streams/index.html) of Apache Kafka, we can implement an event processing application in Java, Scala, or other JVM languages. Here is a Kafka Streams example similar to the Flink example above:
 
 ```java
 KStream<Integer, Rating> ratings = builder.table(<blabla>);
